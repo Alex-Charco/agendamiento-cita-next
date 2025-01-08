@@ -11,6 +11,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.6.11",
     "agendamiento-cita-next": "file:",
+    "axios": "^1.7.9",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

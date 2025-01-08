@@ -5,9 +5,13 @@
     npm install
 
 ## INSTALACIÓN DE DEPENDENCIAS
-
+#### NextUI
     npm install @nextui-org/react
 
+#### Axios
+    npm install axios
+
+---
 ## Getting Started
 
 First, run the development server:
