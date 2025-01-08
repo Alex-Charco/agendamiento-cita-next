@@ -3,9 +3,9 @@ const { nextui } = require('@nextui-org/react');
 
 module.exports = {
   content: [
-	  './src/**/*.{js,ts,jsx,tsx,mdx}', // Incluye el directorio src
-	  './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
-	],
+    './src/**/*.{js,ts,jsx,tsx,mdx}', // Incluye el directorio src
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}', // Asegúrate de que la ruta es correcta
+  ],
 
   darkMode: 'class',
   theme: {
@@ -17,51 +17,46 @@ module.exports = {
         lg: '2rem',
       },
     },
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#000361', // Azul base
+          50: '#D4E1F1', // Azul muy claro
+          100: '#A8C3E6', // Azul claro
+          200: '#7BA5DB', // Azul medio claro
+          300: '#4E87D0', // Azul medio
+          400: '#2171C5', // Azul más fuerte
+          500: '#000361', // Azul base
+          600: '#00004E', // Azul más oscuro
+          700: '#00003B', // Azul muy oscuro
+          800: '#000028', // Azul muy oscuro
+          900: '#000015', // Azul casi negro
+        },
+      },
+    },
   },
   plugins: [
     nextui({
       themes: {
-        light: {
-          layout: {}, // light theme layout tokens
-          colors: {}, // light theme colors
-        },
-        dark: {
-          layout: {}, // dark theme layout tokens
-          colors: {}, // dark theme colors
-        },
         modern: {
-          extend: 'dark', // <- inherit default values from dark theme
+          extend: 'dark', 
           colors: {
             background: '#0D001A',
             foreground: '#ffffff',
             primary: {
-              50: '#3B096C',
-              100: '#520F83',
-              200: '#7318A2',
-              300: '#9823C2',
-              400: '#c031e2',
-              500: '#DD62ED',
-              600: '#F182F6',
-              700: '#FCADF9',
-              800: '#FDD5F9',
-              900: '#FEECFE',
-              DEFAULT: '#DD62ED',
-              foreground: '#ffffff',
+              50: '#D4E1F1',
+              100: '#A8C3E6',
+              200: '#7BA5DB',
+              300: '#4E87D0',
+              400: '#2171C5',
+              500: '#000361',
+              600: '#00004E',
+              700: '#00003B',
+              800: '#000028',
+              900: '#000015',
+              DEFAULT: '#000361', // Azul base predeterminado
             },
-            focus: '#F182F6',
-          },
-          layout: {
-            disabledOpacity: '0.3',
-            radius: {
-              small: '1px',
-              medium: '2px',
-              large: '4px',
-            },
-            borderWidth: {
-              small: '1px',
-              medium: '2px',
-              large: '3px',
-            },
+            focus: '#2171C5', // Azul brillante para foco
           },
         },
       },

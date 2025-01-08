@@ -4,29 +4,34 @@ import React, { useState } from "react";
 import { Button, Input, Card, CardHeader, CardBody, Form } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importamos los íconos de react-icons
 import "./globals.css";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
+  const [isVisible, setIsVisible] = useState(false); // Estado para controlar la visibilidad del password
+
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    const idCard = data.idCard;
+    const password = data.password;
 
-    if (!idCard) {
-      setErrorMessage("Por favor, ingresa tu ID_CARD.");
+    if (!password) {
+      setErrorMessage("Por favor, ingresa tu numéro de identificación.");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", { id_card: idCard });
+      const response = await axios.post("http://localhost:5000/auth/login", { password });
+
       const { token, user, message } = response.data;
 
       if (message !== "Inicio de sesión exitoso") {
-        setErrorMessage("ID_CARD incorrecto.");
+        setErrorMessage("Numéro de identificación incorrecta.");
         return;
       }
 
@@ -56,24 +61,49 @@ export default function Login() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-200">
+    <div className="flex h-screen items-center justify-center">
       <Card className="max-w-md w-full">
-        <CardHeader>
-          <h1 className="text-lg font-medium">Iniciar sesión</h1>
-          <p className="text-sm text-gray-500">Accede con tu ID_CARD</p>
+        <CardHeader className="flex flex-col gap-2">
+          <h1 className="text-lg font-medium text-center">Iniciar sesión</h1>
+          <div className="w-full">
+            <p className="text-sm text-gray-500 text-left">Accede con tu número de cédula o tarjeta militar</p>
+          </div>
         </CardHeader>
         <CardBody>
           <Form className="flex flex-col gap-4" onSubmit={onSubmit}>
-            <Input
-              isRequired
-              label="ID_CARD"
-              name="idCard"
-              placeholder="Ingresa tu ID_CARD"
-              type="text"
-            />
-            <Button type="submit" color="primary">
-              Iniciar sesión
-            </Button>
+            {/* Contenedor con el label pegado al borde del Input */}
+            <div className="relative w-full">
+              <label className="absolute text-sm text-gray-700 left-0 ml-2" htmlFor="id_card">
+                Número de identificación
+              </label>
+              <Input
+                isRequired
+                id="id_card"
+                name="id_card"
+                placeholder="Ingresa tu número de identificación"
+                type={isVisible ? "text" : "id_card"} // Cambiar el tipo según la visibilidad
+                className="w-full mt-5"
+              />
+              <button
+                aria-label="toggle id_card visibility"
+                className="absolute right-3 top-1/2 transform -translate-y-1 focus:outline-none"
+                type="button"
+                onClick={toggleVisibility}
+              >
+                {isVisible ? (
+                  <FaEyeSlash className="text-2xl text-gray-500" />
+                ) : (
+                  <FaEye className="text-2xl text-gray-500" />
+                )}
+              </button>
+            </div>
+
+            {/* Contenedor para centrar el botón */}
+            <div className="flex justify-center w-full">
+              <Button className="mx-auto" type="submit" color="primary">
+                Iniciar sesión
+              </Button>
+            </div>
           </Form>
           {errorMessage && <div className="text-red-500 mt-2">{errorMessage}</div>}
         </CardBody>

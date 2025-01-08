@@ -5,15 +5,19 @@
     npm install
 
 ## INSTALACIÓN DE DEPENDENCIAS
-#### NextUI
+#### [NextUI](https://nextui.org/docs/guide/installation)
     npm install @nextui-org/react
 
-#### Axios
+#### [Axios](https://www.npmjs.com/package/axios)
     npm install axios
 
-#### Autoprefixer
+#### [Autoprefixer](https://www.npmjs.com/package/autoprefixer)
 
     npm i autoprefixer
+
+#### [React-icons](https://www.npmjs.com/package/react-icons)
+
+    npm install react-icons
 
 ---
 ## Getting Started
