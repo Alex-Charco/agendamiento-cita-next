@@ -11,6 +11,10 @@
 #### Axios
     npm install axios
 
+#### Autoprefixer
+
+    npm i autoprefixer
+
 ---
 ## Getting Started
 
