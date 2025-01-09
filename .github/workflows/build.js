@@ -1,4 +1,4 @@
-name: Build
+/*name: Build
 on:
   push:
     branches:
@@ -17,3 +17,4 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+*/

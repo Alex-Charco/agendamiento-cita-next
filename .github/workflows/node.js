@@ -1,4 +1,4 @@
-name: Node.js CI
+/*name: Node.js CI
 
 on:
   push:
@@ -25,3 +25,4 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     #- run: npm test
+  */

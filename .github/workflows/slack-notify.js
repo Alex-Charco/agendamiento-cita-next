@@ -1,4 +1,4 @@
-on: push
+/*on: push
 name: Slack Notification Demo
 jobs:
   slackNotification:
@@ -12,3 +12,4 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       with:
         args: "¡Código sin errores!"
+*/

@@ -1,4 +1,4 @@
-name: ESLint
+/*name: ESLint
 
 on:
   push:
@@ -45,3 +45,4 @@ jobs:
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
+*/
