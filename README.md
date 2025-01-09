@@ -1,6 +1,13 @@
-# CREACIÓN DEL PROYECTO
+# Agendamiento de citas médica
 Aplicación web, para agendar citas médicas con el framework Next.js y lenguaje de programación JavaScript.
 
+- ![Completado](https://img.shields.io/badge/status-completado-brightgreen)
+  - ✔️ **Implementación de Pipeline CI/CD:** se añadió un pipeline CI/CD que incluye integración con GitHub, GitHub Actions, análisis con SonarCloud y ESLint, pruebas con Node.js, notificaciones en Slack y despliegue automático en Vercel.
+
+- ![Pendiente](https://img.shields.io/badge/status-pendiente-orange)
+  - ✔️ **Construcción del proyecto web:** Páginas, componentes... para la construcción del forntend web.
+
+## Creación del proyecto
 Creación del proyecto Nextx.js ejecutando en comando en el cmd:
 
     npx create-next-app@latest agendamiento-citas-next --use-npm --javascript
@@ -37,17 +44,8 @@ Abrir http://localhost:3000 en el navegador para ver el resultado.
     npm install react-icons
 
 ---
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy en Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ver el proyecto desplegado en [Vercel](https://agendamiento-cita-next.vercel.app/).
