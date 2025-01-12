@@ -24,7 +24,7 @@ export default function PatientDashboard() {
     const token = localStorage.getItem("authToken");
 
     // Verificamos que el usuario y el token existan
-    if (storedUser && storedUser.ID_CARD && token) {
+    if (storedUser?.ID_CARD && token) {
       console.log("Usuario y token encontrados:", storedUser, token);
 
       // Hacemos la solicitud GET para obtener los datos del paciente
