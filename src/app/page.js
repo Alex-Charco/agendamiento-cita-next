@@ -74,7 +74,7 @@ export default function Login() {
             {/* Contenedor con el label pegado al borde del Input */}
             <div className="relative w-full">
               <label className="absolute text-sm text-gray-700 left-0 ml-2" htmlFor="id_card">
-                Número de identificación
+                Ingresar Usuario
               </label>
               <Input
                 isRequired
