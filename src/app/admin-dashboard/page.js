@@ -1,4 +1,4 @@
-// pages/admin-dashboard.js
+// /admin-dashboard.js
 import React from 'react';
 
 const AdminDashboard = () => {

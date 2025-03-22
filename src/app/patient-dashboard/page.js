@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, CardHeader, CardBody, Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Button, Input, Select, SelectItem } from "@heroui/react";
 
 export default function PatientDashboard() {
   const [patientData, setPatientData] = useState(null);

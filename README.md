@@ -35,7 +35,7 @@ Desistalación NextUI
     
 	npm install @nextui-org/react
 
-Se cambia por HeroUI y la respectiva configuración:
+Se cambia por HeroUI con la respectiva configuración:
 
 #### [HeroUI](https://www.heroui.com/)
     
@@ -52,6 +52,10 @@ Se cambia por HeroUI y la respectiva configuración:
 #### [React-icons](https://www.npmjs.com/package/react-icons)
 
     npm install react-icons
+
+#### [jwt-decode](https://www.npmjs.com/package/jwt-decode)
+
+    npm install jwt-decode
 
 ---
 
