@@ -29,11 +29,21 @@ npm run dev
 Abrir http://localhost:3000 en el navegador para ver el resultado.
 
 ## INSTALACIÓN DE DEPENDENCIAS
+Desistalación NextUI
+
 #### [NextUI](https://nextui.org/docs/guide/installation)
-    npm install @nextui-org/react
+    
+	npm install @nextui-org/react
+
+Se cambia por HeroUI y la respectiva configuración:
+
+#### [HeroUI](https://www.heroui.com/)
+    
+	npm install @heroui/react
 
 #### [Axios](https://www.npmjs.com/package/axios)
-    npm install axios
+    
+	npm install axios
 
 #### [Autoprefixer](https://www.npmjs.com/package/autoprefixer)
 

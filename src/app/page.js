@@ -1,27 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button, Input, Card, CardHeader, CardBody, Form } from "@nextui-org/react";
+import { Button, Input, Card, CardHeader, CardBody } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importamos los íconos de react-icons
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./globals.css";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
-  const [isVisible, setIsVisible] = useState(false); // Estado para controlar la visibilidad del password
+  const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     const data = Object.fromEntries(new FormData(e.currentTarget));
     const password = data.password;
 
     if (!password) {
-      setErrorMessage("Por favor, ingresa tu numéro de identificación.");
+      setErrorMessage("Por favor, ingresa tu número de identificación.");
       return;
     }
 
@@ -31,15 +30,12 @@ export default function Login() {
       const { token, user, message } = response.data;
 
       if (message !== "Inicio de sesión exitoso") {
-        setErrorMessage("Numéro de identificación incorrecta.");
+        setErrorMessage("Número de identificación incorrecto.");
         return;
       }
 
-      // Guardamos tanto el token como el objeto de usuario en localStorage
       localStorage.setItem("authToken", token);
       localStorage.setItem("user", JSON.stringify(user));
-
-      console.log("Token y datos del usuario guardados en localStorage:", { token, user }); // Depuración
 
       switch (user.ID_ROLE) {
         case 1:
@@ -56,58 +52,95 @@ export default function Login() {
       }
     } catch (error) {
       setErrorMessage("Error en la autenticación. Verifica tus datos.");
-      console.error("Error al autenticar:", error); // Depuración
+      console.error("Error al autenticar:", error);
     }
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <Card className="max-w-md w-full">
-        <CardHeader className="flex flex-col gap-2">
-          <h1 className="text-lg font-medium text-center">Iniciar sesión</h1>
-          <div className="w-full">
-            <p className="text-sm text-gray-500 text-left">Accede con tu número de cédula o tarjeta militar</p>
-          </div>
-        </CardHeader>
-        <CardBody>
-          <Form className="flex flex-col gap-4" onSubmit={onSubmit}>
-            {/* Contenedor con el label pegado al borde del Input */}
-            <div className="relative w-full">
-              <label className="absolute text-sm text-gray-700 left-0 ml-2" htmlFor="id_card">
-                Ingresar Usuario
-              </label>
-              <Input
-                isRequired
-                id="id_card"
-                name="id_card"
-                placeholder="Ingresa tu número de identificación"
-                type={isVisible ? "text" : "id_card"} // Cambiar el tipo según la visibilidad
-                className="w-full mt-5"
-              />
-              <button
-                aria-label="toggle id_card visibility"
-                className="absolute right-3 top-1/2 transform -translate-y-1 focus:outline-none"
-                type="button"
-                onClick={toggleVisibility}
-              >
-                {isVisible ? (
-                  <FaEyeSlash className="text-2xl text-gray-500" />
-                ) : (
-                  <FaEye className="text-2xl text-gray-500" />
-                )}
-              </button>
-            </div>
+    <div
+      className="flex h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/images/background.svg')" }}
+    >
+      {/* Fondo con opacidad */}
+      <div className="absolute inset-0 bg-black bg-opacity-5"></div> {/* Ajusta la opacidad aquí */}
 
-            {/* Contenedor para centrar el botón */}
-            <div className="flex justify-center w-full">
-              <Button className="mx-auto" type="submit" color="primary">
-                Iniciar sesión
-              </Button>
+      {/* Contenido dentro del fondo */}
+      <div className="relative z-10">
+
+        <Card className="max-w-md w-full bg-gradient-to-b from-celeste-fuerte to-plomo-claro to-[#F5F7FC] bg-opacity-50"
+          style={{
+            border: '4px solid rgba(0, 56, 255, 0.3)', // Azul translúcido
+            boxShadow: '0 4px 10px rgba(0, 56, 255, 0.5)', // Sombra suave
+          }}>
+          <CardHeader className="text-center p-0 mb-6">
+            <div className="mb-0">
+              <img src="/images/logo.png" alt="Logo" className="w-full h-auto" />
             </div>
-          </Form>
-          {errorMessage && <div className="text-red-500 mt-2">{errorMessage}</div>}
-        </CardBody>
-      </Card>
+          </CardHeader>
+
+          <CardBody>
+            <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+              {/* Contenedor de Usuario y Contraseña alineados */}
+              <div className="flex flex-col gap-4">
+                {/* Usuario */}
+                <div className="flex items-center w-full">
+                  <label className="text-sm text-gray-700 w-1/3 text-left" htmlFor="id_usuario">
+                    Usuario: *
+                  </label>
+                  <Input
+                    isRequired
+                    id="id_usuario"
+                    name="id_usuario"
+                    placeholder="Ingresar el usuario"
+                    className="w-full md:w-3/4"
+                  />
+                </div>
+
+                {/* Contraseña */}
+                <div className="flex items-center w-full">
+                  <label className="text-sm text-gray-700 w-1/3 text-left" htmlFor="id_password">
+                    Contraseña: *
+                  </label>
+                  <div className="relative w-full md:w-3/4">
+                    <Input
+                      isRequired
+                      id="id_password"
+                      name="id_password"
+                      placeholder="Ingresar la contraseña"
+                      type={isVisible ? "text" : "password"} // Cambia entre "text" y "password" dependiendo de isVisible
+                      className="w-full"
+                    />
+                    <button
+                      aria-label="toggle password visibility"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 focus:outline-none"
+                      type="button"
+                      onClick={toggleVisibility}
+                    >
+                      {isVisible ? <FaEye className="text-2xl text-gray-500" /> : <FaEyeSlash className="text-2xl text-gray-500" />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botón */}
+              <div className="flex flex-col justify-center w-full">
+                <Button className="mx-auto w-1/3" type="submit" color="primary">
+                  Ingresar
+                </Button>
+                <p className="flex justify-center text-xs text-gray-700 mt-2">
+                  Olvidó la contraseña: Recuperar contraseña
+                </p>
+              </div>
+            </form>
+
+            {errorMessage && <div className="text-red-500 mt-2">{errorMessage}</div>}
+            {/* Texto pequeño debajo del login */}
+            <p className="text-sm text-center font-bold text-blue-700 mt-4 border-t border-plomo-claro pt-2 w-full mx-0">
+              Sistema de Gestión Hospitalaria
+            </p>
+          </CardBody>
+        </Card>
+      </div>
     </div>
   );
 }

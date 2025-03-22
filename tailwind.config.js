@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-const { nextui } = require('@nextui-org/react');
+const { heroui } = require("@heroui/react");
 
 module.exports = {
   content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}', // Incluye el directorio src
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}', // Asegúrate de que la ruta es correcta
+    './src/**/*.{js,ts,jsx,tsx,mdx}', 
+    './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
 
   darkMode: 'class',
@@ -19,8 +19,16 @@ module.exports = {
     },
     extend: {
       colors: {
+		  azul: '#004aad',
+        'celeste-fuerte': '#90C0E8',
+        plomo: '#B7BDC5',
+        'plomo-oscuro': '#94aab8',
+        'celeste-plomado-oscuro': '#CDDAE3',
+        'plomo-claro': '#cddae3',
+        'celeste-plomado-claro': '#E3E7F0',
+        rosado: '#FFF9F9',
         primary: {
-          DEFAULT: '#000361', // Azul base
+          DEFAULT: '#004aad', // Azul base
           50: '#D4E1F1', // Azul muy claro
           100: '#A8C3E6', // Azul claro
           200: '#7BA5DB', // Azul medio claro
@@ -36,7 +44,7 @@ module.exports = {
     },
   },
   plugins: [
-    nextui({
+    heroui({
       themes: {
         modern: {
           extend: 'dark', 
