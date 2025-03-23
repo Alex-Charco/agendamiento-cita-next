@@ -10,52 +10,59 @@ export default function PatientDashboard() {
   const [doctors, setDoctors] = useState([]);
   const [error, setError] = useState(null);
   const [appointmentDetails, setAppointmentDetails] = useState({
-    specialtyId: "",
-    doctorId: "",
-    typeAttention: "",
-    office: "",
-    turnDate: "",
-    turnTime: "",
+    id_paciente: "",    // id del paciente
+    id_medico: "",      // id del médico seleccionado
+    id_turno: "",       // id del turno seleccionado
+    estado_cita: "PENDIENTE", // Estado inicial de la cita
+    fecha_creacion: new Date(), // Fecha de creación de la cita
   });
 
   useEffect(() => {
-    // Recuperamos el usuario desde localStorage
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("authToken");
 
-    // Verificamos que el usuario y el token existan
-    if (storedUser?.ID_CARD && token) {
+    if (storedUser && token) {
       console.log("Usuario y token encontrados:", storedUser, token);
 
-      // Hacemos la solicitud GET para obtener los datos del paciente
-      axios
-        .get(`http://localhost:5000/patients/patient/${storedUser.ID_CARD}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-          console.log("Datos del paciente recibidos:", response.data);
-          setPatientData(response.data);
-        })
-        .catch((error) => {
-          console.error("Error al obtener los datos del paciente:", error);
-          setError("Error al obtener los datos del paciente.");
-        });
+      // Verifica si 'identificacion' existe en el objeto 'user'
+      if (storedUser.identificacion) {
+        // Obtener los datos del paciente usando la identificacion
+        axios
+          .get(`http://localhost:5000/api/paciente/get/${storedUser.identificacion}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => {
+            console.log("Datos del paciente recibidos:", response.data);
+            setPatientData(response.data);
+            setAppointmentDetails((prev) => ({
+              ...prev,
+              id_paciente: response.data.id_paciente, // Asignar id del paciente
+            }));
+          })
+          .catch((error) => {
+            console.error("Error al obtener los datos del paciente:", error);
+            setError("Error al obtener los datos del paciente.");
+          });
 
-      // Hacemos la solicitud GET para obtener las especialidades
-      axios
-        .get("http://localhost:5000/specialty", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-          console.log("Especialidades recibidas:", response.data);
-          setSpecialties(response.data);
-        })
-        .catch((error) => {
-          console.error("Error al obtener las especialidades:", error);
-          setError("Error al obtener las especialidades.");
-        });
+        // Obtener las especialidades
+        axios
+          .get("http://localhost:5000/specialty", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => {
+            console.log("Especialidades recibidas:", response.data);
+            setSpecialties(response.data);
+          })
+          .catch((error) => {
+            console.error("Error al obtener las especialidades:", error);
+            setError("Error al obtener las especialidades.");
+          });
+      } else {
+        setError("No se encontró la identificacion del usuario.");
+        console.log("No se encontró la identificacion del usuario.");
+      }
     } else {
-      setError("No se encontró información del usuario.");
+      setError("No se encontró información del usuario o token.");
       console.log("No se encontró información del usuario o token.");
     }
   }, []);
@@ -63,10 +70,10 @@ export default function PatientDashboard() {
   const handleSpecialtyChange = (specialtyId) => {
     setAppointmentDetails((prev) => ({
       ...prev,
-      specialtyId,
+      id_especialidad: specialtyId, // Asignar id de especialidad
     }));
 
-    // Obtener los doctores para la especialidad seleccionada
+    // Obtener los médicos para la especialidad seleccionada
     axios
       .get(`http://localhost:5000/doctors?specialtyId=${specialtyId}`)
       .then((response) => {
@@ -80,8 +87,19 @@ export default function PatientDashboard() {
   };
 
   const handleAppointmentSubmission = () => {
-    // Aquí iría la lógica para enviar los datos de la cita al servidor
-    console.log("Cita agendada:", appointmentDetails);
+    // Lógica para enviar los datos de la cita al servidor
+    axios
+      .post("http://localhost:5000/cita", appointmentDetails, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
+      })
+      .then((response) => {
+        console.log("Cita agendada:", response.data);
+        alert("Cita agendada exitosamente.");
+      })
+      .catch((error) => {
+        console.error("Error al agendar la cita:", error);
+        setError("Error al agendar la cita.");
+      });
   };
 
   if (error) {
@@ -104,7 +122,7 @@ export default function PatientDashboard() {
             {patientData ? (
               <div>
                 <h2 className="text-lg font-bold">Paciente:</h2>
-                <p>{patientData.PATIENT_NAME}</p>
+                <p>{`${patientData.primer_nombre} ${patientData.primer_apellido}`}</p>
               </div>
             ) : (
               <div>Cargando datos del paciente...</div>
@@ -116,8 +134,8 @@ export default function PatientDashboard() {
               onChange={(e) => handleSpecialtyChange(e.target.value)}
             >
               {specialties.map((specialty) => (
-                <SelectItem key={specialty.SPECIALTY_ID} value={specialty.SPECIALTY_ID}>
-                  {specialty.SPECIALTY_NAME}
+                <SelectItem key={specialty.id_especialidad} value={specialty.id_especialidad}>
+                  {specialty.nombre}
                 </SelectItem>
               ))}
             </Select>
@@ -128,50 +146,26 @@ export default function PatientDashboard() {
               onChange={(e) =>
                 setAppointmentDetails((prev) => ({
                   ...prev,
-                  doctorId: e.target.value,
+                  id_medico: e.target.value,
                 }))
               }
-              isDisabled={!appointmentDetails.specialtyId}
+              isDisabled={!appointmentDetails.id_especialidad}
             >
               {doctors.map((doctor) => (
-                <SelectItem key={doctor.DOCTOR_ID} value={doctor.DOCTOR_ID}>
-                  {doctor.DOCTOR_NAME}
+                <SelectItem key={doctor.id_medico} value={doctor.id_medico}>
+                  {`${doctor.primer_nombre} ${doctor.primer_apellido}`}
                 </SelectItem>
               ))}
             </Select>
 
-            {/* Tipo de atención */}
-            <Input
-              label="Tipo de Atención"
-              placeholder="Ejemplo: Urgencia"
-              onChange={(e) =>
-                setAppointmentDetails((prev) => ({
-                  ...prev,
-                  typeAttention: e.target.value,
-                }))
-              }
-            />
-
-            {/* Oficina */}
-            <Input
-              label="Oficina"
-              placeholder="Ejemplo: A1"
-              onChange={(e) =>
-                setAppointmentDetails((prev) => ({
-                  ...prev,
-                  office: e.target.value,
-                }))
-              }
-            />
-
-            {/* Fecha y hora */}
+            {/* Fecha y hora del turno */}
             <Input
               label="Fecha"
               type="date"
               onChange={(e) =>
                 setAppointmentDetails((prev) => ({
                   ...prev,
-                  turnDate: e.target.value,
+                  id_turno: e.target.value, // Este campo debe referirse a un turno real, se necesita más detalle
                 }))
               }
             />
@@ -181,7 +175,7 @@ export default function PatientDashboard() {
               onChange={(e) =>
                 setAppointmentDetails((prev) => ({
                   ...prev,
-                  turnTime: e.target.value,
+                  hora_turno: e.target.value, // Necesitarás un manejo adecuado de horas disponibles
                 }))
               }
             />

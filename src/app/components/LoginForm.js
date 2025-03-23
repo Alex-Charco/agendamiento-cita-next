@@ -59,7 +59,7 @@ export default function LoginForm() {
 
     try {
         const response = await axios.post(
-            `${API_BASE_URL}/auth/login`,
+            `${API_BASE_URL}/api/auth/login`,
             { nombre_usuario, password },
             { 
                 headers: { "Content-Type": "application/json" },
@@ -149,13 +149,16 @@ export default function LoginForm() {
                             </div>
 
                             <div className="flex flex-col justify-center w-full">
-                                <Button className="mx-auto w-1/3" type="submit" color="primary">
-                                    Ingresar
-                                </Button>
-                                <p className="flex justify-center text-xs text-gray-700 mt-2">
-                                    Olvidó la contraseña: Recuperar contraseña
-                                </p>
-                            </div>
+								<Button className="mx-auto w-1/3" type="submit" color="primary">
+									Ingresar
+								</Button>
+								<p className="flex justify-center text-xs text-gray-700 mt-2">
+									Olvidó la contraseña:{" "}
+									<a href="/auth/reset-password" className="text-blue-600 hover:underline">
+										Recuperar contraseña
+									</a>
+								</p>
+							</div>
                         </form>
 
                         {errorMessage && <div className="text-red-500 mt-2">{errorMessage}</div>}
