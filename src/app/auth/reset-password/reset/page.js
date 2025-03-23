@@ -1,14 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 
-export default function ResetPasswordForm() {
+function ResetPasswordForm() {
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
 
     const [password, setPassword] = useState("");
-	const [nombre_usuario, setNombreUsuario] = useState("");
+    const [nombre_usuario, setNombreUsuario] = useState("");
     const [message, setMessage] = useState("");
 
     const handleSubmit = async (e) => {
@@ -22,8 +22,8 @@ export default function ResetPasswordForm() {
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/reset-password`, {
                 token,
-				nombre_usuario,
-                newPassword: password, // Verifica que el nombre del campo sea `newPassword`
+                nombre_usuario,
+                newPassword: password,
             });
 
             setMessage(response.data.message || "Contraseña restablecida con éxito.");
@@ -38,14 +38,14 @@ export default function ResetPasswordForm() {
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-lg">
                 <h2 className="text-lg font-bold mb-4">Usuario</h2>
                 <input
-                    type="nombre_usuario"
+                    type="text"
                     className="border p-2 w-full"
-                    placeholder="Ingresar el usuarioo"
+                    placeholder="Ingresar el usuario"
                     value={nombre_usuario}
                     onChange={(e) => setNombreUsuario(e.target.value)}
                     required
                 />
-				<h2 className="text-lg font-bold mb-4">Nueva contraseña</h2>
+                <h2 className="text-lg font-bold mb-4">Nueva contraseña</h2>
                 <input
                     type="password"
                     className="border p-2 w-full"
@@ -60,5 +60,14 @@ export default function ResetPasswordForm() {
                 {message && <p className="mt-2 text-sm">{message}</p>}
             </form>
         </div>
+    );
+}
+
+// Envolver la página con Suspense
+export default function Page() {
+    return (
+        <Suspense fallback={<p>Cargando...</p>}>
+            <ResetPasswordForm />
+        </Suspense>
     );
 }
