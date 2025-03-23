@@ -87,11 +87,11 @@ export default function LoginForm() {
             case 3: // ADMINISTRADOR
                 router.push(ROUTES.ADMIN_DASHBOARD);
                 break;
-            case 2: // DOCTOR
-                router.push(ROUTES.DOCTOR_DASHBOARD);
+            case 2: // MÉDICO
+                router.push(ROUTES.MEDICO_DASHBOARD);
                 break;
             case 1: // PACIENTE
-                router.push(ROUTES.PATIENT_DASHBOARD);
+                router.push(ROUTES.PACIENTE_DASHBOARD);
                 break;
             default:
                 setErrorMessage("Rol no reconocido.");

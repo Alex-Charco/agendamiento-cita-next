@@ -1,6 +1,6 @@
 export const ROUTES = {
     ADMIN_DASHBOARD: "/admin-dashboard",
-    DOCTOR_DASHBOARD: "/doctor-dashboard",
-    PATIENT_DASHBOARD: "/patient-dashboard",
+    MEDICO_DASHBOARD: "/medico-dashboard",
+    PACIENTE_DASHBOARD: "/paciente-dashboard",
     LOGIN: "/login",
 };
