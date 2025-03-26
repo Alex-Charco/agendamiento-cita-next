@@ -46,30 +46,47 @@ function ResetPasswordForm() {
     };
 
     return (
-        <div className="flex h-screen items-center justify-center">
-            <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-lg w-96">
-                <h2 className="text-lg font-bold mb-2">Usuario</h2>
-                <input
-                    type="text"
-                    className="border p-2 w-full"
-                    placeholder="Ingresar el usuario"
-                    value={nombre_usuario}
-                    onChange={(e) => setNombreUsuario(e.target.value)}
-                    required
-                />
+        <div className="flex h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/background.svg')" }}>
+            <div className="absolute inset-0 bg-black bg-opacity-5"></div>
+            <form onSubmit={handleSubmit} className="bg-white p-5 rounded shadow-lg w-96" style={{
+                border: '4px solid rgba(0, 56, 255, 0.3)',
+                boxShadow: '0 4px 10px rgba(0, 56, 255, 0.5)',
+            }}>
+                <h2 className="text-lg font-bold mb-4 text-center">Restablecer contraseña</h2>
 
-                <h2 className="text-lg font-bold mt-4 mb-2">Nueva contraseña</h2>
-                <input
-                    type="password"
-                    className="border p-2 w-full"
-                    placeholder="Nueva contraseña"
-                    value={password}
-                    onChange={(e) => {
-                        setPassword(e.target.value);
-                        setPasswordErrors([]); // Limpiar errores al escribir
-                    }}
-                    required
-                />
+                {/* Usuario */}
+                <div className="flex items-center mb-4">
+                    <label className="text-xs font-bold mr-2 w-1/3 text-left" htmlFor="nombre_usuario">
+                        Usuario
+                    </label>
+                    <input
+                        type="text"
+                        className="border p-2 w-2/3"
+                        placeholder="Ingresar el usuario"
+                        value={nombre_usuario}
+                        onChange={(e) => setNombreUsuario(e.target.value)}
+                        required
+                    />
+                </div>
+
+                {/* Contraseña */}
+                <div className="flex items-center mb-4">
+                    <label className="text-xs font-bold mr-2 w-1/3 text-left" htmlFor="password">
+                        Nueva contraseña
+                    </label>
+                    <input
+                        type="password"
+                        className="border p-2 w-2/3"
+                        placeholder="Nueva contraseña"
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            setPasswordErrors([]); // Limpiar errores al escribir
+                        }}
+                        required
+                    />
+                </div>
 
                 {/* Mostrar errores de contraseña si existen */}
                 {passwordErrors.length > 0 && (

@@ -110,7 +110,7 @@ export default function LoginForm() {
             <div className="absolute inset-0 bg-black bg-opacity-5"></div>
 
             <div className="relative z-10">
-                <Card className="max-w-md w-full bg-gradient-to-b from-celeste-fuerte to-plomo-claro to-[#F5F7FC] bg-opacity-50"
+                <Card className="max-w-md w-full bg-gradient-to-b from-celeste-fuerte to-[#F5F7FC] bg-opacity-50"
                     style={{
                         border: '4px solid rgba(0, 56, 255, 0.3)',
                         boxShadow: '0 4px 10px rgba(0, 56, 255, 0.5)',
