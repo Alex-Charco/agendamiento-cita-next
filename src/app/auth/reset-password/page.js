@@ -25,7 +25,7 @@ export default function RequestResetPassword() {
     return (
         <div className="flex flex-col h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: "url('/images/background.svg')" }}>
-            <div className="absolute inset-0 bg-black bg-opacity-5"></div>
+            <div className="absolute inset-0 bg-black bg-opacity-5 pointer-events-none"></div>
 
             {/* Imagen fuera del formulario, centrada */}
             <div className="mb-4">
@@ -35,6 +35,7 @@ export default function RequestResetPassword() {
                     width={150} // Establece el tamaño de la imagen
                     height={150} // Establece el tamaño de la imagen
                     className="mx-auto" // Centra la imagen
+					priority
                 />
             </div>
 

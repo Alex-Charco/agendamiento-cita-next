@@ -3,7 +3,7 @@ const { heroui } = require("@heroui/react");
 
 module.exports = {
   content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}', 
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
     './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
 
@@ -19,7 +19,7 @@ module.exports = {
     },
     extend: {
       colors: {
-		  azul: '#004aad',
+        azul: '#004aad',
         'celeste-fuerte': '#90C0E8',
         plomo: '#B7BDC5',
         'plomo-oscuro': '#94aab8',
@@ -47,7 +47,7 @@ module.exports = {
     heroui({
       themes: {
         modern: {
-          extend: 'dark', 
+          extend: 'dark',
           colors: {
             background: '#0D001A',
             foreground: '#ffffff',

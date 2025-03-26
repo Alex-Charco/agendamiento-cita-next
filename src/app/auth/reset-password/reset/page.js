@@ -48,7 +48,7 @@ function ResetPasswordForm() {
     return (
         <div className="flex h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: "url('/images/background.svg')" }}>
-            <div className="absolute inset-0 bg-black bg-opacity-5"></div>
+            <div className="absolute inset-0 bg-black bg-opacity-5 pointer-events-none"></div>
             <form onSubmit={handleSubmit} className="bg-white p-5 rounded shadow-lg w-96" style={{
                 border: '4px solid rgba(0, 56, 255, 0.3)',
                 boxShadow: '0 4px 10px rgba(0, 56, 255, 0.5)',
