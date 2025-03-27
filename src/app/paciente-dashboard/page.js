@@ -24,15 +24,14 @@ const HomePage = () => {
         description="Gestione sus citas médicas fácilmente"
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
-          { text: "Crear Cita Médica", link: "/crear-cita", variant: "primary" },
+          { text: "Agendar Cita Médica", link: "/crear-cita", variant: "primary" },
           { text: "Consultar Cita Médica", link: "/ver-citas", variant: "secondary" },
         ]}
       />
 
-      <section className="p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <CardFeature icon="📅" title="Agendar Citas" description="Seleccione una fecha y hora para su consulta." />
-        <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas." />
-        <CardFeature icon="👤" title="Perfil Personalizado" description="Gestione su información de contacto." />
+      <section className="p-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <CardFeature icon="📅" title="Agendar Citas" description="Seleccione una fecha, hora, especialidadd y médico para su consulta." />
+        <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas  médicas." />
       </section>
 
       <Footer />

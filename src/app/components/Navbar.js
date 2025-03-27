@@ -68,7 +68,7 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
 
         {/* Menú desplegable para móviles */}
         <NavbarMenuToggle
-          onPress={() => setIsMenuOpen(!isMenuOpen)} // ✅ Usamos onPress en lugar de onClick
+          onClick={() => setIsMenuOpen(!isMenuOpen)} // ✅ Usamos onPress en lugar de onClick
           isMenuOpen={isMenuOpen} // ✅ Pasamos el estado del menú correctamente
           aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           className="sm:hidden"
