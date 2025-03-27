@@ -21,8 +21,8 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
       <NavbarContent className="w-full flex justify-between items-center">
         {/* Logo alineado a la izquierda */}
         <NavbarBrand>
-          <Image src="/images/logo.png" alt="Logo" className="h-11 w-auto" />
-          <p className="font-bold text-inherit mx-5">InnovaVida</p>
+          <Image src="/images/logo.png" alt="Logo" className="h-11 w-auto rounded-none" />
+          <p className="font-bold text-inherit mx-3">InnovaVida</p>
         </NavbarBrand>
 
         {/* Menú de navegación principal */}
@@ -69,7 +69,7 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
         {/* Menú desplegable para móviles */}
         <NavbarMenuToggle
           onClick={() => setIsMenuOpen(!isMenuOpen)} // ✅ Usamos onPress en lugar de onClick
-          isMenuOpen={isMenuOpen} // ✅ Pasamos el estado del menú correctamente
+          //isMenuOpen={isMenuOpen} // ✅ Pasamos el estado del menú correctamente
           aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
           className="sm:hidden"
         />

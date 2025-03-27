@@ -1,7 +1,7 @@
 const Footer = () => {
     return (
-      <footer className="w-full bg-blue-600 text-white text-center p-4 mt-auto">
-        <p>&copy; 2025 Hospital Plus. Todos los derechos reservados.</p>
+      <footer className="w-full bg-azul-medio text-black text-center text-sm p-4 mt-auto">
+        <p>&copy; 2025 Hospital de Brigada de Selva No.17 “Pastaza”. Todos los derechos reservados.</p>
       </footer>
     );
   };

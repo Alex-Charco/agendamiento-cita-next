@@ -20,8 +20,9 @@ module.exports = {
     extend: {
       colors: {
         azul: '#004aad',
+        'azul-medio': '#bac8d9',
         'celeste-fuerte': '#90C0E8',
-        plomo: '#B7BDC5',
+        'plomo': '#B7BDC5',
         'plomo-oscuro': '#94aab8',
         'celeste-plomado-oscuro': '#CDDAE3',
         'plomo-claro': '#cddae3',
