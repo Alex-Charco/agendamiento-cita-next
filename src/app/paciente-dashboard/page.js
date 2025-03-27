@@ -1,9 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
-import NavbarComponent from "../components/Navbar";
-import CardFeature from "../components/CardFeature";
-import Footer from "../components/Footer";
-import Banner from "../components/Banner";
+import NavbarComponent from "@/components/Navbar";
+import CardFeature from "@/components/CardFeature";
+import Footer from "@/components/Footer";
+import Banner from "@/components/Banner";
 
 const HomePage = () => {
   const router = useRouter();

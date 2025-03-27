@@ -2,5 +2,5 @@ import { redirect } from "next/navigation";  // Importa la función de redirecci
 
 export default function Home() {
   // Redirige inmediatamente a la ruta /login
-  redirect('/login');
+  redirect('/auth/login');
 }

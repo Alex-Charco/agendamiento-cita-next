@@ -62,7 +62,7 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
         {/* Botón de salir en escritorio */}
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Link href="/login">Salir</Link>
+            <Link href="/auth/login">Salir</Link>
           </NavbarItem>
         </NavbarContent>
 

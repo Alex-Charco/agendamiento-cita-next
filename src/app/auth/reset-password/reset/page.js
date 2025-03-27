@@ -2,7 +2,7 @@
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import { validarPassword } from "../../../utils/validarPassword.js";
+import { validarPassword } from "@/utils/validarPassword.js";
 
 function ResetPasswordForm() {
     const searchParams = useSearchParams();
