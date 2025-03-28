@@ -30,7 +30,7 @@ const HomePage = () => {
       />
 
       <section className="p-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <CardFeature icon="📅" title="Agendar Citas" description="Seleccione una fecha, hora, especialidadd y médico para su consulta." />
+        <CardFeature icon="📅" title="Reagendar Citas" description="Seleccione una fecha, hora, especialidadd y médico para reagendar la cita médica." />
         <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas  médicas." />
       </section>
 

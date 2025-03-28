@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -22,6 +20,33 @@ const services = [
 const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [user, setUser] = useState(null); // Estado para almacenar los datos del usuario
+  const [isUserInfoVisible, setIsUserInfoVisible] = useState(false); // Estado para controlar la visibilidad de la subsección
+
+  // Función para obtener las iniciales del usuario
+  const getInitials = (user) => {
+    if (!user) return "?";
+    const { primer_nombre, primer_apellido } = user;
+    const initial1 = primer_nombre ? primer_nombre.charAt(0).toUpperCase() : "";
+    const initial2 = primer_apellido ? primer_apellido.charAt(0).toUpperCase() : "";
+    return `${initial1}${initial2}`;
+  };
+
+  // Función para obtener el nombre completo sin espacios innecesarios
+  const getFullName = (user) => {
+    if (!user) return "Datos no disponibles";
+    return [user.primer_nombre, user.segundo_nombre, user.primer_apellido, user.segundo_apellido]
+      .filter(Boolean) // Filtra los valores null o vacíos
+      .join(" ");
+  };
+
+  // Cargar datos del usuario desde localStorage al montar el componente
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
 
   return (
     <Navbar className="px-4">
@@ -44,19 +69,7 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
               Contacto
             </Link>
           </NavbarItem>
-
-          {/* Opciones adicionales */}
-          {menuItems.map((item, index) => (
-            <NavbarItem key={index}>
-              <Link
-                href={`/${item.toLowerCase()}`}
-                className="hover:bg-gray-100 px-3 py-2 rounded-md transition-colors"
-              >
-                {item}
-              </Link>
-            </NavbarItem>
-          ))}
-
+          
           {/* Menú desplegable de Servicios */}
           {showExtraOptions && (
             <NavbarItem className="relative">
@@ -67,9 +80,7 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
                 Servicios ▼
               </button>
               <div
-                className={`absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md transition-opacity ${
-                  isServicesOpen ? "opacity-100 visible" : "opacity-0 invisible"
-                }`}
+                className={`absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md transition-opacity ${isServicesOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
               >
                 {services.map((service, index) => (
                   <Link
@@ -83,14 +94,41 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
               </div>
             </NavbarItem>
           )}
+
+          {/* Mostrar botón "Salir" en escritorio */}
+          {user && (
+            <NavbarItem>
+              <Link href="/auth/login" className="hover:bg-gray-100 px-3 py-2 rounded-md transition-colors">
+                Salir
+              </Link>
+            </NavbarItem>
+          )}
         </NavbarContent>
 
-        {/* Botón de salir en escritorio */}
+        {/* Círculo con iniciales del usuario */}
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            <Link href="/auth/login" className="hover:bg-gray-100 px-3 py-2 rounded-md transition-colors">
-              Salir
-            </Link>
+          <NavbarItem>
+            {user ? (
+              <div className="relative">
+                <div
+                  className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white font-bold rounded-full cursor-pointer hover:bg-blue-700"
+                  onClick={() => setIsUserInfoVisible(!isUserInfoVisible)} // Al hacer clic, cambia la visibilidad
+                >
+                  {getInitials(user)}
+                </div>
+                {/* Sub-sección con el nombre completo y rol */}
+                {isUserInfoVisible && (
+                  <div className="absolute mt-2 bg-white/90 shadow-md rounded-md p-4 text-black text-xs max-w-[250px] w-auto transform -translate-x-24 break-words">
+                    <p>{getFullName(user)}</p>
+                    <p>{user.rol?.nombre_rol}</p> {/* Asegúrate de acceder a las propiedades correctamente */}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="w-10 h-10 flex items-center justify-center bg-gray-300 text-white font-bold rounded-full">
+                ?
+              </div>
+            )}
           </NavbarItem>
         </NavbarContent>
 
@@ -102,9 +140,8 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
         />
       </NavbarContent>
 
-      {/* Menú móvil corregido con hover */}
+      {/* Menú móvil */}
       <NavbarMenu className={`transition-all ${isMenuOpen ? "block" : "hidden"}`}>
-        {/* Links principales en móvil */}
         <NavbarMenuItem>
           <Link href="#" className="block py-2 px-4 hover:bg-gray-100 transition-colors rounded-md">
             Inicio
@@ -116,47 +153,14 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
           </Link>
         </NavbarMenuItem>
 
-        {/* Opciones adicionales en móvil */}
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={index}>
-            <Link
-              href={`/${item.toLowerCase()}`}
-              className="block py-2 px-4 hover:bg-gray-100 transition-colors rounded-md"
-            >
-              {item}
+        {/* Botón de salir en móvil */}
+        {user && (
+          <NavbarMenuItem>
+            <Link href="/auth/login" className="block py-2 px-4 hover:bg-gray-100 transition-colors rounded-md">
+              Salir
             </Link>
           </NavbarMenuItem>
-        ))}
-
-        {/* Submenú de Servicios en móvil */}
-        {showExtraOptions && (
-          <NavbarMenuItem>
-            <button
-              className="w-full text-left py-2 px-4 flex justify-between items-center hover:bg-gray-100 transition-colors rounded-md"
-              onClick={() => setIsServicesOpen(!isServicesOpen)}
-            >
-              Servicios ▼
-            </button>
-            <div className={`${isServicesOpen ? "block" : "hidden"} pl-4 transition-all`}>
-              {services.map((service, index) => (
-                <Link
-                  key={index}
-                  href={service.path}
-                  className="block py-2 px-4 hover:bg-gray-100 transition-colors rounded-md"
-                >
-                  {service.name}
-                </Link>
-              ))}
-            </div>
-          </NavbarMenuItem>
         )}
-
-        {/* Botón de salir en móvil */}
-        <NavbarMenuItem>
-          <Link href="/auth/login" className="block py-2 px-4 hover:bg-gray-100 transition-colors rounded-md">
-            Salir
-          </Link>
-        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   );
