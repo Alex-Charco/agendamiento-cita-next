@@ -11,67 +11,59 @@ import {
   Image,
 } from "@heroui/react";
 
-const services = [
-  { name: "Consultar paciente", path: "/common/consulta-paciente" },
-  { name: "Consultar médico", path: "/servicio2" },
-  { name: "Consultar cita", path: "/servicio3" },
-];
-
-const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
+const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [user, setUser] = useState(null); // Estado para almacenar los datos del usuario
-  const [isUserInfoVisible, setIsUserInfoVisible] = useState(false); // Estado para controlar la visibilidad de la subsección
+  const [user, setUser] = useState(null);
+  const [isUserInfoVisible, setIsUserInfoVisible] = useState(false);
 
-  // Función para obtener las iniciales del usuario
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Error al parsear el usuario desde localStorage:", error);
+      }
+    }
+  }, []);
+
   const getInitials = (user) => {
     if (!user) return "?";
     const { primer_nombre, primer_apellido } = user;
-    const initial1 = primer_nombre ? primer_nombre.charAt(0).toUpperCase() : "";
-    const initial2 = primer_apellido ? primer_apellido.charAt(0).toUpperCase() : "";
-    return `${initial1}${initial2}`;
+    return `${primer_nombre?.charAt(0).toUpperCase() ?? ""}${primer_apellido?.charAt(0).toUpperCase() ?? ""}`;
   };
 
-  // Función para obtener el nombre completo sin espacios innecesarios
   const getFullName = (user) => {
     if (!user) return "Datos no disponibles";
     return [user.primer_nombre, user.segundo_nombre, user.primer_apellido, user.segundo_apellido]
-      .filter(Boolean) // Filtra los valores null o vacíos
+      .filter(Boolean)
       .join(" ");
   };
-
-  // Cargar datos del usuario desde localStorage al montar el componente
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
-    }
-  }, []);
 
   return (
     <Navbar className="px-4">
       <NavbarContent className="w-full flex justify-between items-center">
-        {/* Logo alineado a la izquierda */}
         <NavbarBrand>
           <Image src="/images/logo.png" alt="Logo" className="h-11 w-auto rounded-none" />
           <p className="font-bold text-inherit mx-3">InnovaVida</p>
         </NavbarBrand>
 
-        {/* Menú de navegación principal */}
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem isActive>
-            <Link href="#" className="hover:bg-gray-100 px-3 py-2 rounded-md transition-colors">
-              Inicio
-            </Link>
+            <Link href="/">Inicio</Link>
           </NavbarItem>
           <NavbarItem>
-            <Link href="#" className="hover:bg-gray-100 px-3 py-2 rounded-md transition-colors">
-              Contacto
-            </Link>
+            <Link href="/contacto">Contacto</Link>
           </NavbarItem>
+          {menuItems.map((item, index) => (
+            <NavbarItem key={index}>
+              <Link href={item.path}>{item.name}</Link>
+            </NavbarItem>
+          ))}
           
-          {/* Menú desplegable de Servicios */}
-          {showExtraOptions && (
+          {/* Servicios */}
+          {menuServices.length > 0 && showExtraOptions && (
             <NavbarItem className="relative">
               <button
                 className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors focus:outline-none"
@@ -79,48 +71,40 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
               >
                 Servicios ▼
               </button>
-              <div
-                className={`absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md transition-opacity ${isServicesOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
-              >
-                {services.map((service, index) => (
-                  <Link
-                    key={index}
-                    href={service.path}
-                    className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                  >
-                    {service.name}
-                  </Link>
-                ))}
-              </div>
+              {isServicesOpen && (
+                <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md">
+                  {menuServices.map((service, index) => (
+                    <Link key={index} href={service.path} className="block px-4 py-2 hover:bg-gray-100">
+                      {service.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </NavbarItem>
           )}
-
-          {/* Mostrar botón "Salir" en escritorio */}
-          {user && (
+          
+          {/* Opciones del usuario */}
+          {showExtraOptions && user && (
             <NavbarItem>
-              <Link href="/auth/login" className="hover:bg-gray-100 px-3 py-2 rounded-md transition-colors">
-                Salir
-              </Link>
+              <Link href="/auth/login">Salir</Link>
             </NavbarItem>
           )}
         </NavbarContent>
 
-        {/* Círculo con iniciales del usuario */}
         <NavbarContent justify="end">
           <NavbarItem>
             {user ? (
               <div className="relative">
                 <div
                   className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white font-bold rounded-full cursor-pointer hover:bg-blue-700"
-                  onClick={() => setIsUserInfoVisible(!isUserInfoVisible)} // Al hacer clic, cambia la visibilidad
+                  onClick={() => setIsUserInfoVisible(!isUserInfoVisible)}
                 >
                   {getInitials(user)}
                 </div>
-                {/* Sub-sección con el nombre completo y rol */}
                 {isUserInfoVisible && (
                   <div className="absolute mt-2 bg-white/90 shadow-md rounded-md p-4 text-black text-xs max-w-[250px] w-auto transform -translate-x-24 break-words">
                     <p>{getFullName(user)}</p>
-                    <p>{user.rol?.nombre_rol}</p> {/* Asegúrate de acceder a las propiedades correctamente */}
+                    <p>{user.rol?.nombre_rol}</p>
                   </div>
                 )}
               </div>
@@ -132,7 +116,6 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
           </NavbarItem>
         </NavbarContent>
 
-        {/* Menú desplegable para móviles */}
         <NavbarMenuToggle
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
@@ -140,25 +123,21 @@ const NavbarComponent = ({ menuItems = [], showExtraOptions = false }) => {
         />
       </NavbarContent>
 
-      {/* Menú móvil */}
-      <NavbarMenu className={`transition-all ${isMenuOpen ? "block" : "hidden"}`}>
+      <NavbarMenu className={isMenuOpen ? "block" : "hidden"}>
         <NavbarMenuItem>
-          <Link href="#" className="block py-2 px-4 hover:bg-gray-100 transition-colors rounded-md">
-            Inicio
-          </Link>
+          <Link href="/">Inicio</Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link href="#" className="block py-2 px-4 hover:bg-gray-100 transition-colors rounded-md">
-            Contacto
-          </Link>
+          <Link href="/contacto">Contacto</Link>
         </NavbarMenuItem>
-
-        {/* Botón de salir en móvil */}
-        {user && (
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={index}>
+            <Link href={item.path}>{item.name}</Link>
+          </NavbarMenuItem>
+        ))}
+        {showExtraOptions && user && (
           <NavbarMenuItem>
-            <Link href="/auth/login" className="block py-2 px-4 hover:bg-gray-100 transition-colors rounded-md">
-              Salir
-            </Link>
+            <Link href="/auth/login">Salir</Link>
           </NavbarMenuItem>
         )}
       </NavbarMenu>

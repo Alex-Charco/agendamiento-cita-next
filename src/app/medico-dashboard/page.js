@@ -12,12 +12,14 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       
       <NavbarComponent
-      // Agregar o quitar elementos editando menuItems.
-
-        //menuItems={["Paciente"]}
-        showExtraOptions={true}
+        //menuItems={[{ name: "Paciente", path: "/paciente" }]} // Agrega lo que necesites en el menú
+        menuServices={[  // Solo para el caso de "Reagendar cita"
+          { name: "Consultar Cita", path: "/ver-citas" },
+          { name: "Consultar Horario", path: "/ver-horarios" },
+          { name: "Reagendar Cita", path: "/crear-cita" }
+        ]}
+        showExtraOptions={true} // Mostrar opciones adicionales, como servicios y salir
       />
-
 
       <Banner
         title="Bienvenido al Hospital de Brigada de Selva No.17 “Pastaza”"
@@ -31,7 +33,7 @@ const HomePage = () => {
 
       <section className="p-10 grid grid-cols-1 md:grid-cols-2 gap-6">
         <CardFeature icon="📅" title="Reagendar Citas" description="Seleccione una fecha, hora, especialidadd y médico para reagendar la cita médica." />
-        <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas  médicas." />
+        <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas médicas." />
       </section>
 
       <Footer />

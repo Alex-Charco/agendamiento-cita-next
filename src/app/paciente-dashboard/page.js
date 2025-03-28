@@ -12,10 +12,15 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       
       <NavbarComponent
-      // Agregar o quitar elementos editando menuItems.
-
-        //menuItems={["Perfil", "Dashboard", "Configuración", "Salir"]}
-        //showExtraOptions={true}
+        /*menuItems={[
+          { name: "Perfil", path: "/perfil" },
+          { name: "Dashboard", path: "/dashboard" },
+        ]}*/
+        menuServices={[
+          { name: "Agendar Cita", path: "/crear-cita" },
+          { name: "Consultar Cita", path: "/ver-citas" },
+        ]}
+        showExtraOptions={true}
       />
 
 
