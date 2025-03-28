@@ -10,7 +10,7 @@ const rolePermissions = {
 
 // Middleware principal
 export function middleware(req) {
-    const token = req.cookies.get("token")?.value; // Obtener token de cookies
+    const token = req.cookies.get("authToken")?.value; // Obtener token de cookies
     const url = req.nextUrl.pathname; // Obtener la ruta actual
 
     // Si no hay token, redirigir a login

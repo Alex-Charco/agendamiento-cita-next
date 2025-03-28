@@ -3,4 +3,7 @@ export const ROUTES = {
     MEDICO_DASHBOARD: "/medico-dashboard",
     PACIENTE_DASHBOARD: "/paciente-dashboard",
     LOGIN: "/auth/login",
+    COMMON: {
+        CONSULTA_PACIENTE: "/common/consulta-paciente",
+    }
 };
