@@ -105,6 +105,12 @@ const NavbarComponent = ({
               )}
             </NavbarItem>
           )}
+          {/* Opción "Salir" en escritorio */}
+          {showExtraOptions && user && (
+            <NavbarItem>
+              <Link href="/auth/login">Salir</Link>
+            </NavbarItem>
+          )}
         </NavbarContent>
 
         <NavbarContent justify="end">
