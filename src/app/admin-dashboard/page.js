@@ -28,16 +28,17 @@ const HomePage = () => {
       />
 
       <Banner
-        title="Bienvenido al Hospital de Brigada de Selva No.17 “Pastaza”"
-        description="Gestione sus citas médicas fácilmente"
+        title="Hospital de Brigada de Selva No.17 “Pastaza”"
+        description="Sistema de Gestión Hospitalaria"
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
-          { text: "Reagendar Cita Médica", link: "/crear-cita", variant: "primary" },
+          { text: "Agendar Cita Médica", link: "/crear-cita", variant: "primary" },
           { text: "Consultar Cita Médica", link: "/ver-citas", variant: "secondary" },
         ]}
       />
 
-      <section className="p-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <CardFeature icon="📅" title="Agendar Citas" description="Seleccione una fecha, hora, especialidad y médico para agendar la cita médica." />
         <CardFeature icon="📅" title="Reagendar Citas" description="Seleccione una fecha, hora, especialidad y médico para reagendar la cita médica." />
         <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas médicas." />
       </section>
