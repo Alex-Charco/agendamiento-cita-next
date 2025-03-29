@@ -4,6 +4,7 @@ import NavbarComponent from "@/components/Navbar";
 import CardFeature from "@/components/CardFeature";
 import Footer from "@/components/Footer";
 import Banner from "@/components/Banner";
+import { FaUserInjured, FaCalendarCheck, FaRedoAlt, FaCalendarAlt } from "react-icons/fa";
 
 const HomePage = () => {
   const router = useRouter();
@@ -11,18 +12,12 @@ const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       <NavbarComponent
-        /*menuItems={[
-          { name: "Gestión Pacientes", path: "/admin/pacientes" },
-          { name: "Gestión Médicos", path: "/admin/medicos" },
-          { name: "Gestión Citas", path: "/admin/citas" },
-        ]}*/
         menuServices={[
-          { name: "Consultar Paciente", path: "/common/consulta-paciente" },
-          { name: "Consultar Médico", path: "/common/consulta-medico" },
-          { name: "Consultar Cita", path: "/common/consulta-cita" },
-          { name: "Crear Cita", path: "/common/crear-cita" },
-          { name: "Cancelar Cita", path: "/common/cancelar-cita" },
-          { name: "Historial Médico", path: "/common/historial-medico" },
+          { name: "Paciente", path: "/admin-dashboard/paciente/consulta-paciente" },
+          { name: "Médico", path: "/common/consulta-medico" },
+          { name: "Usuario", path: "/common/consulta-cita" },
+          { name: "Cita", path: "/common/crear-cita" },
+          { name: "Horario", path: "/common/cancelar-cita" },
         ]}
         showExtraOptions={true}
       />
@@ -38,9 +33,26 @@ const HomePage = () => {
       />
 
       <section className="p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <CardFeature icon="📅" title="Agendar Citas" description="Seleccione una fecha, hora, especialidad y médico para agendar la cita médica." />
-        <CardFeature icon="📅" title="Reagendar Citas" description="Seleccione una fecha, hora, especialidad y médico para reagendar la cita médica." />
-        <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas médicas." />
+      <CardFeature 
+          icon={<FaUserInjured className="text-blue-500 text-3xl" />} // Icono de paciente
+          title="Pacientes" 
+          description="Podrá consultar, registrar y actualizar a los pacientes" 
+        />
+        <CardFeature 
+          icon={<FaCalendarCheck className="text-green-500 text-3xl" />} // Icono para Agendar Citas
+          title="Agendar Citas" 
+          description="Seleccione una fecha, hora, especialidad y médico para agendar la cita médica." 
+        />
+        <CardFeature 
+          icon={<FaRedoAlt className="text-yellow-500 text-3xl" />} // Icono para Reagendar Citas
+          title="Reagendar Citas" 
+          description="Seleccione una fecha, hora, especialidad y médico para reagendar la cita médica." 
+        />
+        <CardFeature 
+          icon={<FaCalendarAlt className="text-purple-500 text-3xl" />} // Icono para Consultar Citas
+          title="Consultar Citas" 
+          description="Revise su historial y próximas citas médicas." 
+        />
       </section>
 
       <Footer />

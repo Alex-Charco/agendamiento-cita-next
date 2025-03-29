@@ -1,4 +1,4 @@
-import PacienteSearch from "@/common/components/PacienteSearch";
+import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 
 export default function ConsultaPacientePage() {
     return (
