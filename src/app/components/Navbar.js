@@ -11,9 +11,14 @@ import {
   Image,
 } from "@heroui/react";
 
-const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions = false }) => {
+const NavbarComponent = ({
+  menuItems = [],
+  menuServices = [],
+  showExtraOptions = false,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isUserInfoVisible, setIsUserInfoVisible] = useState(false);
 
@@ -31,12 +36,19 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
   const getInitials = (user) => {
     if (!user) return "?";
     const { primer_nombre, primer_apellido } = user;
-    return `${primer_nombre?.charAt(0).toUpperCase() ?? ""}${primer_apellido?.charAt(0).toUpperCase() ?? ""}`;
+    return `${primer_nombre?.charAt(0).toUpperCase() ?? ""}${
+      primer_apellido?.charAt(0).toUpperCase() ?? ""
+    }`;
   };
 
   const getFullName = (user) => {
     if (!user) return "Datos no disponibles";
-    return [user.primer_nombre, user.segundo_nombre, user.primer_apellido, user.segundo_apellido]
+    return [
+      user.primer_nombre,
+      user.segundo_nombre,
+      user.primer_apellido,
+      user.segundo_apellido,
+    ]
       .filter(Boolean)
       .join(" ");
   };
@@ -45,8 +57,12 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
     <Navbar className="px-4">
       <NavbarContent className="w-full flex justify-between items-center">
         <NavbarBrand>
-          <Image src="/images/logo.png" alt="Logo" className="h-11 w-auto rounded-none" />
-          <p className="font-bold text-inherit mx-3">InnovaVida</p>
+          <Image
+            src="/images/logo.png"
+            alt="Logo"
+            className="h-11 w-auto rounded-none"
+          />
+          <p className="font-bold text-inherit mx-3">MiliSalud 17</p>
         </NavbarBrand>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -61,32 +77,32 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
               <Link href={item.path}>{item.name}</Link>
             </NavbarItem>
           ))}
-          
+
           {/* Servicios */}
           {menuServices.length > 0 && showExtraOptions && (
             <NavbarItem className="relative">
-              <button
-                className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors focus:outline-none"
-                onClick={() => setIsServicesOpen(!isServicesOpen)}
+              <Link
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsServicesOpen(!isServicesOpen);
+                }}
               >
                 Servicios ▼
-              </button>
+              </Link>
               {isServicesOpen && (
                 <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md">
                   {menuServices.map((service, index) => (
-                    <Link key={index} href={service.path} className="block px-4 py-2 hover:bg-gray-100">
+                    <Link
+                      key={index}
+                      href={service.path}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
                       {service.name}
                     </Link>
                   ))}
                 </div>
               )}
-            </NavbarItem>
-          )}
-          
-          {/* Opciones del usuario */}
-          {showExtraOptions && user && (
-            <NavbarItem>
-              <Link href="/auth/login">Salir</Link>
             </NavbarItem>
           )}
         </NavbarContent>
@@ -135,6 +151,40 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
             <Link href={item.path}>{item.name}</Link>
           </NavbarMenuItem>
         ))}
+
+        {/* Servicios en menú móvil */}
+        {menuServices.length > 0 && showExtraOptions && (
+          <>
+            <NavbarMenuItem>
+              <Link
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMobileServicesOpen(!isMobileServicesOpen);
+                }}
+                className="block w-full text-left font-semibold"
+              >
+                Servicios ▼
+              </Link>
+            </NavbarMenuItem>
+
+            {isMobileServicesOpen && (
+              <div className="pl-4">
+                {menuServices.map((service, index) => (
+                  <NavbarMenuItem key={index}>
+                    <Link
+                      href={service.path}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      {service.name}
+                    </Link>
+                  </NavbarMenuItem>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
         {showExtraOptions && user && (
           <NavbarMenuItem>
             <Link href="/auth/login">Salir</Link>
