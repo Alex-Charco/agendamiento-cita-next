@@ -13,7 +13,7 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       <NavbarComponent
         menuServices={[
-          { name: "Paciente", path: "/admin-dashboard/paciente/consulta-paciente" },
+          { name: "Paciente", path: "/admin-dashboard/paciente" },
           { name: "Médico", path: "/common/consulta-medico" },
           { name: "Usuario", path: "/common/consulta-cita" },
           { name: "Cita", path: "/common/crear-cita" },

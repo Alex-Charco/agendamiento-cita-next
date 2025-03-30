@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import PropTypes from "prop-types";
+import Head from "next/head";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,9 +21,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <Head>
+        {/* Asegúrate de agregar el preload de manera correcta */}
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+      </Head>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
