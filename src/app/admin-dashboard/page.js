@@ -12,15 +12,19 @@ const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       <NavbarComponent
-        menuServices={[
-          { name: "Paciente", path: "/admin-dashboard/paciente" },
-          { name: "Médico", path: "/common/consulta-medico" },
-          { name: "Usuario", path: "/common/consulta-cita" },
-          { name: "Cita", path: "/common/crear-cita" },
-          { name: "Horario", path: "/common/cancelar-cita" },
-        ]}
-        showExtraOptions={true}
-      />
+		  menuServices={[
+			{
+			  name: "Paciente",
+			  subMenu: [
+				{ name: "Consultar Pacientes", path: "/admin-dashboard/paciente" },
+				{ name: "Consulta Médico", path: "/common/consulta-medico" },
+			  ],
+			},
+			{ name: "Cita", path: "/common/crear-cita" },
+			{ name: "Horario", path: "/common/cancelar-cita" },
+		  ]}
+		  showExtraOptions={true}
+		/>
 
       <Banner
         title="Hospital de Brigada de Selva No.17 “Pastaza”"
