@@ -10,7 +10,7 @@ import {
   NavbarMenu,
   NavbarContent,
   NavbarItem,
-  Link,
+  Image,
   Button,
 } from "@heroui/react";
 
@@ -24,9 +24,9 @@ export default function NavbarComponent({ buttons, onAction }) {
       className="bg-gradient-to-b from-celeste-fuerte to-[#F5F7FC]"
     >
       {/* Logo a la izquierda */}
-      <NavbarContent justify="start" className="hidden flex items-center">
+      <NavbarContent justify="start" className="flex items-center">
         <NavbarBrand>
-          <img src="/images/logo-hospital.png" alt="Logo Hospital" className="h-10" />
+        <Image src="/images/logo-hospital.png" alt="Logo" className="h-11 w-auto rounded-none" />
         </NavbarBrand>
       </NavbarContent>
 
@@ -66,7 +66,7 @@ export default function NavbarComponent({ buttons, onAction }) {
                 color={color}
                 variant="flat"
                 onClick={() => onAction(action)} 
-                className={`flex flex-col items-start gap-2 ${textColor} ${hoverEffect} px-4 py-2 rounded lg:flex-row lg:text-black`}
+                className={`flex flex-col items-start gap-2 ${textColor} ${hoverEffect} px-4 rounded lg:flex-row lg:text-black`}
               >
                 <Icon />
                 <span className="lg:text-right">{label}</span>

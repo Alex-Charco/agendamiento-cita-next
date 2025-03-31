@@ -41,7 +41,7 @@ const HomePage = () => {
       <section className="p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
         <Link href="/admin-dashboard/paciente/consultar-paciente">
           <CardFeature
-            icon={<FaUserInjured className="text-blue-500 text-3xl" />}
+            icon={<FaUserInjured className="text-azul text-3xl" />}
             title="Consultar paciente"
             description={
               <>
