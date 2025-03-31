@@ -37,8 +37,8 @@ export default function PacienteSearch({ onSelectPaciente }) {
     };
 
     return (
-        <div className="bg-gray-200 px-6 pt-20 flex flex-col items-center h-[52vh]">
-            <h1 className="text-3xl font-bold text-blue-900 mb-6">Consulta de Pacientes</h1>
+        <div className="bg-gray-200 px-6 pt-10 flex flex-col items-center h-[52vh] rounded-lg">
+            <h1 className="text-3xl font-bold text-blue-900 mb-6">Buscar Paciente</h1>
             <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
                 <div className="flex space-x-2">
                     <input
@@ -62,7 +62,6 @@ export default function PacienteSearch({ onSelectPaciente }) {
                         <h2 className="text-lg font-semibold text-gray-700">
                             {`${paciente.primer_nombre} ${paciente.segundo_nombre} ${paciente.primer_apellido} ${paciente.segundo_apellido}`}
                         </h2>
-                        <p className="text-gray-600"><strong>ID Paciente:</strong> {paciente.id_paciente}</p>
                         <button
                             onClick={() => onSelectPaciente(paciente)}  // Enviar el paciente seleccionado
                             className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"

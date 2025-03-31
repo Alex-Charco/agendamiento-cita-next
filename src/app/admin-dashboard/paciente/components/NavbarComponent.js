@@ -58,23 +58,23 @@ export default function NavbarComponent({ buttons, onAction }) {
 
       {/* Menú desplegable en pantallas pequeñas */}
       {isMenuOpen && (
-        <NavbarMenu>
-          {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect }) => (
-            <NavbarMenuItem key={label}>
-              <Button
-                as="a"
-                color={color}
-                variant="flat"
-                onClick={() => onAction(action)} 
-                className={`flex flex-col items-start gap-2 ${textColor} ${hoverEffect} px-4 rounded lg:flex-row lg:text-black`}
-              >
-                <Icon />
-                <span className="lg:text-right">{label}</span>
-              </Button>
-            </NavbarMenuItem>
-          ))}
-        </NavbarMenu>
-      )}
+	  <NavbarMenu className="text-left">
+		{buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect }) => (
+		  <NavbarMenuItem key={label} className="w-full">
+			<Button
+			  as="a"
+			  color={color}
+			  variant="flat"
+			  onClick={() => onAction(action)} 
+			  className={`flex justify-start items-center gap-2 ${textColor} ${hoverEffect} px-4 rounded w-full`}
+			>
+			  <Icon />
+			  <span>{label}</span>
+			</Button>
+		  </NavbarMenuItem>
+		))}
+	  </NavbarMenu>
+	)}
     </Navbar>
   );
 }
