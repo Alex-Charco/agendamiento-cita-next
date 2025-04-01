@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import NavbarComponent from "@/components/Navbar";
 import CardFeature from "@/components/CardFeature";
 import Footer from "@/components/Footer";
@@ -9,7 +8,6 @@ import Banner from "@/components/Banner";
 import { FaUserInjured, FaCalendarCheck, FaRedoAlt, FaCalendarAlt } from "react-icons/fa";
 
 const HomePage = () => {
-  const router = useRouter();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">

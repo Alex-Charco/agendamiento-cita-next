@@ -81,7 +81,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
 
           {menuServices.length > 0 && showExtraOptions && (
             <NavbarItem className="relative">
-              <Link href="#" onClick={() => setIsServicesOpen(!isServicesOpen)} className="hover:bg-gray-200 px-4 py-2 rounded">
+              <Link href="#" onPress={() => setIsServicesOpen(!isServicesOpen)} className="hover:bg-gray-200 px-4 py-2 rounded">
                 Servicios ▼
               </Link>
               {isServicesOpen && (
@@ -161,7 +161,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
             <NavbarMenuItem>
               <Link
                 href="#"
-                onClick={(e) => {
+                onPress={(e) => {
                   e.preventDefault();
                   setIsMobileServicesOpen(!isMobileServicesOpen);
                 }}

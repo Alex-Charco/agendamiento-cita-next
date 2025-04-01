@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { FaTimes, FaSearch, FaPlus, FaCalendarAlt, FaSave } from "react-icons/fa";
 import {
   Navbar,
@@ -26,28 +27,35 @@ export default function NavbarComponent({ buttons, onAction }) {
       {/* Logo a la izquierda */}
       <NavbarContent justify="start" className="flex items-center">
         <NavbarBrand>
-        <Image src="/images/logo-hospital.png" alt="Logo" className="h-11 w-auto rounded-none" />
+          <Image src="/images/logo-hospital.png" alt="Logo" className="h-11 w-auto rounded-none" />
         </NavbarBrand>
       </NavbarContent>
 
       {/* Menú de navegación en pantallas grandes */}
       <NavbarContent className="hidden lg:flex gap-4" justify="end">
-        {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect }) => (
+        {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect, href }) => (
           <NavbarItem key={label}>
-            <Button
-              as="a"
-              color={color}
-              variant="flat"
-              onClick={() => onAction(action)}  
-              className={`flex items-center gap-2 ${textColor} ${hoverEffect} px-4 py-2 rounded lg:text-black`}
-            >
-              <Icon /> {label}
-            </Button>
+            {href ? (
+              <Link href={href} className={`flex items-center gap-2 px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}>
+                <Icon />
+                {label}
+              </Link>
+            ) : (
+              <Button
+                as="a"
+                color={color}
+                variant="flat"
+                onClick={() => onAction(action)}
+                className={`flex items-center gap-2 px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
+              >
+                <Icon /> {label}
+              </Button>
+            )}
           </NavbarItem>
         ))}
       </NavbarContent>
 
-      {/* Botón de menú en pantallas pequeñas, alineado a la derecha */}
+      {/* Botón de menú en pantallas pequeñas */}
       <NavbarContent justify="end" className="lg:hidden">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -58,23 +66,30 @@ export default function NavbarComponent({ buttons, onAction }) {
 
       {/* Menú desplegable en pantallas pequeñas */}
       {isMenuOpen && (
-	  <NavbarMenu className="text-left">
-		{buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect }) => (
-		  <NavbarMenuItem key={label} className="w-full">
-			<Button
-			  as="a"
-			  color={color}
-			  variant="flat"
-			  onClick={() => onAction(action)} 
-			  className={`flex justify-start items-center gap-2 ${textColor} ${hoverEffect} px-4 rounded w-full`}
-			>
-			  <Icon />
-			  <span>{label}</span>
-			</Button>
-		  </NavbarMenuItem>
-		))}
-	  </NavbarMenu>
-	)}
+        <NavbarMenu className="text-left">
+          {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect, href }) => (
+            <NavbarMenuItem key={label} className="w-full">
+              {href ? (
+                <Link href={href} className={`flex justify-start items-center gap-2 px-4 rounded w-full ${textColor} ${hoverEffect}`}>
+                  <Icon />
+                  <span>{label}</span>
+                </Link>
+              ) : (
+                <Button
+                  as="a"
+                  color={color}
+                  variant="flat"
+                  onClick={() => onAction(action)}
+                  className={`flex justify-start items-center gap-2 px-4 rounded w-full ${textColor} ${hoverEffect}`}
+                >
+                  <Icon />
+                  <span>{label}</span>
+                </Button>
+              )}
+            </NavbarMenuItem>
+          ))}
+        </NavbarMenu>
+      )}
     </Navbar>
   );
 }

@@ -4,11 +4,11 @@ import { Tabs, Tab, Card, CardBody } from "@heroui/react";
 
 export default function CustomTabs({ tabs }) {
     return (
-        <div className="flex w-full flex-col m-2 border-1 border-gray-300 rounded">
-            <Tabs className="mx-2 mt-2">
+        <div className="bg-white w-full max-w-[95%] m-4 p-2  overflow-x-hidden border border-gray-300 rounded">
+            <Tabs className="w-full">
                 {tabs.map((tab) => (
                     <Tab key={tab.key} title={tab.title}>
-                        <Card className="mx-2">
+                        <Card className="w-full rounded">
                             <CardBody>
                                 {tab.content}
                             </CardBody>
