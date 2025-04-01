@@ -57,8 +57,16 @@ Se cambia por HeroUI con la respectiva configuración:
 
     npm install jwt-decode
 
+#### [SweetAlert2](https://sweetalert2.github.io/)
+
+La librería permite personalizar las notificaciones:
+
+	npm install sweetalert2
+
 ---
 
+#### NOTA
+Al caducar el token no permitira realizar solicitudes a la api y mostrará una notificación que la sesión a caducado.
 
 ## Deploy en Vercel
 
