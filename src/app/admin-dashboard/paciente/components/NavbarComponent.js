@@ -36,20 +36,24 @@ export default function NavbarComponent({ buttons, onAction }) {
         {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect, href }) => (
           <NavbarItem key={label}>
             {href ? (
-              <Link href={href} className={`flex items-center gap-2 px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}>
-                <Icon />
-                {label}
-              </Link>
+              <Link 
+				href={href} 
+				className={`flex items-center gap-2 btn-primary btn-primary:hover px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
+			  >
+				<Icon className="text-lg" />
+				<span>{label}</span>
+			  </Link>
             ) : (
               <Button
                 as="a"
                 color={color}
                 variant="flat"
                 onClick={() => onAction(action)}
-                className={`flex items-center gap-2 px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
-              >
-                <Icon /> {label}
-              </Button>
+                className={`flex items-center gap-2 btn-primary btn-primary:hover px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
+			  >
+				<Icon className="text-lg" />
+				<span>{label}</span>
+			  </Button>
             )}
           </NavbarItem>
         ))}
@@ -70,21 +74,22 @@ export default function NavbarComponent({ buttons, onAction }) {
           {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect, href }) => (
             <NavbarMenuItem key={label} className="w-full">
               {href ? (
-                <Link href={href} className={`flex justify-start items-center gap-2 px-4 rounded w-full ${textColor} ${hoverEffect}`}>
-                  <Icon />
-                  <span>{label}</span>
-                </Link>
+                <Link href={href} 
+				className={`flex justify-start items-center gap-2 btn-primary px-4 rounded w-full ${textColor} ${hoverEffect}`}>
+                   <Icon className="text-lg" />
+				<span>{label}</span>
+			  </Link>
               ) : (
                 <Button
                   as="a"
                   color={color}
                   variant="flat"
                   onClick={() => onAction(action)}
-                  className={`flex justify-start items-center gap-2 px-4 rounded w-full ${textColor} ${hoverEffect}`}
+                  className={`flex justify-start items-center gap-2 btn-primary btn-primary:hover px-4 py-4 rounded w-full ${textColor} ${hoverEffect}`}
                 >
-                  <Icon />
-                  <span>{label}</span>
-                </Button>
+                  <Icon className="text-lg" />
+					<span>{label}</span>
+				  </Button>
               )}
             </NavbarMenuItem>
           ))}
