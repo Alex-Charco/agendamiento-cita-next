@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function PacienteSearch({ onSelectPaciente }) {
@@ -35,6 +35,13 @@ export default function PacienteSearch({ onSelectPaciente }) {
             setLoading(false);
         }
     };
+	
+	// Guardar la identificación en localStorage cuando cambie el valor de query
+    useEffect(() => {
+        if (query.trim()) {
+            localStorage.setItem("identificacion", query);
+        }
+    }, [query]);
 
     return (
         <div className="bg-gray-200 px-6 pt-10 flex flex-col items-center h-[52vh] rounded-lg">
@@ -63,7 +70,11 @@ export default function PacienteSearch({ onSelectPaciente }) {
                             {`${paciente.primer_nombre} ${paciente.segundo_nombre} ${paciente.primer_apellido} ${paciente.segundo_apellido}`}
                         </h2>
                         <button
-                            onClick={() => onSelectPaciente(paciente)}  // Enviar el paciente seleccionado
+                            onClick={() => {
+                                // Pasamos el paciente seleccionado al padre y actualizamos la identificación
+                                onSelectPaciente(paciente);
+                                localStorage.setItem("identificacion", paciente.identificacion);
+                            }}
                             className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                         >
                             Seleccionar
