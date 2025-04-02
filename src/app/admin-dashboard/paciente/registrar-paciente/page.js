@@ -1,10 +1,19 @@
-import RegistrarPaciente from "@/admin-dashboard/paciente/components/RegistrarPaciente";
+"use client";
+//import { useState } from "react";
+import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 
-export default function RegistrarPacientePage() {
+export default function RegistrarPaciente() {
+    const handleFormSubmit = (data) => {
+        console.log("Paciente registrado:", data);
+        // Aquí puedes redirigir a una nueva página o mostrar un mensaje de éxito
+    };
+
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Registrar Pacientes</h1>
-            <RegistrarPaciente />
+        <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
+            <h1 className="text-3xl font-bold text-blue-900 mb-6">Registrar Paciente</h1>
+            <div>
+                <PacienteForm onSubmit={handleFormSubmit} />
+            </div>
         </div>
     );
 }

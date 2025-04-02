@@ -77,21 +77,21 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
                 <FaHospitalUser className="text-blue-600" /> Datos del Paciente
             </h2>
 
-            {/* Campos de id usuario */}
+            {/* Campos de nombre de usuario */}
                     <Input
 						isRequired
-					    className="max-w-xs"
+					    className="w-full"
 					    defaultValue="Ingresar el nombre de usuario"
-					    label="Id usuario"
+					    label="Nombre usuario"
 						name= "nombre_usuario"
-					    type="number"
-						value={paciente.primer_nombre}
+					    type="text"
+						value={paciente.nombre_usuario}
                         onChange={handleInputChange}
                     />
 				{/* Campo de identificación */}
                 <Input
 					isRequired
-					    className="max-w-xs"
+					    className="w-full"
 					    defaultValue="Ingresar la identificacion"
 					    label="Identificación"
 						name= "identificacion"
@@ -101,7 +101,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
                 />
                     <Input
 						isRequired
-					    className="max-w-xs"
+					    className="w-full"
 					    defaultValue="Ingresar el primer nombre"
 					    label="Primer Nombre"
 					    type="text"
@@ -110,7 +110,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
                     />
                     <Input
 						isRequired
-					    className="max-w-xs"
+					    className="mw-full"
 					    defaultValue="Ingresar el segundo nombre"
 						label="Segundo Nombre"
                         type="text"
@@ -119,10 +119,10 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
                         onChange={handleInputChange}
                     />
 
-            {/* Campos de apellidos */}
+					{/* Campos de apellidos */}
                     <Input
 						isRequired
-					    className="max-w-xs"
+					    className="w-full"
 					    defaultValue="Ingresar el primer apellido"
 						label="Primer Apellido"
                         type="text"
@@ -132,7 +132,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
                     />
                     <Input
 						isRequired
-					    className="max-w-xs"
+					    className="w-full"
 					    defaultValue="Ingresar el segundo apellido"
 						label="Segundo Apellido"
                         type="text"
@@ -187,10 +187,10 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
                     />
             </div>
 
-            {/* Campo de correo */}
+				{/* Campo de correo */}
                 <Input
 					isRequired
-					className="max-w-xs"
+					className="w-full"
 					label="Correo"
                     type="email"
                     name="correo"
