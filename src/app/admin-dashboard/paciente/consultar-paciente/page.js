@@ -146,7 +146,7 @@ export default function ConsultaPacientePage() {
 
     return (
         <div className="bg-white">
-            <NavbarComponent buttons={buttons} onAction={(action) => {
+            <NavbarComponent  title="Brigada de Selva No.17" buttons={buttons} onAction={(action) => {
                 if (action === "buscar") onOpen();
                 else console.log(action);
             }} />

@@ -15,7 +15,7 @@ import {
   Button,
 } from "@heroui/react";
 
-export default function NavbarComponent({ buttons, onAction }) {
+export default function NavbarComponent({ title, buttons, onAction }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -24,12 +24,21 @@ export default function NavbarComponent({ buttons, onAction }) {
       onMenuOpenChange={setIsMenuOpen} 
       className="bg-gradient-to-b from-celeste-fuerte to-[#F5F7FC]"
     >
-      {/* Logo a la izquierda */}
-      <NavbarContent justify="start" className="flex items-center">
-        <NavbarBrand>
-          <Image src="/images/logo-hospital.png" alt="Logo" className="h-11 w-auto rounded-none" />
-        </NavbarBrand>
-      </NavbarContent>
+	  
+      {/* Logo + Título alineados a la izquierda */}
+		<NavbarContent justify="start" className="flex items-center space-x-2">
+		  <NavbarBrand className="flex items-center gap-3">
+			<Image 
+			  src="/images/logo-hospital.png" 
+			  alt="Logo" 
+			  className="max-h-[55px] min-h-[44px] w-auto rounded-none min-w-[44px]"
+			/>
+			<h1 className="text-lg font-semibold text-white whitespace-nowrap">
+			  {title}
+			</h1>
+		  </NavbarBrand>
+		</NavbarContent>
+
 
       {/* Menú de navegación en pantallas grandes */}
       <NavbarContent className="hidden lg:flex gap-4" justify="end">

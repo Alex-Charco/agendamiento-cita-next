@@ -65,11 +65,6 @@ export default function UsuarioForm({ onSubmit, usuarioData = {} }) {
                 onSelectionChange={(keys) => setUsuario({ ...usuario, id_rol: Array.from(keys)[0] })}
                 items={roles}
                 aria-label="Seleccionar rol de usuario"
-                endContent={
-                    <div className="absolute right-4 transform -translate-y-1/2">
-                        <FaChevronDown className="text-gray-400 w-3 h-3" />
-                    </div>
-                }
             >
                 {(role) => <SelectItem className="text-gray-600" key={role.key}>{role.label}</SelectItem>}
             </Select>
