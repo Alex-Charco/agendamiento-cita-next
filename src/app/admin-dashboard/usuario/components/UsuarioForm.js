@@ -30,7 +30,7 @@ export default function UsuarioForm({ onSubmit, usuarioData = {} }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-xl max-w-4xl mx-auto">
+        <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto">
             <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
                 <FaHospitalUser className="text-blue-600" /> Registrar usuario
             </h2>

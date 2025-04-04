@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import { FaTimes, FaSearch, FaPlus, FaCalendarAlt, FaSave } from "react-icons/fa";
+import { FaTimes, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro } from "@/utils/api"; 
 import CustomTabs from "@/components/CustomTabs";
 import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
-import UsuarioForm from "@/admin-dashboard/usuario/components/UsuarioForm";
+import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
 import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 
 export default function RegistrarPaciente() {
@@ -38,22 +38,22 @@ export default function RegistrarPaciente() {
 
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
-        { label: "Actualizar Paciente", icon: FaPlus, action: "nuevo", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/usuario" },
+        { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
     ];
 	
     const tabsConfig = [
         {
             key: "registrar-usuario",
-            title: "Usuario",
+            title: "1. Usuario",
             content: selectedUsuario ? (
-            <UsuarioForm usuario={selectedUsuario} /> // Pasa el paciente al formulario para editar
+            <RegistrarUsuario usuario={selectedUsuario} /> // Pasa el paciente al formulario para editar
         ) : (
-            <UsuarioForm /> // Si no hay paciente seleccionado, muestra el formulario vacío para registrar un nuevo paciente
+            <RegistrarUsuario /> // Si no hay paciente seleccionado, muestra el formulario vacío para registrar un nuevo paciente
         ),
     },
 		{
             key: "registrar-paciente",
-            title: "Paciente",
+            title: "2. Paciente",
             content: selectedPaciente ? (
             <PacienteForm paciente={selectedPaciente} /> // Pasa el paciente al formulario para editar
         ) : (
@@ -62,7 +62,7 @@ export default function RegistrarPaciente() {
     },
 		{
             key: "familiar",
-            title: "Familiar",
+            title: "3. Familiar",
             content: selectedFamiliar ? (
 				<div className="ml-5">
 					<h2 className="text-lg font-semibold text-gray-700">Información Familiar</h2>
@@ -80,7 +80,7 @@ export default function RegistrarPaciente() {
         },
 		{
             key: "informacion-militar",
-            title: "Info Militar",
+            title: "4. Info Militar",
             content: selectedInfoMilitar ? (
 				<div className="ml-5">
                     <h2 className="text-lg font-semibold text-gray-700">Información Militar</h2>
@@ -95,7 +95,7 @@ export default function RegistrarPaciente() {
         },
 		{
         key: "residencia",
-        title: "Residencia",
+        title: "5. Residencia",
         content: selectedResidencia ? (
 				<div className="ml-5">
                 <h2 className="text-lg font-semibold text-gray-700">Información de Residencia</h2>
@@ -114,7 +114,7 @@ export default function RegistrarPaciente() {
     },
 	{
             key: "seguro",
-            title: "Seguro",
+            title: "6. Seguro",
             content: selectedSeguro ? (
 				<div className="ml-5">
                     <h2 className="text-lg font-semibold text-gray-700">Información del Seguro</h2>
@@ -134,16 +134,10 @@ export default function RegistrarPaciente() {
 
     return (
         <div className="bg-white">
-            <NavbarComponent  title="Brigada de Selva No.17" buttons={buttons} onAction={(action) => {
-                if (action === "buscar") onOpen();
-                else console.log(action);
+            <NavbarComponent  title="Registrar Paciente" buttons={buttons} onAction={(action) => {
             }} />
-
+	
             <CustomTabs tabs={tabsConfig} />
-
-            <ReusableModal isOpen={isOpen} onOpenChange={onOpenChange}>
-                <PacienteForm onSelectPaciente={handlePacienteSelect} />
-            </ReusableModal>
 
         </div>
     );

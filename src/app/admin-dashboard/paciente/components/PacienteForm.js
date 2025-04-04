@@ -1,93 +1,66 @@
 "use client";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { FaUser, FaEnvelope, FaPhone, FaHospitalUser } from "react-icons/fa";
-import { Button, Input, Textarea, Checkbox, Select, SelectItem } from "@heroui/react";
-import { FaChevronDown } from "react-icons/fa6";
-import SelectEndContent from "@/components/ui/SelectEndContent";
+
+import { useReducer } from "react";
+import { FaHospitalUser } from "react-icons/fa";
+import { Button, Input, Select, SelectItem } from "@heroui/react";
+
+const initialState = {
+    nombre_usuario: "",
+    identificacion: "",
+    fecha_nacimiento: "",
+    primer_nombre: "",
+    segundo_nombre: "",
+    primer_apellido: "",
+    segundo_apellido: "",
+    genero: "",
+    celular: "",
+    telefono: "",
+    correo: "",
+    estado_civil: "",
+    grupo_sanguineo: "",
+    instruccion: "",
+    ocupacion: "",
+    empresa: "",
+    discapacidad: false,
+    orientacion: "",
+    identidad: "",
+    tipo_paciente: "",
+    estatus: 1,
+};
+
+function reducer(state, action) {
+    return { ...state, [action.name]: action.value };
+}
 
 export default function PacienteForm({ onSubmit, pacienteData = {} }) {
-	const [paciente, setPaciente] = useState({
-		nombre_usuario: pacienteData.nombre_usuario || "",
-		identificacion: pacienteData.identificacion || "",
-		fecha_nacimiento: pacienteData.fecha_nacimiento || "",
-		primer_nombre: pacienteData.primer_nombre || "",
-		segundo_nombre: pacienteData.segundo_nombre || "",
-		primer_apellido: pacienteData.primer_apellido || "",
-		segundo_apellido: pacienteData.segundo_apellido || "",
-		genero: pacienteData.genero || "",
-		celular: pacienteData.celular || "",
-		telefono: pacienteData.telefono || "",
-		correo: pacienteData.correo || "",
-		estado_civil: pacienteData.estado_civil || "",
-		grupo_sanguineo: pacienteData.grupo_sanguineo || "",
-		instruccion: pacienteData.instruccion || "",
-		ocupacion: pacienteData.ocupacion || "",
-		empresa: pacienteData.empresa || "",
-		discapacidad: pacienteData.discapacidad || false,
-		orientacion: pacienteData.orientacion || "",
-		identidad: pacienteData.identidad || "",
-		tipo_paciente: pacienteData.tipo_paciente || "",
-		estatus: pacienteData.estatus ?? 1, // Evita undefined
-	});
+    const [paciente, dispatch] = useReducer(reducer, { ...initialState, ...pacienteData });
 
-	useEffect(() => {
-		if (pacienteData && Object.keys(pacienteData).length > 0) {
-			setPaciente(prev => ({
-				...prev,
-				...pacienteData
-			}));
-		}
-	}, [pacienteData]); // Se ejecuta solo cuando `pacienteData` cambia
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        dispatch({ name, value: type === "checkbox" ? checked : value });
+    };
 
-	const handleInputChange = (e) => {
-		const { name, value, type, checked } = e.target;
-		setPaciente((prev) => ({
-			...prev,
-			[name]: type === "checkbox" ? checked : value || "", // Evita undefined
-		}));
-	};
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			const token = localStorage.getItem("authToken");
-			const apiUrl = paciente.id_paciente
-				? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/update/${paciente.id_paciente}`
-				: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/create`;
-
-			const method = paciente.id_paciente ? "put" : "post";
-
-			const response = await axios({
-				method,
-				url: apiUrl,
-				data: paciente,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-
-			onSubmit(response.data);
-		} catch (error) {
-			console.error("Error al enviar los datos", error);
-		}
-	};
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSubmit(paciente);
+    };
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-xl max-w-4xl mx-auto">
+		<form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8">
 			<h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
 				<FaHospitalUser className="text-blue-600" /> Datos del Paciente
 			</h2>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+				{/* Campo de Nombre de Usuario - No Editable */}
 				<Input
-					isRequired
-					className="w-full"
-					label="Nombre usuario"
-					name="nombre_usuario"
-					type="text"
-					value={paciente.nombre_usuario}
-					onChange={handleInputChange}
+				  isRequired
+				  className="w-full"
+				  label="Nombre usuario"
+				  name="nombre_usuario"
+				  type="text"
+				  value={paciente.nombre_usuario}
+				  readOnly // Hace que el input no sea editable
 				/>
 				<Input 
 					isRequired 
@@ -97,16 +70,17 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					placeholder="Escribir la identificación"
 					type="text" 
 					value={paciente.identificacion} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 				/>
-				<Input 
-					isRequired 
+				<Input
+					isRequired
 					className="w-full" 
-					label="Primer Nombre"
-					placeholder="Escribir el primer nombre"
+					label="Primer Nombre" 
 					type="text" 
+					name="primer_nombre"
+					placeholder="Escribir el primer nombre"
 					value={paciente.primer_nombre} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 				/>
 				<Input 
 					className="w-full" 
@@ -115,7 +89,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="segundo_nombre"
 					placeholder="Escribir el segundo nombre"
 					value={paciente.segundo_nombre} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 				/>
 				<Input 
 					isRequired 
@@ -124,7 +98,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="primer_apellido"
 					placeholder="Escribir el primer apellido"
 					type="text" value={paciente.primer_apellido} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 				/>
 				<Input 
 					className="w-full" 
@@ -133,7 +107,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="segundo_apellido" 
 					placeholder="Escribir el segundo apellido"
 					value={paciente.segundo_apellido} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 				/>
 				<Input 
 					isRequired 
@@ -142,7 +116,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					type="date" 
 					name="fecha_nacimiento" 
 					value={paciente.fecha_nacimiento} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 				/>
 				<Select
 					isRequired
@@ -151,7 +125,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					label="Género"
 					placeholder="Seleccionar un género"
 					value={paciente.genero}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="NINGUNO">Seleccione Género</SelectItem>
 					<SelectItem className="text-gray-600" value="MASCULINO">Masculino</SelectItem>
@@ -165,7 +139,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="celular"
 					placeholder="Escribir número de celular"
 					value={paciente.celular} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 				/>
 				<Input 
 					className="w-full" 
@@ -174,7 +148,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="telefono"
 					placeholder="Escribir número de teléfono"
 					value={paciente.telefono} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 					/>
 				<Input 
 					isRequired 
@@ -184,7 +158,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="correo"
 					placeholder="Escribir el correo electrónico"
 					value={paciente.correo} 
-					onChange={handleInputChange} 
+					onChange={handleChange} 
 				/>
 				<Select
 					isRequired
@@ -193,7 +167,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="estado_civil"
 					placeholder="Seleccionar estado civil"
 					value={paciente.estado_civil}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="SOLTERO/A">Soltero</SelectItem>
 					<SelectItem className="text-gray-600" value="CASADO/A">Casado/a</SelectItem>
@@ -208,7 +182,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="grupo_sanguineo"
 					placeholder="Seleccionar grupo sanguineo"
 					value={paciente.grupo_sanguineo}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="NINGUNO">Ninguno</SelectItem>
 					<SelectItem className="text-gray-600" value="A RH+">A RH+</SelectItem>
@@ -227,7 +201,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="instruccion"
 					placeholder="Seleccionar nivel instrucción"
 					value={paciente.instruccion}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="BÁSICA">Básica</SelectItem>
 					<SelectItem className="text-gray-600" value="BACHILLERATO">Bachillerato</SelectItem>
@@ -240,7 +214,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="ocupacion"
 					placeholder="Seleccionar ocupación"
 					value={paciente.ocupacion}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="ABOGADO">Abogado</SelectItem>
 					<SelectItem className="text-gray-600" value="AGRICULTOR">Agricultor</SelectItem>
@@ -263,7 +237,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					<SelectItem className="text-gray-600" value="INDEPENDIENTE">Independiente</SelectItem>
 					<SelectItem className="text-gray-600" value="TÉCNICO">Técnico</SelectItem>
 				</Select>
-				<Input className="w-full" label="Empresa" type="text" name="empresa" placeholder="Escribir nombre de la empresa" value={paciente.empresa} onChange={handleInputChange} />
+				<Input className="w-full" label="Empresa" type="text" name="empresa" placeholder="Escribir nombre de la empresa" value={paciente.empresa} onChange={handleChange} />
 				<Select
 					isRequired
 					className="w-full"
@@ -271,7 +245,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="discapacidad"
 					placeholder="¿Padece discapacidad?"
 					value={paciente.discapacidad}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="1">Sí</SelectItem>
 					<SelectItem className="text-gray-600" value="0">No</SelectItem>
@@ -283,7 +257,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="orientacion"
 					placeholder="Seleccionar la orientación"
 					value={paciente.orientacion}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="NINGUNO">Ninguno</SelectItem>
 					<SelectItem className="text-gray-600" value="HETEROSEXUAL">Heterosexual</SelectItem>
@@ -298,7 +272,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="identidad"
 					placeholder="Seleccionar identidad de género"
 					value={paciente.identidad}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="NINGUNO">Ninguno</SelectItem>
 					<SelectItem className="text-gray-600" value="CISGÉNERO">Cisgénero</SelectItem>
@@ -316,7 +290,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="tipo_paciente"
 					placeholder="Seleccionar tipo de paciente"
 					value={paciente.tipo_paciente}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="CIVIL">Civil</SelectItem>
 					<SelectItem className="text-gray-600" value="MILITAR">Militar</SelectItem>
@@ -329,7 +303,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="estatus"
 					placeholder="Selecconar el estatus"
 					value={paciente.estatus}
-					onChange={handleInputChange}
+					onChange={handleChange}
 				>
 					<SelectItem className="text-gray-600" value="1">Activo</SelectItem>
 					<SelectItem className="text-gray-600" value="0">Inactivo</SelectItem>
