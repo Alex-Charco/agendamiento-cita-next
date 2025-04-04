@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer } from "react";
+import { useReducer,  useEffect } from "react";
 import { FaHospitalUser } from "react-icons/fa";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
 
@@ -35,6 +35,13 @@ function reducer(state, action) {
 export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 	const [paciente, dispatch] = useReducer(reducer, { ...initialState, ...pacienteData });
 
+	useEffect(() => {
+		const nombreUsuarioGuardado = localStorage.getItem("nombre_usuario");
+		if (nombreUsuarioGuardado) {
+			dispatch({ name: "nombre_usuario", value: nombreUsuarioGuardado });
+		}
+	}, [pacienteData.nombre_usuario]);
+	
 	const handleChange = (e) => {
 		const { name, value, type, checked } = e.target;
 		dispatch({ name, value: type === "checkbox" ? checked : value });
@@ -60,8 +67,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="nombre_usuario"
 					type="text"
 					value={paciente.nombre_usuario}
-					//readOnly // Hace que el input no sea editable
-					onChange={handleChange}
+					readOnly // Hace que el input no sea editable
 				/>
 				<Input
 					isRequired
