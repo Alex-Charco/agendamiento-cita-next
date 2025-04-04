@@ -19,25 +19,25 @@ export default function NavbarComponent({ title, buttons, onAction }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <Navbar 
-      isMenuOpen={isMenuOpen} 
-      onMenuOpenChange={setIsMenuOpen} 
+    <Navbar
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
       className="bg-gradient-to-b from-celeste-fuerte to-[#F5F7FC]"
     >
-	  
+
       {/* Logo + Título alineados a la izquierda */}
-		<NavbarContent justify="start" className="flex items-center space-x-2">
-		  <NavbarBrand className="flex items-center gap-3">
-			<Image 
-			  src="/images/logo-hospital.png" 
-			  alt="Logo" 
-			  className="max-h-[55px] min-h-[44px] w-auto rounded-none min-w-[44px]"
-			/>
-			<h1 className="text-lg font-semibold text-white whitespace-nowrap">
-			  {title}
-			</h1>
-		  </NavbarBrand>
-		</NavbarContent>
+      <NavbarContent justify="start" className="flex items-center space-x-2">
+        <NavbarBrand className="flex items-center gap-3">
+          <Image
+            src="/images/logo-hospital.png"
+            alt="Logo"
+            className="max-h-[55px] min-h-[44px] w-auto rounded-none min-w-[44px]"
+          />
+          <h1 className="text-lg font-semibold text-white whitespace-nowrap">
+            {title}
+          </h1>
+        </NavbarBrand>
+      </NavbarContent>
 
 
       {/* Menú de navegación en pantallas grandes */}
@@ -45,13 +45,13 @@ export default function NavbarComponent({ title, buttons, onAction }) {
         {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect, href }) => (
           <NavbarItem key={label}>
             {href ? (
-              <Link 
-				href={href} 
-				className={`flex items-center gap-2 btn-primary btn-primary:hover px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
-			  >
-				<Icon className="text-lg" />
-				<span>{label}</span>
-			  </Link>
+              <Link
+                href={href}
+                className={`flex items-center gap-2 btn-primary btn-primary:hover px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
+              >
+                <Icon className="text-lg" />
+                <span>{label}</span>
+              </Link>
             ) : (
               <Button
                 as="a"
@@ -59,10 +59,10 @@ export default function NavbarComponent({ title, buttons, onAction }) {
                 variant="flat"
                 onClick={() => onAction(action)}
                 className={`flex items-center gap-2 btn-primary btn-primary:hover px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
-			  >
-				<Icon className="text-lg" />
-				<span>{label}</span>
-			  </Button>
+              >
+                <Icon className="text-lg" />
+                <span>{label}</span>
+              </Button>
             )}
           </NavbarItem>
         ))}
@@ -73,7 +73,7 @@ export default function NavbarComponent({ title, buttons, onAction }) {
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className={`text-${isMenuOpen ? "red-500" : "black"}`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)} 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
         />
       </NavbarContent>
 
@@ -83,11 +83,11 @@ export default function NavbarComponent({ title, buttons, onAction }) {
           {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect, href }) => (
             <NavbarMenuItem key={label} className="w-full">
               {href ? (
-                <Link href={href} 
-				className={`flex justify-start items-center gap-2 btn-primary px-4 rounded w-full ${textColor} ${hoverEffect}`}>
-                   <Icon className="text-lg" />
-				<span>{label}</span>
-			  </Link>
+                <Link href={href}
+                  className={`flex justify-start items-center gap-2 btn-primary px-4 rounded w-full ${textColor} ${hoverEffect}`}>
+                  <Icon className="text-lg" />
+                  <span>{label}</span>
+                </Link>
               ) : (
                 <Button
                   as="a"
@@ -97,8 +97,8 @@ export default function NavbarComponent({ title, buttons, onAction }) {
                   className={`flex justify-start items-center gap-2 btn-primary btn-primary:hover px-4 py-4 rounded w-full ${textColor} ${hoverEffect}`}
                 >
                   <Icon className="text-lg" />
-					<span>{label}</span>
-				  </Button>
+                  <span>{label}</span>
+                </Button>
               )}
             </NavbarMenuItem>
           ))}

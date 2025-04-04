@@ -5,45 +5,45 @@ import { FaHospitalUser } from "react-icons/fa";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
 
 const initialState = {
-    nombre_usuario: "",
-    identificacion: "",
-    fecha_nacimiento: "",
-    primer_nombre: "",
-    segundo_nombre: "",
-    primer_apellido: "",
-    segundo_apellido: "",
-    genero: "",
-    celular: "",
-    telefono: "",
-    correo: "",
-    estado_civil: "",
-    grupo_sanguineo: "",
-    instruccion: "",
-    ocupacion: "",
-    empresa: "",
-    discapacidad: false,
-    orientacion: "",
-    identidad: "",
-    tipo_paciente: "",
-    estatus: 1,
+	nombre_usuario: "",
+	identificacion: "",
+	fecha_nacimiento: "",
+	primer_nombre: "",
+	segundo_nombre: "",
+	primer_apellido: "",
+	segundo_apellido: "",
+	genero: "",
+	celular: "",
+	telefono: "",
+	correo: "",
+	estado_civil: "",
+	grupo_sanguineo: "",
+	instruccion: "",
+	ocupacion: "",
+	empresa: "",
+	discapacidad: false,
+	orientacion: "",
+	identidad: "",
+	tipo_paciente: "",
+	estatus: 1,
 };
 
 function reducer(state, action) {
-    return { ...state, [action.name]: action.value };
+	return { ...state, [action.name]: action.value };
 }
 
 export default function PacienteForm({ onSubmit, pacienteData = {} }) {
-    const [paciente, dispatch] = useReducer(reducer, { ...initialState, ...pacienteData });
+	const [paciente, dispatch] = useReducer(reducer, { ...initialState, ...pacienteData });
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        dispatch({ name, value: type === "checkbox" ? checked : value });
-    };
+	const handleChange = (e) => {
+		const { name, value, type, checked } = e.target;
+		dispatch({ name, value: type === "checkbox" ? checked : value });
+	};
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit(paciente);
-    };
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		onSubmit(paciente);
+	};
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8">
@@ -54,69 +54,69 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				{/* Campo de Nombre de Usuario - No Editable */}
 				<Input
-				  isRequired
-				  className="w-full"
-				  label="Nombre usuario"
-				  name="nombre_usuario"
-				  type="text"
-				  value={paciente.nombre_usuario}
-				  readOnly // Hace que el input no sea editable
-				/>
-				<Input 
-					isRequired 
-					className="w-full" 
-					label="Identificación" 
-					name="identificacion"
-					placeholder="Escribir la identificación"
-					type="text" 
-					value={paciente.identificacion} 
-					onChange={handleChange} 
+					isRequired
+					className="w-full"
+					label="Nombre usuario"
+					name="nombre_usuario"
+					type="text"
+					value={paciente.nombre_usuario}
+					readOnly // Hace que el input no sea editable
 				/>
 				<Input
 					isRequired
-					className="w-full" 
-					label="Primer Nombre" 
-					type="text" 
+					className="w-full"
+					label="Identificación"
+					name="identificacion"
+					placeholder="Escribir la identificación"
+					type="text"
+					value={paciente.identificacion}
+					onChange={handleChange}
+				/>
+				<Input
+					isRequired
+					className="w-full"
+					label="Primer Nombre"
+					type="text"
 					name="primer_nombre"
 					placeholder="Escribir el primer nombre"
-					value={paciente.primer_nombre} 
-					onChange={handleChange} 
+					value={paciente.primer_nombre}
+					onChange={handleChange}
 				/>
-				<Input 
-					className="w-full" 
-					label="Segundo Nombre" 
-					type="text" 
+				<Input
+					className="w-full"
+					label="Segundo Nombre"
+					type="text"
 					name="segundo_nombre"
 					placeholder="Escribir el segundo nombre"
-					value={paciente.segundo_nombre} 
-					onChange={handleChange} 
+					value={paciente.segundo_nombre}
+					onChange={handleChange}
 				/>
-				<Input 
-					isRequired 
-					className="w-full" 
-					label="Primer Apellido" 
+				<Input
+					isRequired
+					className="w-full"
+					label="Primer Apellido"
 					name="primer_apellido"
 					placeholder="Escribir el primer apellido"
-					type="text" value={paciente.primer_apellido} 
-					onChange={handleChange} 
+					type="text" value={paciente.primer_apellido}
+					onChange={handleChange}
 				/>
-				<Input 
-					className="w-full" 
-					label="Segundo Apellido" 
-					type="text" 
-					name="segundo_apellido" 
+				<Input
+					className="w-full"
+					label="Segundo Apellido"
+					type="text"
+					name="segundo_apellido"
 					placeholder="Escribir el segundo apellido"
-					value={paciente.segundo_apellido} 
-					onChange={handleChange} 
+					value={paciente.segundo_apellido}
+					onChange={handleChange}
 				/>
-				<Input 
-					isRequired 
-					className="w-full" 
-					label="Fecha de nacimiento" 
-					type="date" 
-					name="fecha_nacimiento" 
-					value={paciente.fecha_nacimiento} 
-					onChange={handleChange} 
+				<Input
+					isRequired
+					className="w-full"
+					label="Fecha de nacimiento"
+					type="date"
+					name="fecha_nacimiento"
+					value={paciente.fecha_nacimiento}
+					onChange={handleChange}
 				/>
 				<Select
 					isRequired
@@ -131,34 +131,34 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					<SelectItem className="text-gray-600" value="MASCULINO">Masculino</SelectItem>
 					<SelectItem className="text-gray-600" value="FEMENINO">Femenino</SelectItem>
 				</Select>
-				<Input 
-					isRequired 
-					className="w-full" 
-					label="Celular" 
-					type="tel" 
+				<Input
+					isRequired
+					className="w-full"
+					label="Celular"
+					type="tel"
 					name="celular"
 					placeholder="Escribir número de celular"
-					value={paciente.celular} 
-					onChange={handleChange} 
+					value={paciente.celular}
+					onChange={handleChange}
 				/>
-				<Input 
-					className="w-full" 
-					label="Teléfono" 
-					type="tel" 
+				<Input
+					className="w-full"
+					label="Teléfono"
+					type="tel"
 					name="telefono"
 					placeholder="Escribir número de teléfono"
-					value={paciente.telefono} 
-					onChange={handleChange} 
-					/>
-				<Input 
-					isRequired 
-					className="w-full md:col-span-2" 
-					label="Correo" 
-					type="email" 
+					value={paciente.telefono}
+					onChange={handleChange}
+				/>
+				<Input
+					isRequired
+					className="w-full md:col-span-2"
+					label="Correo"
+					type="email"
 					name="correo"
 					placeholder="Escribir el correo electrónico"
-					value={paciente.correo} 
-					onChange={handleChange} 
+					value={paciente.correo}
+					onChange={handleChange}
 				/>
 				<Select
 					isRequired

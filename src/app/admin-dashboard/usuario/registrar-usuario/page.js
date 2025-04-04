@@ -55,17 +55,17 @@ export default function RegistrarUsuario() {
         }
     };
 
-	 const buttons = [
+    const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
         { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
     ];
-	
+
     return (
-		<div className="bg-gray-100 min-h-screen w-full flex flex-col items-center">
-            <NavbarComponent  title="Brigada de Selva No.17  - Paso 1" buttons={buttons} onAction={(action) => {
+        <div className="bg-gray-100 min-h-screen w-full flex flex-col items-center">
+            <NavbarComponent title="Brigada de Selva No.17  - Paso 1" buttons={buttons} onAction={(action) => {
             }} />
             <div className="w-full flex-grow flex flex-col items-center mt-10">
-            <UsuarioForm onSubmit={handleFormSubmit} />
+                <UsuarioForm onSubmit={handleFormSubmit} />
                 {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
             </div>
         </div>
