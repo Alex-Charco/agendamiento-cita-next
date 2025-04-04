@@ -3,14 +3,12 @@ import { useState } from "react";
 import axios from "axios";
 import { FaTimes, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
-import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro } from "@/utils/api";
 import CustomTabs from "@/components/CustomTabs";
-import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
-import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
+import RegistrarPaciente from "@/admin-dashboard/paciente/components/RegistrarPaciente";
 
-export default function RegistrarPaciente() {
+export default function RegistrarPacientePage() {
 
     const [query, setQuery] = useState("");
     const [loading, setLoading] = useState(false);
@@ -26,14 +24,14 @@ export default function RegistrarPaciente() {
 
 
 
-    const handlePacienteSelect = (paciente) => {
+    /*const handlePacienteSelect = (paciente) => {
         setSelectedPaciente(paciente);
         fetchFamiliar(paciente.identificacion, setSelectedFamiliar);
         fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar);
         fetchResidencia(paciente.identificacion, setSelectedResidencia);
         fetchSeguro(paciente.identificacion, setSelectedSeguro);
         onOpenChange(false);
-    };
+    };*/
 
 
     const buttons = [
@@ -55,9 +53,9 @@ export default function RegistrarPaciente() {
             key: "registrar-paciente",
             title: "2. Paciente",
             content: selectedPaciente ? (
-                <PacienteForm paciente={selectedPaciente} /> // Pasa el paciente al formulario para editar
+                <RegistrarPaciente paciente={selectedPaciente} /> // Pasa el paciente al formulario para editar
             ) : (
-                <PacienteForm /> // Si no hay paciente seleccionado, muestra el formulario vacío para registrar un nuevo paciente
+                <RegistrarPaciente /> // Si no hay paciente seleccionado, muestra el formulario vacío para registrar un nuevo paciente
             ),
         },
         {

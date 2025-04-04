@@ -16,7 +16,7 @@ const HomePage = () => {
           {
             name: "Paciente",
             subMenu: [
-              { name: "Consultar Pacientes", path: "/admin-dashboard/paciente/consultar-paciente" },
+              { name: "Pacientes", path: "/admin-dashboard/paciente/consultar-paciente" },
               { name: "Consulta Médico", path: "/common/consulta-medico" },
             ],
           },
@@ -40,21 +40,16 @@ const HomePage = () => {
         <Link href="/admin-dashboard/paciente/consultar-paciente">
           <CardFeature
             icon={<FaUserInjured className="text-azul text-3xl" />}
-            title="Consultar paciente"
+            title="Pacientes"
             description={
               <>
-                <span className="block text-left text-sm mt-2">Podrá consultar pacientes ingresando el número de cédula en el buscador</span><br />
+                <span className="block text-left text-sm mt-2">Podrá consultar, registrar y actualizar a los pacientes</span><br />
                 <span className="text-blue-500 text-sm block">Ingresar</span>
               </>
             }
 
           />
         </Link>
-        <CardFeature
-          icon={<FaUserInjured className="text-blue-500 text-3xl" />} // Icono de paciente
-          title="Pacientes"
-          description="Podrá consultar, registrar y actualizar a los pacientes"
-        />
         <CardFeature
           icon={<FaCalendarCheck className="text-green-500 text-3xl" />} // Icono para Agendar Citas
           title="Agendar Citas"

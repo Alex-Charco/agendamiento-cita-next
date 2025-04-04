@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
-import PacienteForm from "@/admin-dashboard/usuario/components/PacienteForm";
+import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 //import Link from "next/link";

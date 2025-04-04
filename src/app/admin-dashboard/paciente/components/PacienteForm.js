@@ -60,7 +60,8 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					name="nombre_usuario"
 					type="text"
 					value={paciente.nombre_usuario}
-					readOnly // Hace que el input no sea editable
+					//readOnly // Hace que el input no sea editable
+					onChange={handleChange}
 				/>
 				<Input
 					isRequired
@@ -120,16 +121,20 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 				/>
 				<Select
 					isRequired
-					className="w-full relative"
-					name="genero"
+					className="w-full"
 					label="Género"
 					placeholder="Seleccionar un género"
-					value={paciente.genero}
-					onChange={handleChange}
+					selectedKeys={paciente.genero ? [paciente.genero] : []}
+					onSelectionChange={(keys) => dispatch({ name: "genero", value: Array.from(keys)[0] })}
+					items={[
+						{ key: "NINGUNO", label: "Ninguno" },
+						{ key: "MASCULINO", label: "Masculino" },
+						{ key: "FEMENINO", label: "Femenino" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="NINGUNO">Seleccione Género</SelectItem>
-					<SelectItem className="text-gray-600" value="MASCULINO">Masculino</SelectItem>
-					<SelectItem className="text-gray-600" value="FEMENINO">Femenino</SelectItem>
+					{(item) => <SelectItem key={item.key} className="text-gray-600">
+						{item.label}
+					</SelectItem>}
 				</Select>
 				<Input
 					isRequired
@@ -164,149 +169,210 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
 					isRequired
 					className="w-full"
 					label="Estado Civil"
-					name="estado_civil"
 					placeholder="Seleccionar estado civil"
-					value={paciente.estado_civil}
-					onChange={handleChange}
+					selectedKeys={paciente.estado_civil ? [paciente.estado_civil] : []}
+					onSelectionChange={(keys) => dispatch({ name: "estado_civil", value: Array.from(keys)[0] })}
+					items={[
+						{ key: "SOLTERO/A", label: "Soltero/a" },
+						{ key: "CASADO/A", label: "Casado/a" },
+						{ key: "DIVORCIADO/A", label: "Divorciado/a" },
+						{ key: "VIUDO/A", label: "Viudo/a" },
+						{ key: "OTRO", label: "Otro" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="SOLTERO/A">Soltero</SelectItem>
-					<SelectItem className="text-gray-600" value="CASADO/A">Casado/a</SelectItem>
-					<SelectItem className="text-gray-600" value="DIVORCIADO/A">Divorciado/a</SelectItem>
-					<SelectItem className="text-gray-600" value="VIUDO/A">Viudo/a</SelectItem>
-					<SelectItem className="text-gray-600" value="OTRO">Otro</SelectItem>
+					{(item) => <SelectItem key={item.key} className="text-gray-600">
+						{item.label}
+					</SelectItem>}
 				</Select>
 				<Select
 					isRequired
 					className="w-full"
 					label="Grupo Sanguíneo"
-					name="grupo_sanguineo"
-					placeholder="Seleccionar grupo sanguineo"
-					value={paciente.grupo_sanguineo}
-					onChange={handleChange}
+					placeholder="Seleccionar grupo sanguíneo"
+					selectedKeys={paciente.grupo_sanguineo ? [paciente.grupo_sanguineo] : []}
+					onSelectionChange={(keys) => dispatch({ name: "grupo_sanguineo", value: Array.from(keys)[0] })}
+					items={[
+						{ key: "NINGUNO", label: "Ninguno" },
+						{ key: "A RH+", label: "A RH+" },
+						{ key: "A RH-", label: "A RH-" },
+						{ key: "B RH+", label: "B RH+" },
+						{ key: "B RH-", label: "B RH-" },
+						{ key: "AB RH+", label: "AB RH+" },
+						{ key: "AB RH-", label: "AB RH-" },
+						{ key: "O RH+", label: "O RH+" },
+						{ key: "O RH-", label: "O RH-" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="NINGUNO">Ninguno</SelectItem>
-					<SelectItem className="text-gray-600" value="A RH+">A RH+</SelectItem>
-					<SelectItem className="text-gray-600" value="A RH-">A RH-</SelectItem>
-					<SelectItem className="text-gray-600" value="B RH+">B RH+</SelectItem>
-					<SelectItem className="text-gray-600" value="B RH-">B RH-</SelectItem>
-					<SelectItem className="text-gray-600" value="AB RH+">AB RH+</SelectItem>
-					<SelectItem className="text-gray-600" value="AB RH-">AB RH-</SelectItem>
-					<SelectItem className="text-gray-600" value="O RH+">O RH+</SelectItem>
-					<SelectItem className="text-gray-600" value="O RH-">O RH-</SelectItem>
+					{(item) => <SelectItem key={item.key} className="text-gray-600">
+						{item.label}
+					</SelectItem>}
 				</Select>
 				<Select
 					isRequired
 					className="w-full"
 					label="Nivel de Instrucción"
-					name="instruccion"
 					placeholder="Seleccionar nivel instrucción"
-					value={paciente.instruccion}
-					onChange={handleChange}
+					selectedKeys={paciente.instruccion ? [paciente.instruccion] : []}
+					onSelectionChange={(keys) => dispatch({ name: "instruccion", value: Array.from(keys)[0] })}
+					items={[
+						{ key: "BÁSICA", label: "Básica" },
+						{ key: "BACHILLERATO", label: "Bachillerato" },
+						{ key: "SUPERIOR", label: "Superior" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="BÁSICA">Básica</SelectItem>
-					<SelectItem className="text-gray-600" value="BACHILLERATO">Bachillerato</SelectItem>
-					<SelectItem className="text-gray-600" value="SUPERIOR">Superior</SelectItem>
+					{(item) => <SelectItem key={item.key} className="text-gray-600">
+						{item.label}
+					</SelectItem>}
 				</Select>
 				<Select
 					isRequired
 					className="w-full"
 					label="Ocupación"
-					name="ocupacion"
 					placeholder="Seleccionar ocupación"
-					value={paciente.ocupacion}
-					onChange={handleChange}
+					selectedKeys={paciente.ocupacion ? [paciente.ocupacion] : []}
+					onSelectionChange={(keys) => dispatch({ name: "ocupacion", value: Array.from(keys)[0] })
+					}
+					items={[
+						{ key: "ABOGADO", label: "Abogado" },
+						{ key: "AGRICULTOR", label: "Agricultor" },
+						{ key: "AMA DE CASA", label: "Ama de Casa" },
+						{ key: "BOMBERO", label: "Bombero" },
+						{ key: "COMERCIANTE", label: "Comerciante" },
+						{ key: "CONTADOR", label: "Contador" },
+						{ key: "DESEMPLEADO", label: "Desempleado" },
+						{ key: "DOCENTE", label: "Docente" },
+						{ key: "EMPLEADO PRIVADO", label: "Empleado Privado" },
+						{ key: "EMPLEADO PÚBLICO", label: "Empleado Público" },
+						{ key: "EMPRESARIO", label: "Empresario" },
+						{ key: "ESTUDIANTE", label: "Estudiante" },
+						{ key: "INGENIERO", label: "Ingeniero" },
+						{ key: "JUBILADO", label: "Jubilado" },
+						{ key: "MÉDICO", label: "Médico" },
+						{ key: "MILITAR", label: "Militar" },
+						{ key: "OBRERO", label: "Obrero" },
+						{ key: "POLICÍA", label: "Policía" },
+						{ key: "INDEPENDIENTE", label: "Independiente" },
+						{ key: "TÉCNICO", label: "Técnico" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="ABOGADO">Abogado</SelectItem>
-					<SelectItem className="text-gray-600" value="AGRICULTOR">Agricultor</SelectItem>
-					<SelectItem className="text-gray-600" value="AMA DE CASA">Ama de Casa</SelectItem>
-					<SelectItem className="text-gray-600" value="BOMBERO">Bombero</SelectItem>
-					<SelectItem className="text-gray-600" value="COMERCIANTE">Comerciante</SelectItem>
-					<SelectItem className="text-gray-600" value="CONTADOR">Contador</SelectItem>
-					<SelectItem className="text-gray-600" value="DESEMPLEADO">Desempleado</SelectItem>
-					<SelectItem className="text-gray-600" value="DOCENTE">Docente</SelectItem>
-					<SelectItem className="text-gray-600" value="EMPLEADO PRIVADO">Empleado Privado</SelectItem>
-					<SelectItem className="text-gray-600" value="EMPLEADO PÚBLICO">Empleado Público</SelectItem>
-					<SelectItem className="text-gray-600" value="EMPRESARIO">Empresario</SelectItem>
-					<SelectItem className="text-gray-600" value="ESTUDIANTE">Estudiante</SelectItem>
-					<SelectItem className="text-gray-600" value="INGENIERO">Ingeniero</SelectItem>
-					<SelectItem className="text-gray-600" value="JUBILADO">Jubilado</SelectItem>
-					<SelectItem className="text-gray-600" value="MÉDICO">Médico</SelectItem>
-					<SelectItem className="text-gray-600" value="MILITAR">Militar</SelectItem>
-					<SelectItem className="text-gray-600" value="OBRERO">Obrero</SelectItem>
-					<SelectItem className="text-gray-600" value="POLICÍA">Policía</SelectItem>
-					<SelectItem className="text-gray-600" value="INDEPENDIENTE">Independiente</SelectItem>
-					<SelectItem className="text-gray-600" value="TÉCNICO">Técnico</SelectItem>
+					{(item) => <SelectItem key={item.key} className="text-gray-600">
+						{item.label}
+					</SelectItem>}
 				</Select>
 				<Input className="w-full" label="Empresa" type="text" name="empresa" placeholder="Escribir nombre de la empresa" value={paciente.empresa} onChange={handleChange} />
 				<Select
 					isRequired
 					className="w-full"
 					label="Discapacidad"
-					name="discapacidad"
 					placeholder="¿Padece discapacidad?"
-					value={paciente.discapacidad}
-					onChange={handleChange}
+					selectedKeys={paciente.discapacidad !== null && paciente.discapacidad !== undefined ? [String(paciente.discapacidad)] : []}
+					onSelectionChange={(keys) =>
+						dispatch({ name: "discapacidad", value: parseInt(Array.from(keys)[0]) })
+					}
+					items={[
+						{ key: "1", label: "Sí" },
+						{ key: "0", label: "No" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="1">Sí</SelectItem>
-					<SelectItem className="text-gray-600" value="0">No</SelectItem>
+					{(item) => (
+						<SelectItem key={item.key} className="text-gray-600">
+							{item.label}
+						</SelectItem>
+					)}
 				</Select>
 				<Select
 					isRequired
 					className="w-full"
 					label="Orientación"
-					name="orientacion"
 					placeholder="Seleccionar la orientación"
-					value={paciente.orientacion}
-					onChange={handleChange}
+					selectedKeys={paciente.orientacion ? [paciente.orientacion] : []}
+					onSelectionChange={(keys) =>
+						dispatch({ name: "orientacion", value: Array.from(keys)[0] })
+					}
+					items={[
+						{ key: "NINGUNO", label: "Ninguno" },
+						{ key: "HETEROSEXUAL", label: "Heterosexual" },
+						{ key: "HOMOSEXUAL", label: "Homosexual" },
+						{ key: "OTRO", label: "Otro" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="NINGUNO">Ninguno</SelectItem>
-					<SelectItem className="text-gray-600" value="HETEROSEXUAL">Heterosexual</SelectItem>
-					<SelectItem className="text-gray-600" value="HOMOSEXUAL">Homosexual</SelectItem>
-					<SelectItem className="text-gray-600" value="OTRO">Otro</SelectItem>
+					{(item) => (
+						<SelectItem key={item.key} className="text-gray-600">
+							{item.label}
+						</SelectItem>
+					)}
 				</Select>
 
 				<Select
 					isRequired
 					className="w-full"
 					label="Identidad de Género"
-					name="identidad"
 					placeholder="Seleccionar identidad de género"
-					value={paciente.identidad}
-					onChange={handleChange}
+					selectedKeys={paciente.identidad ? [paciente.identidad] : []}
+					onSelectionChange={(keys) =>
+						dispatch({ name: "identidad", value: Array.from(keys)[0] })
+					}
+					items={[
+						{ key: "NINGUNO", label: "Ninguno" },
+						{ key: "CISGÉNERO", label: "Cisgénero" },
+						{ key: "BINARIO", label: "Binario" },
+						{ key: "NO BINARIO", label: "No Binario" },
+						{ key: "INTERSEXUAL", label: "Intersexual" },
+						{ key: "TRANSEXUAL", label: "Transexual" },
+						{ key: "TRANSGÉNERO", label: "Transgénero" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="NINGUNO">Ninguno</SelectItem>
-					<SelectItem className="text-gray-600" value="CISGÉNERO">Cisgénero</SelectItem>
-					<SelectItem className="text-gray-600" value="BINARIO">Binario</SelectItem>
-					<SelectItem className="text-gray-600" value="NO BINARIO">No Binario</SelectItem>
-					<SelectItem className="text-gray-600" value="INTERSEXUAL">Intersexual</SelectItem>
-					<SelectItem className="text-gray-600" value="TRANSEXUAL">Transexual</SelectItem>
-					<SelectItem className="text-gray-600" value="TRANSGÉNERO">Transgénero</SelectItem>
+					{(item) => (
+						<SelectItem key={item.key} className="text-gray-600">
+							{item.label}
+						</SelectItem>
+					)}
 				</Select>
 
 				<Select
 					isRequired
 					className="w-full"
 					label="Tipo de Paciente"
-					name="tipo_paciente"
 					placeholder="Seleccionar tipo de paciente"
-					value={paciente.tipo_paciente}
-					onChange={handleChange}
+					selectedKeys={paciente.tipo_paciente ? [paciente.tipo_paciente] : []}
+					onSelectionChange={(keys) =>
+						dispatch({ name: "tipo_paciente", value: Array.from(keys)[0] })
+					}
+					items={[
+						{ key: "CIVIL", label: "Civil" },
+						{ key: "MILITAR", label: "Militar" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="CIVIL">Civil</SelectItem>
-					<SelectItem className="text-gray-600" value="MILITAR">Militar</SelectItem>
+					{(item) => (
+						<SelectItem key={item.key} className="text-gray-600">
+							{item.label}
+						</SelectItem>
+					)}
 				</Select>
 
 				<Select
 					isRequired
 					className="w-full"
 					label="Estatus"
-					name="estatus"
-					placeholder="Selecconar el estatus"
-					value={paciente.estatus}
-					onChange={handleChange}
+					placeholder="Seleccionar el estatus"
+					selectedKeys={
+						paciente.estatus !== null && paciente.estatus !== undefined
+							? [String(paciente.estatus)]
+							: []
+					}
+					onSelectionChange={(keys) =>
+						dispatch({ name: "estatus", value: parseInt(Array.from(keys)[0]) })
+					}
+					items={[
+						{ key: "1", label: "Activo" },
+						{ key: "0", label: "Inactivo" },
+					]}
 				>
-					<SelectItem className="text-gray-600" value="1">Activo</SelectItem>
-					<SelectItem className="text-gray-600" value="0">Inactivo</SelectItem>
+					{(item) => (
+						<SelectItem key={item.key} className="text-gray-600">
+							{item.label}
+						</SelectItem>
+					)}
 				</Select>
 
 			</div>
