@@ -4,13 +4,14 @@ import axios from "axios";
 import { FaSearch, FaTimes, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
+import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro } from "@/utils/api";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 import ActualizarPaciente from "@/admin-dashboard/paciente/components/ActualizarPaciente";
+import ActualizarFamiliar from "@/admin-dashboard/paciente/components/ActualizarFamiliar";
 import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
 
 export default function ActualizarPacientePage() {
-
     const [query, setQuery] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -21,11 +22,15 @@ export default function ActualizarPacientePage() {
     const [selectedSeguro, setSelectedSeguro] = useState(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [activeTab, setActiveTab] = useState("datos-generales");
-	
-	const handlePacienteSelect = (paciente) => {
+
+
+
+    const handlePacienteSelect = (paciente) => {
         setSelectedPaciente(paciente);
+        fetchFamiliar(paciente.identificacion, setSelectedFamiliar);
         onOpenChange(false);
     };
+
 
     const buttons = [
 		{ label: "Buscar", icon: FaSearch, action: "buscar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", onClick: onOpen },
@@ -33,29 +38,38 @@ export default function ActualizarPacientePage() {
         { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
     ];
 
-    const tabsConfig = [
+   const tabsConfig = [
 	  {
-		key: "registrar-paciente",
+		key: "actualizar-paciente",
 		title: "1. Paciente",
 		content: (
 		  <ActualizarPaciente pacienteData={selectedPaciente} />
 		),
 	  },
+	  {
+		key: "actualizar-familiar",
+		title: "2. Familiar",
+		content: (
+		  <ActualizarFamiliar familiarData={selectedFamiliar} />
+		),
+	  },
 	];
+
 
     return (
         <div className="bg-white">
-			<NavbarComponent title="Actualizar Paciente" buttons={buttons} onAction={(action) => {
+            <NavbarComponent title="Actualizar Paciente" buttons={buttons} onAction={(action) => {
                 if (action === "buscar") onOpen();
                 else console.log(action);
             }} />
 
             <CustomTabs tabs={tabsConfig} />
-			
-			<ReusableModal isOpen={isOpen} onOpenChange={onOpenChange}>
-				<PacienteSearch onSelectPaciente={handlePacienteSelect} />
+
+            <ReusableModal isOpen={isOpen} onOpenChange={onOpenChange}>
+                <PacienteSearch onSelectPaciente={handlePacienteSelect} />
             </ReusableModal>
 
         </div>
     );
 }
+
