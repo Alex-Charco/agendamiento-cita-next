@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function PacienteSearch({ onSelectPaciente }) {
-    const [, setQuery] = useState("");
+    const [query, setQuery] = useState("");
     const [pacientes, setPacientes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);

@@ -68,6 +68,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
         {/* Campo de Nombre de Usuario - No Editable */}
         <Input
           isRequired
+		  isReadOnly
           className="w-full"
           label="Nombre usuario"
           name="nombre_usuario"

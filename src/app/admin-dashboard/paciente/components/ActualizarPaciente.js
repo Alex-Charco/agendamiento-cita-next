@@ -1,47 +1,81 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState, useEffect } from "react";
 import axios from "axios";
-import PacienteForm from "./PacienteForm";
+import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+import { useParams } from "next/navigation";
 
-export default function ActualizarPaciente({ pacienteId }) {
-    const [pacienteData, setPacienteData] = useState(null);
+export default function ActualizarPaciente({ pacienteData }) {
+  const [mensaje, setMensaje] = useState("");
+  const [datosPaciente, setDatosPaciente] = useState(pacienteData || null);
 
-    useEffect(() => {
-        const fetchPaciente = async () => {
-            try {
-                const token = localStorage.getItem("authToken");
-                const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/get/${pacienteId}`;
-                const response = await axios.get(apiUrl, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setPacienteData(response.data.paciente);
-            } catch (error) {
-                console.error("Error al obtener los datos del paciente:", error);
-            }
-        };
-
-        if (pacienteId) {
-            fetchPaciente();
-        }
-    }, [pacienteId]);
-
-    const handleFormSubmit = (data) => {
-        console.log("Paciente actualizado:", data);
-        // Aquí puedes redirigir a otra página o mostrar un mensaje de éxito
-    };
-
-    if (!pacienteData) {
-        return <p>Cargando datos del paciente...</p>;
+  useEffect(() => {
+    if (pacienteData) {
+      setDatosPaciente(pacienteData);
     }
+  }, [pacienteData]);
 
-    return (
-        <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-            <h1 className="text-3xl font-bold text-blue-900 mb-6">Actualizar Paciente</h1>
-            <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
-                <PacienteForm onSubmit={handleFormSubmit} pacienteData={pacienteData} />
-            </div>
-        </div>
-    );
+  const handleFormSubmit = async (data) => {
+    try {
+        const token = localStorage.getItem("authToken");
+        const pacienteId = localStorage.getItem("identificacion"); // ← obtén identificación guardada
+
+        console.log("🔍 Token desde localStorage:", token);
+        console.log("🔍 Identificación del paciente desde localStorage:", pacienteId);
+
+        if (!token) {
+            setMensaje("No se encontró el token de autenticación.");
+            return;
+        }
+
+        if (!pacienteId) {
+            console.error("❌ No se encontró identificación del paciente en localStorage");
+            setMensaje("No se encontró la identificación del paciente. Por favor, vuelve a iniciar sesión.");
+            return;
+        }
+
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/put/${pacienteId}`;
+        console.log("Enviando datos a:", apiUrl);
+        console.log("Datos:", data);
+
+        const response = await axios.put(
+            apiUrl,
+            JSON.stringify(data),
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        console.log("✅ Respuesta de la API:", response.data);
+
+        Swal.fire({
+            title: "Paciente actualizado!",
+            icon: "success",
+            confirmButtonText: "OK"
+        });
+
+    } catch (error) {
+        console.error("❌ Error al actualizar paciente:", error.response?.data || error.message);
+        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+    }
+};
+
+
+  return (
+    <div className="min-h-screen p-6 flex flex-col items-center">
+      <div>
+        {datosPaciente ? (
+          <PacienteForm onSubmit={handleFormSubmit} pacienteData={datosPaciente} />
+        ) : (
+          <p>Buscar paciente para modificar paciente</p>
+        )}
+        {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
+      </div>
+    </div>
+  );
 }
