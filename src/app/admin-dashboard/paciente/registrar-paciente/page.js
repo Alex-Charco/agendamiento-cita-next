@@ -9,6 +9,7 @@ import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsua
 import RegistrarPaciente from "@/admin-dashboard/paciente/components/RegistrarPaciente";
 import RegistrarFamiliar from "@/admin-dashboard/paciente/components/RegistrarFamiliar";
 import RegistrarInfoMilitar from "@/admin-dashboard/paciente/components/RegistrarInfoMilitar";
+import RegistrarResidencia from "@/admin-dashboard/paciente/components/RegistrarResidencia";
 
 export default function RegistrarPacientePage() {
 
@@ -82,19 +83,9 @@ export default function RegistrarPacientePage() {
             key: "residencia",
             title: "5. Residencia",
             content: selectedResidencia ? (
-                <div className="ml-5">
-                    <h2 className="text-lg font-semibold text-gray-700">Información de Residencia</h2>
-                    <p className="text-gray-600"><strong>Lugar de Nacimiento:</strong> {selectedResidencia.lugar_nacimiento}</p>
-                    <p className="text-gray-600"><strong>País:</strong> {selectedResidencia.pais}</p>
-                    <p className="text-gray-600"><strong>Nacionalidad:</strong> {selectedResidencia.nacionalidad}</p>
-                    <p className="text-gray-600"><strong>Provincia:</strong> {selectedResidencia.provincia}</p>
-                    <p className="text-gray-600"><strong>Cantón:</strong> {selectedResidencia.canton}</p>
-                    <p className="text-gray-600"><strong>Parroquia:</strong> {selectedResidencia.parroquia}</p>
-                    <p className="text-gray-600"><strong>Dirección:</strong> {selectedResidencia.direccion}</p>
-                    <p className="text-gray-600"><strong>Fecha de Registro:</strong> {new Date(selectedResidencia.fecha_registro).toLocaleDateString()}</p>
-                </div>
+                <RegistrarResidencia residencia={selectedResidencia} />
             ) : (
-                <p>No se han encontrado datos de residencia para el paciente.</p>
+                <RegistrarResidencia /> 
             ),
         },
         {
