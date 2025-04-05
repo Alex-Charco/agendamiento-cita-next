@@ -7,6 +7,7 @@ import CustomTabs from "@/components/CustomTabs";
 import { useDisclosure } from "@heroui/react";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
 import RegistrarPaciente from "@/admin-dashboard/paciente/components/RegistrarPaciente";
+import RegistrarFamiliar from "@/admin-dashboard/paciente/components/RegistrarFamiliar";
 
 export default function RegistrarPacientePage() {
 
@@ -46,7 +47,7 @@ export default function RegistrarPacientePage() {
             content: selectedUsuario ? (
                 <RegistrarUsuario usuario={selectedUsuario} /> // Pasa el paciente al formulario para editar
             ) : (
-                <RegistrarUsuario /> // Si no hay paciente seleccionado, muestra el formulario vacío para registrar un nuevo paciente
+                <RegistrarUsuario /> // Si no hay usuario seleccionado, muestra el formulario vacío para registrar un nuevo paciente
             ),
         },
         {
@@ -55,26 +56,17 @@ export default function RegistrarPacientePage() {
             content: selectedPaciente ? (
                 <RegistrarPaciente paciente={selectedPaciente} /> // Pasa el paciente al formulario para editar
             ) : (
-                <RegistrarPaciente /> // Si no hay paciente seleccionado, muestra el formulario vacío para registrar un nuevo paciente
+                <RegistrarPaciente /> 
             ),
         },
         {
             key: "familiar",
             title: "3. Familiar",
             content: selectedFamiliar ? (
-                <div className="ml-5">
-                    <h2 className="text-lg font-semibold text-gray-700">Información Familiar</h2>
-                    <p className="text-gray-600"><strong>Nombre:</strong> {`${selectedFamiliar.primer_nombre} ${selectedFamiliar.segundo_nombre} ${selectedFamiliar.primer_apellido} ${selectedFamiliar.segundo_apellido}`}</p>
-                    <p className="text-gray-600"><strong>Relación:</strong> {selectedFamiliar.relacion}</p>
-                    <p className="text-gray-600"><strong>Identificacion</strong> {selectedFamiliar.identificacion}</p>
-                    <p className="text-gray-600"><strong>Celular:</strong> {selectedFamiliar.celular}</p>
-                    <p className="text-gray-600"><strong>Teléfono:</strong> {selectedFamiliar.telefono}</p>
-                    <p className="text-gray-600"><strong>Correo:</strong> {selectedFamiliar.correo}</p>
-                    <p className="text-gray-600"><strong>Dirección:</strong> {selectedFamiliar.direccion}</p>
-                </div>
+                <RegistrarFamiliar familiar={selectedFamiliar} />
             ) : (
-                <p>No se ha seleccionado ningún familiar.</p>
-            )
+                <RegistrarFamiliar /> 
+            ),
         },
         {
             key: "informacion-militar",

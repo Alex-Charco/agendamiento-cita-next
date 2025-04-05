@@ -73,7 +73,7 @@ export default function PacienteForm({ onSubmit, pacienteData = {} }) {
           name="nombre_usuario"
           type="text"
           value={paciente.nombre_usuario}
-          readOnly // Hace que el input no sea editable
+          onChange={handleChange}
         />
         <Input
           isRequired

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function PacienteSearch({ onSelectPaciente }) {
-    const [query, setQuery] = useState("");
+    const [, setQuery] = useState("");
     const [pacientes, setPacientes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ export default function PacienteSearch({ onSelectPaciente }) {
         if (!query.trim()) return;
         setLoading(true);
         setError(null);
-        setPacientes([]);
+        setPacientes([]);query
 
         try {
             const token = localStorage.getItem('authToken');
