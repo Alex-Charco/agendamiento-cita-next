@@ -10,6 +10,7 @@ import RegistrarPaciente from "@/admin-dashboard/paciente/components/RegistrarPa
 import RegistrarFamiliar from "@/admin-dashboard/paciente/components/RegistrarFamiliar";
 import RegistrarInfoMilitar from "@/admin-dashboard/paciente/components/RegistrarInfoMilitar";
 import RegistrarResidencia from "@/admin-dashboard/paciente/components/RegistrarResidencia";
+import RegistrarSeguro from "@/admin-dashboard/paciente/components/RegistrarSeguro";
 
 export default function RegistrarPacientePage() {
 
@@ -56,7 +57,7 @@ export default function RegistrarPacientePage() {
             key: "registrar-paciente",
             title: "2. Paciente",
             content: selectedPaciente ? (
-                <RegistrarPaciente paciente={selectedPaciente} /> // Pasa el paciente al formulario para editar
+                <RegistrarPaciente paciente={selectedPaciente} />
             ) : (
                 <RegistrarPaciente /> 
             ),
@@ -92,18 +93,9 @@ export default function RegistrarPacientePage() {
             key: "seguro",
             title: "6. Seguro",
             content: selectedSeguro ? (
-                <div className="ml-5">
-                    <h2 className="text-lg font-semibold text-gray-700">Información del Seguro</h2>
-                    <p className="text-gray-600"><strong>Tipo de Seguro:</strong> {selectedSeguro.tipo}</p>
-                    <p className="text-gray-600"><strong>Beneficiario:</strong> {selectedSeguro.beneficiario}</p>
-                    <p className="text-gray-600"><strong>Código:</strong> {selectedSeguro.codigo}</p>
-                    <p className="text-gray-600"><strong>Cobertura:</strong> {selectedSeguro.cobertura}</p>
-                    <p className="text-gray-600"><strong>Porcentaje:</strong> {selectedSeguro.porcentaje}</p>
-                    <p className="text-gray-600"><strong>Fecha de Inicio:</strong> {new Date(selectedSeguro.fecha_inicio).toLocaleDateString()}</p>
-                    <p className="text-gray-600"><strong>Fecha de Fin:</strong> {new Date(selectedSeguro.fecha_fin).toLocaleDateString()}</p>
-                </div>
+                <RegistrarSeguro seguro={selectedSeguro} />
             ) : (
-                <p>No se han encontrado datos de seguro para el paciente.</p>
+                <RegistrarSeguro /> 
             ),
         },
     ];
