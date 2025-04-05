@@ -2,20 +2,20 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import FamiliarForm from "@/admin-dashboard/paciente/components/FamiliarForm";
+import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import { useParams } from "next/navigation";
 
-export default function ActualizarFamiliar({ familiarData }) {
+export default function ActualizarInfoMilitar({ infoMilitarData }) {
   const [mensaje, setMensaje] = useState("");
-  const [datosFamiliar, setDatosFamiliar] = useState(familiarData || null);
+  const [datosInfoMilitar, setDatosInfoMilitar] = useState(infoMilitarData || null);
 
   useEffect(() => {
-    if (familiarData) {
-      setDatosFamiliar(familiarData);
+    if (infoMilitarData) {
+      setDatosInfoMilitar(infoMilitarData);
     }
-  }, [familiarData]);
+  }, [infoMilitarData]);
 
   const handleFormSubmit = async (data) => {
     try {
@@ -36,7 +36,7 @@ export default function ActualizarFamiliar({ familiarData }) {
             return;
         }
 
-        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/familiar/put/${pacienteId}`;
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/info-militar/put/${pacienteId}`;
         console.log("Enviando datos a:", apiUrl);
         console.log("Datos:", data);
 
@@ -54,13 +54,13 @@ export default function ActualizarFamiliar({ familiarData }) {
         console.log("✅ Respuesta de la API:", response.data);
 
         Swal.fire({
-            title: "Datos Familiar actualizado!",
+            title: "Información militar actualizada!",
             icon: "success",
             confirmButtonText: "OK"
         });
 
     } catch (error) {
-        console.error("❌ Error al actualizar datos de familiar:", error.response?.data || error.message);
+        console.error("❌ Error al actualizar información militar:", error.response?.data || error.message);
         setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
     }
 };
@@ -69,8 +69,8 @@ export default function ActualizarFamiliar({ familiarData }) {
   return (
     <div className="min-h-screen p-6 flex flex-col items-center">
       <div>
-        {datosFamiliar ? (
-          <FamiliarForm onSubmit={handleFormSubmit} familiarData={datosFamiliar} />
+        {datosInfoMilitar ? (
+          <InfoMilitarForm onSubmit={handleFormSubmit} infoMilitarData={datosInfoMilitar} />
         ) : (
           <p>Buscar paciente para modificar paciente</p>
         )}

@@ -8,6 +8,7 @@ import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro } from "@
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 import ActualizarPaciente from "@/admin-dashboard/paciente/components/ActualizarPaciente";
 import ActualizarFamiliar from "@/admin-dashboard/paciente/components/ActualizarFamiliar";
+import ActualizarInfoMilitar from "@/admin-dashboard/paciente/components/ActualizarInfoMilitar";
 import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
 
@@ -28,12 +29,13 @@ export default function ActualizarPacientePage() {
     const handlePacienteSelect = (paciente) => {
         setSelectedPaciente(paciente);
         fetchFamiliar(paciente.identificacion, setSelectedFamiliar);
+		fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar);
         onOpenChange(false);
     };
 
 
     const buttons = [
-		{ label: "Buscar", icon: FaSearch, action: "buscar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", onClick: onOpen },
+		{ label: "Buscar Paciente", icon: FaSearch, action: "buscar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", onClick: onOpen },
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
         { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
     ];
@@ -51,6 +53,13 @@ export default function ActualizarPacientePage() {
 		title: "2. Familiar",
 		content: (
 		  <ActualizarFamiliar familiarData={selectedFamiliar} />
+		),
+	  },
+	  {
+		key: "informacion-militar",
+		title: "3. Información Militar",
+		content: (
+		  <ActualizarInfoMilitar infoMilitarData={selectedInfoMilitar} />
 		),
 	  },
 	];
