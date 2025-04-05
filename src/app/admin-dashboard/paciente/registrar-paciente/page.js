@@ -8,6 +8,7 @@ import { useDisclosure } from "@heroui/react";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
 import RegistrarPaciente from "@/admin-dashboard/paciente/components/RegistrarPaciente";
 import RegistrarFamiliar from "@/admin-dashboard/paciente/components/RegistrarFamiliar";
+import RegistrarInfoMilitar from "@/admin-dashboard/paciente/components/RegistrarInfoMilitar";
 
 export default function RegistrarPacientePage() {
 
@@ -72,15 +73,9 @@ export default function RegistrarPacientePage() {
             key: "informacion-militar",
             title: "4. Info Militar",
             content: selectedInfoMilitar ? (
-                <div className="ml-5">
-                    <h2 className="text-lg font-semibold text-gray-700">Información Militar</h2>
-                    <p className="text-gray-600"><strong>Cargo:</strong> {selectedInfoMilitar.cargo}</p>
-                    <p className="text-gray-600"><strong>Grado:</strong> {selectedInfoMilitar.grado}</p>
-                    <p className="text-gray-600"><strong>Fuerza:</strong> {selectedInfoMilitar.fuerza}</p>
-                    <p className="text-gray-600"><strong>Unidad:</strong> {selectedInfoMilitar.unidad}</p>
-                </div>
+                <RegistrarInfoMilitar infoMilitar={selectedInfoMilitar} />
             ) : (
-                <p>No se han encontrado datos militares para el paciente.</p>
+                <RegistrarInfoMilitar /> 
             ),
         },
         {

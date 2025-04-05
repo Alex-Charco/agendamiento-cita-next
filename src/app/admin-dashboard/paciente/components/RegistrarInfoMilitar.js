@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import axios from "axios";
-import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
+import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
-//import Link from "next/link";
 
-export default function RegistrarPaciente() {
+export default function RegistrarInfoMilitar() {
     const [mensaje, setMensaje] = useState("");
 
     const handleFormSubmit = async (data) => {
@@ -15,10 +14,7 @@ export default function RegistrarPaciente() {
             const token = localStorage.getItem("authToken");
             if (!token) throw new Error("No se encontró un token de autenticación.");
 
-            // Guardar la contraseña en localStorage
-            localStorage.setItem("identificacion", data.identificacion);
-
-            const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/registrar`;
+            const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/info-militar/registrar`;
             console.log("Enviando datos a:", apiUrl);
             console.log("Datos:", data);
             console.log("Token de autenticación:", token);
@@ -38,14 +34,14 @@ export default function RegistrarPaciente() {
 
             // Muestra la alerta de registro exitoso
             Swal.fire({
-                title: "Paciente registrado!",
+                title: "Información Militar registrada!",
                 icon: "success",
                 draggable: true,
                 confirmButtonText: "OK"
             }).then((result) => {
             });
         } catch (error) {
-            console.error("Error al registrar paciente:", error.response?.data || error.message);
+            console.error("Error al registrar información militar:", error.response?.data || error.message);
             setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
         }
     };
@@ -53,7 +49,7 @@ export default function RegistrarPaciente() {
     return (
         <div className="min-h-screen p-6 flex flex-col items-center">
             <div>
-                <PacienteForm onSubmit={handleFormSubmit} />
+                <InfoMilitarForm onSubmit={handleFormSubmit} />
                 {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
             </div>
         </div>
