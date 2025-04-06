@@ -2,20 +2,20 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
+import ResidenciaForm from "@/admin-dashboard/paciente/components/ResidenciaForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import { useParams } from "next/navigation";
 
-export default function ActualizarInfoMilitar({ infoMilitarData }) {
+export default function ActualizarResidencia({ residenciaData }) {
   const [mensaje, setMensaje] = useState("");
-  const [datosInfoMilitar, setDatosInfoMilitar] = useState(infoMilitarData || null);
+  const [datosResidencia, setDatosResidencia] = useState(residenciaData || null);
 
   useEffect(() => {
-    if (infoMilitarData) {
-      setDatosInfoMilitar(infoMilitarData);
+    if (residenciaData) {
+      setDatosResidencia(residenciaData);
     }
-  }, [infoMilitarData]);
+  }, [residenciaData]);
 
   const handleFormSubmit = async (data) => {
     try {
@@ -36,7 +36,7 @@ export default function ActualizarInfoMilitar({ infoMilitarData }) {
             return;
         }
 
-        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/info-militar/put/${pacienteId}`;
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/residencia/put/${pacienteId}`;
         console.log("Enviando datos a:", apiUrl);
         console.log("Datos:", data);
 
@@ -54,13 +54,13 @@ export default function ActualizarInfoMilitar({ infoMilitarData }) {
         console.log("✅ Respuesta de la API:", response.data);
 
         Swal.fire({
-            title: "Información militar actualizada!",
+            title: "Residencia actualizada!",
             icon: "success",
             confirmButtonText: "OK"
         });
 
     } catch (error) {
-        console.error("❌ Error al actualizar información militar:", error.response?.data || error.message);
+        console.error("❌ Error al actualizar residencia:", error.response?.data || error.message);
         setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
     }
 };
@@ -69,10 +69,10 @@ export default function ActualizarInfoMilitar({ infoMilitarData }) {
   return (
     <div className="min-h-screen p-6 flex flex-col items-center">
       <div>
-        {datosInfoMilitar ? (
-          <InfoMilitarForm onSubmit={handleFormSubmit} infoMilitarData={datosInfoMilitar} />
+        {datosResidencia ? (
+          <ResidenciaForm onSubmit={handleFormSubmit} ResidenciaData={datosResidencia} />
         ) : (
-          <p>Buscar paciente para modificar información militar</p>
+          <p>Buscar paciente para modificar residencia</p>
         )}
         {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
       </div>

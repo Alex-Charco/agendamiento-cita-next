@@ -72,7 +72,7 @@ export default function ActualizarFamiliar({ familiarData }) {
         {datosFamiliar ? (
           <FamiliarForm onSubmit={handleFormSubmit} familiarData={datosFamiliar} />
         ) : (
-          <p>Buscar paciente para modificar paciente</p>
+          <p>Buscar paciente para modificar familiar</p>
         )}
         {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
       </div>

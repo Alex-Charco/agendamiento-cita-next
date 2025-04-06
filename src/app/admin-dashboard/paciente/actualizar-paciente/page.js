@@ -9,6 +9,7 @@ import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch
 import ActualizarPaciente from "@/admin-dashboard/paciente/components/ActualizarPaciente";
 import ActualizarFamiliar from "@/admin-dashboard/paciente/components/ActualizarFamiliar";
 import ActualizarInfoMilitar from "@/admin-dashboard/paciente/components/ActualizarInfoMilitar";
+import ActualizarResidencia from "@/admin-dashboard/paciente/components/ActualizarResidencia";
 import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
 
@@ -30,6 +31,7 @@ export default function ActualizarPacientePage() {
         setSelectedPaciente(paciente);
         fetchFamiliar(paciente.identificacion, setSelectedFamiliar);
 		fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar);
+		fetchResidencia(paciente.identificacion, setSelectedResidencia);
         onOpenChange(false);
     };
 
@@ -60,6 +62,13 @@ export default function ActualizarPacientePage() {
 		title: "3. Información Militar",
 		content: (
 		  <ActualizarInfoMilitar infoMilitarData={selectedInfoMilitar} />
+		),
+	  },
+	  {
+		key: "residencia",
+		title: "4. Residencia",
+		content: (
+		  <ActualizarResidencia residenciaData={selectedResidencia} />
 		),
 	  },
 	];
