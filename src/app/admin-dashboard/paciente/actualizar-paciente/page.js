@@ -12,6 +12,7 @@ import ActualizarResidencia from "@/admin-dashboard/paciente/components/Actualiz
 import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSeguro";
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
+import { FaTimes, FaSignOutAlt } from "react-icons/fa";
 
 export default function ActualizarPacientePage() {
 	const [selectedPaciente, setSelectedPaciente] = useState(null);
