@@ -45,7 +45,6 @@ export default function ActualizarPacientePage() {
 	};
 
 	const buttons = [
-		{ label: "Buscar Paciente", icon: FaSearch, action: "buscar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", onClick: onOpen },
 		{ label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
 		{ label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
 	];
@@ -55,7 +54,14 @@ export default function ActualizarPacientePage() {
 			key: "actualizar-paciente",
 			title: "1. Paciente",
 			content: (
-				<ActualizarPaciente pacienteData={selectedPaciente} />
+				<div className="flex flex-col lg:flex-row gap-6">
+					<div className="lg:w-1/2">
+						<PacienteSearch onSelectPaciente={handlePacienteSelect} />
+					</div>
+					<div className="lg:w-1/2">
+						<ActualizarPaciente pacienteData={selectedPaciente} />
+					</div>
+				</div>
 			),
 		},
 		{
@@ -105,16 +111,10 @@ export default function ActualizarPacientePage() {
 
 	return (
 		<div className="bg-white">
-			<NavbarComponent title="Actualizar Paciente y Usuario" buttons={buttons} onAction={(action) => {
-				if (action === "buscar") onOpen();
-				else console.log(action);
+			<NavbarComponent title="Actualizar Paciente y Usuario" buttons={buttons} onAction={() => {
 			}} />
 
 			<CustomTabs tabs={tabsConfig} />
-
-			<ReusableModal isOpen={isOpen} onOpenChange={onOpenChange}>
-				<PacienteSearch onSelectPaciente={handlePacienteSelect} />
-			</ReusableModal>
 
 		</div>
 	);
