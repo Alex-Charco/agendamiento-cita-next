@@ -15,9 +15,6 @@ export default function RegistrarInfoMilitar() {
             if (!token) throw new Error("No se encontró un token de autenticación.");
 
             const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/info-militar/registrar`;
-            console.log("Enviando datos a:", apiUrl);
-            console.log("Datos:", data);
-            console.log("Token de autenticación:", token);
 
             const response = await axios.post(
                 apiUrl,
@@ -29,8 +26,6 @@ export default function RegistrarInfoMilitar() {
                     },
                 }
             );
-
-            console.log("Respuesta del servidor:", response.data);
 
             // Muestra la alerta de registro exitoso
             Swal.fire({

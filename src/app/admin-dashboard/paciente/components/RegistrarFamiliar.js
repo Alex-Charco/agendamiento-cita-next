@@ -14,27 +14,21 @@ export default function RegistrarFamiliar() {
             const token = localStorage.getItem("authToken");
             const pacienteId = data.identificacion_paciente; // se toma del formulario
 
-            console.log("🔍 Token desde localStorage:", token);
-            console.log("🔍 Identificación del paciente desde el formulario:", pacienteId);
-
             if (!token) {
                 setMensaje("No se encontró el token de autenticación.");
                 return;
             }
 
             if (!pacienteId) {
-                console.error("❌ No se encontró 'identificacion_paciente' en el formulario");
                 setMensaje("No se encontró la identificación del paciente. Por favor, vuelve a iniciar sesión.");
                 return;
             }
 
             const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/familiar/registrar/${pacienteId}`;
-            console.log("🌐 URL construida para la API:", apiUrl);
 
             // 🧹 Eliminar `identificacion_paciente` del cuerpo de datos antes de enviarlo
             const { identificacion_paciente, ...dataSinIdentificacionPaciente } = data;
 
-            console.log("📦 Datos a enviar en el body:", dataSinIdentificacionPaciente);
 
             const response = await axios.post(apiUrl, JSON.stringify(dataSinIdentificacionPaciente), {
                 headers: {
@@ -42,8 +36,6 @@ export default function RegistrarFamiliar() {
                     "Content-Type": "application/json",
                 },
             });
-
-            console.log("✅ Respuesta de la API:", response.data);
 
             Swal.fire({
                 title: "Familiar registrado!",

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { FaSearch, FaTimes, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro } from "@/utils/api";
@@ -13,8 +12,6 @@ import ActualizarResidencia from "@/admin-dashboard/paciente/components/Actualiz
 import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSeguro";
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
-import ReusableModal from "@/components/ReusableModal";
-import { useDisclosure } from "@heroui/react";
 
 export default function ActualizarPacientePage() {
 	const [selectedPaciente, setSelectedPaciente] = useState(null);
@@ -23,7 +20,6 @@ export default function ActualizarPacientePage() {
 	const [selectedResidencia, setSelectedResidencia] = useState(null);
 	const [selectedSeguro, setSelectedSeguro] = useState(null);
 	const [selectedUsuario, setSelectedUsuario] = useState(null);
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	const handleUsuarioSelect = (usuario) => {
 		const datosMapeados = {

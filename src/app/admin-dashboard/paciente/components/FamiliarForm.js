@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useReducer, useEffect } from "react";
 import { FaHospitalUser } from "react-icons/fa";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
@@ -25,7 +26,7 @@ function reducer(state, action) {
   return { ...state, [action.name]: action.value };
 }
 
-export default function FamiliarForm({ onSubmit, familiarData = {} }) {
+function FamiliarForm({ onSubmit, familiarData = {} }) {
   const [familiar, dispatch] = useReducer(reducer, {
     ...initialState,
     ...familiarData,
@@ -243,3 +244,11 @@ export default function FamiliarForm({ onSubmit, familiarData = {} }) {
     </form>
   );
 }
+
+// Validación de props
+FamiliarForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired, // Validación para 'onSubmit'
+  familiarData: PropTypes.object, // Prop 'familiarData' es opcional
+};
+
+export default FamiliarForm;

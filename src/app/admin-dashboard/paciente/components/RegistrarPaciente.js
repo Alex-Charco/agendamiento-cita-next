@@ -5,7 +5,6 @@ import axios from "axios";
 import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
-//import Link from "next/link";
 
 export default function RegistrarPaciente() {
     const [mensaje, setMensaje] = useState("");
@@ -19,9 +18,6 @@ export default function RegistrarPaciente() {
             localStorage.setItem("identificacion", data.identificacion);
 
             const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/registrar`;
-            console.log("Enviando datos a:", apiUrl);
-            console.log("Datos:", data);
-            console.log("Token de autenticación:", token);
 
             const response = await axios.post(
                 apiUrl,
@@ -33,8 +29,6 @@ export default function RegistrarPaciente() {
                     },
                 }
             );
-
-            console.log("Respuesta del servidor:", response.data);
 
             // Muestra la alerta de registro exitoso
             Swal.fire({

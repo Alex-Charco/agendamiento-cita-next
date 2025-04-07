@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { FaTimes, FaSearch, FaPlus, FaCalendarAlt, FaSave } from "react-icons/fa";
 import {
   Navbar,
   NavbarBrand,
