@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
 import { FaTimes, FaSearch, FaPlus, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
@@ -11,18 +10,12 @@ import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
 
 export default function ConsultaPacientePage() {
-    const [query, setQuery] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [selectedPaciente, setSelectedPaciente] = useState(null);
     const [selectedFamiliar, setSelectedFamiliar] = useState(null);
     const [selectedInfoMilitar, setSelectedInfoMilitar] = useState(null);
     const [selectedResidencia, setSelectedResidencia] = useState(null);
     const [selectedSeguro, setSelectedSeguro] = useState(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [activeTab, setActiveTab] = useState("datos-generales");
-
-
 
     const handlePacienteSelect = (paciente) => {
         setSelectedPaciente(paciente);
@@ -32,7 +25,6 @@ export default function ConsultaPacientePage() {
         fetchSeguro(paciente.identificacion, setSelectedSeguro);
         onOpenChange(false);
     };
-
 
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },

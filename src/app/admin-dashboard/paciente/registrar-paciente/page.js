@@ -1,6 +1,6 @@
 "use client";
+
 import { useState } from "react";
-import axios from "axios";
 import { FaTimes, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
@@ -14,29 +14,12 @@ import RegistrarSeguro from "@/admin-dashboard/paciente/components/RegistrarSegu
 
 export default function RegistrarPacientePage() {
 
-    const [query, setQuery] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [selectedUsuario, setSelectedUsuario] = useState(null);
-    const [selectedPaciente, setSelectedPaciente] = useState(null);
-    const [selectedFamiliar, setSelectedFamiliar] = useState(null);
-    const [selectedInfoMilitar, setSelectedInfoMilitar] = useState(null);
-    const [selectedResidencia, setSelectedResidencia] = useState(null);
-    const [selectedSeguro, setSelectedSeguro] = useState(null);
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [activeTab, setActiveTab] = useState("datos-generales");
-
-
-
-    /*const handlePacienteSelect = (paciente) => {
-        setSelectedPaciente(paciente);
-        fetchFamiliar(paciente.identificacion, setSelectedFamiliar);
-        fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar);
-        fetchResidencia(paciente.identificacion, setSelectedResidencia);
-        fetchSeguro(paciente.identificacion, setSelectedSeguro);
-        onOpenChange(false);
-    };*/
-
+    const [selectedUsuario ] = useState(null);
+    const [selectedPaciente ] = useState(null);
+    const [selectedFamiliar ] = useState(null);
+    const [selectedInfoMilitar ] = useState(null);
+    const [selectedResidencia ] = useState(null);
+    const [selectedSeguro ] = useState(null);
 
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },

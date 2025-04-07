@@ -15,13 +15,13 @@ const HomePage = () => {
         menuServices={[
           { name: "Cita", path: "/common/crear-cita" },
           { name: "Horario", path: "/common/cancelar-cita" },
-		  { name: "Médico", path: "/common/consulta-medico" },
-		  {
+          { name: "Médico", path: "/common/consulta-medico" },
+          {
             name: "Paciente",
             subMenu: [
               { name: "Actualizar Paciente", path: "/admin-dashboard/paciente/actualizar-paciente" },
-			  { name: "Consultar Paciente", path: "/admin-dashboard/paciente/consultar-paciente" },
-			  { name: "Registrar Paciente", path: "/admin-dashboard/paciente/registrar-paciente" },
+              { name: "Consultar Paciente", path: "/admin-dashboard/paciente/consultar-paciente" },
+              { name: "Registrar Paciente", path: "/admin-dashboard/paciente/registrar-paciente" },
             ],
           }
         ]}
