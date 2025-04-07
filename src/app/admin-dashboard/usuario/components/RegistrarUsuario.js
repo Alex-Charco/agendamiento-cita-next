@@ -5,7 +5,6 @@ import axios from "axios";
 import UsuarioForm from "@/admin-dashboard/usuario/components/UsuarioForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
-//import Link from "next/link";
 
 export default function RegistrarUsuario() {
     const [mensaje, setMensaje] = useState("");
@@ -19,9 +18,6 @@ export default function RegistrarUsuario() {
             localStorage.setItem("nombre_usuario", data.nombre_usuario);
 
             const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/register`;
-            console.log("Enviando datos a:", apiUrl);
-            console.log("Datos:", data);
-            console.log("Token de autenticación:", token);
 
             const response = await axios.post(
                 apiUrl,
