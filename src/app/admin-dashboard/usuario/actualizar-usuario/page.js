@@ -22,7 +22,7 @@ export default function ActualizarUsuarioPage() {
   const handleUsuarioSelect = (usuario) => {
     const datosMapeados = {
       nombre_usuario: usuario.nombre_usuario,
-      estatus: usuario.rol?.estatus ?? "", // ← viene dentro de `rol`
+      estatus: usuario.estatus ?? "", // ← viene dentro de `rol`
       nombre_rol: usuario.rol?.nombre_rol ?? "", // ← también dentro de `rol`
     };
     console.log("🧾 Usuario seleccionado:", usuario);
@@ -54,6 +54,8 @@ export default function ActualizarUsuarioPage() {
         if (action === "buscar") onOpen();
         else console.log(action);
       }} />
+	  
+	  <UsuarioSearch onSelectUsuario={handleUsuarioSelect} />
 
       <CustomTabs tabs={tabsConfig} />
 
@@ -61,6 +63,7 @@ export default function ActualizarUsuarioPage() {
         <UsuarioSearch onSelectUsuario={handleUsuarioSelect} />
       </ReusableModal>
 
+	  
     </div>
   );
 }

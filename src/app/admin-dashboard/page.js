@@ -13,17 +13,17 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       <NavbarComponent
         menuServices={[
-          {
+          { name: "Cita", path: "/common/crear-cita" },
+          { name: "Horario", path: "/common/cancelar-cita" },
+		  { name: "Médico", path: "/common/consulta-medico" },
+		  {
             name: "Paciente",
             subMenu: [
               { name: "Actualizar Paciente", path: "/admin-dashboard/paciente/actualizar-paciente" },
 			  { name: "Consultar Paciente", path: "/admin-dashboard/paciente/consultar-paciente" },
 			  { name: "Registrar Paciente", path: "/admin-dashboard/paciente/registrar-paciente" },
-              { name: "Consulta Médico", path: "/common/consulta-medico" },
             ],
-          },
-          { name: "Cita", path: "/common/crear-cita" },
-          { name: "Horario", path: "/common/cancelar-cita" },
+          }
         ]}
         showExtraOptions={true}
       />

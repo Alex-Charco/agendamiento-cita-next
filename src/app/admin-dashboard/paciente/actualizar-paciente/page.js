@@ -11,6 +11,8 @@ import ActualizarFamiliar from "@/admin-dashboard/paciente/components/Actualizar
 import ActualizarInfoMilitar from "@/admin-dashboard/paciente/components/ActualizarInfoMilitar";
 import ActualizarResidencia from "@/admin-dashboard/paciente/components/ActualizarResidencia";
 import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSeguro";
+import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
+import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
 import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
 
@@ -23,10 +25,19 @@ export default function ActualizarPacientePage() {
     const [selectedInfoMilitar, setSelectedInfoMilitar] = useState(null);
     const [selectedResidencia, setSelectedResidencia] = useState(null);
     const [selectedSeguro, setSelectedSeguro] = useState(null);
+	const [selectedUsuario, setSelectedUsuario] = useState(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [activeTab, setActiveTab] = useState("datos-generales");
 
-
+	const handleUsuarioSelect = (usuario) => {
+	  const datosMapeados = {
+		nombre_usuario: usuario.nombre_usuario,
+		estatus: usuario.estatus ?? "",
+		nombre_rol: usuario.rol?.nombre_rol ?? "",
+	  };
+	  console.log("🧾 Usuario seleccionado:", usuario);
+	  setSelectedUsuario(datosMapeados); // ✅ Aquí ahora sí estás enviando lo necesario
+	};
 
     const handlePacienteSelect = (paciente) => {
         setSelectedPaciente(paciente);
@@ -37,10 +48,8 @@ export default function ActualizarPacientePage() {
         onOpenChange(false);
     };
 
-
     const buttons = [
 		{ label: "Buscar Paciente", icon: FaSearch, action: "buscar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", onClick: onOpen },
-		{ label: "Buscar Usuario", icon: FaSearch, action: "buscar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700",  href: "/admin-dashboard/usuario/actualizar-usuario" },
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
         { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
     ];
@@ -81,12 +90,26 @@ export default function ActualizarPacientePage() {
 		  <ActualizarSeguro seguroData={selectedSeguro} />
 		),
 	  },
+	   {
+			key: "usuario",
+			title: "Actualizar Usuario",
+			content: (
+			  <div className="flex flex-col lg:flex-row gap-6">
+				<div className="lg:w-1/2">
+				  <UsuarioSearch onSelectUsuario={handleUsuarioSelect} />
+				</div>
+				<div className="lg:w-1/2">
+				  <ActualizarEstatusUsuario estatusUsuarioData={selectedUsuario} />
+				</div>
+			  </div>
+			),
+		  },
 	];
 
 
     return (
         <div className="bg-white">
-            <NavbarComponent title="Actualizar Paciente" buttons={buttons} onAction={(action) => {
+            <NavbarComponent title="Actualizar Paciente y Usuario" buttons={buttons} onAction={(action) => {
                 if (action === "buscar") onOpen();
                 else console.log(action);
             }} />
