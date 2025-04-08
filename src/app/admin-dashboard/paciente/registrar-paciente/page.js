@@ -17,7 +17,6 @@ import "sweetalert2/dist/sweetalert2.min.css";
 export default function RegistrarPacientePage() {
 
     const [selectedUsuario] = useState(null);
-    const [selectedInfoMilitar] = useState(null);
     const [selectedResidencia] = useState(null);
     const [selectedSeguro] = useState(null);
     const [mensaje, setMensaje] = useState("");
@@ -49,8 +48,6 @@ export default function RegistrarPacientePage() {
             setSuccess(false); // Resetear para no mostrarlo más de una vez
         }
     }, [success]);
-    
-
 
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },

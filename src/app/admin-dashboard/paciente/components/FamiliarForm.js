@@ -225,7 +225,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
           )}
         </Select>
         <Input
-          className="w-full"
+          className="w-full md:col-span-2"
           label="Dirección"
           type="text"
           name="direccion"

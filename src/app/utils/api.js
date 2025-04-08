@@ -151,6 +151,7 @@ export const RegistrarFamiliar = async (data, setMensaje, setSuccess) => {
     }
 };
 
+// En el lado del cliente, modifica la función RegistrarInfoMilitar
 export const RegistrarInfoMilitar = async (data, setMensaje, setSuccess) => {
     try {
         const token = localStorage.getItem("authToken");
@@ -176,3 +177,38 @@ export const RegistrarInfoMilitar = async (data, setMensaje, setSuccess) => {
         setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
     }
 };
+
+// *Código para registrar*
+
+// 🆕 Actualizar familiar
+export const ActualizarFamiliar = async (data, setMensaje, setSuccess) => {
+    try {
+        const token = localStorage.getItem("authToken");
+        const pacienteId = localStorage.getItem("identificacion"); // ← identificación desde el localStorage
+
+        if (!token) {
+            setMensaje("No se encontró el token de autenticación.");
+            return;
+        }
+
+        if (!pacienteId) {
+            setMensaje("No se encontró la identificación del paciente. Por favor, vuelve a iniciar sesión.");
+            return;
+        }
+
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/familiar/put/${pacienteId}`;
+
+        await axios.put(apiUrl, JSON.stringify(data), {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
+
+        setSuccess(true); // Marca éxito para mostrar alerta en componente
+    } catch (error) {
+        console.error("❌ Error al actualizar familiar:", error.response?.data || error.message);
+        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+    }
+};
+
