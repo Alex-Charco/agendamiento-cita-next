@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
@@ -71,8 +72,8 @@ function ActualizarInfoMilitar({ infoMilitarData }) {
   );
 }
 
-ActualizarInfoMilitar.prototype = {
-  infoMilitarData: PropTypes.objet,
+ActualizarInfoMilitar.propTypes = {
+  infoMilitarData: PropTypes.object,
 }
 
 export default ActualizarInfoMilitar;
