@@ -3,12 +3,12 @@
 import { useState, useEffect  } from "react";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
-import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro, ActualizarFamiliar, ActualizarInfoMilitar } from "@/utils/api";
+import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro, ActualizarFamiliar, ActualizarInfoMilitar, ActualizarResidencia } from "@/utils/api";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 import ActualizarPaciente from "@/admin-dashboard/paciente/components/ActualizarPaciente";
 import FamiliarForm from "@/admin-dashboard/paciente/components/FamiliarForm";
 import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
-import ActualizarResidencia from "@/admin-dashboard/paciente/components/ActualizarResidencia";
+import ResidenciaForm from "@/admin-dashboard/paciente/components/ResidenciaForm";
 import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSeguro";
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
@@ -59,6 +59,14 @@ export default function ActualizarPacientePage() {
             identificacion_paciente: data.identificacion_paciente || data.identificacion,
         };
         await ActualizarInfoMilitar(infoMilitarData, setMensaje, setSuccess);  // Usamos la función del API
+    };
+
+	const handleResidenciaSubmit = async (data) => {
+        const ResidenciaData = {
+            ...data,
+            identificacion_paciente: data.identificacion_paciente || data.identificacion,
+        };
+        await ActualizarResidencia(ResidenciaData, setMensaje, setSuccess);  // Usamos la función del API
     };
 
 	// Mostrar la alerta si se registra con éxito
@@ -142,7 +150,22 @@ export default function ActualizarPacientePage() {
 			key: "residencia",
 			title: "4. Residencia",
 			content: (
-				<ActualizarResidencia residenciaData={selectedResidencia} />
+				<div className="min-h-screen p-6 flex flex-col items-center">
+					<div className="lg:w-1/2">
+						{selectedResidencia ? (
+							<>
+								{console.log("Residencia seleccionado:", selectedResidencia)}  {/* Agregar el console.log aquí */}
+								<ResidenciaForm
+									onSubmit={handleResidenciaSubmit}  // Usamos handleFamiliarSubmit para manejar el submit
+									ResidenciaData={selectedResidencia}
+								/>
+							</>
+						) : (
+							<p>Buscar paciente para modificar residencia</p>
+						)}
+						{mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
+					</div>
+				</div>
 			),
 		},
 		{
