@@ -20,10 +20,7 @@ function CustomTabs({ tabs }) {
 }
 
 CustomTabs.propTypes = {
-	Tabs: PropTypes.object,
-	Tab: PropTypes.object,
-	Card: PropTypes.object,
-	CardBody: PropTypes.object,
+	tabs: PropTypes.object,
 }
 
 export default CustomTabs;
