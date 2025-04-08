@@ -34,7 +34,7 @@ function ActualizarSeguro({ seguroData }) {
 
         const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/seguro/put/${pacienteId}`;
 
-        const response = await axios.put(
+        await axios.put(
             apiUrl,
             JSON.stringify(data),
             {

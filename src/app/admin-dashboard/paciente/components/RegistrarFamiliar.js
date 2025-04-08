@@ -30,7 +30,7 @@ export default function RegistrarFamiliar() {
             const { identificacion_paciente, ...dataSinIdentificacionPaciente } = data;
 
 
-            const response = await axios.post(apiUrl, JSON.stringify(dataSinIdentificacionPaciente), {
+            await axios.post(apiUrl, JSON.stringify(dataSinIdentificacionPaciente), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",

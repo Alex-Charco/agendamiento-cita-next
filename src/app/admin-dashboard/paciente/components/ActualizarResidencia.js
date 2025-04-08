@@ -34,7 +34,7 @@ function ActualizarResidencia({ residenciaData }) {
 
         const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/residencia/put/${pacienteId}`;
 
-        const response = await axios.put(
+        await axios.put(
             apiUrl,
             JSON.stringify(data),
             {
