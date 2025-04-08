@@ -51,7 +51,3 @@ export default function RegistrarInfoMilitar() {
         </div>
     );
 }
-
-ActualizarFamiliar.propTypes = {
-    familiarData: PropTypes.object,
-  };
