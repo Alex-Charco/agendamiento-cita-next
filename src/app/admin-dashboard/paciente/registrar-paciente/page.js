@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { FaTimes, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
-import { RegistrarPaciente, RegistrarFamiliar } from "@/utils/api";
+import { RegistrarPaciente, RegistrarFamiliar, RegistrarInfoMilitar } from "@/utils/api";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
 import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 import FamiliarForm from "@/admin-dashboard/paciente/components/FamiliarForm";
-import RegistrarInfoMilitar from "@/admin-dashboard/paciente/components/RegistrarInfoMilitar";
+import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
 import RegistrarResidencia from "@/admin-dashboard/paciente/components/RegistrarResidencia";
 import RegistrarSeguro from "@/admin-dashboard/paciente/components/RegistrarSeguro";
 import Swal from "sweetalert2";
@@ -23,7 +23,6 @@ export default function RegistrarPacientePage() {
     const [mensaje, setMensaje] = useState("");
 	const [success, setSuccess] = useState(false);
 
-
     const handlePacienteSelect = async (data) => {
         await RegistrarPaciente(data, setMensaje, setSuccess);
     };
@@ -33,6 +32,9 @@ export default function RegistrarPacientePage() {
             identificacion_paciente: data.identificacion_paciente || data.identificacion,
         };
         await RegistrarFamiliar(familiarData, setMensaje, setSuccess);
+    };
+    const handleInfoMilitarSubmit = async (data) => {
+        await RegistrarInfoMilitar(data, setMensaje, setSuccess);
     };
 
     // Mostrar la alerta si se registra con éxito
@@ -93,10 +95,13 @@ export default function RegistrarPacientePage() {
         {
             key: "informacion-militar",
             title: "4. Info Militar",
-            content: selectedInfoMilitar ? (
-                <RegistrarInfoMilitar infoMilitar={selectedInfoMilitar} />
-            ) : (
-                <RegistrarInfoMilitar />
+            content: (
+                <div className="min-h-screen p-6 flex flex-col items-center">
+                    <div className="lg:w-1/2">
+                        <InfoMilitarForm onSubmit={handleInfoMilitarSubmit} />
+                        {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
+                    </div>
+                </div>
             ),
         },
         {

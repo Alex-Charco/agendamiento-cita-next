@@ -150,3 +150,29 @@ export const RegistrarFamiliar = async (data, setMensaje, setSuccess) => {
         setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
     }
 };
+
+export const RegistrarInfoMilitar = async (data, setMensaje, setSuccess) => {
+    try {
+        const token = localStorage.getItem("authToken");
+        if (!token) throw new Error("No se encontró un token de autenticación.");
+
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/info-militar/registrar`;
+
+        await axios.post(
+            apiUrl,
+            JSON.stringify(data),
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        // Pasar a la función del componente para mostrar la alerta en el cliente
+        setSuccess(true);
+    } catch (error) {
+        console.error("❌ Error al registrar información militar:", error.response?.data || error.message);
+        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+    }
+};
