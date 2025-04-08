@@ -90,7 +90,7 @@ export default function LoginForm() {
 
     return (
         <div
-            className="flex h-screen items-center justify-center bg-cover bg-center bg-no-repeat p-4"
+            className="flex h-screen items-center justify-center bg-cover bg-center bg-no-repeat p-4 bg-gray-100"
             style={{ backgroundImage: "url('/images/background.svg')" }}
         >
             <div className="absolute inset-0 bg-black bg-opacity-5"></div>

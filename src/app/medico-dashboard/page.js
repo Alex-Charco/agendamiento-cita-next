@@ -1,19 +1,17 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import NavbarComponent from "@/components/Navbar";
 import CardFeature from "@/components/CardFeature";
 import Footer from "@/components/Footer";
 import Banner from "@/components/Banner";
 
 const HomePage = () => {
-  const router = useRouter();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       
       <NavbarComponent
-        //menuItems={[{ name: "Paciente", path: "/paciente" }]} // Agrega lo que necesites en el menú
-        menuServices={[  // Solo para el caso de "Reagendar cita"
+        menuServices={[  
           { name: "Consultar Cita", path: "/ver-citas" },
           { name: "Consultar Horario", path: "/ver-horarios" },
           { name: "Reagendar Cita", path: "/crear-cita" }

@@ -1,8 +1,9 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
 
-export default function ReusableModal({ isOpen, onOpenChange, title, children }) {
+function ReusableModal({ isOpen, onOpenChange, title, children }) {
     return (
         <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="z-50 h-[70vh]">
             <ModalContent>
@@ -23,3 +24,12 @@ export default function ReusableModal({ isOpen, onOpenChange, title, children })
         </Modal>
     );
 }
+
+ReusableModal.propTypes = {
+    isOpen: PropTypes.object,
+    onOpenChange: PropTypes.object,
+    title: PropTypes.object,
+    children: PropTypes.object,
+}
+
+export default ReusableModal;
