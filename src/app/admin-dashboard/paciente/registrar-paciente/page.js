@@ -17,8 +17,6 @@ import "sweetalert2/dist/sweetalert2.min.css";
 export default function RegistrarPacientePage() {
 
     const [selectedUsuario] = useState(null);
-    const [selectedPaciente] = useState(null);
-    const [selectedFamiliar, setSelectedFamiliar] = useState(null);
     const [selectedInfoMilitar] = useState(null);
     const [selectedResidencia] = useState(null);
     const [selectedSeguro] = useState(null);
