@@ -38,8 +38,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
   const getInitials = (user) => {
     if (!user) return "?";
     const { primer_nombre, primer_apellido } = user;
-    return `${primer_nombre?.charAt(0).toUpperCase() ?? ""}${primer_apellido?.charAt(0).toUpperCase() ?? ""
-      }`;
+    return `${primer_nombre?.charAt(0).toUpperCase() ?? ""}${primer_apellido?.charAt(0).toUpperCase() ?? ""}`;
   };
 
   const getFullName = (user) => {
@@ -49,9 +48,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
       user.segundo_nombre,
       user.primer_apellido,
       user.segundo_apellido,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    ].filter(Boolean).join(" ");
   };
 
   const toggleSubmenu = (key) => {
@@ -73,14 +70,13 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
           <NavbarItem>
             <Link className="hover:bg-gray-200 px-4 py-2 rounded" href="/contacto">Contacto</Link>
           </NavbarItem>
-          {menuItems.map((item, index) => (
-            <NavbarItem key={index}>
+          {menuItems.map((item) => (
+            <NavbarItem key={item.path}>
               <Link href={item.path}>{item.name}</Link>
             </NavbarItem>
           ))}
 
           {menuServices.length > 0 && showExtraOptions && (
-
             <NavbarItem className="relative">
               <Link href="#" onPress={() => setIsServicesOpen(!isServicesOpen)} className="hover:bg-gray-200 px-4 py-2 rounded">
                 Servicios
@@ -92,8 +88,8 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
               </Link>
               {isServicesOpen && (
                 <div className="absolute left-0 mt-2 w-56 bg-white text-gray-900 shadow-lg rounded-md">
-                  {menuServices.map((category, index) => (
-                    <div key={index}>
+                  {menuServices.map((category) => (
+                    <div key={category.name}>
                       <button className="w-full flex justify-between text-left text-blue-800 px-4 py-2 hover:bg-gray-100" onClick={() => toggleSubmenu(category.name)}>
                         <span>{category.name}</span>
                         {isSubmenuOpen[category.name] ? (
@@ -103,9 +99,9 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                         )}
                       </button>
                       {isSubmenuOpen[category.name] && (
-                        <div className="pl-4 bg-gray-50">
-                          {category.subMenu.map((service, subIndex) => (
-                            <Link key={subIndex} href={service.path} className="block px-4 py-2 hover:bg-gray-200">
+                        <div className="pl-4">
+                          {category.subMenu.map((service) => (
+                            <Link key={service.path} href={service.path} className="block px-4 py-2 hover:bg-gray-200">
                               {service.name}
                             </Link>
                           ))}
@@ -123,9 +119,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
           {user ? (
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
-                <div
-                  className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white font-bold rounded-full cursor-pointer hover:bg-blue-700"
-                >
+                <div className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white font-bold rounded-full cursor-pointer hover:bg-blue-700">
                   {getInitials(user)}
                 </div>
               </DropdownTrigger>
@@ -155,24 +149,19 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
 
       <NavbarMenu className={isMenuOpen ? "block" : "hidden"}>
         <NavbarMenuItem>
-          <Link
-            className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
-            href="/">Inicio</Link>
+          <Link className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100" href="/">Inicio</Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link
-            className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
-            href="/contacto">Contacto</Link>
+          <Link className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100" href="/contacto">Contacto</Link>
         </NavbarMenuItem>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={index}>
-            <Link
-              className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
-              href={item.path}>{item.name}</Link>
+        {menuItems.map((item) => (
+          <NavbarMenuItem key={item.path}>
+            <Link className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100" href={item.path}>
+              {item.name}
+            </Link>
           </NavbarMenuItem>
         ))}
 
-        {/* Servicios en menú móvil */}
         {menuServices.length > 0 && showExtraOptions && (
           <>
             <NavbarMenuItem>
@@ -195,8 +184,8 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
 
             {isMobileServicesOpen && (
               <div className="pl-4">
-                {menuServices.map((category, index) => (
-                  <div key={index}>
+                {menuServices.map((category) => (
+                  <div key={category.name}>
                     <NavbarMenuItem>
                       <button
                         onClick={() => toggleSubmenu(category.name)}
@@ -213,10 +202,9 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
 
                     {isSubmenuOpen[category.name] && (
                       <div className="pl-4 bg-gray-50">
-                        {category.subMenu.map((service, subIndex) => (
-                          <NavbarMenuItem key={subIndex}>
-                            <Link href={service.path}
-                              className="block px-4 py-2 hover:bg-gray-200">
+                        {category.subMenu.map((service) => (
+                          <NavbarMenuItem key={service.path}>
+                            <Link href={service.path} className="block px-4 py-2 hover:bg-gray-200">
                               {service.name}
                             </Link>
                           </NavbarMenuItem>
@@ -230,12 +218,10 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
           </>
         )}
       </NavbarMenu>
-
     </Navbar>
   );
 };
 
-// Validación de props con PropTypes
 NavbarComponent.propTypes = {
   menuItems: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
