@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { FaTimes, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
-import { RegistrarPaciente } from "@/utils/api";
+import { RegistrarPaciente, RegistrarFamiliar } from "@/utils/api";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
 import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
-import RegistrarFamiliar from "@/admin-dashboard/paciente/components/RegistrarFamiliar";
+import FamiliarForm from "@/admin-dashboard/paciente/components/FamiliarForm";
 import RegistrarInfoMilitar from "@/admin-dashboard/paciente/components/RegistrarInfoMilitar";
 import RegistrarResidencia from "@/admin-dashboard/paciente/components/RegistrarResidencia";
 import RegistrarSeguro from "@/admin-dashboard/paciente/components/RegistrarSeguro";
@@ -18,7 +18,7 @@ export default function RegistrarPacientePage() {
 
     const [selectedUsuario] = useState(null);
     const [selectedPaciente] = useState(null);
-    const [selectedFamiliar] = useState(null);
+    const [selectedFamiliar, setSelectedFamiliar] = useState(null);
     const [selectedInfoMilitar] = useState(null);
     const [selectedResidencia] = useState(null);
     const [selectedSeguro] = useState(null);
@@ -29,12 +29,19 @@ export default function RegistrarPacientePage() {
     const handlePacienteSelect = async (data) => {
         await RegistrarPaciente(data, setMensaje, setSuccess);
     };
+    const handleFamiliarSubmit = async (data) => {
+        const familiarData = {
+            ...data,
+            identificacion_paciente: data.identificacion_paciente || data.identificacion,
+        };
+        await RegistrarFamiliar(familiarData, setMensaje, setSuccess);
+    };
 
     // Mostrar la alerta si se registra con éxito
     useEffect(() => {
         if (success) {
             Swal.fire({
-                title: "Paciente registrado!",
+                title: "¡Registro exitoso!",
                 icon: "success",
                 draggable: true,
                 confirmButtonText: "OK"
@@ -76,10 +83,13 @@ export default function RegistrarPacientePage() {
         {
             key: "familiar",
             title: "3. Familiar",
-            content: selectedFamiliar ? (
-                <RegistrarFamiliar familiar={selectedFamiliar} />
-            ) : (
-                <RegistrarFamiliar />
+            content: (
+                <div className="min-h-screen p-6 flex flex-col items-center">
+                    <div className="lg:w-1/2">
+                        <FamiliarForm onSubmit={handleFamiliarSubmit} />
+                        {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
+                    </div>
+                </div>
             ),
         },
         {

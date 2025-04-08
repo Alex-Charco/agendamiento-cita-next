@@ -113,3 +113,40 @@ export const RegistrarPaciente = async (data, setMensaje, setSuccess) => {
         setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
     }
 };
+
+// En el lado del cliente, modifica la función RegistrarFamiliar
+export const RegistrarFamiliar = async (data, setMensaje, setSuccess) => {
+    try {
+        const token = localStorage.getItem("authToken");
+        const pacienteId = data.identificacion_paciente; // se toma del formulario
+
+        if (!token) {
+                setMensaje("No se encontró el token de autenticación.");
+                return;
+            }
+
+            if (!pacienteId) {
+                setMensaje("No se encontró la identificación del paciente. Por favor, vuelve a iniciar sesión.");
+                return;
+            }
+
+            const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/familiar/registrar/${pacienteId}`;
+
+            // 🧹 Eliminar `identificacion_paciente` del cuerpo de datos antes de enviarlo
+            const { identificacion_paciente, ...dataSinIdentificacionPaciente } = data;
+
+
+            await axios.post(apiUrl, JSON.stringify(dataSinIdentificacionPaciente), {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+        // Pasar a la función del componente para mostrar la alerta en el cliente
+        setSuccess(true);
+    } catch (error) {
+        console.error("❌ Error al registrar familiar:", error.response?.data || error.message);
+        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+    }
+};
