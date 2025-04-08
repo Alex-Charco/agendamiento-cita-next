@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { useState } from "react";
 import axios from "axios";
 
-export default function UsuarioSearch({ onSelectUsuario }) {
+function UsuarioSearch({ onSelectUsuario }) {
     const [query, setQuery] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -24,15 +25,13 @@ export default function UsuarioSearch({ onSelectUsuario }) {
 
             console.log("API GET", apiUrl);
 
-            if (response.data && response.data.id_usuario) {
+            if (response.data?.id_usuario) {
                 const usuario = {
                     id_paciente: response.data.id_usuario,
                     nombre_usuario: response.data.nombre_usuario,
                     rol: response.data.rol,
                     estatus: response.data.estatus,
                 };
-
-                console.log("Usuario obtenido", usuario);
 
                 // Guardar en localStorage y enviar al componente padre
                 localStorage.setItem("nombre_usuario", usuario.nombre_usuario);
@@ -74,3 +73,10 @@ export default function UsuarioSearch({ onSelectUsuario }) {
         </div>
     );
 }
+
+UsuarioSearch.propTypes = {
+    onSelectUsuario: PropTypes.object,
+};
+
+
+export default UsuarioSearch;
