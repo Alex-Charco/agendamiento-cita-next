@@ -3,11 +3,11 @@
 import { useState, useEffect  } from "react";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
-import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro, ActualizarFamiliar } from "@/utils/api";
+import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro, ActualizarFamiliar, ActualizarInfoMilitar } from "@/utils/api";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 import ActualizarPaciente from "@/admin-dashboard/paciente/components/ActualizarPaciente";
 import FamiliarForm from "@/admin-dashboard/paciente/components/FamiliarForm";
-import ActualizarInfoMilitar from "@/admin-dashboard/paciente/components/ActualizarInfoMilitar";
+import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
 import ActualizarResidencia from "@/admin-dashboard/paciente/components/ActualizarResidencia";
 import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSeguro";
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
@@ -53,6 +53,14 @@ export default function ActualizarPacientePage() {
         await ActualizarFamiliar(familiarData, setMensaje, setSuccess);  // Usamos la función del API
     };
 
+	const handleInfoMilitarSubmit = async (data) => {
+        const infoMilitarData = {
+            ...data,
+            identificacion_paciente: data.identificacion_paciente || data.identificacion,
+        };
+        await ActualizarInfoMilitar(infoMilitarData, setMensaje, setSuccess);  // Usamos la función del API
+    };
+
 	// Mostrar la alerta si se registra con éxito
 		useEffect(() => {
 			if (success) {
@@ -66,7 +74,6 @@ export default function ActualizarPacientePage() {
 			}
 		}, [success]);
 		
-
 	const buttons = [
 		{ label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
 		{ label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
@@ -113,7 +120,22 @@ export default function ActualizarPacientePage() {
 			key: "informacion-militar",
 			title: "3. Información Militar",
 			content: (
-				<ActualizarInfoMilitar infoMilitarData={selectedInfoMilitar} />
+				<div className="min-h-screen p-6 flex flex-col items-center">
+					<div className="lg:w-1/2">
+						{selectedInfoMilitar ? (
+							<>
+								{console.log("InfoMilitar seleccionado:", selectedInfoMilitar)}  {/* Agregar el console.log aquí */}
+								<InfoMilitarForm
+									onSubmit={handleInfoMilitarSubmit}  // Usamos handleFamiliarSubmit para manejar el submit
+									infoMilitarData={selectedInfoMilitar}
+								/>
+							</>
+						) : (
+							<p>Buscar paciente para modificar familiar</p>
+						)}
+						{mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
+					</div>
+				</div>
 			),
 		},
 		{
