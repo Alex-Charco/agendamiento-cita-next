@@ -1,8 +1,9 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { Tabs, Tab, Card, CardBody } from "@heroui/react";
 
-export default function CustomTabs({ tabs }) {
+function CustomTabs({ tabs }) {
     return (
         <div className="bg-white w-full max-w-[99%] m-2 p-2 overflow-x-hidden border border-gray-300">
             <Tabs className="w-full bg-gray-50 border border-gray-200 rounded-2xl" onChange={(tabKey) => setActiveTab(tabKey)}>
@@ -17,3 +18,9 @@ export default function CustomTabs({ tabs }) {
         </div>
     );
 }
+
+ResidenciaForm.propTypes = {
+	tabs: PropTypes.object,
+}
+
+export default CustomTabs;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+/*import { useState, useEffect } from "react";
 
 const AppointmentForm = () => {
     const [fecha, setFecha] = useState("");
@@ -80,3 +80,4 @@ const AppointmentForm = () => {
 };
 
 export default AppointmentForm;
+*/

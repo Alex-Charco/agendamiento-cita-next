@@ -1,5 +1,7 @@
 "use client";
+
 import { useRouter } from "next/navigation";
+import PropTypes from "prop-types";
 import Button from "./Button";
 
 const Banner = ({ title, description, buttons, imageUrl }) => {
@@ -37,6 +39,20 @@ const Banner = ({ title, description, buttons, imageUrl }) => {
             </div>
         </section>
     );
+};
+
+// ✅ Validación de props
+Banner.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    buttons: PropTypes.arrayOf(
+        PropTypes.shape({
+            text: PropTypes.string.isRequired,
+            link: PropTypes.string.isRequired,
+            variant: PropTypes.string
+        })
+    ),
+    imageUrl: PropTypes.string.isRequired
 };
 
 export default Banner;

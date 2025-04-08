@@ -1,4 +1,6 @@
 "use client";
+
+import PropTypes from "prop-types";
 import { Card } from "@heroui/react";
 
 const CardFeature = ({ icon, title, description }) => {
@@ -11,5 +13,11 @@ const CardFeature = ({ icon, title, description }) => {
     </Card>
   );
 };
+
+ResidenciaForm.propTypes = {
+  icon: PropTypes.object,
+  title: PropTypes.object,
+  description: PropTypes.object,
+}
 
 export default CardFeature;

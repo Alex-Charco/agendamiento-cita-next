@@ -1,4 +1,6 @@
 "use client"; 
+
+import PropTypes from "prop-types";
 import { Button as HeroButton } from "@heroui/react";
 
 const Button = ({ text, onPress, variant = "primary" }) => {  // Cambié onClick por onPress
@@ -14,6 +16,12 @@ const Button = ({ text, onPress, variant = "primary" }) => {  // Cambié onClick
       {text}
     </HeroButton>
   );
+};
+
+Button.propTypes = {
+  text: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  variant: PropTypes.oneOf(["primary", "secondary"]),
 };
 
 export default Button;
