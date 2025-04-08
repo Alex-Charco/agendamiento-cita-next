@@ -1,8 +1,9 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useReducer, useEffect } from "react";
 import { FaHospitalUser } from "react-icons/fa";
-import { Button, Input, Select, SelectItem } from "@heroui/react";
+import { Button, Input } from "@heroui/react";
 
 const initialState = {
   identificacion_paciente: "",
@@ -20,18 +21,18 @@ function reducer(state, action) {
   return { ...state, [action.name]: action.value };
 }
 
-export default function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
+function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
   const [residencia, dispatch] = useReducer(reducer, {
     ...initialState,
     ...ResidenciaData,
   });
-  
+
   useEffect(() => {
-	  const pacienteId = localStorage.getItem("identificacion");
-	  if (pacienteId) {
-		dispatch({ name: "identificacion_paciente", value: pacienteId });
-	  }
-	}, []);
+    const pacienteId = localStorage.getItem("identificacion");
+    if (pacienteId) {
+      dispatch({ name: "identificacion_paciente", value: pacienteId });
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -53,7 +54,7 @@ export default function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-		<Input
+        <Input
           isRequired
           className="w-full"
           label="Identificación paciente"
@@ -139,3 +140,10 @@ export default function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
     </form>
   );
 }
+
+ResidenciaForm.propTypes = {
+  onSubmit: PropTypes.object,
+  ResidenciaData: PropTypes.object,
+}
+
+export default ResidenciaForm;

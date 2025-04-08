@@ -19,7 +19,7 @@ export default function RegistrarPaciente() {
 
             const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/registrar`;
 
-            const response = await axios.post(
+            await axios.post(
                 apiUrl,
                 JSON.stringify(data),
                 {

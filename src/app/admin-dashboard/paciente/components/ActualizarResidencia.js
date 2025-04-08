@@ -1,12 +1,13 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ResidenciaForm from "@/admin-dashboard/paciente/components/ResidenciaForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-export default function ActualizarResidencia({ residenciaData }) {
+function ActualizarResidencia({ residenciaData }) {
   const [mensaje, setMensaje] = useState("");
   const [datosResidencia, setDatosResidencia] = useState(residenciaData || null);
 
@@ -70,3 +71,9 @@ export default function ActualizarResidencia({ residenciaData }) {
     </div>
   );
 }
+
+ActualizarResidencia.propTypes = {
+residenciaData: PropTypes.object,
+}
+
+export default ActualizarResidencia; 
