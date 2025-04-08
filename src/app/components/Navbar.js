@@ -13,7 +13,6 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Avatar,
 } from "@heroui/react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -34,13 +33,12 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
       }
     }
   }, []);
-  
+
   const getInitials = (user) => {
     if (!user) return "?";
     const { primer_nombre, primer_apellido } = user;
-    return `${primer_nombre?.charAt(0).toUpperCase() ?? ""}${
-      primer_apellido?.charAt(0).toUpperCase() ?? ""
-    }`;
+    return `${primer_nombre?.charAt(0).toUpperCase() ?? ""}${primer_apellido?.charAt(0).toUpperCase() ?? ""
+      }`;
   };
 
   const getFullName = (user) => {
@@ -81,27 +79,27 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
           ))}
 
           {menuServices.length > 0 && showExtraOptions && (
-            
-			<NavbarItem className="relative">
+
+            <NavbarItem className="relative">
               <Link href="#" onPress={() => setIsServicesOpen(!isServicesOpen)} className="hover:bg-gray-200 px-4 py-2 rounded">
-				Servicios
-					{isMobileServicesOpen ? (
-					  <FaChevronUp className="ml-2 text-fray-300 text-lg" />
-					) : (
-					  <FaChevronDown className="ml-2 text-gray-300 text-lg" />
-					)}
-			  </Link>
+                Servicios
+                {isMobileServicesOpen ? (
+                  <FaChevronUp className="ml-2 text-fray-300 text-lg" />
+                ) : (
+                  <FaChevronDown className="ml-2 text-gray-300 text-lg" />
+                )}
+              </Link>
               {isServicesOpen && (
                 <div className="absolute left-0 mt-2 w-56 bg-white text-gray-900 shadow-lg rounded-md">
                   {menuServices.map((category, index) => (
                     <div key={index}>
                       <button className="w-full flex justify-between text-left text-blue-800 px-4 py-2 hover:bg-gray-100" onClick={() => toggleSubmenu(category.name)}>
-                         <span>{category.name}</span>
-							  {isSubmenuOpen[category.name] ? (
-								<FaChevronUp className="text-blue-600 text-sm" />
-							  ) : (
-								<FaChevronDown className="text-blue-600 text-sm" />
-							  )}
+                        <span>{category.name}</span>
+                        {isSubmenuOpen[category.name] ? (
+                          <FaChevronUp className="text-blue-600 text-sm" />
+                        ) : (
+                          <FaChevronDown className="text-blue-600 text-sm" />
+                        )}
                       </button>
                       {isSubmenuOpen[category.name] && (
                         <div className="pl-4 bg-gray-50">
@@ -133,11 +131,11 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
               <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem key="profile" className="h-14 gap-2">
                   <p className="text-gray-700 hover:text-gray-900 transition-colors">
-					{getFullName(user)}
-				  </p>
-				  <p className="font-semibold text-gray-700 hover:text-gray-900 transition-colors">
-					{user.rol?.nombre_rol}
-				  </p>
+                    {getFullName(user)}
+                  </p>
+                  <p className="font-semibold text-gray-700 hover:text-gray-900 transition-colors">
+                    {user.rol?.nombre_rol}
+                  </p>
                 </DropdownItem>
                 <DropdownItem key="logout" color="danger">
                   <Link href="/auth/login">Salir</Link>
@@ -153,23 +151,23 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
 
         <NavbarMenuToggle onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"} className="sm:hidden" />
       </NavbarContent>
-	  
-	  <NavbarMenu className={isMenuOpen ? "block" : "hidden"}>
+
+      <NavbarMenu className={isMenuOpen ? "block" : "hidden"}>
         <NavbarMenuItem>
-          <Link 
-			className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
-			href="/">Inicio</Link>
+          <Link
+            className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+            href="/">Inicio</Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link 
-			className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
-			href="/contacto">Contacto</Link>
+          <Link
+            className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+            href="/contacto">Contacto</Link>
         </NavbarMenuItem>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={index}>
-            <Link 
-				className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
-				href={item.path}>{item.name}</Link>
+            <Link
+              className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+              href={item.path}>{item.name}</Link>
           </NavbarMenuItem>
         ))}
 
@@ -177,61 +175,61 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
         {menuServices.length > 0 && showExtraOptions && (
           <>
             <NavbarMenuItem>
-			  <Link
-				  href="#"
-				  onClick={(e) => {
-					e.preventDefault();
-					setIsMobileServicesOpen(!isMobileServicesOpen);
-				  }}
-				  className="block w-full flex justify-between items-center text-left font-semibold"
-				  >
-					<span>Servicios</span>
-					{isMobileServicesOpen ? (
-					  <FaChevronUp className="text-blue-600 text-lg" />
-					) : (
-					  <FaChevronDown className="text-blue-600 text-lg" />
-					)}
-				</Link>
+              <Link
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMobileServicesOpen(!isMobileServicesOpen);
+                }}
+                className="block w-full flex justify-between items-center text-left font-semibold"
+              >
+                <span>Servicios</span>
+                {isMobileServicesOpen ? (
+                  <FaChevronUp className="text-blue-600 text-lg" />
+                ) : (
+                  <FaChevronDown className="text-blue-600 text-lg" />
+                )}
+              </Link>
             </NavbarMenuItem>
 
             {isMobileServicesOpen && (
-      <div className="pl-4">
-        {menuServices.map((category, index) => (
-          <div key={index}>
-            <NavbarMenuItem>
-              <button
-                onClick={() => toggleSubmenu(category.name)}
-                 className="flex justify-between items-center w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
-              >
-                <span>{category.name}</span>
-                {isSubmenuOpen[category.name] ? (
-                  <FaChevronUp className="text-blue-800 text-sm" />
-                ) : (
-                  <FaChevronDown className="text-blue-800 text-sm" />
-                )}
-              </button>
-            </NavbarMenuItem>
+              <div className="pl-4">
+                {menuServices.map((category, index) => (
+                  <div key={index}>
+                    <NavbarMenuItem>
+                      <button
+                        onClick={() => toggleSubmenu(category.name)}
+                        className="flex justify-between items-center w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+                      >
+                        <span>{category.name}</span>
+                        {isSubmenuOpen[category.name] ? (
+                          <FaChevronUp className="text-blue-800 text-sm" />
+                        ) : (
+                          <FaChevronDown className="text-blue-800 text-sm" />
+                        )}
+                      </button>
+                    </NavbarMenuItem>
 
-            {isSubmenuOpen[category.name] && (
-              <div className="pl-4 bg-gray-50">
-                {category.subMenu.map((service, subIndex) => (
-                  <NavbarMenuItem key={subIndex}>
-                    <Link href={service.path} 
-					className="block px-4 py-2 hover:bg-gray-200">
-                      {service.name}
-                    </Link>
-                  </NavbarMenuItem>
+                    {isSubmenuOpen[category.name] && (
+                      <div className="pl-4 bg-gray-50">
+                        {category.subMenu.map((service, subIndex) => (
+                          <NavbarMenuItem key={subIndex}>
+                            <Link href={service.path}
+                              className="block px-4 py-2 hover:bg-gray-200">
+                              {service.name}
+                            </Link>
+                          </NavbarMenuItem>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             )}
-          </div>
-        ))}
-      </div>
-    )}
-  </>
+          </>
         )}
       </NavbarMenu>
-	  
+
     </Navbar>
   );
 };
