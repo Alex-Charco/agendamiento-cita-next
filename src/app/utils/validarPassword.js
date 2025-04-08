@@ -13,7 +13,7 @@ export function validarPassword(password) {
     if (!/\d/.test(password)) {
         errors.push("Debe incluir al menos un número.");
     }
-    if (!/[@$!%*?&\-+_#^(){}\[\]]/.test(password)) {
+    if (!/[@$!%*?&\-+_#^(){}[\]]/.test(password)) {
         errors.push("Debe incluir al menos un carácter especial (@$!%*?&-+_#^(){}[]).");
     }
 

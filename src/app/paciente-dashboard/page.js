@@ -1,21 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import NavbarComponent from "@/components/Navbar";
 import CardFeature from "@/components/CardFeature";
 import Footer from "@/components/Footer";
 import Banner from "@/components/Banner";
 
 const HomePage = () => {
-  const router = useRouter();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       
       <NavbarComponent
-        /*menuItems={[
-          { name: "Perfil", path: "/perfil" },
-          { name: "Dashboard", path: "/dashboard" },
-        ]}*/
         menuServices={[
           { name: "Agendar Cita", path: "/crear-cita" },
           { name: "Consultar Cita", path: "/ver-citas" },
