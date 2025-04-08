@@ -1,12 +1,13 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import FamiliarForm from "@/admin-dashboard/paciente/components/FamiliarForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-export default function ActualizarFamiliar({ familiarData }) {
+function ActualizarFamiliar({ familiarData }) {
   const [mensaje, setMensaje] = useState("");
   const [datosFamiliar, setDatosFamiliar] = useState(familiarData || null);
 
@@ -33,7 +34,7 @@ export default function ActualizarFamiliar({ familiarData }) {
 
         const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/familiar/put/${pacienteId}`;
 
-        const response = await axios.put(
+        await axios.put(
             apiUrl,
             JSON.stringify(data),
             {
@@ -69,3 +70,9 @@ export default function ActualizarFamiliar({ familiarData }) {
     </div>
   );
 }
+
+ActualizarFamiliar.propTypes = {
+  familiarData: PropTypes.object,
+};
+
+export default ActualizarFamiliar;

@@ -31,13 +31,13 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
     ...initialState,
     ...familiarData,
   });
-  
+
   useEffect(() => {
-	  const pacienteId = localStorage.getItem("identificacion");
-	  if (pacienteId) {
-		dispatch({ name: "identificacion_paciente", value: pacienteId });
-	  }
-	}, []);
+    const pacienteId = localStorage.getItem("identificacion");
+    if (pacienteId) {
+      dispatch({ name: "identificacion_paciente", value: pacienteId });
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -59,7 +59,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-		<Input
+        <Input
           isRequired
           className="w-full"
           label="Identificación paciente"
@@ -199,7 +199,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
             </SelectItem>
           )}
         </Select>
-		<Select
+        <Select
           isRequired
           className="w-full"
           label="Relación"
@@ -211,11 +211,11 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
           items={[
             { key: "ABUELO/A", label: "Abuelo/a" },
             { key: "PADRE", label: "Padre" },
-			{ key: "MADRE", label: "Madre" },
-			{ key: "ESPOSO/A", label: "Esposo/a" },
-			{ key: "HERMANO/A", label: "Hermano/a" },
-			{ key: "PRIMO/A", label: "Primo/a" },
-			{ key: "TÍO/A", label: "Tío/a" },
+            { key: "MADRE", label: "Madre" },
+            { key: "ESPOSO/A", label: "Esposo/a" },
+            { key: "HERMANO/A", label: "Hermano/a" },
+            { key: "PRIMO/A", label: "Primo/a" },
+            { key: "TÍO/A", label: "Tío/a" },
           ]}
         >
           {(item) => (
@@ -224,7 +224,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
             </SelectItem>
           )}
         </Select>
-		<Input
+        <Input
           className="w-full"
           label="Dirección"
           type="text"

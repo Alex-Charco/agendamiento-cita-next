@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useState } from "react";
 import axios from "axios";
 import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
@@ -16,7 +17,7 @@ export default function RegistrarInfoMilitar() {
 
             const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/info-militar/registrar`;
 
-            const response = await axios.post(
+            await axios.post(
                 apiUrl,
                 JSON.stringify(data),
                 {
@@ -50,3 +51,7 @@ export default function RegistrarInfoMilitar() {
         </div>
     );
 }
+
+ActualizarFamiliar.propTypes = {
+    familiarData: PropTypes.object,
+  };

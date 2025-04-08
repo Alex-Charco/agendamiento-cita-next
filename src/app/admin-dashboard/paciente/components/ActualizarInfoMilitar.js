@@ -6,7 +6,7 @@ import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarFo
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-export default function ActualizarInfoMilitar({ infoMilitarData }) {
+function ActualizarInfoMilitar({ infoMilitarData }) {
   const [mensaje, setMensaje] = useState("");
   const [datosInfoMilitar, setDatosInfoMilitar] = useState(infoMilitarData || null);
 
@@ -33,7 +33,7 @@ export default function ActualizarInfoMilitar({ infoMilitarData }) {
 
         const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/info-militar/put/${pacienteId}`;
 
-        const response = await axios.put(
+        await axios.put(
             apiUrl,
             JSON.stringify(data),
             {
@@ -70,3 +70,9 @@ export default function ActualizarInfoMilitar({ infoMilitarData }) {
     </div>
   );
 }
+
+ActualizarInfoMilitar.prototype = {
+  infoMilitarData: PropTypes.objet,
+}
+
+export default ActualizarInfoMilitar;
