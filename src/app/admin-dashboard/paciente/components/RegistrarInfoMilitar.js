@@ -1,6 +1,5 @@
 "use client";
 
-import PropTypes from "prop-types";
 import { useState } from "react";
 import axios from "axios";
 import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";

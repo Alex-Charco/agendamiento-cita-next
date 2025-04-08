@@ -1,12 +1,13 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import SeguroForm from "@/admin-dashboard/paciente/components/SeguroForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-export default function ActualizarSeguro({ seguroData }) {
+function ActualizarSeguro({ seguroData }) {
   const [mensaje, setMensaje] = useState("");
   const [datosSeguro, setDatosSeguro] = useState(seguroData || null);
 
@@ -70,3 +71,9 @@ export default function ActualizarSeguro({ seguroData }) {
     </div>
   );
 }
+
+ActualizarSeguro.propTypes = {
+  seguroData: PropTypes.object,
+}
+
+export default ActualizarSeguro;
