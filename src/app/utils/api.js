@@ -83,3 +83,33 @@ export const fetchSeguro = async (identificacion, setSelectedSeguro) => {
         setSelectedSeguro(null);
     }
 };
+
+// *Código para registrar*
+
+// En el lado del cliente, modifica la función RegistrarPaciente
+export const RegistrarPaciente = async (data, setMensaje, setSuccess) => {
+    try {
+        const token = localStorage.getItem("authToken");
+        if (!token) throw new Error("No se encontró un token de autenticación.");
+
+        localStorage.setItem("identificacion", data.identificacion);
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/registrar`;
+
+        await axios.post(
+            apiUrl,
+            JSON.stringify(data),
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        // Pasar a la función del componente para mostrar la alerta en el cliente
+        setSuccess(true);
+    } catch (error) {
+        console.error("Error al registrar paciente:", error.response?.data || error.message);
+        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+    }
+};
