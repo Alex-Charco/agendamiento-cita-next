@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useReducer, useEffect } from "react";
 import { FaHospitalUser } from "react-icons/fa";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
@@ -16,7 +17,7 @@ function reducer(state, action) {
 	return { ...state, [action.name]: action.value };
 }
 
-export default function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
+function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 	const [infoMilitar, dispatch] = useReducer(reducer, {
 		...initialState,
 		...infoMilitarData,
@@ -170,3 +171,10 @@ export default function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 		</form>
 	);
 }
+
+InfoMilitarForm.propTypes = {
+	onSubmit: PropTypes.object,
+	infoMilitarData: PropTypes.object,
+};
+
+export default InfoMilitarForm; 

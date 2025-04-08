@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useReducer, useEffect } from "react";
 import { FaHospitalUser } from "react-icons/fa";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
@@ -14,7 +15,7 @@ function reducer(state, action) {
   return { ...state, [action.name]: action.value };
 }
 
-export default function EstatusUsuarioForm({ onSubmit, estatusUsuarioData = {} }) {
+function EstatusUsuarioForm({ onSubmit, estatusUsuarioData = {} }) {
   const [usuario, dispatch] = useReducer(reducer, {
     ...initialState,
     ...estatusUsuarioData,
@@ -104,3 +105,10 @@ export default function EstatusUsuarioForm({ onSubmit, estatusUsuarioData = {} }
     </form>
   );
 }
+
+EstatusUsuarioForm.propTypes = {
+  onSubmit: PropTypes.object,
+  estatusUsuarioData: PropTypes.object,
+};
+
+export default EstatusUsuarioForm;

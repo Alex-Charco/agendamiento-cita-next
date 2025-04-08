@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useState } from "react";
 import Link from "next/link";
 import {
@@ -14,7 +15,7 @@ import {
   Button,
 } from "@heroui/react";
 
-export default function NavbarComponent({ title, buttons, onAction }) {
+function NavbarComponent({ title, buttons, onAction }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -106,3 +107,21 @@ export default function NavbarComponent({ title, buttons, onAction }) {
     </Navbar>
   );
 }
+
+NavbarComponent.propTypes = {
+  title: PropTypes.string.isRequired,
+  buttons: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      icon: PropTypes.elementType.isRequired,
+      action: PropTypes.string, // o lo que sea que represente
+      color: PropTypes.string,
+      textColor: PropTypes.string,
+      hoverEffect: PropTypes.string,
+      href: PropTypes.string,
+    })
+  ).isRequired,
+  onAction: PropTypes.func.isRequired,
+};
+
+export default  NavbarComponent; 

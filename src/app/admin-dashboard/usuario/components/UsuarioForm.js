@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
-import { FaHospitalUser, FaChevronDown } from "react-icons/fa6";
+import { FaHospitalUser } from "react-icons/fa6";
 
 const roles = [
     { key: "3", label: "Administrador" },
@@ -8,7 +9,7 @@ const roles = [
     { key: "1", label: "Paciente" },
 ];
 
-export default function UsuarioForm({ onSubmit, usuarioData = {} }) {
+function UsuarioForm({ onSubmit, usuarioData = {} }) {
     const [usuario, setUsuario] = useState({
         nombre_usuario: usuarioData.nombre_usuario || "",
         password: usuarioData.password || "",
@@ -78,3 +79,10 @@ export default function UsuarioForm({ onSubmit, usuarioData = {} }) {
         </form>
     );
 }
+
+UsuarioForm.propTypes = {
+    onSubmit: PropTypes.object,
+    usuarioData: PropTypes.object,
+};
+
+export default UsuarioForm;
