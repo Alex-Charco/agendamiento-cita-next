@@ -21,7 +21,7 @@ export default function LoginForm() {
         if (!isAuthenticated()) {
             router.push(ROUTES.LOGIN); // Redirigir si no está autenticado
         }
-    }, []);
+    }, [router]);
 
     const handleLogout = () => {
         logout();

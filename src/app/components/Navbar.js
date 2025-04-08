@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import {
   Navbar,
   NavbarBrand,
@@ -181,7 +182,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                   e.preventDefault();
                   setIsMobileServicesOpen(!isMobileServicesOpen);
                 }}
-                className="block w-full flex justify-between items-center text-left font-semibold"
+                className="w-full flex justify-between items-center text-left font-semibold"
               >
                 <span>Servicios</span>
                 {isMobileServicesOpen ? (
@@ -232,6 +233,22 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
 
     </Navbar>
   );
+};
+
+// Validación de props con PropTypes
+NavbarComponent.propTypes = {
+  menuItems: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+  })),
+  menuServices: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    subMenu: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+    })).isRequired,
+  })),
+  showExtraOptions: PropTypes.bool,
 };
 
 export default NavbarComponent;

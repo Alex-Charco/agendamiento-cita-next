@@ -28,7 +28,7 @@ const Banner = ({ title, description, buttons, imageUrl }) => {
                     <div className="mt-6 flex justify-center flex-wrap gap-6">
                         {buttons.map((btn, index) => (
                             <Button 
-                                key={index} 
+                                key={btn.link}
                                 text={btn.text} 
                                 onClick={() => router.push(btn.link)} 
                                 variant={btn.variant || "primary"} // Soporta botones primarios y secundarios
