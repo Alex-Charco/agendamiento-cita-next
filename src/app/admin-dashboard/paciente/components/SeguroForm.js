@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useReducer, useEffect } from "react";
 import { FaHospitalUser } from "react-icons/fa";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
@@ -19,7 +20,7 @@ function reducer(state, action) {
   return { ...state, [action.name]: action.value };
 }
 
-export default function SeguroForm({ onSubmit, SeguroData = {} }) {
+function SeguroForm({ onSubmit, SeguroData = {} }) {
   const [seguro, dispatch] = useReducer(reducer, {
     ...initialState,
     ...SeguroData,
@@ -161,3 +162,10 @@ export default function SeguroForm({ onSubmit, SeguroData = {} }) {
     </form>
   );
 }
+
+SeguroForm.propTypes = {
+  onSubmit: PropTypes.object,
+  SeguroData: PropTypes.object,
+}
+
+export default SeguroForm;
