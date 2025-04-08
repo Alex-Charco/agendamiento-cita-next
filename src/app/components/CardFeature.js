@@ -14,7 +14,7 @@ const CardFeature = ({ icon, title, description }) => {
   );
 };
 
-ResidenciaForm.propTypes = {
+CardFeature.propTypes = {
   icon: PropTypes.object,
   title: PropTypes.object,
   description: PropTypes.object,
