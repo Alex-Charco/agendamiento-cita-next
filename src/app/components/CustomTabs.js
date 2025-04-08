@@ -19,8 +19,11 @@ function CustomTabs({ tabs }) {
     );
 }
 
-ResidenciaForm.propTypes = {
-	tabs: PropTypes.object,
+CustomTabs.propTypes = {
+	Tabs: PropTypes.object,
+	Tab: PropTypes.object,
+	Card: PropTypes.object,
+	CardBody: PropTypes.object,
 }
 
 export default CustomTabs;

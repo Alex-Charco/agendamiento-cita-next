@@ -38,7 +38,6 @@ export default function ActualizarPacientePage() {
 		fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar);
 		fetchResidencia(paciente.identificacion, setSelectedResidencia);
 		fetchSeguro(paciente.identificacion, setSelectedSeguro);
-		onOpenChange(false);
 	};
 
 	const buttons = [
