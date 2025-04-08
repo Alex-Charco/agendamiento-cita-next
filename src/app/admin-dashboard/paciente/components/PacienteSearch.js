@@ -1,9 +1,10 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function PacienteSearch({ onSelectPaciente }) {
+function PacienteSearch({ onSelectPaciente }) {
     const [query, setQuery] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -24,7 +25,7 @@ export default function PacienteSearch({ onSelectPaciente }) {
 
             console.log("API GET", apiUrl);
 
-            if (response.data && response.data.paciente) {
+            if (response.data?.paciente) {
                 const paciente = response.data.paciente;
 
                 // Guardar en localStorage y enviar al componente padre
@@ -74,3 +75,9 @@ export default function PacienteSearch({ onSelectPaciente }) {
         </div>
     );
 }
+
+PacienteSearch.propTypes = {
+    onSelectPaciente: PropTypes.object,
+}
+
+export default PacienteSearch; 
