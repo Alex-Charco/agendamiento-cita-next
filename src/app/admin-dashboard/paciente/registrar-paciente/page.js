@@ -4,7 +4,6 @@ import { useState } from "react";
 import { FaTimes, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
-import { useDisclosure } from "@heroui/react";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
 import RegistrarPaciente from "@/admin-dashboard/paciente/components/RegistrarPaciente";
 import RegistrarFamiliar from "@/admin-dashboard/paciente/components/RegistrarFamiliar";

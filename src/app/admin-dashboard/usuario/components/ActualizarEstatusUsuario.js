@@ -1,12 +1,13 @@
 "use client";
 
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import EstatusUsuarioForm from "@/admin-dashboard/usuario/components/EstatusUsuarioForm";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-export default function ActualizarEstatusUsuario({ estatusUsuarioData }) {
+function ActualizarEstatusUsuario({ estatusUsuarioData }) {
   const [mensaje, setMensaje] = useState("");
   const [datosEstatusUsuario, setDatosEstatusUsuario] = useState(estatusUsuarioData || null);
 
@@ -71,3 +72,9 @@ export default function ActualizarEstatusUsuario({ estatusUsuarioData }) {
     </div>
   );
 }
+
+ActualizarEstatusUsuario.propTypes = {
+  estatusUsuarioData: PropTypes.object,
+}
+
+export default ActualizarEstatusUsuario; 
