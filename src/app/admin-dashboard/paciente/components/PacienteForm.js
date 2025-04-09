@@ -154,7 +154,7 @@ import { FaHospitalUser } from "react-icons/fa";
         <FaHospitalUser className="text-blue-600" /> Datos del Paciente
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         {/* Nombre de usuario */}
         <CustomInput
           //isReadOnly
@@ -266,7 +266,6 @@ import { FaHospitalUser } from "react-icons/fa";
             onChange={handleChange}
             placeholder="Ingrese el correo"
             type="email"
-            className="col-span-2"
           />
 
           {/* Estado civil */}
