@@ -30,7 +30,7 @@ const HomePage = () => {
 
       <Banner
         title="Hospital de Brigada de Selva No.17 “Pastaza”"
-        description="Sistema de Gestión Hospitalaria"
+        description="Sistema de Gestión Hospitalaria 11"
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
           { text: "Agendar Cita Médica", link: "/crear-cita", variant: "primary" },

@@ -1,11 +1,11 @@
 import { Input } from "@heroui/react";
 import PropTypes from "prop-types";
 
-function CustomInput({ name, label, placeholder, value, onChange, type = "text", isRequired = true }) {
+function CustomInput({ name, label, placeholder, value, onChange, type = "text", isRequired = true, className = "", }) {
 	return (
 		<Input
 			isRequired={isRequired}
-			className="w-full"
+			className={`w-full ${className}`}
 			label={label}
 			name={name}
 			placeholder={placeholder}
@@ -24,6 +24,7 @@ CustomInput.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	type: PropTypes.string,
 	isRequired: PropTypes.bool,
+	className: PropTypes.string,
 };
 
 export default CustomInput;

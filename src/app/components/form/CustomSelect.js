@@ -1,10 +1,20 @@
 import { Select, SelectItem } from "@heroui/react";
 import PropTypes from "prop-types";
 
-function CustomSelect({ name, label, value, onChange, items, placeholder = "Seleccionar una opción", isRequired = true }) {
-	// Cambiar el valor seleccionado usando onChange
+function CustomSelect({
+	name,
+	label,
+	value,
+	onChange,
+	items,
+	placeholder = "Seleccionar una opción",
+	isRequired = true,
+	transformValue = (val) => String(val), // convierte el valor actual a string para seleccionarlo
+	parseValue = (val) => val,             // convierte la selección a booleano, número, string, etc.
+}) {
 	const handleSelectionChange = (keys) => {
-		onChange(name, Array.from(keys)[0]); // Llamada a handleChange con el nombre y el valor seleccionado
+		const selectedKey = Array.from(keys)[0];
+		onChange(name, parseValue(selectedKey)); // Notifica al padre con el valor parseado
 	};
 
 	return (
@@ -13,8 +23,10 @@ function CustomSelect({ name, label, value, onChange, items, placeholder = "Sele
 			className="w-full"
 			label={label}
 			placeholder={placeholder}
-			selectedKeys={value ? [value] : []}
-			onSelectionChange={handleSelectionChange} // Usamos el nuevo manejador de cambio
+			selectedKeys={
+				value !== null && value !== undefined ? [transformValue(value)] : []
+			}
+			onSelectionChange={handleSelectionChange}
 			items={items}
 		>
 			{(item) => (
@@ -29,12 +41,18 @@ function CustomSelect({ name, label, value, onChange, items, placeholder = "Sele
 CustomSelect.propTypes = {
 	name: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
-	value: PropTypes.string,
+	value: PropTypes.any,
 	onChange: PropTypes.func.isRequired,
-	items: PropTypes.array.isRequired,
+	items: PropTypes.arrayOf(
+		PropTypes.shape({
+			key: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+		})
+	).isRequired,
 	placeholder: PropTypes.string,
 	isRequired: PropTypes.bool,
+	transformValue: PropTypes.func,
+	parseValue: PropTypes.func,
 };
 
 export default CustomSelect;
-
