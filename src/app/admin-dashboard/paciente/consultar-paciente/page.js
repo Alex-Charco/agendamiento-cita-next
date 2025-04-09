@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaTimes, FaSearch, FaPlus, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
-import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
+import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro } from "@/utils/api";
 import CustomTabs from "@/components/CustomTabs";
 import ReusableModal from "@/components/ReusableModal";

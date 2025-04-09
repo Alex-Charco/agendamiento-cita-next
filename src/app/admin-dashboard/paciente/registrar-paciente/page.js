@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { FaTimes, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
-import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
+import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { RegistrarPaciente, RegistrarFamiliar, RegistrarInfoMilitar } from "@/utils/api";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect  } from "react";
-import NavbarComponent from "@/admin-dashboard/paciente/components/NavbarComponent";
+import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro, ActualizarFamiliar, ActualizarInfoMilitar, ActualizarResidencia } from "@/utils/api";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";

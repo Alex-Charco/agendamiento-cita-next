@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import NavbarComponent from "@/components/Navbar";
+import NavbarComponent from "@/components/navbars/Navbar";
 import CardFeature from "@/components/CardFeature";
 import Footer from "@/components/Footer";
 import Banner from "@/components/Banner";
