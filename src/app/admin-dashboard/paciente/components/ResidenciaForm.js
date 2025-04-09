@@ -1,7 +1,7 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { useReducer, useEffect, useState  } from "react";
+import { useReducer, useEffect  } from "react";
 import { FaHospitalUser } from "react-icons/fa";
 import { Button, Input } from "@heroui/react";
 
