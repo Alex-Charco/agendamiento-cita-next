@@ -6,6 +6,7 @@ import CardFeature from "@/components/CardFeature";
 import Footer from "@/components/Footer";
 import Banner from "@/components/Banner";
 import { FaUserInjured, FaCalendarCheck, FaRedoAlt, FaCalendarAlt } from "react-icons/fa";
+import { FaUserDoctor } from "react-icons/fa6";
 
 const HomePage = () => {
 
@@ -30,7 +31,7 @@ const HomePage = () => {
 
       <Banner
         title="Hospital de Brigada de Selva No.17 “Pastaza”"
-        description="Sistema de Gestión Hospitalaria 11"
+        description="Sistema de Gestión Hospitalaria"
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
           { text: "Agendar Cita Médica", link: "/crear-cita", variant: "primary" },
@@ -43,6 +44,19 @@ const HomePage = () => {
           <CardFeature
             icon={<FaUserInjured className="text-azul text-3xl" />}
             title="Pacientes"
+            description={
+              <>
+                <span className="block text-left text-sm mt-2">Podrá consultar, registrar y actualizar a los pacientes</span><br />
+                <span className="text-blue-500 text-sm block">Ingresar</span>
+              </>
+            }
+
+          />
+        </Link>
+		<Link href="/admin-dashboard/médico/consultar-médico">
+          <CardFeature
+            icon={<FaUserDoctor className="text-azul text-3xl" />}
+            title="Médicos"
             description={
               <>
                 <span className="block text-left text-sm mt-2">Podrá consultar, registrar y actualizar a los pacientes</span><br />

@@ -125,10 +125,10 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
               </DropdownTrigger>
               <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem key="profile" className="h-14 gap-2">
-                  <p className="text-gray-700 hover:text-gray-900 transition-colors">
+                  <p className="pt-2 text-gray-700 hover:text-gray-900 transition-colors">
                     {getFullName(user)}
                   </p>
-                  <p className="font-semibold text-gray-700 hover:text-gray-900 transition-colors">
+                  <p className="py-2 font-semibold text-gray-700 hover:text-gray-900 transition-colors">
                     {user.rol?.nombre_rol}
                   </p>
                 </DropdownItem>
