@@ -3,7 +3,8 @@
 import PropTypes from "prop-types";
 import { useReducer, useEffect } from "react";
 import { FaHospitalUser } from "react-icons/fa";
-import { Button, Input, Select, SelectItem } from "@heroui/react";
+import CustomInput from "@/components/form/CustomInput";
+import CustomSelect from "@/components/form/CustomSelect";
 
 const initialState = {
   identificacion_paciente: "",
@@ -22,6 +23,28 @@ const initialState = {
   direccion: "",
 };
 
+// Opciones para los selects (basadas en los enums de la base de datos)
+const generoOptions = [
+  { key: "NINGUNO", label: "Ninguno" },
+  { key: "MASCULINO", label: "Masculino" },
+  { key: "FEMENINO", label: "Femenino" },
+];
+
+const estatusOptions = [
+  { key: "1", label: "Activo" },
+  { key: "0", label: "Inactivo" },
+];
+
+const relacionOptions = [
+  { key: "ABUELO/A", label: "Abuelo/a" },
+  { key: "PADRE", label: "Padre" },
+  { key: "MADRE", label: "Madre" },
+  { key: "ESPOSO/A", label: "Esposo/a" },
+  { key: "HERMANO/A", label: "Hermano/a" },
+  { key: "PRIMO/A", label: "Primo/a" },
+  { key: "TÍO/A", label: "Tío/a" },
+];
+
 function reducer(state, action) {
   return { ...state, [action.name]: action.value };
 }
@@ -39,9 +62,8 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
     }
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    dispatch({ name, value: type === "checkbox" ? checked : value });
+  const handleChange = (name, value) => {
+    dispatch({ name, value });
   };
 
   const handleSubmit = (e) => {
@@ -59,18 +81,16 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Input
+        <CustomInput
           isRequired
-          className="w-full"
           label="Identificación paciente"
           name="identificacion_paciente"
           type="text"
           value={familiar.identificacion_paciente}
           onChange={handleChange}
         />
-        <Input
+        <CustomInput
           isRequired
-          className="w-full"
           label="Identificación"
           name="identificacion"
           placeholder="Escribir la identificación"
@@ -78,28 +98,25 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
           value={familiar.identificacion}
           onChange={handleChange}
         />
-        <Input
+        <CustomInput
           isRequired
-          className="w-full"
           label="Primer Nombre"
-          type="text"
           name="primer_nombre"
           placeholder="Escribir el primer nombre"
+          type="text"
           value={familiar.primer_nombre}
           onChange={handleChange}
         />
-        <Input
-          className="w-full"
+        <CustomInput
           label="Segundo Nombre"
-          type="text"
           name="segundo_nombre"
           placeholder="Escribir el segundo nombre"
+          type="text"
           value={familiar.segundo_nombre}
           onChange={handleChange}
         />
-        <Input
+        <CustomInput
           isRequired
-          className="w-full"
           label="Primer Apellido"
           name="primer_apellido"
           placeholder="Escribir el primer apellido"
@@ -107,140 +124,96 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
           value={familiar.primer_apellido}
           onChange={handleChange}
         />
-        <Input
-          className="w-full"
+        <CustomInput
           label="Segundo Apellido"
-          type="text"
           name="segundo_apellido"
           placeholder="Escribir el segundo apellido"
+          type="text"
           value={familiar.segundo_apellido}
           onChange={handleChange}
         />
-        <Input
+        <CustomInput
           isRequired
-          className="w-full"
           label="Fecha de nacimiento"
-          type="date"
           name="fecha_nacimiento"
+          type="date"
           value={familiar.fecha_nacimiento}
           onChange={handleChange}
         />
-        <Select
-          isRequired
-          className="w-full"
+        {/* Género */}
+        <CustomSelect
+          name="genero"
           label="Género"
-          placeholder="Seleccionar un género"
-          selectedKeys={familiar.genero ? [familiar.genero] : []}
-          onSelectionChange={(keys) =>
-            dispatch({ name: "genero", value: Array.from(keys)[0] })
-          }
-          items={[
-            { key: "NINGUNO", label: "Ninguno" },
-            { key: "MASCULINO", label: "Masculino" },
-            { key: "FEMENINO", label: "Femenino" },
-          ]}
-        >
-          {(item) => (
-            <SelectItem key={item.key} className="text-gray-600">
-              {item.label}
-            </SelectItem>
-          )}
-        </Select>
-        <Input
+          value={familiar.genero}
+          onChange={handleChange}
+          items={generoOptions}
+          placeholder="Seleccione un género"
           isRequired
-          className="w-full"
+        />
+        <CustomInput
+          isRequired
           label="Celular"
-          type="tel"
           name="celular"
+          type="tel"
           placeholder="Escribir número de celular"
           value={familiar.celular}
           onChange={handleChange}
         />
-        <Input
-          className="w-full"
+        <CustomInput
           label="Teléfono"
-          type="tel"
           name="telefono"
+          type="tel"
           placeholder="Escribir número de teléfono"
           value={familiar.telefono}
           onChange={handleChange}
         />
-        <Input
+        <CustomInput
           isRequired
-          className="w-full md:col-span-2"
           label="Correo"
-          type="email"
           name="correo"
+          type="email"
           placeholder="Escribir el correo electrónico"
           value={familiar.correo}
           onChange={handleChange}
+          className="md:col-span-2"
         />
-        <Select
+        <CustomSelect
           isRequired
-          className="w-full"
           label="Estatus"
           placeholder="Seleccionar el estatus"
-          selectedKeys={
-            familiar.estatus !== null && familiar.estatus !== undefined
-              ? [String(familiar.estatus)]
-              : []
-          }
-          onSelectionChange={(keys) =>
-            dispatch({ name: "estatus", value: parseInt(Array.from(keys)[0]) })
-          }
-          items={[
-            { key: "1", label: "Activo" },
-            { key: "0", label: "Inactivo" },
-          ]}
-        >
-          {(item) => (
-            <SelectItem key={item.key} className="text-gray-600">
-              {item.label}
-            </SelectItem>
-          )}
-        </Select>
-        <Select
-          isRequired
-          className="w-full"
+          value={familiar.estatus}
+          onChange={handleChange}
+          items={estatusOptions}
+          transformValue={(val) => String(val)}
+          parseValue={(val) => parseInt(val)}
+        /> 
+        <CustomSelect
+          name="relacion"
           label="Relación"
-          placeholder="Seleccionar tipo de relación"
-          selectedKeys={familiar.relacion ? [familiar.relacion] : []}
-          onSelectionChange={(keys) =>
-            dispatch({ name: "relacion", value: Array.from(keys)[0] })
-          }
-          items={[
-            { key: "ABUELO/A", label: "Abuelo/a" },
-            { key: "PADRE", label: "Padre" },
-            { key: "MADRE", label: "Madre" },
-            { key: "ESPOSO/A", label: "Esposo/a" },
-            { key: "HERMANO/A", label: "Hermano/a" },
-            { key: "PRIMO/A", label: "Primo/a" },
-            { key: "TÍO/A", label: "Tío/a" },
-          ]}
-        >
-          {(item) => (
-            <SelectItem key={item.key} className="text-gray-600">
-              {item.label}
-            </SelectItem>
-          )}
-        </Select>
-        <Input
-          className="w-full md:col-span-2"
+          value={familiar.relacion}
+          onChange={handleChange}
+          items={relacionOptions}
+          placeholder="Seleccione nivel de instrucción"
+        />
+        <CustomInput
           label="Dirección"
-          type="text"
           name="direccion"
+          type="text"
           placeholder="Escribir la dirección"
           value={familiar.direccion}
           onChange={handleChange}
+          className="md:col-span-2"
         />
       </div>
 
-      <Button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-      >
-        {familiarData?.id_paciente ? "Actualizar familiar" : "Registrar familiar"}
-      </Button>
+      <div className="text-center">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        >
+          {familiarData?.id_paciente ? "Actualizar familiar" : "Registrar familiar"}
+        </button>
+      </div>
     </form>
   );
 }
