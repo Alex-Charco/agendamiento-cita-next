@@ -140,7 +140,6 @@ import { FaHospitalUser } from "react-icons/fa";
       dispatch({ name, value });
     };
     
-  
     const handleSubmit = (e) => {
       e.preventDefault();
       onSubmit(paciente);
@@ -164,7 +163,6 @@ import { FaHospitalUser } from "react-icons/fa";
           value={paciente.nombre_usuario}
           onChange={handleChange}
           placeholder="Ingrese el nombre de usuario"
-          isRequired
         />
 
         {/* Identificación */}
@@ -175,7 +173,6 @@ import { FaHospitalUser } from "react-icons/fa";
           onChange={handleChange}
           placeholder="Ingrese la identificación"
           type="text"
-          isRequired
         />
 
         {/* Primer nombre */}
@@ -185,7 +182,6 @@ import { FaHospitalUser } from "react-icons/fa";
           value={paciente.primer_nombre}
           onChange={handleChange}
           placeholder="Ingrese el primer nombre"
-          isRequired
         />
 
 

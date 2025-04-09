@@ -1,9 +1,9 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { useReducer, useEffect  } from "react";
+import React, { useReducer, useEffect } from "react";
+import CustomInput from "@/components/form/CustomInput";
 import { FaHospitalUser } from "react-icons/fa";
-import { Button, Input } from "@heroui/react";
 
 const initialState = {
   identificacion_paciente: "",
@@ -34,9 +34,8 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
     }
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    dispatch({ name, value: type === "checkbox" ? checked : value });
+  const handleChange = (name, value) => {
+    dispatch({ name, value });
   };
 
   const handleSubmit = (e) => {
@@ -54,18 +53,14 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Input
-          isRequired
-          className="w-full"
-          label="Identificación paciente"
+        <CustomInput
           name="identificacion_paciente"
+          label="Identificación paciente"
           type="text"
           value={residencia.identificacion_paciente}
           onChange={handleChange}
         />
-        <Input
-          isRequired
-          className="w-full"
+        <CustomInput
           label="Lugar de nacimiento"
           name="lugar_nacimiento"
           placeholder="Escribir lugar de nacimiento"
@@ -73,9 +68,7 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
           value={residencia.lugar_nacimiento}
           onChange={handleChange}
         />
-        <Input
-          isRequired
-          className="w-full"
+        <CustomInput
           label="País"
           type="text"
           name="pais"
@@ -83,8 +76,7 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
           value={residencia.pais}
           onChange={handleChange}
         />
-        <Input
-          className="w-full"
+        <CustomInput
           label="Nacionalidad"
           type="text"
           name="nacionalidad"
@@ -92,9 +84,7 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
           value={residencia.nacionalidad}
           onChange={handleChange}
         />
-        <Input
-          isRequired
-          className="w-full"
+        <CustomInput
           label="Provincia"
           name="provincia"
           placeholder="Escribir la provincia"
@@ -102,8 +92,7 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
           value={residencia.provincia}
           onChange={handleChange}
         />
-        <Input
-          className="w-full"
+        <CustomInput
           label="Cantón"
           type="text"
           name="canton"
@@ -111,8 +100,7 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
           value={residencia.canton}
           onChange={handleChange}
         />
-        <Input
-          className="w-full"
+        <CustomInput
           label="Parroquia"
           type="text"
           name="parroquia"
@@ -120,8 +108,7 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
           value={residencia.parroquia}
           onChange={handleChange}
         />
-        <Input
-          className="w-full"
+        <CustomInput
           label="Dirección"
           type="text"
           name="direccion"
@@ -131,12 +118,14 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
         />
       </div>
 
-      <Button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-      >
+      <div className="text-center">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        >
         {ResidenciaData?.id_paciente ? "Actualizar residencia" : "Registrar residencia"}
-      </Button>
+      </button>
+      </div>
     </form>
   );
 }
