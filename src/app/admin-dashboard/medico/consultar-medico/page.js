@@ -30,24 +30,41 @@ export default function ConsultaMedicoPage() {
             key: "datos-medico",
             title: "Datos Médico",
             content: selectedMedico ? (
-                <div className="ml-5" key={selectedMedico.id_medico}>
+                <div className="flex flex-col md:flex-row gap-10 ml-5" key={selectedMedico.id_medico}>
+                    {/* Columna: Datos del Médico */}
+                    <div className="flex-1 border-1 rounded-xl shadow-lg p-4">
                     <h2 className="text-lg font-semibold text-gray-700">
-                        {`${selectedMedico.primer_nombre} ${selectedMedico.segundo_nombre} ${selectedMedico.primer_apellido} ${selectedMedico.segundo_apellido}`}
-                    </h2>
-                    <p className="text-gray-600"><strong>Identificación:</strong> {selectedMedico.identificacion}</p>
-                    <p className="text-gray-600"><strong>Fecha de Nacimiento:</strong> {selectedMedico.fecha_nacimiento}</p>
-                    <p className="text-gray-600"><strong>Género:</strong> {selectedMedico.genero}</p>
-                    <p className="text-gray-600"><strong>Celular:</strong> {selectedMedico.celular}</p>
-                    <p className="text-gray-600"><strong>Teléfono:</strong> {selectedMedico.telefono}</p>
-                    <p className="text-gray-600"><strong>Correo:</strong> {selectedMedico.correo}</p>
-                    <p className="text-gray-600"><strong>Estatus:</strong> {selectedMedico.estatus}</p>
-                    <p className="text-gray-600"><strong>Reg. MSP:</strong> {selectedMedico.reg_msp}</p>
+                            {[
+                                selectedMedico.primer_nombre,
+                                selectedMedico.segundo_nombre,
+                                selectedMedico.primer_apellido,
+                                selectedMedico.segundo_apellido
+                            ]
+                                .filter(Boolean)  // Filtra los valores falsy (null, undefined, "", etc.)
+                                .join(" ")}  {/* Une los valores con un solo espacio entre ellos */}
+                        </h2>
+                        <p className="text-gray-600"><strong>Identificación:</strong> {selectedMedico.identificacion}</p>
+                        <p className="text-gray-600"><strong>Fecha de Nacimiento:</strong> {selectedMedico.fecha_nacimiento}</p>
+                        <p className="text-gray-600"><strong>Género:</strong> {selectedMedico.genero}</p>
+                        <p className="text-gray-600"><strong>Celular:</strong> {selectedMedico.celular}</p>
+                        <p className="text-gray-600"><strong>Teléfono:</strong> {selectedMedico.telefono}</p>
+                        <p className="text-gray-600"><strong>Correo:</strong> {selectedMedico.correo}</p>
+                        <p className="text-gray-600"><strong>Estatus:</strong> {selectedMedico.estatus}</p>
+                        <p className="text-gray-600"><strong>Reg. MSP:</strong> {selectedMedico.reg_msp}</p>
+                    </div>
+
+                    {/* Columna: Datos de la Especialidad */}
+                    <div className="flex-1 border-1 rounded-xl shadow-lg p-4" >
+                        <h3 className="text-lg font-semibold text-gray-700">Especialidad</h3>
+                        <p className="text-gray-600"><strong>Nombre:</strong> {selectedMedico.especialidad?.nombre}</p>
+                        <p className="text-gray-600"><strong>Atención:</strong> {selectedMedico.especialidad?.atencion}</p>
+                        <p className="text-gray-600"><strong>Consultorio:</strong> {selectedMedico.especialidad?.consultorio}</p>
+                    </div>
                 </div>
             ) : (
-                <p>No se han encontrado datos para el paciente.</p>
+                <p>No se han encontrado datos para el médico.</p>
             ),
-        },
-        
+        }
     ];
 
     return (
