@@ -2,7 +2,7 @@
 
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import authAxios from "@/utils/api/authAxios"; 
 
 function PacienteSearch({ onSelectPaciente }) {
     const [query, setQuery] = useState("");
@@ -15,15 +15,7 @@ function PacienteSearch({ onSelectPaciente }) {
         setError(null);
 
         try {
-            const token = localStorage.getItem("authToken");
-            const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/get/${query}`;
-            const response = await axios.get(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            console.log("API GET", apiUrl);
+            const response = await authAxios.get(`/api/paciente/get/${query}`);
 
             if (response.data?.paciente) {
                 const paciente = response.data.paciente;
