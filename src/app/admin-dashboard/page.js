@@ -16,7 +16,13 @@ const HomePage = () => {
         menuServices={[
           { name: "Cita", path: "/common/crear-cita" },
           { name: "Horario", path: "/common/cancelar-cita" },
-          { name: "Médico", path: "/common/consulta-medico" },
+          { name: "Médico", 
+            subMenu: [
+              { name: "Actualizar Médico", path: "/admin-dashboard/paciente/actualizar-paciente" },
+              { name: "Consultar Médico", path: "/admin-dashboard/medico/consultar-medico" },
+              { name: "Registrar Médico", path: "/admin-dashboard/paciente/registrar-paciente" },
+            ],
+          },
           {
             name: "Paciente",
             subMenu: [

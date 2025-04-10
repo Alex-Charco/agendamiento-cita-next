@@ -1,5 +1,7 @@
 import axios from "axios";
 
+//   ***PACIENTE***
+// *Código para buscar*
 export const fetchFamiliar = async (identificacion, setSelectedFamiliar) => {
     try {
         const token = localStorage.getItem("authToken");
@@ -272,3 +274,4 @@ export const ActualizarResidencia = async (data, setMensaje, setSuccess) => {
         setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
     }
 };
+
