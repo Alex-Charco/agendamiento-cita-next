@@ -29,13 +29,13 @@ export default function RequestResetPassword() {
 
             {/* Imagen fuera del formulario, centrada */}
             <div className="mb-4">
-                <Image 
+                <Image
                     src="/images/reset.svg" // Cambia la ruta a tu imagen
                     alt="Logo"
                     width={150} // Establece el tamaño de la imagen
                     height={150} // Establece el tamaño de la imagen
                     className="mx-auto" // Centra la imagen
-					priority
+                    priority
                 />
             </div>
 
@@ -45,19 +45,22 @@ export default function RequestResetPassword() {
                 border: '4px solid rgba(0, 56, 255, 0.3)',
                 boxShadow: '0 4px 10px rgba(0, 56, 255, 0.5)',
             }}>
-                <h2 className="text-lg font-bold mb-5 text-center">Recuperar contraseña</h2>
+                <h2 className="text-lg text-gray-600 font-bold mb-5 text-center">Recuperar contraseña</h2>
                 <input
                     type="email"
-                    className="border p-2 w-full"
+                    className="border p-2 w-full text-gray-500"
                     placeholder="Ingresa tu correo"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-                <button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
-                    Enviar enlace
-                </button>
-                {message && <p className="mt-2 text-sm">{message}</p>}
+                {/* Botón centrado */}
+                <div className="mt-4 flex justify-center">
+                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+                        Enviar enlace
+                    </button>
+                </div>
+                {message && <p className="mt-2 text-sm text-gray-600">{message}</p>}
             </form>
         </div>
     );

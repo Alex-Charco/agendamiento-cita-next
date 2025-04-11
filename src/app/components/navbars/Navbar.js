@@ -132,8 +132,16 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                     {user.rol?.nombre_rol}
                   </p>
                 </DropdownItem>
-                <DropdownItem key="logout" color="danger">
-                  <Link href="/auth/login">Salir</Link>
+                <DropdownItem
+                  className="text-gray-600"
+                  key="logout"
+                  color="danger"
+                  onClick={() => {
+                    localStorage.removeItem("user"); // si necesitas limpiar sesión
+                    window.location.href = "/auth/login"; // redirige inmediatamente
+                  }}
+                >
+                  Salir
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

@@ -9,6 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
 import { ROUTES } from "@/routes/index.routes";
 import { isAuthenticated, logout } from "@/utils/auth";
+import Link from "next/link";
 
 export default function LoginForm() {
     const [errorMessage, setErrorMessage] = useState(null);
@@ -171,12 +172,9 @@ export default function LoginForm() {
                                 </Button>
                                 <p className="flex justify-center text-xs text-gray-700 mt-2">
                                     Olvidó la contraseña:{" "}
-                                    <a
-                                        href="/auth/reset-password"
-                                        className="text-blue-600 hover:underline"
-                                    >
+                                    <Link href="/auth/reset-password" className="text-blue-600 hover:underline">
                                         Recuperar contraseña
-                                    </a>
+                                    </Link>
                                 </p>
                             </div>
                         </form>

@@ -46,7 +46,7 @@ function ResetPasswordForm() {
     };
 
     return (
-        <div className="flex h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
+        <div className="flex h-screen items-center justify-center bg-cover bg-center bg-no-repeat text-gray-600"
             style={{ backgroundImage: "url('/images/background.svg')" }}>
             <div className="absolute inset-0 bg-black bg-opacity-5 pointer-events-none"></div>
             <form onSubmit={handleSubmit} className="bg-white p-5 rounded shadow-lg w-96" style={{
@@ -66,7 +66,7 @@ function ResetPasswordForm() {
                         type="text"
                         className="border p-2 w-2/3"
                         placeholder="Ingresar el usuario"
-                        value={nombre_usuario}
+                        value={nombreUsuario}
                         onChange={(e) => setNombreUsuario(e.target.value)}
                         required
                     />
