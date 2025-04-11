@@ -20,7 +20,7 @@ const HomePage = () => {
             subMenu: [
               { name: "Actualizar Médico", path: "/admin-dashboard/paciente/actualizar-paciente" },
               { name: "Consultar Médico", path: "/admin-dashboard/medico/consultar-medico" },
-              { name: "Registrar Médico", path: "/admin-dashboard/paciente/registrar-paciente" },
+              { name: "Registrar Médico", path: "/admin-dashboard/medico/registrar-medico" },
             ],
           },
           {

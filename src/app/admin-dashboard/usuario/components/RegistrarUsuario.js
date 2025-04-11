@@ -38,10 +38,6 @@ export default function RegistrarUsuario() {
                 icon: "success",
                 draggable: true,
                 confirmButtonText: "OK"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = "/admin-dashboard/paciente/registrar-paciente";
-                }
             });
         } catch (error) {
             console.error("Error al registrar usuario:", error.response?.data || error.message);
