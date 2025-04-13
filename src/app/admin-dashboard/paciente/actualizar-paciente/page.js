@@ -14,7 +14,7 @@ import ResidenciaForm from "@/admin-dashboard/paciente/components/ResidenciaForm
 import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSeguro";
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
-import { FaTimes, FaSearch, FaPlus, FaSignOutAlt } from "react-icons/fa";
+import { FaSearch, FaPlus } from "react-icons/fa";
 import useSuccessAlert from "@/hooks/useSuccessAlert";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
