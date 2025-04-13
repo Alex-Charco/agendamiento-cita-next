@@ -15,6 +15,7 @@ import RegistrarResidencia from "@/admin-dashboard/paciente/components/Registrar
 import RegistrarSeguro from "@/admin-dashboard/paciente/components/RegistrarSeguro";
 import useSuccessAlert from "@/hooks/useSuccessAlert";
 import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
+import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
 export default function RegistrarPacientePage() {
 
@@ -23,6 +24,7 @@ export default function RegistrarPacientePage() {
     const [selectedSeguro] = useState(null);
     const [mensaje, setMensaje] = useState("");
     const [success, setSuccess] = useState(false);
+    const pathname = usePathname();
 
     // Limpia localStorage al entrar/salir
     useClearLocalStorage(["identificacion", "nombre_usuario"]);

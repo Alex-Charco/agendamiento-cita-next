@@ -8,13 +8,13 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
   Image,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
 } from "@heroui/react";
+import NextLink from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions = false }) => {
@@ -64,33 +64,41 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
         </NavbarBrand>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem isActive>
-            <Link className="hover:bg-gray-200 px-4 py-2 rounded" href="/">Inicio</Link>
+          <NavbarItem isActive href="/" className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100">
+            Inicio
           </NavbarItem>
+
           <NavbarItem>
-            <Link className="hover:bg-gray-200 px-4 py-2 rounded" href="/contacto">Contacto</Link>
+            <NextLink href="/contacto" className="hover:bg-gray-100 px-4 py-2 rounded">Contacto</NextLink>
           </NavbarItem>
+
           {menuItems.map((item) => (
-            <NavbarItem key={item.path}>
-              <Link href={item.path}>{item.name}</Link>
+            <NavbarItem key={item.path} href={item.path}>
+              {item.name}
             </NavbarItem>
           ))}
 
           {menuServices.length > 0 && showExtraOptions && (
-            <NavbarItem className="relative">
-              <Link href="#" onPress={() => setIsServicesOpen(!isServicesOpen)} className="hover:bg-gray-200 px-4 py-2 rounded">
+            <div className="relative">
+              <button
+                onClick={() => setIsServicesOpen(!isServicesOpen)}
+                className="hover:bg-gray-100 px-4 py-2 rounded flex items-center justify-between gap-2 w-full text-blue-800"
+              >
                 Servicios
-                {isMobileServicesOpen ? (
-                  <FaChevronUp className="ml-2 text-fray-300 text-lg" />
+                {isServicesOpen ? (
+                  <FaChevronUp className="ml-2 text-gray-300 text-lg" />
                 ) : (
                   <FaChevronDown className="ml-2 text-gray-300 text-lg" />
                 )}
-              </Link>
+              </button>
               {isServicesOpen && (
-                <div className="absolute left-0 mt-2 w-56 bg-white text-gray-900 shadow-lg rounded-md">
+                <div className="absolute left-0 mt-2 w-56 bg-white text-gray-900 shadow-lg rounded-md z-10">
                   {menuServices.map((category) => (
                     <div key={category.name}>
-                      <button className="w-full flex justify-between text-left text-blue-800 px-4 py-2 hover:bg-gray-100" onClick={() => toggleSubmenu(category.name)}>
+                      <button
+                        className="w-full flex justify-between text-left text-blue-800 px-4 py-2 hover:bg-gray-100"
+                        onClick={() => toggleSubmenu(category.name)}
+                      >
                         <span>{category.name}</span>
                         {isSubmenuOpen[category.name] ? (
                           <FaChevronUp className="text-blue-600 text-sm" />
@@ -101,9 +109,9 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                       {isSubmenuOpen[category.name] && (
                         <div className="pl-4">
                           {category.subMenu.map((service) => (
-                            <Link key={service.path} href={service.path} className="block px-4 py-2 hover:bg-gray-200">
+                            <NextLink key={service.path} href={service.path} className="block px-4 py-2 hover:bg-gray-200 text-blue-700">
                               {service.name}
-                            </Link>
+                            </NextLink>
                           ))}
                         </div>
                       )}
@@ -111,7 +119,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                   ))}
                 </div>
               )}
-            </NavbarItem>
+            </div>
           )}
         </NavbarContent>
 
@@ -137,8 +145,8 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                   key="logout"
                   color="danger"
                   onClick={() => {
-                    localStorage.removeItem("user"); // si necesitas limpiar sesión
-                    window.location.href = "/auth/login"; // redirige inmediatamente
+                    localStorage.removeItem("user");
+                    window.location.href = "/auth/login";
                   }}
                 >
                   Salir
@@ -152,34 +160,38 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
           )}
         </NavbarItem>
 
-        <NavbarMenuToggle onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"} className="sm:hidden" />
+        <NavbarMenuToggle
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+          className="sm:hidden"
+        />
       </NavbarContent>
 
       <NavbarMenu className={isMenuOpen ? "block" : "hidden"}>
         <NavbarMenuItem>
-          <Link className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100" href="/">Inicio</Link>
+          <NextLink href="/" className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100">
+            Inicio
+          </NextLink>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100" href="/contacto">Contacto</Link>
+          <NextLink href="/contacto" className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100">
+            Contacto
+          </NextLink>
         </NavbarMenuItem>
         {menuItems.map((item) => (
           <NavbarMenuItem key={item.path}>
-            <Link className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100" href={item.path}>
+            <NextLink href={item.path} className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100">
               {item.name}
-            </Link>
+            </NextLink>
           </NavbarMenuItem>
         ))}
 
         {menuServices.length > 0 && showExtraOptions && (
           <>
             <NavbarMenuItem>
-              <Link
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsMobileServicesOpen(!isMobileServicesOpen);
-                }}
-                className="w-full flex justify-between items-center text-left font-semibold"
+              <button
+                onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                className="w-full flex justify-between items-center text-left text-blue-800 mx-2"
               >
                 <span>Servicios</span>
                 {isMobileServicesOpen ? (
@@ -187,7 +199,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                 ) : (
                   <FaChevronDown className="text-blue-600 text-lg" />
                 )}
-              </Link>
+              </button>
             </NavbarMenuItem>
 
             {isMobileServicesOpen && (
@@ -212,9 +224,9 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                       <div className="pl-4 bg-gray-50">
                         {category.subMenu.map((service) => (
                           <NavbarMenuItem key={service.path}>
-                            <Link href={service.path} className="block px-4 py-2 hover:bg-gray-200">
+                            <NextLink href={service.path} className="block px-4 py-2 hover:bg-gray-200 text-blue-700">
                               {service.name}
-                            </Link>
+                            </NextLink>
                           </NavbarMenuItem>
                         ))}
                       </div>
