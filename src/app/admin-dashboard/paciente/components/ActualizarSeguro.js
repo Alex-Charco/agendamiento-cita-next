@@ -9,7 +9,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 function ActualizarSeguro({ seguroData }) {
   const [mensaje, setMensaje] = useState("");
-  const [datosSeguro, setDatosSeguro] = useState(seguroData || null);
+  const [datosSeguro, setDatosSeguro] = useState(seguroData || "");
 
   useEffect(() => {
     if (seguroData) {

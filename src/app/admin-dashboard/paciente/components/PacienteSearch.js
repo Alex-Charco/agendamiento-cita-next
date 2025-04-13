@@ -20,14 +20,25 @@ function PacienteSearch({ onSelectPaciente }) {
             if (response.data?.paciente) {
                 const paciente = response.data.paciente;
 
+                // Extraer nombre_usuario y pasarlo al objeto plano
+                const pacienteConUsuario = {
+                    ...paciente,
+                    nombre_usuario: paciente.usuario?.nombre_usuario || ""
+                };
+
                 // Guardar en localStorage y enviar al componente padre
                 localStorage.setItem("identificacion", paciente.identificacion);
-                onSelectPaciente(paciente);
+                localStorage.setItem("nombre_usuario", pacienteConUsuario.nombre_usuario);
+                
+                onSelectPaciente(pacienteConUsuario);
             } else {
                 setError("No se encontró el paciente.");
             }
         } catch (err) {
             console.error("Error al obtener paciente:", err);
+
+            if (err.response?.status === 401) return;
+            
             setError("Error al obtener los datos. Inténtelo nuevamente.");
         } finally {
             setLoading(false);

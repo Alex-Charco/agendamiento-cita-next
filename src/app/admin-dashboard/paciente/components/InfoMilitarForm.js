@@ -83,7 +83,7 @@ function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 					name="identificacion"
 					label="Identificación"
 					placeholder="Escribir la identificación"
-					value={infoMilitar.identificacion}
+					value={infoMilitar.identificacion ?? ""}
 					onChange={handleChange} // Aquí se usa el handleChange del useFormReducer
 				/>
 

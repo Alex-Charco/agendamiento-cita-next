@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect  } from "react";
+import { useState } from "react";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
+import FormWrapper from "@/components/FormWrapper";
 import { fetchFamiliar, fetchInfoMilitar, fetchResidencia, fetchSeguro, ActualizarFamiliar, ActualizarInfoMilitar, ActualizarResidencia } from "@/utils/api";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 import ActualizarPaciente from "@/admin-dashboard/paciente/components/ActualizarPaciente";
@@ -13,8 +14,7 @@ import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSe
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
 import { FaTimes, FaSearch, FaPlus, FaSignOutAlt } from "react-icons/fa";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import useSuccessAlert from "@/hooks/useSuccessAlert";
 
 export default function ActualizarPacientePage() {
 	const [selectedPaciente, setSelectedPaciente] = useState(null);
@@ -37,55 +37,56 @@ export default function ActualizarPacientePage() {
 	};
 
 	const handlePacienteSelect = (paciente) => {
-		console.log("Paciente seleccionado:", paciente); 
+		console.log("Paciente seleccionado:", paciente);
 		setSelectedPaciente(paciente);
 		fetchFamiliar(paciente.identificacion, setSelectedFamiliar);
-		fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar);
+		
+		// Verificar si el paciente es de tipo militar antes de intentar obtener la info militar
+		if (paciente.tipo_paciente === "militar") {
+			fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar).catch((error) => {
+				console.error("Error al obtener información militar:", error);
+				setSelectedInfoMilitar(null); // Si hay error, aseguramos que no haya datos previos
+			});
+		} else {
+			// Si no es de tipo militar, no se obtiene la información militar
+			setSelectedInfoMilitar(null);
+		}
+	
 		fetchResidencia(paciente.identificacion, setSelectedResidencia);
 		fetchSeguro(paciente.identificacion, setSelectedSeguro);
 	};
-
+	
 	const handleFamiliarSubmit = async (data) => {
-        const familiarData = {
-            ...data,
-            identificacion_paciente: data.identificacion_paciente || data.identificacion,
-        };
-        await ActualizarFamiliar(familiarData, setMensaje, setSuccess);  // Usamos la función del API
-    };
+		const familiarData = {
+			...data,
+			identificacion_paciente: data.identificacion_paciente || data.identificacion,
+		};
+		await ActualizarFamiliar(familiarData, setMensaje, setSuccess);  // Usamos la función del API
+	};
 
 	const handleInfoMilitarSubmit = async (data) => {
-        const infoMilitarData = {
-            ...data,
-            identificacion_paciente: data.identificacion_paciente || data.identificacion,
-        };
-        await ActualizarInfoMilitar(infoMilitarData, setMensaje, setSuccess);  // Usamos la función del API
-    };
+		const infoMilitarData = {
+			...data,
+			identificacion_paciente: data.identificacion_paciente || data.identificacion,
+		};
+		await ActualizarInfoMilitar(infoMilitarData, setMensaje, setSuccess);  // Usamos la función del API
+	};
 
 	const handleResidenciaSubmit = async (data) => {
-        const ResidenciaData = {
-            ...data,
-            identificacion_paciente: data.identificacion_paciente || data.identificacion,
-        };
-        await ActualizarResidencia(ResidenciaData, setMensaje, setSuccess);  // Usamos la función del API
-    };
+		const residenciaData = {
+			...data,
+			identificacion_paciente: data.identificacion_paciente || data.identificacion,
+		};
+		await ActualizarResidencia(residenciaData, setMensaje, setSuccess);  // Usamos la función del API
+	};
 
 	// Mostrar la alerta si se registra con éxito
-		useEffect(() => {
-			if (success) {
-				Swal.fire({
-					title: "¡Registro exitoso!",
-					icon: "success",
-					draggable: true,
-					confirmButtonText: "OK"
-				});
-				setSuccess(false); // Resetear para no mostrarlo más de una vez
-			}
-		}, [success]);
-		
+	useSuccessAlert(success, setSuccess, "¡Paciente actualizado exitosamente!");
+
 	const buttons = [
 		{ label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
 		{ label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/consultar-paciente" },
-        { label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/registrar-paciente" },
+		{ label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/registrar-paciente" },
 		{ label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
 	];
 
@@ -108,66 +109,56 @@ export default function ActualizarPacientePage() {
 			key: "actualizar-familiar",
 			title: "2. Familiar",
 			content: (
-				<div className="min-h-screen p-6 flex flex-col items-center">
-					<div className="lg:w-1/2">
-						{selectedFamiliar ? (
-							<>
-								{console.log("Familiar seleccionado:", selectedFamiliar)}  {/* Agregar el console.log aquí */}
-								<FamiliarForm
-									onSubmit={handleFamiliarSubmit}  // Usamos handleFamiliarSubmit para manejar el submit
-									familiarData={selectedFamiliar}
-								/>
-							</>
-						) : (
-							<p>Buscar paciente para modificar familiar</p>
-						)}
-						{mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
-					</div>
-				</div>
+				<FormWrapper mensaje={mensaje}>
+					{selectedFamiliar ? (
+						<>
+							<FamiliarForm
+								onSubmit={handleFamiliarSubmit}
+								familiarData={selectedFamiliar}
+							/>
+						</>
+					) : (
+						<p>Buscar paciente para modificar familiar</p>
+					)}
+				</FormWrapper>
 			),
-		},		
+		},
 		{
 			key: "informacion-militar",
 			title: "3. Información Militar",
 			content: (
-				<div className="min-h-screen p-6 flex flex-col items-center">
-					<div className="lg:w-1/2">
-						{selectedInfoMilitar ? (
-							<>
-								{console.log("InfoMilitar seleccionado:", selectedInfoMilitar)}  {/* Agregar el console.log aquí */}
-								<InfoMilitarForm
-									onSubmit={handleInfoMilitarSubmit}  // Usamos handleFamiliarSubmit para manejar el submit
-									infoMilitarData={selectedInfoMilitar}
-								/>
-							</>
-						) : (
-							<p>Buscar paciente para modificar familiar</p>
-						)}
-						{mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
-					</div>
-				</div>
+				<FormWrapper mensaje={mensaje}>
+					{selectedInfoMilitar ? (
+						<>
+							{console.log("InfoMilitar seleccionado:", selectedInfoMilitar)}
+							<InfoMilitarForm
+								onSubmit={handleInfoMilitarSubmit}
+								infoMilitarData={selectedInfoMilitar}
+							/>
+						</>
+					) : (
+						<p>No hay información militar.</p>
+					)}
+				</FormWrapper>
 			),
 		},
 		{
 			key: "residencia",
 			title: "4. Residencia",
 			content: (
-				<div className="min-h-screen p-6 flex flex-col items-center">
-					<div className="lg:w-1/2">
-						{selectedResidencia ? (
-							<>
-								{console.log("Residencia seleccionado:", selectedResidencia)}  {/* Agregar el console.log aquí */}
-								<ResidenciaForm
-									onSubmit={handleResidenciaSubmit}  // Usamos handleFamiliarSubmit para manejar el submit
-									ResidenciaData={selectedResidencia}
-								/>
-							</>
-						) : (
-							<p>Buscar paciente para modificar residencia</p>
-						)}
-						{mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
-					</div>
-				</div>
+				<FormWrapper mensaje={mensaje}>
+					{selectedResidencia ? (
+						<>
+							{console.log("Residencia seleccionado:", selectedResidencia)}
+							<ResidenciaForm
+								onSubmit={handleResidenciaSubmit}
+								residenciaData={selectedResidencia}
+							/>
+						</>
+					) : (
+						<p>Buscar paciente para modificar residencia</p>
+					)}
+				</FormWrapper>
 			),
 		},
 		{

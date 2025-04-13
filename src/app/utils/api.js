@@ -36,11 +36,11 @@ export const fetchInfoMilitar = async (identificacion, setSelectedInfoMilitar) =
         if (response.data) {
             setSelectedInfoMilitar(response.data);
         } else {
-            setSelectedInfoMilitar(null);
+            setSelectedInfoMilitar("");
         }
     } catch (error) {
-        console.error("Error al obtener familiar:", error);
-        setSelectedInfoMilitar(null);
+        console.error("Error al obtener Inoformación militar:", error);
+        setSelectedInfoMilitar("");
     }
 };
 

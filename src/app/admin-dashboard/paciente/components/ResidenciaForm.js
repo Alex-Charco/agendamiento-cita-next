@@ -21,10 +21,10 @@ function reducer(state, action) {
   return { ...state, [action.name]: action.value };
 }
 
-function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
+function ResidenciaForm({ onSubmit, residenciaData = {} }) {
   const [residencia, dispatch] = useReducer(reducer, {
     ...initialState,
-    ...ResidenciaData,
+    ...residenciaData,
   });
 
   useEffect(() => {
@@ -123,7 +123,7 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
         >
-        {ResidenciaData?.id_paciente ? "Actualizar residencia" : "Registrar residencia"}
+        {residenciaData?.id_paciente ? "Actualizar residencia" : "Registrar residencia"}
       </button>
       </div>
     </form>
@@ -132,7 +132,7 @@ function ResidenciaForm({ onSubmit, ResidenciaData = {} }) {
 
 ResidenciaForm.propTypes = {
   onSubmit: PropTypes.object,
-  ResidenciaData: PropTypes.object,
+  residenciaData: PropTypes.object,
 }
 
 export default ResidenciaForm;

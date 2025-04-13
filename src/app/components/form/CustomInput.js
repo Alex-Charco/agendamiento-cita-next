@@ -10,7 +10,7 @@ function CustomInput({ name, label, placeholder, value, onChange, type = "text",
 			name={name}
 			placeholder={placeholder}
 			type={type}
-			value={value}
+			value={value ?? ""}
 			readOnly={isReadOnly}
 			onChange={(e) => onChange(name, e.target.value)} // Llamada a handleChange con el nombre y el valor del input
 		/>

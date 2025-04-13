@@ -9,7 +9,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 function ActualizarPaciente({ pacienteData }) {
   const [mensaje, setMensaje] = useState("");
-  const [datosPaciente, setDatosPaciente] = useState(pacienteData || null);
+  const [datosPaciente, setDatosPaciente] = useState(pacienteData || "");
 
   useEffect(() => {
     if (pacienteData) {

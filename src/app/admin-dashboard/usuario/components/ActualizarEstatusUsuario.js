@@ -9,7 +9,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 function ActualizarEstatusUsuario({ estatusUsuarioData }) {
   const [mensaje, setMensaje] = useState("");
-  const [datosEstatusUsuario, setDatosEstatusUsuario] = useState(estatusUsuarioData || null);
+  const [datosEstatusUsuario, setDatosEstatusUsuario] = useState(estatusUsuarioData || "");
 
   useEffect(() => {
     if (estatusUsuarioData) {
