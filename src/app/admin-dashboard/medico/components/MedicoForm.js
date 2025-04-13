@@ -24,7 +24,7 @@ const initialState = {
   estatus: 1,
 };
 
-// Opciones para los selects
+// Opciones para los selects (basadas en los enums de la base de datos)
 const generoOptions = [
   { key: "NINGUNO", label: "Ninguno" },
   { key: "MASCULINO", label: "Masculino" },
@@ -32,7 +32,7 @@ const generoOptions = [
 ];
 
 const especialidadOptions = [
-  { key: "1", label: "Medicina General" },
+  { key: "1", label: "Medecina General" },
   { key: "2", label: "Odontología" },
   { key: "3", label: "Psicología" },
   { key: "4", label: "Rehabilitación" },
@@ -70,88 +70,163 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
     onSubmit(medico);
   };
 
-  const inputFields = [
-    { name: "nombre_usuario", label: "Nombre de usuario", readOnly: true },
-    { name: "identificacion", label: "Identificación" },
-    { name: "primer_nombre", label: "Primer nombre" },
-    { name: "segundo_nombre", label: "Segundo nombre", isRequired: false },
-    { name: "primer_apellido", label: "Primer apellido" },
-    { name: "segundo_apellido", label: "Segundo apellido", isRequired: false },
-    {
-      name: "fecha_nacimiento",
-      label: "Fecha de nacimiento",
-      type: "date",
-    },
-    { name: "reg_msp", label: "Reg. MSP" },
-    { name: "celular", label: "Celular", type: "tel" },
-    { name: "telefono", label: "Teléfono", type: "tel", isRequired: false },
-    { name: "correo", label: "Correo", type: "email" },
-  ];
-
-  const selectFields = [
-    {
-      name: "genero",
-      label: "Género",
-      items: generoOptions,
-      isRequired: true,
-    },
-    {
-      name: "id_especialidad",
-      label: "Especialidad",
-      items: especialidadOptions,
-      parseValue: (val) => parseInt(val),
-      transformValue: (val) => String(val),
-    },
-    {
-      name: "estatus",
-      label: "Estatus",
-      items: estatusOptions,
-      parseValue: (val) => parseInt(val),
-      transformValue: (val) => String(val),
-    },
-  ];
-
   return (
     <form
       onSubmit={handleSubmit}
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
     >
       <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-        <FaHospitalUser className="text-blue-600" />
-        Datos del Médico
+        <FaHospitalUser className="text-blue-600" /> Datos del Medico
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {inputFields.map((field) => (
-          <CustomInput
-            key={field.name}
-            name={field.name}
-            label={field.label}
-            value={medico[field.name]}
-            onChange={handleChange}
-            placeholder={`Ingrese ${field.label.toLowerCase()}`}
-            type={field.type || "text"}
-            isReadOnly={field.readOnly || false}
-            isRequired={field.isRequired !== false}
-          />
-        ))}
+        {/* Nombre de usuario */}
+        <CustomInput
+          isReadOnly={true}
+          name="nombre_usuario"
+          label="Nombre de usuario"
+          value={medico.nombre_usuario}
+          onChange={handleChange}
+          placeholder="Ingrese el nombre de usuario"
+        />
 
-        {selectFields.map((select) => (
-          <CustomSelect
-            key={select.name}
-            name={select.name}
-            label={select.label}
-            value={medico[select.name]}
-            onChange={handleChange}
-            items={select.items}
-            placeholder={`Seleccione ${select.label.toLowerCase()}`}
-            parseValue={select.parseValue}
-            transformValue={select.transformValue}
-            isRequired={select.isRequired !== false}
-          />
-        ))}
+        {/* Identificación */}
+        <CustomInput
+          name="identificacion"
+          label="Identificación"
+          value={medico.identificacion}
+          onChange={handleChange}
+          placeholder="Ingrese la identificación"
+          type="text"
+        />
+
+        {/* Primer nombre */}
+        <CustomInput
+          name="primer_nombre"
+          label="Primer nombre"
+          value={medico.primer_nombre}
+          onChange={handleChange}
+          placeholder="Ingrese el primer nombre"
+        />
+
+
+        {/* Segundo nombre */}
+        <CustomInput
+          name="segundo_nombre"
+          label="Segundo nombre"
+          value={medico.segundo_nombre}
+          onChange={handleChange}
+          placeholder="Ingrese el segundo nombre"
+          isRequired={false}
+        />
+
+        {/* Primer apellido */}
+        <CustomInput
+          name="primer_apellido"
+          label="Primer apellido"
+          value={medico.primer_apellido}
+          onChange={handleChange}
+          placeholder="Ingrese el primer apellido"
+          isRequired
+        />
+
+        {/* Segundo apellido */}
+        <CustomInput
+          name="segundo_apellido"
+          label="Segundo apellido"
+          value={medico.segundo_apellido}
+          onChange={handleChange}
+          placeholder="Ingrese el segundo apellido"
+          isRequired={false}
+        />
+
+        {/* Fecha de nacimiento */}
+        <CustomInput
+          name="fecha_nacimiento"
+          label="Fecha de nacimiento"
+          value={medico.fecha_nacimiento}
+          onChange={handleChange}
+          placeholder="Ingrese la fecha de nacimiento"
+          type="date"
+          isRequired
+        />
+
+        {/* Género */}
+        <CustomSelect
+          name="genero"
+          label="Género"
+          value={medico.genero}
+          onChange={handleChange}
+          items={generoOptions}
+          placeholder="Seleccione un género"
+          isRequired
+        />
+
+        {/* reg_msp */}
+        <CustomInput
+          name="reg_msp"
+          label="Reg. MSP"
+          value={medico.reg_msp}
+          onChange={handleChange}
+          placeholder="Ingrese el Reg. MSP"
+          type="text"
+        />
+
+        {/* Celular */}
+        <CustomInput
+          name="celular"
+          label="Celular"
+          value={medico.celular}
+          onChange={handleChange}
+          placeholder="Ingrese el celular"
+          type="tel"
+        />
+
+        {/* Teléfono */}
+        <CustomInput
+          name="telefono"
+          label="Teléfono"
+          value={medico.telefono}
+          onChange={handleChange}
+          placeholder="Ingrese el teléfono"
+          type="tel"
+          isRequired={false}
+        />
+
+        {/* Correo */}
+        <CustomInput
+          name="correo"
+          label="Correo"
+          value={medico.correo}
+          onChange={handleChange}
+          placeholder="Ingrese el correo"
+          type="email"
+        />
+
+        {/* Especialidad */}
+        <CustomSelect
+          name="id_especialidad"
+          label="Especialidad"
+          value={medico.id_especialidad}
+          onChange={handleChange}
+          items={especialidadOptions}
+          placeholder="Seleccione la especialidad"
+          parseValue={(val) => parseInt(val)}
+          transformValue={(val) => String(val)}
+        />
+
+        {/* Estatus (activo/inactivo, número) */}
+        <CustomSelect
+          name="estatus"
+          label="Estatus"
+          value={medico.estatus}
+          onChange={handleChange}
+          items={estatusOptions}
+          transformValue={(val) => String(val)}
+          parseValue={(val) => parseInt(val)}
+        />
       </div>
-
+      {/* Botón de envío */}
       <div className="text-center">
         <button
           type="submit"
@@ -161,12 +236,13 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
         </button>
       </div>
     </form>
-  );
-}
 
-MedicoForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  medicoData: PropTypes.object,
+  );
 };
 
-export default MedicoForm;
+MedicoForm.propTypes = {
+  onSubmit: PropTypes.object,
+  medicoData: PropTypes.object,
+}
+
+export default MedicoForm; 
