@@ -45,7 +45,7 @@ export default function ActualizarPacientePage() {
 		fetchFamiliar(paciente.identificacion, setSelectedFamiliar);
 
 		// Verificar si el paciente es de tipo militar antes de intentar obtener la info militar
-		if (paciente.tipo_paciente === "militar") {
+		if (paciente.tipo_paciente === "MILITAR") {
 			fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar).catch((error) => {
 				console.error("Error al obtener información militar:", error);
 				setSelectedInfoMilitar(null); // Si hay error, aseguramos que no haya datos previos
