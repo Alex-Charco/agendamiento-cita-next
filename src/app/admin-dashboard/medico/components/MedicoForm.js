@@ -73,7 +73,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
     >
       <SectionTitle text="Datos del Medico" />
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         <CustomInput
           isReadOnly={true}
@@ -112,7 +111,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           value={medico.primer_apellido}
           onChange={handleChange}
           placeholder="Ingrese el primer apellido"
-          isRequired
         />
         <CustomInput
           name="segundo_apellido"
@@ -129,7 +127,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           onChange={handleChange}
           placeholder="Ingrese la fecha de nacimiento"
           type="date"
-          isRequired
         />
         <CustomSelect
           name="genero"
@@ -138,7 +135,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           onChange={handleChange}
           items={generoOptions}
           placeholder="Seleccione un género"
-          isRequired
         />
         <CustomInput
           name="reg_msp"
@@ -193,11 +189,8 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           parseValue={(val) => parseInt(val)}
         />
       </div>
-
       <SubmitButton text="Enviar" />
-
     </form>
-
   );
 };
 
