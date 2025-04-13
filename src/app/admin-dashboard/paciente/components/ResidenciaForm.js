@@ -3,7 +3,7 @@
 import PropTypes from "prop-types";
 import React, { useReducer, useEffect } from "react";
 import CustomInput from "@/components/form/CustomInput";
-import { FaHospitalUser } from "react-icons/fa";
+import SectionTitle from "@/components/ui/SectionTitle";
 
 const initialState = {
   identificacion_paciente: "",
@@ -48,9 +48,8 @@ function ResidenciaForm({ onSubmit, residenciaData = {} }) {
       onSubmit={handleSubmit}
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
     >
-      <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-        <FaHospitalUser className="text-blue-600" /> Datos de la Residencia
-      </h2>
+
+      <SectionTitle text="Datos de la Residencia" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <CustomInput

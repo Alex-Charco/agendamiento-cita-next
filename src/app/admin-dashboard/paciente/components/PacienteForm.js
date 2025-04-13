@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import React, { useReducer, useEffect } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import CustomSelect from "@/components/form/CustomSelect";
-import { FaHospitalUser } from "react-icons/fa";
+import SectionTitle from "@/components/ui/SectionTitle";
 
   // Estado inicial para el formulario
   const initialState = {
@@ -150,9 +150,8 @@ import { FaHospitalUser } from "react-icons/fa";
       onSubmit={handleSubmit}
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
     >
-      <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-        <FaHospitalUser className="text-blue-600" /> Datos del Paciente
-      </h2>
+
+      <SectionTitle text="Datos del Paciente" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         {/* Nombre de usuario */}

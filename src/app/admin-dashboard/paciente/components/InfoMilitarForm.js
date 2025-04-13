@@ -2,7 +2,7 @@
 
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-import { FaHospitalUser } from "react-icons/fa";
+import SectionTitle from "@/components/ui/SectionTitle";
 import { Button } from "@heroui/react";
 import { useFormReducer } from "@/hooks/useFormReducer";
 import CustomInput from "@/components/form/CustomInput";
@@ -74,9 +74,8 @@ function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 			onSubmit={handleSubmit}
 			className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
 		>
-			<h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-				<FaHospitalUser className="text-blue-600" /> Información Militar
-			</h2>
+			
+			<SectionTitle text="Información Militar" />
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<CustomInput
