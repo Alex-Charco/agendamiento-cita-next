@@ -2,12 +2,9 @@
 
 import PropTypes from "prop-types";
 import React, { useReducer, useEffect } from "react";
-import CustomInput from "@/components/form/CustomInput";
-import CustomSelect from "@/components/form/CustomSelect";
-import SectionTitle from "@/components/ui/SectionTitle";
-import SubmitButton from "@/components/ui/SubmitButton";
+import { CustomInput, CustomSelect } from "@/components/form";
+import { SectionTitle, SubmitButton } from "@/components/ui";
 
-// Estado inicial para el formulario
 const initialState = {
   id_especialidad: "",
   nombre_usuario: "",
@@ -25,7 +22,6 @@ const initialState = {
   estatus: 1,
 };
 
-// Opciones para los selects (basadas en los enums de la base de datos)
 const generoOptions = [
   { key: "NINGUNO", label: "Ninguno" },
   { key: "MASCULINO", label: "Masculino" },
