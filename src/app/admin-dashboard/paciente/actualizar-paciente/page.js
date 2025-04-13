@@ -12,7 +12,7 @@ import ResidenciaForm from "@/admin-dashboard/paciente/components/ResidenciaForm
 import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSeguro";
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
-import { FaTimes, FaSignOutAlt } from "react-icons/fa";
+import { FaTimes, FaSearch, FaPlus, FaSignOutAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
@@ -84,6 +84,8 @@ export default function ActualizarPacientePage() {
 		
 	const buttons = [
 		{ label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
+		{ label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/consultar-paciente" },
+        { label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/registrar-paciente" },
 		{ label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
 	];
 

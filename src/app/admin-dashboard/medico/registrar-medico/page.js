@@ -35,7 +35,7 @@ export default function RegistrarMedicoPage() {
 
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
-        { label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/medico/registrar-medico" },
+        { label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/medico/consultar-medico" },
 		{ label: "Actualizar Médico", icon: FaSyncAlt, action: "actualizar-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/medico/actualizar-medico" },
         { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
     ];

@@ -180,8 +180,7 @@ export const RegistrarInfoMilitar = async (data, setMensaje, setSuccess) => {
     }
 };
 
-// *Código para registrar*
-
+// *Código para actualizar*
 export const ActualizarFamiliar = async (data, setMensaje, setSuccess) => {
     try {
         const token = localStorage.getItem("authToken");

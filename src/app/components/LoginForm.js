@@ -18,6 +18,14 @@ export default function LoginForm() {
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
+    // 🔽 Aquí va el useEffect para detectar sesión expirada
+    useEffect(() => {
+        if (localStorage.getItem("expiredSession") === "true") {
+            setErrorMessage("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
+            localStorage.removeItem("expiredSession");
+        }
+    }, []);
+
     useEffect(() => {
         if (!isAuthenticated()) {
             router.push(ROUTES.LOGIN); // Redirigir si no está autenticado

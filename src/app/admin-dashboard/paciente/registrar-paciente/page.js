@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaTimes, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaTimes, FaSearch, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { RegistrarPaciente, RegistrarFamiliar, RegistrarInfoMilitar } from "@/utils/api";
@@ -51,7 +51,8 @@ export default function RegistrarPacientePage() {
 
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
-        { label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/actualizar-paciente" },
+        { label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/consultar-paciente" },
+		{ label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/actualizar-paciente" },
         { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
     ];
 

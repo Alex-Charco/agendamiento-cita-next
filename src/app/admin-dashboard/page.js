@@ -18,7 +18,7 @@ const HomePage = () => {
           { name: "Horario", path: "/common/cancelar-cita" },
           { name: "Médico", 
             subMenu: [
-              { name: "Actualizar Médico", path: "/admin-dashboard/paciente/actualizar-paciente" },
+              { name: "Actualizar Médico", path: "/admin-dashboard/medico/actualizar-medico" },
               { name: "Consultar Médico", path: "/admin-dashboard/medico/consultar-medico" },
               { name: "Registrar Médico", path: "/admin-dashboard/medico/registrar-medico" },
             ],

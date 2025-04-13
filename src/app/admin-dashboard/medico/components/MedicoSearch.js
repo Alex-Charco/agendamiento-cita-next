@@ -24,14 +24,29 @@ function MedicoSearch({ onSelectMedico }) {
                 const medico = response.data.medicos;
                 console.log("Respuesta completa:", response.data);
 
-                // Guardar en localStorage y enviar al componente padre
+                // Extraer nombre_usuario y pasarlo al objeto plano
+                const medicoConUsuario = {
+                    ...medico,
+                    nombre_usuario: medico.usuario?.nombre_usuario || ""
+                };
+
+                // Guardar en localStorage si quieres
                 localStorage.setItem("identificacion", medico.identificacion);
-                onSelectMedico(medico);
+                localStorage.setItem("nombre_usuario", medicoConUsuario.nombre_usuario); // opcional
+
+                onSelectMedico(medicoConUsuario);
             } else {
                 setError("No se encontró el médico.");
             }
         } catch (err) {
             console.error("Error al obtener médico:", err);
+        
+            if (err.response?.status === 401) {
+                // No mostramos mensaje, porque el interceptor ya redirige al login
+                return; // importante: detenemos la ejecución aquí
+            }
+        
+            // Solo mostramos error si no fue un 401
             setError("Error al obtener los datos. Inténtelo nuevamente.");
         } finally {
             setLoading(false);

@@ -1,7 +1,7 @@
 import { Input } from "@heroui/react";
 import PropTypes from "prop-types";
 
-function CustomInput({ name, label, placeholder, value, onChange, type = "text", isRequired = true, className = "", }) {
+function CustomInput({ name, label, placeholder, value, onChange, type = "text", isRequired = true, className = "", isReadOnly = false, }) {
 	return (
 		<Input
 			isRequired={isRequired}
@@ -11,6 +11,7 @@ function CustomInput({ name, label, placeholder, value, onChange, type = "text",
 			placeholder={placeholder}
 			type={type}
 			value={value}
+			readOnly={isReadOnly}
 			onChange={(e) => onChange(name, e.target.value)} // Llamada a handleChange con el nombre y el valor del input
 		/>
 	);
@@ -25,6 +26,7 @@ CustomInput.propTypes = {
 	type: PropTypes.string,
 	isRequired: PropTypes.bool,
 	className: PropTypes.string,
+	isReadOnly: PropTypes.bool,
 };
 
 export default CustomInput;

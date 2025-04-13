@@ -83,7 +83,7 @@ import { FaHospitalUser } from "react-icons/fa";
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         {/* Nombre de usuario */}
         <CustomInput
-          //isReadOnly
+          isReadOnly={true}
           name="nombre_usuario"
           label="Nombre de usuario"
           value={medico.nombre_usuario}
