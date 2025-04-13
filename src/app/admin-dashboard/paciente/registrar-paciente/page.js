@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { FaTimes, FaSearch, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
+import FormWrapper from "@/components/FormWrapper";
 import { RegistrarPaciente, RegistrarFamiliar, RegistrarInfoMilitar } from "@/utils/api";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
 import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
@@ -11,8 +12,7 @@ import FamiliarForm from "@/admin-dashboard/paciente/components/FamiliarForm";
 import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
 import RegistrarResidencia from "@/admin-dashboard/paciente/components/RegistrarResidencia";
 import RegistrarSeguro from "@/admin-dashboard/paciente/components/RegistrarSeguro";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import useSuccessAlert from "@/hooks/useSuccessAlert";
 
 export default function RegistrarPacientePage() {
 
@@ -59,17 +59,7 @@ export default function RegistrarPacientePage() {
     };
 
     // Mostrar la alerta si se registra con éxito
-    useEffect(() => {
-        if (success) {
-            Swal.fire({
-                title: "¡Registro exitoso!",
-                icon: "success",
-                draggable: true,
-                confirmButtonText: "OK"
-            });
-            setSuccess(false); // Resetear para no mostrarlo más de una vez
-        }
-    }, [success]);
+    useSuccessAlert(success, setSuccess, "¡Paciente registrado exitosamente!");
 
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
@@ -92,36 +82,27 @@ export default function RegistrarPacientePage() {
             key: "registrar-paciente",
             title: "2. Paciente",
             content: (
-                <div className="min-h-screen p-6 flex flex-col items-center">
-                    <div className="lg:w-1/2">
-                        <PacienteForm onSubmit={handlePacienteSelect} />
-                        {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
-                    </div>
-                </div>
+                <FormWrapper mensaje={mensaje}>
+                    <PacienteForm onSubmit={handlePacienteSelect} />
+                </FormWrapper>
             ),
         },
         {
             key: "familiar",
             title: "3. Familiar",
             content: (
-                <div className="min-h-screen p-6 flex flex-col items-center">
-                    <div className="lg:w-1/2">
-                        <FamiliarForm onSubmit={handleFamiliarSubmit} />
-                        {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
-                    </div>
-                </div>
+                <FormWrapper mensaje={mensaje}>
+                    <FamiliarForm onSubmit={handleFamiliarSubmit} />
+                </FormWrapper>
             ),
         },
         {
             key: "informacion-militar",
             title: "4. Info Militar",
             content: (
-                <div className="min-h-screen p-6 flex flex-col items-center">
-                    <div className="lg:w-1/2">
-                        <InfoMilitarForm onSubmit={handleInfoMilitarSubmit} />
-                        {mensaje && <p className="mt-4 text-red-600">{mensaje}</p>}
-                    </div>
-                </div>
+                <FormWrapper mensaje={mensaje}>
+                    <InfoMilitarForm onSubmit={handleInfoMilitarSubmit} />
+                </FormWrapper>
             ),
         },
         {
