@@ -13,6 +13,7 @@ import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarFo
 import RegistrarResidencia from "@/admin-dashboard/paciente/components/RegistrarResidencia";
 import RegistrarSeguro from "@/admin-dashboard/paciente/components/RegistrarSeguro";
 import useSuccessAlert from "@/hooks/useSuccessAlert";
+import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
 
 export default function RegistrarPacientePage() {
 
@@ -23,26 +24,7 @@ export default function RegistrarPacientePage() {
     const [success, setSuccess] = useState(false);
 
     // Limpia localStorage al entrar/salir
-    useEffect(() => {
-        // Eliminar inmediatamente al entrar
-        localStorage.removeItem("identificacion");
-        localStorage.removeItem("nombre_usuario");
-
-        // También asegurarse de eliminar al salir
-        const clearStorage = () => {
-            localStorage.removeItem("identificacion");
-            localStorage.removeItem("nombre_usuario");
-        };
-
-        window.addEventListener("beforeunload", clearStorage);
-        window.addEventListener("pagehide", clearStorage);
-
-        return () => {
-            window.removeEventListener("beforeunload", clearStorage);
-            window.removeEventListener("pagehide", clearStorage);
-        };
-    }, []);
-
+    useClearLocalStorage(["identificacion", "nombre_usuario"]);
 
     const handlePacienteSelect = async (data) => {
         await RegistrarPaciente(data, setMensaje, setSuccess);
