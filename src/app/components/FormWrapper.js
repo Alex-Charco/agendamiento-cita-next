@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function FormWrapper({ children, mensaje }) {
     return (
         <div className="min-h-screen p-6 flex flex-col items-center">
@@ -8,3 +10,8 @@ export default function FormWrapper({ children, mensaje }) {
         </div>
     );
 }
+
+FormWrapper.propTypes = {
+    children: PropTypes.node.isRequired,
+    mensaje: PropTypes.string,
+};

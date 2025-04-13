@@ -40,7 +40,7 @@ export default function ActualizarPacientePage() {
 		console.log("Paciente seleccionado:", paciente);
 		setSelectedPaciente(paciente);
 		fetchFamiliar(paciente.identificacion, setSelectedFamiliar);
-		
+
 		// Verificar si el paciente es de tipo militar antes de intentar obtener la info militar
 		if (paciente.tipo_paciente === "militar") {
 			fetchInfoMilitar(paciente.identificacion, setSelectedInfoMilitar).catch((error) => {
@@ -51,11 +51,11 @@ export default function ActualizarPacientePage() {
 			// Si no es de tipo militar, no se obtiene la información militar
 			setSelectedInfoMilitar(null);
 		}
-	
+
 		fetchResidencia(paciente.identificacion, setSelectedResidencia);
 		fetchSeguro(paciente.identificacion, setSelectedSeguro);
 	};
-	
+
 	const handleFamiliarSubmit = async (data) => {
 		const familiarData = {
 			...data,
@@ -111,12 +111,10 @@ export default function ActualizarPacientePage() {
 			content: (
 				<FormWrapper mensaje={mensaje}>
 					{selectedFamiliar ? (
-						<>
-							<FamiliarForm
-								onSubmit={handleFamiliarSubmit}
-								familiarData={selectedFamiliar}
-							/>
-						</>
+						<FamiliarForm
+							onSubmit={handleFamiliarSubmit}
+							familiarData={selectedFamiliar}
+						/>
 					) : (
 						<p>Buscar paciente para modificar familiar</p>
 					)}
@@ -129,13 +127,10 @@ export default function ActualizarPacientePage() {
 			content: (
 				<FormWrapper mensaje={mensaje}>
 					{selectedInfoMilitar ? (
-						<>
-							{console.log("InfoMilitar seleccionado:", selectedInfoMilitar)}
-							<InfoMilitarForm
-								onSubmit={handleInfoMilitarSubmit}
-								infoMilitarData={selectedInfoMilitar}
-							/>
-						</>
+						<InfoMilitarForm
+							onSubmit={handleInfoMilitarSubmit}
+							infoMilitarData={selectedInfoMilitar}
+						/>
 					) : (
 						<p>No hay información militar.</p>
 					)}
@@ -148,13 +143,10 @@ export default function ActualizarPacientePage() {
 			content: (
 				<FormWrapper mensaje={mensaje}>
 					{selectedResidencia ? (
-						<>
-							{console.log("Residencia seleccionado:", selectedResidencia)}
-							<ResidenciaForm
-								onSubmit={handleResidenciaSubmit}
-								residenciaData={selectedResidencia}
-							/>
-						</>
+						<ResidenciaForm
+							onSubmit={handleResidenciaSubmit}
+							residenciaData={selectedResidencia}
+						/>
 					) : (
 						<p>Buscar paciente para modificar residencia</p>
 					)}
