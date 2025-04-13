@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { FaTimes, FaSearch, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
+import { usePathname } from "next/navigation";
+import { FaSearch, FaSyncAlt} from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import FormWrapper from "@/components/FormWrapper";
@@ -44,10 +45,9 @@ export default function RegistrarPacientePage() {
     useSuccessAlert(success, setSuccess, "¡Paciente registrado exitosamente!");
 
     const buttons = [
-        { label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },
         { label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", href: "/admin-dashboard/paciente/consultar-paciente" },
         { label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", href: "/admin-dashboard/paciente/actualizar-paciente" },
-        { label: "Salir", icon: FaSignOutAlt, action: "salir", href: "/auth/login" },
+        ...getCommonButtonsByPath(pathname)
     ];
 
     const tabsConfig = [

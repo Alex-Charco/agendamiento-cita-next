@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { FaTimes, FaSearch, FaPlus, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
+import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
 export default function ConsultaPacientePage() {
     const [selectedPaciente, setSelectedPaciente] = useState(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const pathname = usePathname();
 
     const handlePacienteSelect = (paciente) => {
         setSelectedPaciente(paciente);
@@ -18,11 +21,10 @@ export default function ConsultaPacientePage() {
     };
 
     const buttons = [
-        { label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },
         { label: "Buscar Paciente", icon: FaSearch, action: "buscar", onClick: onOpen },
         { label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", href: "/admin-dashboard/paciente/registrar-paciente" },
         { label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", href: "/admin-dashboard/paciente/actualizar-paciente" },
-        { label: "Salir", icon: FaSignOutAlt, action: "salir", href: "/admin-dashboard" }
+        ...getCommonButtonsByPath(pathname)
     ];
 
     const tabsConfig = [

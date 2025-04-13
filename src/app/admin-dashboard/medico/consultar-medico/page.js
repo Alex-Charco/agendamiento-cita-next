@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { FaTimes, FaSearch, FaPlus, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
+import { usePathname } from "next/navigation";
+import { FaSearch, FaPlus, FaSyncAlt } from "react-icons/fa";
 import MedicoSearch from "@/admin-dashboard/medico/components/MedicoSearch";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import ReusableModal from "@/components/ReusableModal";
 import { useDisclosure } from "@heroui/react";
+import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
 export default function ConsultaMedicoPage() {
     const [selectedMedico, setSelectedMedico] = useState(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const pathname = usePathname();
 
     const handleMedicoSelect = (medico) => {
         setSelectedMedico(medico);
@@ -18,11 +21,10 @@ export default function ConsultaMedicoPage() {
     };
 
     const buttons = [
-        { label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },
         { label: "Buscar Médico", icon: FaSearch, action: "buscar", onClick: onOpen },
         { label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico", href: "/admin-dashboard/medico/registrar-medico" },
         { label: "Actualizar Médico", icon: FaSyncAlt, action: "actualizar-medico", href: "/admin-dashboard/medico/actualizar-medico" },
-        { label: "Salir", icon: FaSignOutAlt, action: "salir", href: "/admin-dashboard" }
+        ...getCommonButtonsByPath(pathname)
     ];
 
     const tabsConfig = [

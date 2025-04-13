@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import FormWrapper from "@/components/FormWrapper";
@@ -15,6 +16,7 @@ import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
 import { FaTimes, FaSearch, FaPlus, FaSignOutAlt } from "react-icons/fa";
 import useSuccessAlert from "@/hooks/useSuccessAlert";
+import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
 export default function ActualizarPacientePage() {
 	const [selectedPaciente, setSelectedPaciente] = useState(null);
@@ -25,6 +27,7 @@ export default function ActualizarPacientePage() {
 	const [selectedUsuario, setSelectedUsuario] = useState(null);
 	const [mensaje, setMensaje] = useState("");
 	const [success, setSuccess] = useState(false);
+	const pathname = usePathname();
 
 	const handleUsuarioSelect = (usuario) => {
 		const datosMapeados = {
@@ -84,10 +87,9 @@ export default function ActualizarPacientePage() {
 	useSuccessAlert(success, setSuccess, "¡Paciente actualizado exitosamente!");
 
 	const buttons = [
-		{ label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },
 		{ label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", href: "/admin-dashboard/paciente/consultar-paciente" },
 		{ label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", href: "/admin-dashboard/paciente/registrar-paciente" },
-		{ label: "Salir", icon: FaSignOutAlt, action: "salir", href: "/auth/login" },
+		...getCommonButtonsByPath(pathname)
 	];
 
 	const tabsConfig = [

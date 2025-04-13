@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { FaTimes, FaSearch, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
+import { usePathname } from "next/navigation";
+import { FaSearch, FaSyncAlt } from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { RegistrarMedico } from "@/utils/api/medicoApi";
@@ -9,6 +10,7 @@ import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsua
 import MedicoForm from "@/admin-dashboard/medico/components/MedicoForm";
 import useSuccessAlert from "@/hooks/useSuccessAlert";
 import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
+import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
 
 export default function RegistrarMedicoPage() {
@@ -16,6 +18,7 @@ export default function RegistrarMedicoPage() {
     const [selectedUsuario] = useState(null);
     const [mensaje, setMensaje] = useState("");
 	const [success, setSuccess] = useState(false);
+    const pathname = usePathname();
 
     const handleMedicoSelect = async (data) => {
         await RegistrarMedico(data, setMensaje, setSuccess);
@@ -29,10 +32,9 @@ export default function RegistrarMedicoPage() {
     useClearLocalStorage(["nombre_usuario"]);
 
     const buttons = [
-        { label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },
         { label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", href: "/admin-dashboard/medico/consultar-medico" },
-		{ label: "Actualizar Médico", icon: FaSyncAlt, action: "actualizar-medico", href: "/admin-dashboard/medico/actualizar-medico" },
-        { label: "Salir", icon: FaSignOutAlt, action: "salir", href: "/auth/login" },
+        { label: "Actualizar Médico", icon: FaSyncAlt, action: "actualizar-medico", href: "/admin-dashboard/medico/actualizar-medico" },
+        ...getCommonButtonsByPath(pathname)
     ];
 
     const tabsConfig = [

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaTimes, FaSearch, FaPlus, FaSignOutAlt } from "react-icons/fa";
+import { usePathname } from "next/navigation";
+import { FaSearch, FaPlus } from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { ActualizarMedico } from "@/utils/api/medicoApi";
@@ -11,12 +12,15 @@ import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
 import useSuccessAlert from "@/hooks/useSuccessAlert";
 import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
+import { getCommonButtonsByPath } from "@/utils/commonButtons";
+
 
 export default function ActualizarMedicoPage() {
 	const [selectedMedico, setSelectedMedico] = useState(null);
 	const [selectedUsuario, setSelectedUsuario] = useState(null);
 	const [mensaje, setMensaje] = useState("");
 	const [success, setSuccess] = useState(false);
+	const pathname = usePathname();
 
 
 	const handleMedicoSelect = (medico) => {
@@ -58,10 +62,9 @@ export default function ActualizarMedicoPage() {
 
 
 	const buttons = [
-		{ label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },
 		{ label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", href: "/admin-dashboard/medico/consultar-medico" },
 		{ label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico",  href: "/admin-dashboard/medico/registrar-medico" },
-		{ label: "Salir", icon: FaSignOutAlt, action: "salir", href: "/auth/login" },
+		...getCommonButtonsByPath(pathname)
 	];
 
 	const tabsConfig = [
