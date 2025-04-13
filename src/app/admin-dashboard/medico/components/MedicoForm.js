@@ -5,6 +5,7 @@ import React, { useReducer, useEffect } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import CustomSelect from "@/components/form/CustomSelect";
 import SectionTitle from "@/components/ui/SectionTitle";
+import SubmitButton from "@/components/ui/SubmitButton";
 
 // Estado inicial para el formulario
 const initialState = {
@@ -78,7 +79,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
       <SectionTitle text="Datos del Medico" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {/* Nombre de usuario */}
         <CustomInput
           isReadOnly={true}
           name="nombre_usuario"
@@ -87,8 +87,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           onChange={handleChange}
           placeholder="Ingrese el nombre de usuario"
         />
-
-        {/* Identificación */}
         <CustomInput
           name="identificacion"
           label="Identificación"
@@ -97,8 +95,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           placeholder="Ingrese la identificación"
           type="text"
         />
-
-        {/* Primer nombre */}
         <CustomInput
           name="primer_nombre"
           label="Primer nombre"
@@ -106,9 +102,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           onChange={handleChange}
           placeholder="Ingrese el primer nombre"
         />
-
-
-        {/* Segundo nombre */}
         <CustomInput
           name="segundo_nombre"
           label="Segundo nombre"
@@ -117,8 +110,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           placeholder="Ingrese el segundo nombre"
           isRequired={false}
         />
-
-        {/* Primer apellido */}
         <CustomInput
           name="primer_apellido"
           label="Primer apellido"
@@ -127,8 +118,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           placeholder="Ingrese el primer apellido"
           isRequired
         />
-
-        {/* Segundo apellido */}
         <CustomInput
           name="segundo_apellido"
           label="Segundo apellido"
@@ -137,8 +126,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           placeholder="Ingrese el segundo apellido"
           isRequired={false}
         />
-
-        {/* Fecha de nacimiento */}
         <CustomInput
           name="fecha_nacimiento"
           label="Fecha de nacimiento"
@@ -148,8 +135,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           type="date"
           isRequired
         />
-
-        {/* Género */}
         <CustomSelect
           name="genero"
           label="Género"
@@ -159,8 +144,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           placeholder="Seleccione un género"
           isRequired
         />
-
-        {/* reg_msp */}
         <CustomInput
           name="reg_msp"
           label="Reg. MSP"
@@ -169,8 +152,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           placeholder="Ingrese el Reg. MSP"
           type="text"
         />
-
-        {/* Celular */}
         <CustomInput
           name="celular"
           label="Celular"
@@ -179,8 +160,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           placeholder="Ingrese el celular"
           type="tel"
         />
-
-        {/* Teléfono */}
         <CustomInput
           name="telefono"
           label="Teléfono"
@@ -190,8 +169,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           type="tel"
           isRequired={false}
         />
-
-        {/* Correo */}
         <CustomInput
           name="correo"
           label="Correo"
@@ -200,8 +177,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           placeholder="Ingrese el correo"
           type="email"
         />
-
-        {/* Especialidad */}
         <CustomSelect
           name="id_especialidad"
           label="Especialidad"
@@ -212,8 +187,6 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           parseValue={(val) => parseInt(val)}
           transformValue={(val) => String(val)}
         />
-
-        {/* Estatus (activo/inactivo, número) */}
         <CustomSelect
           name="estatus"
           label="Estatus"
@@ -224,15 +197,9 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
           parseValue={(val) => parseInt(val)}
         />
       </div>
-      {/* Botón de envío */}
-      <div className="text-center">
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-          Enviar
-        </button>
-      </div>
+
+      <SubmitButton text="Enviar" />
+
     </form>
 
   );

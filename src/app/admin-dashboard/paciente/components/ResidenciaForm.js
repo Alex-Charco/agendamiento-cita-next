@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import React, { useReducer, useEffect } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import SectionTitle from "@/components/ui/SectionTitle";
+import SubmitButton from "@/components/ui/SubmitButton";
 
 const initialState = {
   identificacion_paciente: "",
@@ -117,14 +118,10 @@ function ResidenciaForm({ onSubmit, residenciaData = {} }) {
         />
       </div>
 
-      <div className="text-center">
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-        {residenciaData?.id_paciente ? "Actualizar residencia" : "Registrar residencia"}
-      </button>
-      </div>
+      <SubmitButton
+        text={residenciaData?.id_paciente ? "Actualizar residencia" : "Registrar residencia"}
+      />
+
     </form>
   );
 }

@@ -3,6 +3,7 @@
 import PropTypes from "prop-types";
 import React, { useReducer, useEffect } from "react";
 import SectionTitle from "@/components/ui/SectionTitle";
+import SubmitButton from "@/components/ui/SubmitButton";
 import CustomInput from "@/components/form/CustomInput";
 import CustomSelect from "@/components/form/CustomSelect";
 
@@ -127,14 +128,10 @@ function SeguroForm({ onSubmit, SeguroData = {} }) {
         />
       </div>
 
-      <div className="text-center">
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-        {SeguroData?.id_paciente ? "Actualizar residencia" : "Registrar residencia"}
-      </button>
-      </div>
+      <SubmitButton
+        text={SeguroData?.id_paciente ? "Actualizar Seguro" : "Registrar Seguro"}
+      />
+
     </form>
   );
 }

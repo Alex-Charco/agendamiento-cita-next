@@ -3,7 +3,7 @@
 import PropTypes from "prop-types";
 import { useReducer, useEffect } from "react";
 import SectionTitle from "@/components/ui/SectionTitle";
-import { FaHospitalUser } from "react-icons/fa";
+import SubmitButton from "@/components/ui/SubmitButton";
 import CustomInput from "@/components/form/CustomInput";
 import CustomSelect from "@/components/form/CustomSelect";
 
@@ -77,7 +77,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
       onSubmit={handleSubmit}
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
     >
-      
+
       <SectionTitle text="Datos del Familiar" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -188,7 +188,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
           items={estatusOptions}
           transformValue={(val) => String(val)}
           parseValue={(val) => parseInt(val)}
-        /> 
+        />
         <CustomSelect
           name="relacion"
           label="Relación"
@@ -208,22 +208,18 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
         />
       </div>
 
-      <div className="text-center">
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-          {familiarData?.id_paciente ? "Actualizar familiar" : "Registrar familiar"}
-        </button>
-      </div>
+      <SubmitButton
+        text={familiarData?.id_paciente ? "Actualizar familiar" : "Registrar familiar"}
+      />
+      
     </form>
   );
 }
 
 // Validación de props
 FamiliarForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired, // Validación para 'onSubmit'
-  familiarData: PropTypes.object, // Prop 'familiarData' es opcional
+  onSubmit: PropTypes.func.isRequired,
+  familiarData: PropTypes.object,
 };
 
 export default FamiliarForm;

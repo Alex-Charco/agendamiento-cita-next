@@ -5,6 +5,7 @@ import React, { useReducer, useEffect } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import CustomSelect from "@/components/form/CustomSelect";
 import SectionTitle from "@/components/ui/SectionTitle";
+import SubmitButton from "@/components/ui/SubmitButton";
 
   // Estado inicial para el formulario
   const initialState = {
@@ -154,7 +155,7 @@ import SectionTitle from "@/components/ui/SectionTitle";
       <SectionTitle text="Datos del Paciente" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {/* Nombre de usuario */}
+
         <CustomInput
           //isReadOnly
           name="nombre_usuario"
@@ -163,8 +164,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           onChange={handleChange}
           placeholder="Ingrese el nombre de usuario"
         />
-
-        {/* Identificación */}
         <CustomInput
           name="identificacion"
           label="Identificación"
@@ -173,8 +172,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           placeholder="Ingrese la identificación"
           type="text"
         />
-
-        {/* Primer nombre */}
         <CustomInput
           name="primer_nombre"
           label="Primer nombre"
@@ -182,9 +179,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           onChange={handleChange}
           placeholder="Ingrese el primer nombre"
         />
-
-
-        {/* Segundo nombre */}
         <CustomInput
           name="segundo_nombre"
           label="Segundo nombre"
@@ -193,8 +187,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           placeholder="Ingrese el segundo nombre"
           isRequired={false}
         />
-
-        {/* Primer apellido */}
         <CustomInput
           name="primer_apellido"
           label="Primer apellido"
@@ -203,8 +195,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           placeholder="Ingrese el primer apellido"
           isRequired
         />
-
-        {/* Segundo apellido */}
         <CustomInput
           name="segundo_apellido"
           label="Segundo apellido"
@@ -213,8 +203,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           placeholder="Ingrese el segundo apellido"
           isRequired={false}
         />
-
-        {/* Fecha de nacimiento */}
         <CustomInput
           name="fecha_nacimiento"
           label="Fecha de nacimiento"
@@ -224,8 +212,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           type="date"
           isRequired
         />
-
-        {/* Género */}
         <CustomSelect
           name="genero"
           label="Género"
@@ -235,8 +221,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           placeholder="Seleccione un género"
           isRequired
         />
-
-          {/* Celular */}
           <CustomInput
             name="celular"
             label="Celular"
@@ -245,8 +229,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
             placeholder="Ingrese el celular"
             type="tel"
           />
-
-          {/* Teléfono */}
           <CustomInput
             name="telefono"
             label="Teléfono"
@@ -256,8 +238,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
             type="tel"
             isRequired={false}
           />
-
-          {/* Correo */}
           <CustomInput
             name="correo"
             label="Correo"
@@ -266,8 +246,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
             placeholder="Ingrese el correo"
             type="email"
           />
-
-          {/* Estado civil */}
           <CustomSelect
             name="estado_civil"
             label="Estado Civil"
@@ -276,8 +254,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
             items={estadoCivilOptions}
             placeholder="Seleccione un estado civil"
           />
-
-          {/* Grupo sanguíneo */}
           <CustomSelect
             name="grupo_sanguineo"
             label="Grupo Sanguíneo"
@@ -286,8 +262,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
             items={grupoSanguineoOptions}
             placeholder="Seleccione un grupo sanguíneo"
           />
-
-          {/* Instrucción */}
           <CustomSelect
             name="instruccion"
             label="Instrucción"
@@ -296,8 +270,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
             items={instruccionOptions}
             placeholder="Seleccione nivel de instrucción"
           />
-
-          {/* Ocupación */}
         <CustomSelect
           name="ocupacion"
           label="Ocupación"
@@ -306,8 +278,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           items={ocupacionOptions}
           placeholder="Seleccione la ocupación"
         />
-
-        {/* Empresa */}
         <CustomInput
           name="empresa"
           label="Empresa"
@@ -316,8 +286,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           placeholder="Ingrese la empresa"
           isRequired={false}
         />
-
-        {/* Discapacidad (booleano, con parseo necesario) */}
         <CustomSelect
             name="discapacidad"
             label="¿Tiene discapacidad?"
@@ -327,8 +295,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
             transformValue={(val) => (val ? "1" : "0")}
             parseValue={(val) => val === "1"}
           />
-
-        {/* Orientación */}
         <CustomSelect
           name="orientacion"
           label="Orientación"
@@ -337,8 +303,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           items={orientacionOptions}
           placeholder="Seleccione la orientación"
         />
-
-        {/* Identidad */}
         <CustomSelect
           name="identidad"
           label="Identidad de Género"
@@ -347,8 +311,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           items={identidadOptions}
           placeholder="Seleccione la identidad"
         />
-
-        {/* Tipo de paciente */}
         <CustomSelect
           name="tipo_paciente"
           label="Tipo de paciente"
@@ -357,8 +319,6 @@ import SectionTitle from "@/components/ui/SectionTitle";
           items={tipoPacienteOptions}
           placeholder="Ingrese el tipo de paciente"
         />
-
-        {/* Estatus (activo/inactivo, número) */}
         <CustomSelect
             name="estatus"
             label="Estatus"
@@ -369,15 +329,9 @@ import SectionTitle from "@/components/ui/SectionTitle";
             parseValue={(val) => parseInt(val)}
           />
       </div>
-      {/* Botón de envío */}
-      <div className="text-center">
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
-        >
-          Enviar
-        </button>
-      </div>
+
+      <SubmitButton text="Enviar" />
+
     </form>
     
   );

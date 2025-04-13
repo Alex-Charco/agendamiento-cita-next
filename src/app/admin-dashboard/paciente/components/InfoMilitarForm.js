@@ -3,10 +3,10 @@
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import SectionTitle from "@/components/ui/SectionTitle";
-import { Button } from "@heroui/react";
 import { useFormReducer } from "@/hooks/useFormReducer";
 import CustomInput from "@/components/form/CustomInput";
 import CustomSelect from "@/components/form/CustomSelect";
+import SubmitButton from "@/components/ui/SubmitButton";
 
 const initialState = {
 	identificacion: "",
@@ -74,7 +74,7 @@ function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 			onSubmit={handleSubmit}
 			className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
 		>
-			
+
 			<SectionTitle text="Información Militar" />
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -85,7 +85,6 @@ function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 					value={infoMilitar.identificacion ?? ""}
 					onChange={handleChange} // Aquí se usa el handleChange del useFormReducer
 				/>
-
 				<CustomSelect
 					name="cargo"
 					label="Cargo"
@@ -93,7 +92,6 @@ function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 					onChange={handleChange} // Se usa handleChange en lugar de dispatch
 					items={cargoOptions}
 				/>
-
 				<CustomSelect
 					name="grado"
 					label="Grado"
@@ -101,27 +99,26 @@ function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 					onChange={handleChange} // Se usa handleChange aquí también
 					items={gradoOptions}
 				/>
-
 				<CustomSelect
 					name="fuerza"
 					label="Fuerza"
 					value={infoMilitar.fuerza}
-					onChange={handleChange} // Se usa handleChange
+					onChange={handleChange}
 					items={fuerzaOptions}
 				/>
-
 				<CustomSelect
 					name="unidad"
 					label="Unidad"
 					value={infoMilitar.unidad}
-					onChange={handleChange} // Se usa handleChange
+					onChange={handleChange}
 					items={unidadOptions}
 				/>
 			</div>
 
-			<Button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700">
-				{infoMilitarData.id_paciente ? "Actualizar Info Militar" : "Registrar Info Militar"}
-			</Button>
+			<SubmitButton
+				text={infoMilitarData.id_paciente ? "Actualizar Info Militar" : "Registrar Info Militar"}
+			/>
+
 		</form>
 	);
 }
