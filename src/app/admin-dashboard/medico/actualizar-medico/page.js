@@ -80,10 +80,10 @@ export default function ActualizarMedicoPage() {
 	}, []);
 
 	const buttons = [
-		{ label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
-		{ label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/medico/consultar-medico" },
-		{ label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/medico/registrar-medico" },
-		{ label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
+		{ label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },
+		{ label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", href: "/admin-dashboard/medico/consultar-medico" },
+		{ label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico",  href: "/admin-dashboard/medico/registrar-medico" },
+		{ label: "Salir", icon: FaSignOutAlt, action: "salir", href: "/auth/login" },
 	];
 
 	const tabsConfig = [
