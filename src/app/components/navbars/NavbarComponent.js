@@ -42,7 +42,15 @@ function NavbarComponent({ title, buttons, onAction }) {
 
       {/* Menú de navegación en pantallas grandes */}
       <NavbarContent className="hidden lg:flex gap-4" justify="end">
-        {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect, href }) => (
+        {buttons.map(({ 
+            label, 
+            icon: Icon, 
+            action, 
+            color = "bg-gray-400",
+            textColor = "text-black",
+            hoverEffect = "hover:bg-gray-200 hover:text-gray-700", 
+            href 
+          }) => (
           <NavbarItem key={label}>
             {href ? (
               <Link
@@ -80,7 +88,15 @@ function NavbarComponent({ title, buttons, onAction }) {
       {/* Menú desplegable en pantallas pequeñas */}
       {isMenuOpen && (
         <NavbarMenu className="text-left">
-          {buttons.map(({ label, icon: Icon, action, color, textColor, hoverEffect, href }) => (
+          {buttons.map(({ 
+            label, 
+            icon: Icon, 
+            action, 
+            color = "bg-gray-400",
+            textColor = "text-black",
+            hoverEffect = "hover:bg-gray-200 hover:text-gray-700", 
+            href 
+          }) => (
             <NavbarMenuItem key={label} className="w-full">
               {href ? (
                 <Link href={href}
