@@ -7,8 +7,9 @@ import CustomTabs from "@/components/CustomTabs";
 import { RegistrarMedico } from "@/utils/api/medicoApi";
 import RegistrarUsuario from "@/admin-dashboard/usuario/components/RegistrarUsuario";
 import MedicoForm from "@/admin-dashboard/medico/components/MedicoForm";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import useSuccessAlert from "@/hooks/useSuccessAlert";
+import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
+
 
 export default function RegistrarMedicoPage() {
 
@@ -21,36 +22,11 @@ export default function RegistrarMedicoPage() {
     };
 
     // Mostrar la alerta si se registra con éxito
-    useEffect(() => {
-        if (success) {
-            Swal.fire({
-                title: "¡Registro exitoso!",
-                icon: "success",
-                draggable: true,
-                confirmButtonText: "OK"
-            });
-            setSuccess(false); // Resetear para no mostrarlo más de una vez
-        }
-    }, [success]);
+    useSuccessAlert(success, setSuccess, "¡Médico registrado exitosamente!");
 
-    // Limpiar localStorage al montar y salir
-	useEffect(() => {
-		// Eliminar inmediatamente al entrar
-		localStorage.removeItem("nombre_usuario");
 
-		// También asegurarse de eliminar al salir
-		const clearNombreUsuario = () => {
-			localStorage.removeItem("nombre_usuario");
-		};
-
-		window.addEventListener("beforeunload", clearNombreUsuario);
-		window.addEventListener("pagehide", clearNombreUsuario);
-
-		return () => {
-			window.removeEventListener("beforeunload", clearNombreUsuario);
-			window.removeEventListener("pagehide", clearNombreUsuario);
-		};
-	}, []);
+    // Limpia localStorage al entrar/salir
+    useClearLocalStorage(["nombre_usuario"]);
 
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },

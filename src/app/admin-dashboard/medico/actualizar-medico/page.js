@@ -9,8 +9,8 @@ import MedicoSearch from "@/admin-dashboard/medico/components/MedicoSearch";
 import MedicoForm from "@/admin-dashboard/medico/components/MedicoForm";
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import useSuccessAlert from "@/hooks/useSuccessAlert";
+import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
 
 export default function ActualizarMedicoPage() {
 	const [selectedMedico, setSelectedMedico] = useState(null);
@@ -49,35 +49,13 @@ export default function ActualizarMedicoPage() {
 		await ActualizarMedico(data, setMensaje, setSuccess);
 	};
 
-	useEffect(() => {
-		if (success) {
-			Swal.fire({
-				title: "¡Actualización exitosa!",
-				icon: "success",
-				confirmButtonText: "OK",
-			});
-			setSuccess(false);
-		}
-	}, [success]);
+	// Mostrar la alerta si se registra con éxito
+    useSuccessAlert(success, setSuccess, "¡Médico actualizado exitosamente!");
 
-	// Limpiar localStorage al montar y salir
-	useEffect(() => {
-		// Eliminar inmediatamente al entrar
-		localStorage.removeItem("nombre_usuario");
 
-		// También asegurarse de eliminar al salir
-		const clearNombreUsuario = () => {
-			localStorage.removeItem("nombre_usuario");
-		};
+	// Limpia localStorage al entrar/salir
+    useClearLocalStorage(["nombre_usuario"]);
 
-		window.addEventListener("beforeunload", clearNombreUsuario);
-		window.addEventListener("pagehide", clearNombreUsuario);
-
-		return () => {
-			window.removeEventListener("beforeunload", clearNombreUsuario);
-			window.removeEventListener("pagehide", clearNombreUsuario);
-		};
-	}, []);
 
 	const buttons = [
 		{ label: "Cancelar", icon: FaTimes, action: "cancelar", href: "/admin-dashboard" },
