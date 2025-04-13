@@ -20,7 +20,29 @@ export default function RegistrarPacientePage() {
     const [selectedResidencia] = useState(null);
     const [selectedSeguro] = useState(null);
     const [mensaje, setMensaje] = useState("");
-	const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    // Limpia localStorage al entrar/salir
+    useEffect(() => {
+        // Eliminar inmediatamente al entrar
+        localStorage.removeItem("identificacion");
+        localStorage.removeItem("nombre_usuario");
+
+        // También asegurarse de eliminar al salir
+        const clearStorage = () => {
+            localStorage.removeItem("identificacion");
+            localStorage.removeItem("nombre_usuario");
+        };
+
+        window.addEventListener("beforeunload", clearStorage);
+        window.addEventListener("pagehide", clearStorage);
+
+        return () => {
+            window.removeEventListener("beforeunload", clearStorage);
+            window.removeEventListener("pagehide", clearStorage);
+        };
+    }, []);
+
 
     const handlePacienteSelect = async (data) => {
         await RegistrarPaciente(data, setMensaje, setSuccess);
@@ -52,7 +74,7 @@ export default function RegistrarPacientePage() {
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
         { label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/consultar-paciente" },
-		{ label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/actualizar-paciente" },
+        { label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/actualizar-paciente" },
         { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/auth/login" },
     ];
 

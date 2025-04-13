@@ -33,6 +33,25 @@ export default function RegistrarMedicoPage() {
         }
     }, [success]);
 
+    // Limpiar localStorage al montar y salir
+	useEffect(() => {
+		// Eliminar inmediatamente al entrar
+		localStorage.removeItem("nombre_usuario");
+
+		// También asegurarse de eliminar al salir
+		const clearNombreUsuario = () => {
+			localStorage.removeItem("nombre_usuario");
+		};
+
+		window.addEventListener("beforeunload", clearNombreUsuario);
+		window.addEventListener("pagehide", clearNombreUsuario);
+
+		return () => {
+			window.removeEventListener("beforeunload", clearNombreUsuario);
+			window.removeEventListener("pagehide", clearNombreUsuario);
+		};
+	}, []);
+
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
         { label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/medico/consultar-medico" },

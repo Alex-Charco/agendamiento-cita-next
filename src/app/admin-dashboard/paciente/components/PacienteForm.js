@@ -350,7 +350,7 @@ import { FaHospitalUser } from "react-icons/fa";
         />
 
         {/* Tipo de paciente */}
-        <CustomInput
+        <CustomSelect
           name="tipo_paciente"
           label="Tipo de paciente"
           value={paciente.tipo_paciente}

@@ -114,6 +114,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
           type="text"
           value={familiar.segundo_nombre}
           onChange={handleChange}
+          isRequired={false}
         />
         <CustomInput
           isRequired
@@ -131,6 +132,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
           type="text"
           value={familiar.segundo_apellido}
           onChange={handleChange}
+          isRequired={false}
         />
         <CustomInput
           isRequired

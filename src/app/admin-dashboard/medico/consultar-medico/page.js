@@ -20,8 +20,8 @@ export default function ConsultaMedicoPage() {
     const buttons = [
         { label: "Cancelar", icon: FaTimes, action: "cancelar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" },
         { label: "Buscar Médico", icon: FaSearch, action: "buscar", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", onClick: onOpen },
-        { label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/registrar-paciente" },
-        { label: "Actualizar Médico", icon: FaSyncAlt, action: "actualizar-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/paciente/actualizar-paciente" },
+        { label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/medico/registrar-medico" },
+        { label: "Actualizar Médico", icon: FaSyncAlt, action: "actualizar-medico", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard/medico/actualizar-medico" },
         { label: "Salir", icon: FaSignOutAlt, action: "salir", color: "bg-gray-400", textColor: "text-black", hoverEffect: "hover:bg-gray-200 hover:text-gray-700", href: "/admin-dashboard" }
     ];
 
