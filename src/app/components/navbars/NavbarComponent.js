@@ -45,32 +45,41 @@ function NavbarComponent({ title, buttons, onAction }) {
         {buttons.map(({ 
             label, 
             icon: Icon, 
-            action, 
+            action,
             color = "bg-gray-400",
-            textColor = "text-black",
+            textColor = "bg-gray-100 text-black",
             hoverEffect = "hover:bg-gray-200 hover:text-gray-700", 
             href 
           }) => (
           <NavbarItem key={label}>
             {href ? (
-              <Link
-                href={href}
-                className={`flex items-center gap-2 btn-primary btn-primary:hover px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
-              >
-                <Icon className="text-lg" />
-                <span>{label}</span>
+			<Link
+			  href={href}
+			  className={`flex items-center gap-2 px-2 py-2 mt-4 rounded 
+						  transition duration-200 ease-in-out 
+						  shadow hover:shadow-md 
+						  active:scale-95 
+						  ${textColor} ${hoverEffect}`}
+			>
+                <Icon className="text-xs" />
+                <span className="text-xs">{label}</span>
               </Link>
             ) : (
               <Button
-                as="a"
-                color={color}
-                variant="flat"
-                onClick={() => onAction(action)}
-                className={`flex items-center gap-2 btn-primary btn-primary:hover px-4 py-2 rounded lg:text-black ${textColor} ${hoverEffect}`}
-              >
-                <Icon className="text-lg" />
-                <span>{label}</span>
-              </Button>
+				  as="a"
+				  color={color}
+				  variant="flat"
+				  onClick={() => onAction(action)}
+				  className={`flex items-center gap-2 px-2 py-2 mt-4 rounded 
+							  transition duration-200 ease-in-out 
+							  shadow hover:shadow-md 
+							  active:scale-95 
+							  ${textColor} ${hoverEffect}`}
+				>
+  <Icon className="text-xs" />
+  <span className="text-xs">{label}</span>
+</Button>
+
             )}
           </NavbarItem>
         ))}
