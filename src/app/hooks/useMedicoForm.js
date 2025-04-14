@@ -1,4 +1,9 @@
 import { useEffect, useReducer } from "react";
+import {
+    generoOptions,
+    especialidadOptions,
+    estatusOptions,
+} from "@/components/medicoOptions";
 
 const initialState = {
     id_especialidad: "",
@@ -17,25 +22,6 @@ const initialState = {
     estatus: 1,
 };
 
-const generoOptions = [
-    { key: "NINGUNO", label: "Ninguno" },
-    { key: "MASCULINO", label: "Masculino" },
-    { key: "FEMENINO", label: "Femenino" },
-];
-
-const especialidadOptions = [
-    { key: "1", label: "Medecina General" },
-    { key: "2", label: "Odontología" },
-    { key: "3", label: "Psicología" },
-    { key: "4", label: "Rehabilitación" },
-    { key: "5", label: "Laboratorio" },
-];
-
-const estatusOptions = [
-    { key: "1", label: "Activo" },
-    { key: "0", label: "Inactivo" },
-];
-
 function reducer(state, action) {
     return { ...state, [action.name]: action.value };
 }
@@ -46,16 +32,16 @@ export function useMedicoForm(medicoData = {}) {
         ...medicoData,
     });
 
-    useEffect(() => {
-        const nombreUsuarioGuardado = localStorage.getItem("nombre_usuario");
-        if (nombreUsuarioGuardado) {
-            dispatch({ name: "nombre_usuario", value: nombreUsuarioGuardado });
-        }
-    }, [medicoData.nombre_usuario]);
-
     const handleChange = (name, value) => {
         dispatch({ name, value });
     };
+
+    useEffect(() => {
+        const nombreUsuarioGuardado = localStorage.getItem("nombre_usuario");
+        if (nombreUsuarioGuardado) {
+            handleChange("nombre_usuario", nombreUsuarioGuardado);
+        }
+    }, [medicoData.nombre_usuario]);
 
     return {
         medico,
