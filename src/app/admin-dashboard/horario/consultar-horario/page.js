@@ -35,15 +35,19 @@ export default function ConsultaHorarioPage() {
     ];
 
     return (
-        <div className="bg-white border-1 border-gray-200">
+        <div className="bg-gray-50 border-1 border-gray-200">
             <NavbarComponent title="Consultar Horario" buttons={buttons} />
-
-            <div className="flex justify-center py-8">
-                <div className="flex flex-col w-full max-w-4xl gap-6 border rounded-xl shadow-lg p-6 bg-white">
-                    <h2 className="text-2xl font-semibold text-gray-800 border-b pb-4">Buscar Horario por Médico</h2>
-
+    
+            <div className="flex justify-center py-2">
+                <div className="relative flex flex-col w-full border rounded shadow-lg p-2 bg-gray-50 mx-2 text-center">
+                    
+                    {/* Título flotante */}
+                    <div className="absolute -top-2 left-4 bg-white px-2 text-[10px] text-blue-800">
+                        Horarios
+                    </div>
+    
                     <HorarioSearch onHorarioEncontrado={handleHorarioSelect} />
-
+    
                     {selectedHorario && (
                         <>
                             <MedicoDetalle
@@ -52,12 +56,12 @@ export default function ConsultaHorarioPage() {
                                     especialidad: selectedHorario.especialidad,
                                 }}
                             />
-
+    
                             <TablaHorarios
                                 horarios={selectedHorario.horarios}
                                 onSeleccionarHorario={handleVerTurnos}
                             />
-
+    
                             {horarioSeleccionadoParaTurnos ? (
                                 <>
                                     <h3 className="text-xl font-bold mt-4 text-gray-700">
@@ -76,4 +80,5 @@ export default function ConsultaHorarioPage() {
             </div>
         </div>
     );
+    
 }

@@ -3,6 +3,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import authAxios from "@/utils/api/authAxios";
+import SearchInput from "@/components/search/SearchInput";
 
 function HorarioSearch({ onHorarioEncontrado }) {
     const [query, setQuery] = useState("");
@@ -32,7 +33,7 @@ function HorarioSearch({ onHorarioEncontrado }) {
                     medico,
                     especialidad,
                     horarios,
-                    turnos, 
+                    turnos,
                 };
 
                 onHorarioEncontrado(data);
@@ -52,30 +53,17 @@ function HorarioSearch({ onHorarioEncontrado }) {
     };
 
     return (
-        <div className="bg-gray-200 px-6 pt-10 flex flex-col items-center h-[60vh] rounded-lg">
-            <h1 className="text-3xl font-bold text-blue-900 mb-6">Buscar Horarios</h1>
-            <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
-                <div className="flex space-x-2">
-                    <input
-                        type="text"
-                        placeholder="Ingresar identificación..."
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        className="w-full border border-gray-300 text-gray-600 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <button
-                        onClick={fetchHorario}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                    >
-                        Buscar
-                    </button>
-                </div>
-
-                {loading && <p className="text-blue-500 mt-4">Cargando...</p>}
-                {error && <p className="text-red-500 mt-4">{error}</p>}
-            </div>
-        </div>
+        <SearchInput
+            label="No. Identificación"
+            placeholder="Ingresar identificación..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onClick={fetchHorario}
+            loading={loading}
+            error={error}
+        />
     );
+
 }
 
 HorarioSearch.propTypes = {
