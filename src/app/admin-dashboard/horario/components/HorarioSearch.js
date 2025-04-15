@@ -1,32 +1,64 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { useEffect } from "react";
-import { useHorarioSearch } from "@/hooks/useHorarioSearch";
+import { useState } from "react";
+import authAxios from "@/utils/api/authAxios";
 
-function HorarioSearch({ onSelectHorario }) {
-    const {
-        query,
-        setQuery,
-        fetchHorario,
-        loading,
-        error,
-    } = useHorarioSearch(onSelectHorario);
+function HorarioSearch({ onHorarioEncontrado }) {
+    const [query, setQuery] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        if (query.trim()) {
-            localStorage.setItem("horario_query", query);
+    const fetchHorario = async () => {
+        if (!query.trim()) return;
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await authAxios.get(`/api/horario/get/${query}`);
+
+            console.log("API GET", `/api/horario/get/${query}`);
+            console.log("Respuesta:", response.data);
+
+            const { medico, horarios, turnos } = response.data;
+
+            if (medico && horarios) {
+                const especialidad = medico.especialidad || {};
+
+                localStorage.setItem("identificacion", medico.identificacion);
+                localStorage.setItem("nombre_medico", `${medico.primer_nombre} ${medico.primer_apellido}`);
+
+                const data = {
+                    medico,
+                    especialidad,
+                    horarios,
+                    turnos, 
+                };
+
+                onHorarioEncontrado(data);
+            } else {
+                setError("No se encontró información de horario para el médico.");
+            }
+
+        } catch (err) {
+            console.error("Error al obtener horarios:", err);
+
+            if (err.response?.status === 401) return;
+
+            setError("Error al obtener los datos. Inténtelo nuevamente.");
+        } finally {
+            setLoading(false);
         }
-    }, [query]);
+    };
 
     return (
-        <div className="bg-gray-200 px-6 pt-10 flex flex-col items-center h-[52vh] rounded-lg">
-            <h1 className="text-3xl font-bold text-blue-900 mb-6">Buscar Horario</h1>
+        <div className="bg-gray-200 px-6 pt-10 flex flex-col items-center h-[60vh] rounded-lg">
+            <h1 className="text-3xl font-bold text-blue-900 mb-6">Buscar Horarios</h1>
             <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
                 <div className="flex space-x-2">
                     <input
                         type="text"
-                        placeholder="Ingresar ID de horario..."
+                        placeholder="Ingresar identificación..."
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         className="w-full border border-gray-300 text-gray-600 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -47,7 +79,7 @@ function HorarioSearch({ onSelectHorario }) {
 }
 
 HorarioSearch.propTypes = {
-    onSelectHorario: PropTypes.func.isRequired,
+    onHorarioEncontrado: PropTypes.func.isRequired,
 };
 
 export default HorarioSearch;
