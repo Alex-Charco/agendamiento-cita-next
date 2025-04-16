@@ -7,14 +7,15 @@ import {
     TableRow,
     TableCell,
     Input,
-    Button,
-    DropdownTrigger,
-    Dropdown,
-    DropdownMenu,
-    DropdownItem,
     Chip,
     Pagination,
+    Dropdown,
+    DropdownTrigger,
+    DropdownMenu,
+    DropdownItem,
+    Button,
 } from "@heroui/react";
+import { FaSearch, FaChevronDown } from "react-icons/fa";
 
 // Función para Capitalizar el Texto
 export const capitalize = (s) => {
@@ -23,22 +24,34 @@ export const capitalize = (s) => {
 
 // Componente de Tabla Genérica
 export default function DynamicTable({
-    columns = [], // Columnas configurables
-    data = [], // Datos configurables
-    rowsPerPage = 5, // Número de filas por página
-    filterPlaceholder = "Buscar", // Texto del filtro de búsqueda
+    columns = [],
+    data = [],
+    rowsPerPage = 5,
+    filterPlaceholder = "Buscar",
+	actionLabel = "Nuevo horario",
+	actionRoute = "/admin-dashboard/medico/consultar-medico"
 }) {
     const [filterValue, setFilterValue] = React.useState("");
     const [page, setPage] = React.useState(1);
+    const [visibleColumns, setVisibleColumns] = React.useState(
+        new Set(columns.map((c) => c.uid))
+    );
+
+    const visibleColumnObjects = columns.filter((col) =>
+        visibleColumns.has(col.uid)
+    );
 
     // Filtrar los datos
     const filteredItems = React.useMemo(() => {
-        return data.filter((item) => {
-            return columns.some((column) =>
-                item[column.uid]?.toString().toLowerCase().includes(filterValue.toLowerCase())
-            );
-        });
-    }, [data, filterValue, columns]);
+        return data.filter((item) =>
+            visibleColumnObjects.some((column) =>
+                item[column.uid]
+                    ?.toString()
+                    .toLowerCase()
+                    .includes(filterValue.toLowerCase())
+            )
+        );
+    }, [data, filterValue, visibleColumnObjects]);
 
     // Paginación
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -48,50 +61,104 @@ export default function DynamicTable({
         return filteredItems.slice(start, end);
     }, [page, filteredItems, rowsPerPage]);
 
+    // Función de navegación ahora redirige según la prop
+    const handleRedirect = () => {
+        window.location.href = actionRoute;
+    };
+
     return (
         <div className="text-gray-600">
-            {/* Filtro de Búsqueda */}
-            <Input
-                type="text"
-                placeholder={filterPlaceholder}
-                value={filterValue}
-                onChange={(e) => setFilterValue(e.target.value)}
-                className="mb-4"
-            />
+            {/* Filtros y acciones */}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                {/* Filtro de búsqueda */}
+                <Input
+                    type="text"
+                    placeholder={filterPlaceholder}
+                    value={filterValue}
+                    onChange={(e) => setFilterValue(e.target.value)}
+                    startContent={<FaSearch className="text-gray-500 mr-2" />}
+                    className="max-w-xs"
+                />
+
+                {/* Dropdown de columnas */}
+                <Dropdown>
+                    <DropdownTrigger>
+                        <Button 
+							variant="bordered" 
+							className="capitalize flex items-center gap-2 text-gray-600"
+							endContent={<FaChevronDown className="text-sm" />}
+							>
+                            Columnas
+                        </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu
+						className="text-gray-600"
+                        disallowEmptySelection
+                        aria-label="Table Columns"
+                        closeOnSelect={false}
+                        selectedKeys={visibleColumns}
+                        selectionMode="multiple"
+                        onSelectionChange={setVisibleColumns}
+                    >
+                        {columns.map((column) => (
+                            <DropdownItem key={column.uid} className="capitalize">
+                                {capitalize(column.name)}
+                            </DropdownItem>
+                        ))}
+                    </DropdownMenu>
+                </Dropdown>
+
+                {/* Botón de redirección */}
+                <Button
+                    color="primary"
+                    className="text-white"
+                    onClick={handleRedirect}
+                >
+                    {actionLabel}
+                </Button>
+            </div>
 
             {/* Tabla */}
             <Table aria-label="Tabla dinámica">
                 <TableHeader>
-                    {columns.map((column) => (
+                    {visibleColumnObjects.map((column) => (
                         <TableColumn key={column.uid}>{column.name}</TableColumn>
                     ))}
                 </TableHeader>
 
                 <TableBody>
-    {items.map((item, index) => (
-        <TableRow key={index}>
-            {columns.map((column) => (
-                <TableCell key={column.uid}>
-                    {/* Si la columna tiene una función 'render', úsala */}
-                    {column.render
-                        ? column.render(item)
-                        : column.uid === "status"
-                        ? (
-                            <Chip color={item[column.uid] === "active" ? "success" : "danger"}>
-                                {capitalize(item[column.uid])}
-                            </Chip>
-                        )
-                        : item[column.uid]}
-                </TableCell>
-            ))}
-        </TableRow>
-    ))}
-</TableBody>
-
+                    {items.map((item, index) => (
+                        <TableRow key={index}>
+                            {visibleColumnObjects.map((column) => (
+                                <TableCell key={column.uid}>
+                                    {column.render
+                                        ? column.render(item)
+                                        : column.uid === "status"
+                                        ? (
+                                            <Chip
+                                                color={
+                                                    item[column.uid] === "active"
+                                                        ? "success"
+                                                        : "danger"
+                                                }
+                                            >
+                                                {capitalize(item[column.uid])}
+                                            </Chip>
+                                        )
+                                        : item[column.uid]}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableBody>
             </Table>
 
             {/* Paginación */}
             <Pagination
+                className="py-4"
+                isCompact
+                showControls
+                showShadow
                 total={pages}
                 current={page}
                 onChange={setPage}

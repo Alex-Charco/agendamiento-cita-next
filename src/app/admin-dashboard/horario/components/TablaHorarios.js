@@ -9,13 +9,15 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
         { name: "Fin", uid: "hora_fin" },
         { name: "Máx. consultas", uid: "consulta_maxima" },
         { name: "Asignadas", uid: "asignado" },
+		{ name: "Selección", uid: "seleccion" },
+		{ name: "Turno extra", uid: "turno_extra" },
         {
             name: "Ver Turnos",
             uid: "acciones",
             render: (horario) => (
                 <button
                     onClick={() => onSeleccionarHorario(horario)}
-                    className="px-2 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700"
+                     className="bg-gray-100 text-gray-600 text-xs px-4 py-1 rounded-lg hover:bg-gray-200 flex items-center gap-2 shadow-md active:translate-y-0.5 active:shadow-inner transition-all duration-150"
                 >
                     Ver turnos
                 </button>
@@ -24,13 +26,18 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
     ];
 
     return (
-        <div className="my-6">
-            <h2 className="text-xl text-gray-600 font-semibold mb-2">Horarios disponibles</h2>
-            <DynamicTable
-                columns={columns}
-                data={horarios}
-                filterPlaceholder="Buscar horario..."
-            />
+        <div className="flex justify-center py-2">
+            <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50  text-center">
+                {/* Título flotante */}
+                <div className="absolute -top-2 left-4 bg-white px-2 text-[10px] text-blue-800">
+                    Horarios disponibles
+                </div>
+                <DynamicTable
+                    columns={columns}
+                    data={horarios}
+                    filterPlaceholder="Filtrar horario..."
+                />
+            </div>
         </div>
     );
 }

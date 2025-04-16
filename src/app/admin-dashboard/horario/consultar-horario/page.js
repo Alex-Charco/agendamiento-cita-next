@@ -51,11 +51,12 @@ export default function ConsultaHorarioPage() {
                     {selectedHorario && (
                         <>
                             <MedicoDetalle
-                                medico={{
-                                    ...selectedHorario.medico,
-                                    especialidad: selectedHorario.especialidad,
-                                }}
-                            />
+								medico={{
+									...selectedHorario.medico,
+									especialidad: selectedHorario.especialidad,
+								}}
+								mostrarCampos={["nombre", "identificacion", "correo", "especialidad"]}
+							/>
     
                             <TablaHorarios
                                 horarios={selectedHorario.horarios}

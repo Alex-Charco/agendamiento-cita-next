@@ -10,15 +10,15 @@ export default function TablaTurnos({ turnos }) {
         { name: "Estado", uid: "estado" },
     ];
 
-    if (!turnos || turnos.length === 0) {
-        return <p className="text-center text-gray-500">No hay turnos disponibles para mostrar.</p>;
-    }
-    
-
     return (
         <div className="my-6 text-gray-600">
             <h2 className="text-xl font-semibold mb-2">Turnos</h2>
-            <DynamicTable columns={columns} data={turnos} filterPlaceholder="Buscar turno..." />
+            <DynamicTable 
+				columns={columns} 
+				data={turnos}
+				actionLabel="Nuevo Turno"
+				actionRoute="/admin-dashborad/paciente/consultar-paciente"
+				filterPlaceholder="Buscar turno..." />
         </div>
     );
 }
