@@ -78,17 +78,17 @@ const HomePage = () => {
           />
         </Link>
         <CardFeature
-          icon={<FaCalendarCheck className="text-green-500 text-3xl" />} // Icono para Agendar Citas
+          icon={<FaCalendarCheck className="text-green-500 text-3xl" />}
           title="Agendar Citas"
           description="Seleccione una fecha, hora, especialidad y médico para agendar la cita médica."
         />
         <CardFeature
-          icon={<FaRedoAlt className="text-yellow-500 text-3xl" />} // Icono para Reagendar Citas
+          icon={<FaRedoAlt className="text-yellow-500 text-3xl" />} 
           title="Reagendar Citas"
           description="Seleccione una fecha, hora, especialidad y médico para reagendar la cita médica."
         />
         <CardFeature
-          icon={<FaCalendarAlt className="text-purple-500 text-3xl" />} // Icono para Consultar Citas
+          icon={<FaCalendarAlt className="text-purple-500 text-3xl" />}
           title="Consultar Citas"
           description="Revise su historial y próximas citas médicas."
         />

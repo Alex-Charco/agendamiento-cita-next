@@ -79,7 +79,6 @@ export default function DynamicTable({
                     startContent={<FaSearch className="text-gray-500 mr-2" />}
                     className="max-w-xs border shadow-inner rounded-2xl"
                 />
-
                 {/* Dropdown de columnas */}
                 <Dropdown>
                     <DropdownTrigger>
