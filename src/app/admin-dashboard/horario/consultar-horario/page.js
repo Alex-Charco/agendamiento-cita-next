@@ -25,12 +25,6 @@ export default function ConsultaHorarioPage() {
     };
 
     const buttons = [
-        {
-            label: "Nuevo Horario",
-            icon: FaPlus,
-            action: "nuevo-horario",
-            href: "/admin-dashboard/horario/registrar-horario",
-        },
         ...getCommonButtonsByPath(pathname),
     ];
 

@@ -9,15 +9,23 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
         { name: "Fin", uid: "hora_fin" },
         { name: "Máx. consultas", uid: "consulta_maxima" },
         { name: "Asignadas", uid: "asignado" },
-		{ name: "Selección", uid: "seleccion" },
-		{ name: "Turno extra", uid: "turno_extra" },
+        {
+            name: "Disponible",
+            uid: "disponible",
+            render: (horario) => {
+                const disponible = (horario.consulta_maxima ?? 0) - (horario.asignado ?? 0);
+                return <span>{disponible}</span>;
+            },
+        },
+        { name: "Selección", uid: "seleccion" },
+        { name: "Turno extra", uid: "turno_extra" },
         {
             name: "Ver Turnos",
             uid: "acciones",
             render: (horario) => (
                 <button
                     onClick={() => onSeleccionarHorario(horario)}
-                     className="bg-gray-100 text-gray-600 text-xs px-4 py-1 rounded-lg hover:bg-gray-200 flex items-center gap-2 shadow-md active:translate-y-0.5 active:shadow-inner transition-all duration-150"
+                    className="bg-gray-100 text-gray-600 text-xs px-4 py-1 rounded-lg hover:bg-gray-200 flex items-center gap-2 shadow-md active:translate-y-0.5 active:shadow-inner transition-all duration-150"
                 >
                     Ver turnos
                 </button>

@@ -77,7 +77,7 @@ export default function DynamicTable({
                     value={filterValue}
                     onChange={(e) => setFilterValue(e.target.value)}
                     startContent={<FaSearch className="text-gray-500 mr-2" />}
-                    className="max-w-xs"
+                    className="max-w-xs border shadow-inner rounded-2xl"
                 />
 
                 {/* Dropdown de columnas */}
@@ -122,7 +122,9 @@ export default function DynamicTable({
             <Table aria-label="Tabla dinámica">
                 <TableHeader>
                     {visibleColumnObjects.map((column) => (
-                        <TableColumn key={column.uid}>{column.name}</TableColumn>
+                        <TableColumn key={column.uid} className="text-center">
+                            {column.name}
+                        </TableColumn>
                     ))}
                 </TableHeader>
 
@@ -130,7 +132,7 @@ export default function DynamicTable({
                     {items.map((item, index) => (
                         <TableRow key={index}>
                             {visibleColumnObjects.map((column) => (
-                                <TableCell key={column.uid}>
+                                <TableCell key={column.uid} className="text-center">
                                     {column.render
                                         ? column.render(item)
                                         : column.uid === "status"
