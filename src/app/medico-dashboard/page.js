@@ -9,18 +9,19 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
-      
+
       <NavbarComponent
-        menuServices={[  
-		   { name: "Cita", 
-			subMenu: [
+        menuServices={[
+          {
+            name: "Cita",
+            subMenu: [
               { name: "Consultar Cita", path: "/common/consultar-cita" },
-			  { name: "Consultar Horario", path: "/common/consultar-horario" },
+              { name: "Consultar Horario", path: "/medico-dashboard/consultar-horario" },
               { name: "Reagendar Cita", path: "/admin-dashboard/horario/registrar-horario" },
             ],
-		  },
+          },
           { name: "Consultar Cita", path: "/ver-citas" },
-          
+
         ]}
         showExtraOptions={true} // Mostrar opciones adicionales, como servicios y salir
       />

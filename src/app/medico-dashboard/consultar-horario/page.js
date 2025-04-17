@@ -1,5 +1,5 @@
 import ConsultaHorarioPage from "@/common/consultar-horario/ConsultaHorarioPage";
 
-export default function AdminHorarioPage() {
+export default function MedicoHorarioPage() {
   return <ConsultaHorarioPage />;
 }
