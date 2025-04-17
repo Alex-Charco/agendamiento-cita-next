@@ -60,6 +60,11 @@ export default function DynamicTable({
         const end = start + rowsPerPage;
         return filteredItems.slice(start, end);
     }, [page, filteredItems, rowsPerPage]);
+	
+	// Obtener el rol desde localStorage
+	const user = JSON.parse(localStorage.getItem("user"));
+	const userRole = user?.rol?.nombre_rol || "";
+	const hasPermission = userRole === "ADMINISTRADOR";
 
     // Función de navegación ahora redirige según la prop
     const handleRedirect = () => {
@@ -112,6 +117,7 @@ export default function DynamicTable({
                     color="primary"
                     className="text-white"
                     onClick={handleRedirect}
+					isDisabled={!hasPermission}
                 >
                     {actionLabel}
                 </Button>

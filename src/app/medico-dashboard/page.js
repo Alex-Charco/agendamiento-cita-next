@@ -12,9 +12,15 @@ const HomePage = () => {
       
       <NavbarComponent
         menuServices={[  
+		   { name: "Cita", 
+			subMenu: [
+              { name: "Consultar Cita", path: "/common/consultar-cita" },
+			  { name: "Consultar Horario", path: "/common/consultar-horario" },
+              { name: "Reagendar Cita", path: "/admin-dashboard/horario/registrar-horario" },
+            ],
+		  },
           { name: "Consultar Cita", path: "/ver-citas" },
-          { name: "Consultar Horario", path: "/ver-horarios" },
-          { name: "Reagendar Cita", path: "/crear-cita" }
+          
         ]}
         showExtraOptions={true} // Mostrar opciones adicionales, como servicios y salir
       />

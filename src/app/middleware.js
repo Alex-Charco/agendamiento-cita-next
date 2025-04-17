@@ -3,8 +3,8 @@ import { decodeToken } from "./utils/auth";
 
 // Definir las rutas accesibles por cada rol
 const rolePermissions = {
-    admin: ["/admin-dashboard", "/common/consulta-paciente", "/common/horario", "/common/citas"],
-    medico: ["/medico-dashboard", "/common/consulta-paciente", "/common/horario", "/common/citas"],
+    admin: ["/admin-dashboard", "/common/consulta-paciente", "/common/consultar-horario", "/common/citas"],
+    medico: ["/medico-dashboard", "/common/consulta-paciente", "/common/consultar-horario", "/common/citas"],
     paciente: ["/paciente-dashboard", "/common/citas"],
 };
 

@@ -42,43 +42,43 @@ function NavbarComponent({ title, buttons, onAction }) {
 
       {/* Menú de navegación en pantallas grandes */}
       <NavbarContent className="hidden lg:flex gap-4" justify="end">
-        {buttons.map(({ 
-            label, 
-            icon: Icon, 
-            action,
-            color = "bg-gray-400",
-            textColor = "bg-gray-100 text-black",
-            hoverEffect = "hover:bg-gray-200 hover:text-gray-700", 
-            href 
-          }) => (
+        {buttons.map(({
+          label,
+          icon: Icon,
+          action,
+          color = "bg-gray-400",
+          textColor = "bg-gray-100 text-black",
+          hoverEffect = "hover:bg-gray-200 hover:text-gray-700",
+          href
+        }) => (
           <NavbarItem key={label}>
             {href ? (
-			<Link
-			  href={href}
-			  className={`flex items-center gap-2 px-2 py-2 mt-4 rounded 
-						  transition duration-200 ease-in-out 
-						  shadow hover:shadow-md 
-						  active:scale-95 
-						  ${textColor} ${hoverEffect}`}
-			>
+              <Link
+                href={href}
+                className={`flex items-center gap-2 px-2 py-2 mt-4 rounded 
+                transition duration-200 ease-in-out 
+                shadow hover:shadow-md 
+                active:scale-95 
+                ${textColor} ${hoverEffect}`}
+              >
                 <Icon className="text-xs" />
                 <span className="text-xs">{label}</span>
               </Link>
             ) : (
               <Button
-				  as="a"
-				  color={color}
-				  variant="flat"
-				  onClick={() => onAction(action)}
-				  className={`flex items-center gap-2 px-2 py-2 mt-4 rounded 
+                as="a"
+                color={color}
+                variant="flat"
+                onClick={() => onAction(action)}
+                className={`flex items-center gap-2 px-2 py-2 mt-4 rounded 
 							  transition duration-200 ease-in-out 
 							  shadow hover:shadow-md 
 							  active:scale-95 
 							  ${textColor} ${hoverEffect}`}
-				>
-  <Icon className="text-xs" />
-  <span className="text-xs">{label}</span>
-</Button>
+              >
+                <Icon className="text-xs" />
+                <span className="text-xs">{label}</span>
+              </Button>
 
             )}
           </NavbarItem>
@@ -97,14 +97,14 @@ function NavbarComponent({ title, buttons, onAction }) {
       {/* Menú desplegable en pantallas pequeñas */}
       {isMenuOpen && (
         <NavbarMenu className="text-left">
-          {buttons.map(({ 
-            label, 
-            icon: Icon, 
-            action, 
+          {buttons.map(({
+            label,
+            icon: Icon,
+            action,
             color = "bg-gray-400",
             textColor = "text-black",
-            hoverEffect = "hover:bg-gray-200 hover:text-gray-700", 
-            href 
+            hoverEffect = "hover:bg-gray-200 hover:text-gray-700",
+            href
           }) => (
             <NavbarMenuItem key={label} className="w-full">
               {href ? (
@@ -149,4 +149,4 @@ NavbarComponent.propTypes = {
   onAction: PropTypes.func.isRequired,
 };
 
-export default  NavbarComponent; 
+export default NavbarComponent; 

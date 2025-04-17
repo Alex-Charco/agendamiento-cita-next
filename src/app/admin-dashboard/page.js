@@ -15,13 +15,15 @@ const HomePage = () => {
       <NavbarComponent
         menuServices={[
           { name: "Cita", path: "/common/crear-cita" },
-          { name: "Horario", 
-			subMenu: [
+          {
+            name: "Horario",
+            subMenu: [
               { name: "Consultar Horario", path: "/admin-dashboard/horario/consultar-horario" },
               { name: "Nuevo horario", path: "/admin-dashboard/horario/registrar-horario" },
             ],
-		  },
-          { name: "Médico", 
+          },
+          {
+            name: "Médico",
             subMenu: [
               { name: "Actualizar Médico", path: "/admin-dashboard/medico/actualizar-medico" },
               { name: "Consultar Médico", path: "/admin-dashboard/medico/consultar-medico" },
@@ -64,7 +66,7 @@ const HomePage = () => {
 
           />
         </Link>
-		<Link href="/admin-dashboard/médico/consultar-médico">
+        <Link href="/admin-dashboard/médico/consultar-médico">
           <CardFeature
             icon={<FaUserDoctor className="text-azul text-3xl" />}
             title="Médicos"
@@ -83,7 +85,7 @@ const HomePage = () => {
           description="Seleccione una fecha, hora, especialidad y médico para agendar la cita médica."
         />
         <CardFeature
-          icon={<FaRedoAlt className="text-yellow-500 text-3xl" />} 
+          icon={<FaRedoAlt className="text-yellow-500 text-3xl" />}
           title="Reagendar Citas"
           description="Seleccione una fecha, hora, especialidad y médico para reagendar la cita médica."
         />

@@ -108,11 +108,16 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
                       </button>
                       {isSubmenuOpen[category.name] && (
                         <div className="pl-4">
-                          {category.subMenu.map((service) => (
-                            <NextLink key={service.path} href={service.path} className="block px-4 py-2 hover:bg-gray-200 text-blue-700">
-                              {service.name}
-                            </NextLink>
-                          ))}
+                          {Array.isArray(category.subMenu) &&
+                            category.subMenu.map((service) => (
+                              <NextLink
+                                key={service.path}
+                                href={service.path}
+                                className="block px-4 py-2 hover:bg-gray-200 text-blue-700"
+                              >
+                                {service.name}
+                              </NextLink>
+                            ))}
                         </div>
                       )}
                     </div>
@@ -202,39 +207,40 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
               </button>
             </NavbarMenuItem>
 
-            {isMobileServicesOpen && (
-              <div className="pl-4">
-                {menuServices.map((category) => (
-                  <div key={category.name}>
-                    <NavbarMenuItem>
-                      <button
-                        onClick={() => toggleSubmenu(category.name)}
-                        className="flex justify-between items-center w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
-                      >
-                        <span>{category.name}</span>
-                        {isSubmenuOpen[category.name] ? (
-                          <FaChevronUp className="text-blue-800 text-sm" />
-                        ) : (
-                          <FaChevronDown className="text-blue-800 text-sm" />
-                        )}
-                      </button>
-                    </NavbarMenuItem>
+            {isMobileServicesOpen &&
+              menuServices.map((category) => (
+                <div key={category.name}>
+                  <NavbarMenuItem>
+                    <button
+                      onClick={() => toggleSubmenu(category.name)}
+                      className="flex justify-between items-center w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+                    >
+                      <span>{category.name}</span>
+                      {isSubmenuOpen[category.name] ? (
+                        <FaChevronUp className="text-blue-800 text-sm" />
+                      ) : (
+                        <FaChevronDown className="text-blue-800 text-sm" />
+                      )}
+                    </button>
+                  </NavbarMenuItem>
 
-                    {isSubmenuOpen[category.name] && (
-                      <div className="pl-4 bg-gray-50">
-                        {category.subMenu.map((service) => (
+                  {isSubmenuOpen[category.name] && (
+                    <div className="pl-4 bg-gray-50">
+                      {Array.isArray(category.subMenu) &&
+                        category.subMenu.map((service) => (
                           <NavbarMenuItem key={service.path}>
-                            <NextLink href={service.path} className="block px-4 py-2 hover:bg-gray-200 text-blue-700">
+                            <NextLink
+                              href={service.path}
+                              className="block w-full px-4 py-2 hover:bg-gray-200 text-blue-700"
+                            >
                               {service.name}
                             </NextLink>
                           </NavbarMenuItem>
                         ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
+                    </div>
+                  )}
+                </div>
+              ))}
           </>
         )}
       </NavbarMenu>
@@ -243,17 +249,8 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
 };
 
 NavbarComponent.propTypes = {
-  menuItems: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired,
-  })),
-  menuServices: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subMenu: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      path: PropTypes.string.isRequired,
-    })).isRequired,
-  })),
+  menuItems: PropTypes.array,
+  menuServices: PropTypes.array,
   showExtraOptions: PropTypes.bool,
 };
 
