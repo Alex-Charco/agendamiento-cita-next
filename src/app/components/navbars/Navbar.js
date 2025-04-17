@@ -69,7 +69,7 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
           </NavbarItem>
 
           <NavbarItem>
-            <NextLink href="/contacto" className="hover:bg-gray-100 px-4 py-2 rounded">Contacto</NextLink>
+            <NextLink href="/contacto" className="hover:bg-gray-100 text-blue-800 font-medium px-4 py-2 rounded">Contacto</NextLink>
           </NavbarItem>
 
           {menuItems.map((item) => (
