@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import DynamicTable from "@/components/table/DynamicTable";
 
 export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
@@ -49,3 +50,9 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
         </div>
     );
 }
+
+// ✅ Validación de props
+TablaHorarios.propTypes = {
+    horarios: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onSeleccionarHorario: PropTypes.func.isRequired,
+};

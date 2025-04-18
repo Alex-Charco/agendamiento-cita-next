@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { FaSearch } from "react-icons/fa";
 
 const SearchInput = ({
@@ -38,6 +39,17 @@ const SearchInput = ({
             {error && <p className="text-red-500 mt-4">{error}</p>}
         </div>
     );
+};
+
+// ✅ Validación de props
+SearchInput.propTypes = {
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
+    loading: PropTypes.bool,
+    error: PropTypes.string,
 };
 
 export default SearchInput;

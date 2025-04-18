@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import DynamicTable from "@/components/table/DynamicTable";
 
 export default function TablaTurnos({ turnos }) {
@@ -27,3 +28,8 @@ export default function TablaTurnos({ turnos }) {
 		</div>
     );
 }
+
+// ✅ Validación de props
+TablaTurnos.propTypes = {
+    turnos: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

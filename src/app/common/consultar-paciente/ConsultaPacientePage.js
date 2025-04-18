@@ -80,9 +80,9 @@ export default function ConsultaPacientePage() {
                     <div className="flex flex-col w-full max-w-4xl gap-4 border rounded-xl shadow-lg p-6 bg-white">
                         <h2 className="text-2xl font-semibold text-gray-800 border-b pb-4">Información Familiar</h2>
                         {selectedPaciente?.Familiars?.length > 0 ? (
-                            selectedPaciente.Familiars.map((familiar, index) => (
-                                <div
-                                    key={index}
+                            selectedPaciente.Familiars.map((familiar) => (
+							<div
+								key={familiar.identificacion}
                                     className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-gray-700 border rounded-lg p-4 bg-gray-50"
                                 >
                                     <p><span className="font-semibold">Nombre:</span> {[familiar.primer_nombre, familiar.segundo_nombre, familiar.primer_apellido, familiar.segundo_apellido].filter(Boolean).join(" ")}</p>

@@ -55,14 +55,12 @@ export default function ConsultaHorarioPage() {
                                 onSeleccionarHorario={handleVerTurnos}
                             />
                             {horarioSeleccionadoParaTurnos ? (
-                                <>
                                     <TablaTurnos
                                         turnos={horarioSeleccionadoParaTurnos.turnos.map(turno => ({
                                             ...turno,
                                             fecha: horarioSeleccionadoParaTurnos.fecha_horario
                                         }))}
                                     />
-                                </>
                             ) : (
                                 <p className="text-center text-gray-500">
                                     Selecciona un horario para ver sus turnos.

@@ -1,5 +1,8 @@
 "use client";
 
+import React from "react";
+import PropTypes from "prop-types";
+
 export default function MedicoDetalle({ medico, mostrarCampos }) {
     if (!medico) {
         return <p>No se han encontrado datos para el médico.</p>;
@@ -74,3 +77,27 @@ export default function MedicoDetalle({ medico, mostrarCampos }) {
         </div>
     );
 }
+
+// ✅ Validación completa de props
+MedicoDetalle.propTypes = {
+    medico: PropTypes.shape({
+        identificacion: PropTypes.string,
+        fecha_nacimiento: PropTypes.string,
+        primer_nombre: PropTypes.string.isRequired,
+        segundo_nombre: PropTypes.string,
+        primer_apellido: PropTypes.string.isRequired,
+        segundo_apellido: PropTypes.string,
+        genero: PropTypes.oneOf(["NINGUNO", "MASCULINO", "FEMENINO"]),
+        reg_msp: PropTypes.string,
+        celular: PropTypes.string,
+        telefono: PropTypes.string,
+        correo: PropTypes.string,
+        estatus: PropTypes.number,
+        especialidad: PropTypes.shape({
+            nombre: PropTypes.string,
+            atencion: PropTypes.string,
+            consultorio: PropTypes.string,
+        }),
+    }).isRequired,
+    mostrarCampos: PropTypes.arrayOf(PropTypes.string),
+};

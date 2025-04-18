@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import {
     Table,
@@ -173,3 +174,18 @@ export default function DynamicTable({
         </div>
     );
 }
+
+DynamicTable.propTypes = {
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      uid: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      render: PropTypes.func, // si algunas columnas usan función de renderizado
+    })
+  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  rowsPerPage: PropTypes.number,
+  filterPlaceholder: PropTypes.string,
+  actionLabel: PropTypes.string,
+  actionRoute: PropTypes.string,
+};
