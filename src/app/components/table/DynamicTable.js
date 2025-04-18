@@ -71,6 +71,15 @@ export default function DynamicTable({
     const handleRedirect = () => {
         window.location.href = actionRoute;
     };
+	
+	const renderCellContent = (uid, item) => {
+		if (uid === "status") {
+			const status = item[uid];
+			const color = status === "active" ? "success" : "danger";
+			return <Chip color={color}>{capitalize(status)}</Chip>;
+		}
+		return item[uid];
+	};
 
     return (
         <div className="text-gray-600">
@@ -136,24 +145,12 @@ export default function DynamicTable({
 
                 <TableBody>
                     {items.map((item, index) => (
-                        <TableRow key={index}>
+                        <TableRow key={item.id || index}>
                             {visibleColumnObjects.map((column) => (
                                 <TableCell key={column.uid} className="text-center">
-                                    {column.render
-                                        ? column.render(item)
-                                        : column.uid === "status"
-                                        ? (
-                                            <Chip
-                                                color={
-                                                    item[column.uid] === "active"
-                                                        ? "success"
-                                                        : "danger"
-                                                }
-                                            >
-                                                {capitalize(item[column.uid])}
-                                            </Chip>
-                                        )
-                                        : item[column.uid]}
+                                   {column.render
+									? column.render(item)
+									: renderCellContent(column.uid, item)}
                                 </TableCell>
                             ))}
                         </TableRow>
