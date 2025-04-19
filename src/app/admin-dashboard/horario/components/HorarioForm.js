@@ -1,7 +1,7 @@
 "use client";
 
 import PropTypes from "prop-types";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, forwardRef, useImperativeHandle } from "react";
 import { CustomInput, CustomSelect } from "@/components/form";
 import { SectionTitle, SubmitButton } from "@/components/ui";
 
@@ -39,11 +39,21 @@ function reducer(state, action) {
     return { ...state, [action.name]: action.value };
 }
 
-function HorarioForm({ onSubmit, horarioData = {} }) {
+const HorarioForm = forwardRef(({ onSubmit, horarioData = {} }, ref) => {
     const [horario, dispatch] = React.useReducer(reducer, {
         ...initialState,
         ...horarioData,
     });
+
+    useImperativeHandle(ref, () => ({
+        resetForm: () => {
+            dispatch({ name: "identificacion_paciente_horario", value: "" });
+            localStorage.removeItem("identificacion");
+            for (const key of Object.keys(initialState)) {
+                dispatch({ name: key, value: initialState[key] });
+            }
+        },
+    }));
 
     useEffect(() => {
         const storedId = localStorage.getItem("identificacion");
@@ -55,7 +65,7 @@ function HorarioForm({ onSubmit, horarioData = {} }) {
     const handleChange = (name, value) => {
         dispatch({ name, value });
         if (name === "identificacion_paciente_horario") {
-            localStorage.setItem("identificacion", value); // Guardamos en localStorage
+            localStorage.setItem("identificacion", value);
         }
     };
 
@@ -76,7 +86,7 @@ function HorarioForm({ onSubmit, horarioData = {} }) {
                     label="Identificación Médico"
                     value={horario.identificacion_paciente_horario}
                     onChange={handleChange}
-                    placeholder="Ingrese la identificación del médico"
+                    placeholder="Ingrese la identificación"
                     type="text"
                     required
                 />
@@ -136,10 +146,15 @@ function HorarioForm({ onSubmit, horarioData = {} }) {
                 />
             </div>
             <SubmitButton text="Guardar Horario" />
-        </form>
+            </form>
     );
-}
+});
 
+
+// 👇 Esta línea elimina el error
+HorarioForm.displayName = "HorarioForm";
+
+// PropTypes
 HorarioForm.propTypes = {
     onSubmit: PropTypes.func,
     horarioData: PropTypes.object,
