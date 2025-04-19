@@ -29,8 +29,8 @@ export default function DynamicTable({
     data = [],
     rowsPerPage = 5,
     filterPlaceholder = "Buscar",
-	actionLabel = "Nuevo horario",
-	actionRoute = "/admin-dashboard/medico/consultar-medico"
+    actionLabel = "Nuevo horario",
+    actionRoute = "/admin-dashboard/medico/consultar-medico"
 }) {
     const [filterValue, setFilterValue] = React.useState("");
     const [page, setPage] = React.useState(1);
@@ -61,25 +61,25 @@ export default function DynamicTable({
         const end = start + rowsPerPage;
         return filteredItems.slice(start, end);
     }, [page, filteredItems, rowsPerPage]);
-	
-	// Obtener el rol desde localStorage
-	const user = JSON.parse(localStorage.getItem("user"));
-	const userRole = user?.rol?.nombre_rol || "";
-	const hasPermission = userRole === "ADMINISTRADOR";
+
+    // Obtener el rol desde localStorage
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userRole = user?.rol?.nombre_rol || "";
+    const hasPermission = userRole === "ADMINISTRADOR";
 
     // Función de navegación ahora redirige según la prop
     const handleRedirect = () => {
         window.location.href = actionRoute;
     };
-	
-	const renderCellContent = (uid, item) => {
-		if (uid === "status") {
-			const status = item[uid];
-			const color = status === "active" ? "success" : "danger";
-			return <Chip color={color}>{capitalize(status)}</Chip>;
-		}
-		return item[uid];
-	};
+
+    const renderCellContent = (uid, item) => {
+        if (uid === "status") {
+            const status = item[uid];
+            const color = status === "active" ? "success" : "danger";
+            return <Chip color={color}>{capitalize(status)}</Chip>;
+        }
+        return item[uid];
+    };
 
     return (
         <div className="text-gray-600">
@@ -97,16 +97,16 @@ export default function DynamicTable({
                 {/* Dropdown de columnas */}
                 <Dropdown>
                     <DropdownTrigger>
-                        <Button 
-							variant="bordered" 
-							className="capitalize flex items-center gap-2 text-gray-600"
-							endContent={<FaChevronDown className="text-sm" />}
-							>
+                        <Button
+                            variant="bordered"
+                            className="capitalize flex items-center gap-2 text-gray-600"
+                            endContent={<FaChevronDown className="text-sm" />}
+                        >
                             Columnas
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu
-						className="text-gray-600"
+                        className="text-gray-600"
                         disallowEmptySelection
                         aria-label="Table Columns"
                         closeOnSelect={false}
@@ -127,7 +127,7 @@ export default function DynamicTable({
                     color="primary"
                     className="text-white"
                     onClick={handleRedirect}
-					isDisabled={!hasPermission}
+                    isDisabled={!hasPermission}
                 >
                     {actionLabel}
                 </Button>
@@ -148,9 +148,9 @@ export default function DynamicTable({
                         <TableRow key={item.id || index}>
                             {visibleColumnObjects.map((column) => (
                                 <TableCell key={column.uid} className="text-center">
-                                   {column.render
-									? column.render(item)
-									: renderCellContent(column.uid, item)}
+                                    {column.render
+                                        ? column.render(item)
+                                        : renderCellContent(column.uid, item)}
                                 </TableCell>
                             ))}
                         </TableRow>
@@ -173,16 +173,16 @@ export default function DynamicTable({
 }
 
 DynamicTable.propTypes = {
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      uid: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      render: PropTypes.func, // si algunas columnas usan función de renderizado
-    })
-  ).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  rowsPerPage: PropTypes.number,
-  filterPlaceholder: PropTypes.string,
-  actionLabel: PropTypes.string,
-  actionRoute: PropTypes.string,
+    columns: PropTypes.arrayOf(
+        PropTypes.shape({
+            uid: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            render: PropTypes.func, // si algunas columnas usan función de renderizado
+        })
+    ).isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    rowsPerPage: PropTypes.number,
+    filterPlaceholder: PropTypes.string,
+    actionLabel: PropTypes.string,
+    actionRoute: PropTypes.string,
 };

@@ -61,7 +61,7 @@ export default function MedicoDetalle({ medico, mostrarCampos }) {
                     {/* Especialidad */}
                     {debeMostrar("especialidad") && (
                         <div className="relative bg-white border rounded-lg p-4 text-left">
-                            <div className="absolute bg-white -top-2 left-4 bg-gray-50 px-2 text-[10px] text-blue-800">
+                            <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
                                 Especialidad
                             </div>
 

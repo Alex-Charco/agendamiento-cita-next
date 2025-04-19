@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from 'prop-types';
 import DynamicTable from "@/components/table/DynamicTable";
 
-export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
+export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarTurnoExtra }) {
+
     const columns = [
         { name: "Fecha", uid: "fecha_horario" },
         { name: "Institución", uid: "institucion" },
@@ -18,8 +19,19 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
                 return <span>{disponible}</span>;
             },
         },
-        { name: "Selección", uid: "seleccion" },
-        { name: "Turno extra", uid: "turno_extra" },
+        { name: "Seleccionar", uid: "seleccion" },
+        {
+            name: "Turno extra",
+            uid: "turno_extra",
+            render: (horario) => (
+                <input
+                    type="checkbox"
+                    checked={horario.turno_extra === 1}
+                    readOnly
+                    className="w-4 h-4 cursor-default"
+                />
+            )
+        },        
         {
             name: "Ver Turnos",
             uid: "acciones",
@@ -36,7 +48,7 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
 
     return (
         <div className="flex justify-center py-2">
-            <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50  text-center">
+            <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50 text-center">
                 {/* Título flotante */}
                 <div className="absolute -top-2 left-4 bg-white px-2 text-[10px] text-blue-800">
                     Horarios disponibles
@@ -51,8 +63,8 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario }) {
     );
 }
 
-// ✅ Validación de props
 TablaHorarios.propTypes = {
     horarios: PropTypes.arrayOf(PropTypes.object).isRequired,
     onSeleccionarHorario: PropTypes.func.isRequired,
+    onActualizarTurnoExtra: PropTypes.func.isRequired,
 };

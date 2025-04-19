@@ -11,18 +11,33 @@ import TablaTurnos from "@/admin-dashboard/horario/components/TablaTurnos";
 import { FaPlus } from "react-icons/fa";
 
 export default function ConsultaHorarioPage() {
+    
     const [selectedHorario, setSelectedHorario] = useState(null);
     const [horarioSeleccionadoParaTurnos, setHorarioSeleccionadoParaTurnos] = useState(null);
     const pathname = usePathname();
 
     const handleHorarioSelect = (data) => {
         setSelectedHorario(data);
-        setHorarioSeleccionadoParaTurnos(null); // Reinicia selección de turnos al cambiar de médico
+        setHorarioSeleccionadoParaTurnos(null); 
     };
 
     const handleVerTurnos = (horario) => {
         setHorarioSeleccionadoParaTurnos(horario);
     };
+
+    const handleActualizarTurnoExtra = (id_horario, nuevoValor) => {
+        const nuevosHorarios = selectedHorario.horarios.map(horario =>
+            horario.id_horario === id_horario
+                ? { ...horario, turno_extra: nuevoValor }
+                : horario
+        );
+    
+        setSelectedHorario(prev => ({
+            ...prev,
+            horarios: nuevosHorarios
+        }));
+    };
+    
 
     const buttons = [
         { label: "Nuevo Horario", icon: FaPlus, action: "nuevo-horario", href: "/admin-dashboard/horario/registrar-horario" },
@@ -55,6 +70,7 @@ export default function ConsultaHorarioPage() {
                             <TablaHorarios
                                 horarios={selectedHorario.horarios}
                                 onSeleccionarHorario={handleVerTurnos}
+                                onActualizarTurnoExtra={handleActualizarTurnoExtra}
                             />
                             {horarioSeleccionadoParaTurnos ? (
                                     <TablaTurnos
