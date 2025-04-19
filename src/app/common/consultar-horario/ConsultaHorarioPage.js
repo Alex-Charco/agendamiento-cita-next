@@ -8,6 +8,7 @@ import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import MedicoDetalle from "@/admin-dashboard/medico/components/MedicoDetalle";
 import TablaHorarios from "@/admin-dashboard/horario/components/TablaHorarios";
 import TablaTurnos from "@/admin-dashboard/horario/components/TablaTurnos";
+import { FaPlus } from "react-icons/fa";
 
 export default function ConsultaHorarioPage() {
     const [selectedHorario, setSelectedHorario] = useState(null);
@@ -24,6 +25,7 @@ export default function ConsultaHorarioPage() {
     };
 
     const buttons = [
+        { label: "Nuevo Horario", icon: FaPlus, action: "nuevo-horario", href: "/admin-dashboard/horario/registrar-horario" },
         ...getCommonButtonsByPath(pathname),
     ];
 

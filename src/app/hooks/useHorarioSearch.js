@@ -1,3 +1,5 @@
+// Aun no esta en uso
+
 import { useState } from "react";
 import { getHorario } from "@/utils/api/horarioApi";
 
