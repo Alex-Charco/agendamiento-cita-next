@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { usePathname, useSearchParams  } from "next/navigation";
+import { usePathname, useSearchParams, useRouter  } from "next/navigation";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import HorarioForm from "@/admin-dashboard/horario/components/HorarioForm";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
@@ -32,7 +32,8 @@ export default function ActualizarHorarioPage() {
     // ✅ Luego lo usas
     const [horarioData, setHorarioData] = useState(initialHorarioData);
     const [mensaje, setMensaje] = useState("");
-    const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = useState(false); 
+    const router = useRouter();
 
     const handleHorarioSubmit = async (data) => {
         await ActualizarHorario(data, horarioData.id_horario, setMensaje, setSuccess);
@@ -51,6 +52,7 @@ export default function ActualizarHorarioPage() {
         setSuccess(false);
         setHorarioData(null);
         formRef.current?.resetForm();
+        router.push("/admin-dashboard/horario/consultar-horario");
     }, "¡Horario actualizado exitosamente!");
 
     const buttons = [
