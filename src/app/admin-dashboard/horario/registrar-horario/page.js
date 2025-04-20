@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { FaSearch, FaSyncAlt } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { RegistrarHorario } from "@/utils/api/horarioApi";

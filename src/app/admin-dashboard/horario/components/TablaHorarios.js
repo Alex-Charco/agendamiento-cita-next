@@ -76,6 +76,5 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
 TablaHorarios.propTypes = {
     horarios: PropTypes.arrayOf(PropTypes.object).isRequired,
     onSeleccionarHorario: PropTypes.func.isRequired,
-    onActualizarTurnoExtra: PropTypes.func.isRequired,
     onActualizarHorario: PropTypes.func.isRequired,
 };
