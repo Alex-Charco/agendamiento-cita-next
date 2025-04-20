@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { useRef, useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import HorarioForm from "@/admin-dashboard/horario/components/HorarioForm";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
@@ -14,26 +14,30 @@ import { getCommonButtonsByPath } from "@/utils/commonButtons";
 export default function ActualizarHorarioPage() {
     const formRef = useRef();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
-
-    const id_horario = searchParams.get("id");
-    const initialHorarioData = {
-        id_horario: id_horario ? parseInt(id_horario) : null,
-        id_medico: parseInt(searchParams.get("id_medico")),
-        institucion: searchParams.get("institucion"),
-        fecha_horario: searchParams.get("fecha_horario"),
-        hora_inicio: searchParams.get("hora_inicio"),
-        hora_fin: searchParams.get("hora_fin"),
-        consulta_maxima: parseInt(searchParams.get("consulta_maxima")),
-        asignado: parseInt(searchParams.get("asignado")),
-        turno_extra: parseInt(searchParams.get("turno_extra")),
-    };
-
     // ✅ Luego lo usas
-    const [horarioData, setHorarioData] = useState(initialHorarioData);
+    const [horarioData, setHorarioData] = useState(null);
     const [mensaje, setMensaje] = useState("");
     const [success, setSuccess] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+    
+        const id_horario = searchParams.get("id");
+        const newHorario = {
+            id_horario: id_horario ? parseInt(id_horario) : null,
+            id_medico: parseInt(searchParams.get("id_medico")),
+            institucion: searchParams.get("institucion"),
+            fecha_horario: searchParams.get("fecha_horario"),
+            hora_inicio: searchParams.get("hora_inicio"),
+            hora_fin: searchParams.get("hora_fin"),
+            consulta_maxima: parseInt(searchParams.get("consulta_maxima")),
+            asignado: parseInt(searchParams.get("asignado")),
+            turno_extra: parseInt(searchParams.get("turno_extra")),
+        };
+    
+        setHorarioData(newHorario);
+    }, []);
 
     const handleHorarioSubmit = async (data) => {
         await ActualizarHorario(data, horarioData.id_horario, setMensaje, setSuccess);
