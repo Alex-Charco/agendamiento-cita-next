@@ -28,7 +28,6 @@ export default function RegistrarHorarioPage() {
 
 
     const buttons = [
-        { label: "Actualizar Horario", icon: FaSyncAlt, action: "actualizar-horario", href: "/admin-dashboard/horario/actualizar-horario" },
         { label: "Buscar Horario", icon: FaSearch, action: "buscar-horario", href: "/admin-dashboard/horario/consultar-horario" },
         ...getCommonButtonsByPath(pathname),
     ];

@@ -18,7 +18,6 @@ const HomePage = () => {
           {
             name: "Horario",
             subMenu: [
-              { name: "Actualizar horario", path: "/admin-dashboard/horario/actualizar-horario" },
               { name: "Consultar Horario", path: "/admin-dashboard/horario/consultar-horario" },
               { name: "Nuevo horario", path: "/admin-dashboard/horario/registrar-horario" },
             ],

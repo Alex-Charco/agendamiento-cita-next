@@ -58,8 +58,6 @@ export const RegistrarHorario = async (data, identificacion, setMensaje, setSucc
     }
 };
 
-
-// *Actualizar horario
 // *Actualizar horario
 export async function ActualizarHorario(data, id_horario, setMensaje, setSuccess) {
     try {
