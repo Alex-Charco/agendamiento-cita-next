@@ -1,6 +1,6 @@
 // No se esta usando ahora
 
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 
 const initialState = {
     identificacion_paciente_horario: "",

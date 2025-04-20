@@ -1,7 +1,7 @@
 "use client";
 
 import PropTypes from "prop-types";
-import React, { useEffect, useReducer, forwardRef, useImperativeHandle } from "react";
+import React, { useEffect, forwardRef, useImperativeHandle } from "react";
 import { CustomInput, CustomSelect } from "@/components/form";
 import { SectionTitle, SubmitButton } from "@/components/ui";
 

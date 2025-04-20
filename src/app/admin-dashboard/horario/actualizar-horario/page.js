@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { usePathname, useSearchParams, useRouter  } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import HorarioForm from "@/admin-dashboard/horario/components/HorarioForm";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
@@ -16,9 +16,9 @@ export default function ActualizarHorarioPage() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    // 🔁 Primero extraes los datos
+    const id_horario = searchParams.get("id");
     const initialHorarioData = {
-        id_horario: parseInt(searchParams.get("id")),
+        id_horario: id_horario ? parseInt(id_horario) : null,
         id_medico: parseInt(searchParams.get("id_medico")),
         institucion: searchParams.get("institucion"),
         fecha_horario: searchParams.get("fecha_horario"),
@@ -32,7 +32,7 @@ export default function ActualizarHorarioPage() {
     // ✅ Luego lo usas
     const [horarioData, setHorarioData] = useState(initialHorarioData);
     const [mensaje, setMensaje] = useState("");
-    const [success, setSuccess] = useState(false); 
+    const [success, setSuccess] = useState(false);
     const router = useRouter();
 
     const handleHorarioSubmit = async (data) => {
