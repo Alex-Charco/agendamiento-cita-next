@@ -39,22 +39,23 @@ export default function ActualizarHorarioPage() {
         await ActualizarHorario(data, horarioData.id_horario, setMensaje, setSuccess);
     };
 
-    const handleHorarioEncontrado = (data) => {
-        if (data && data.horarios?.length > 0) {
-            // Supongamos que solo se permite actualizar el primer horario
-            setHorarioData(data.horarios[0]);
-        } else {
-            setMensaje("No se encontró ningún horario asignado.");
-        }
-    };
-
     useSuccessAlert(success, () => {
         setSuccess(false);
-        setHorarioData(null);
+        setHorarioData({
+            id_horario: null,
+            id_medico: null,
+            institucion: "",
+            fecha_horario: "",
+            hora_inicio: "",
+            hora_fin: "",
+            consulta_maxima: 0,
+            asignado: 0,
+            turno_extra: 0,
+        });
         formRef.current?.resetForm();
         router.push("/admin-dashboard/horario/consultar-horario");
     }, "¡Horario actualizado exitosamente!");
-
+    
     const buttons = [
         { label: "Registrar Horario", icon: FaPlus, action: "registrar-horario", href: "/admin-dashboard/horario/registrar-horario" },
         { label: "Buscar Horario", icon: FaSearch, action: "buscar-horario", href: "/admin-dashboard/horario/consultar-horario" },
