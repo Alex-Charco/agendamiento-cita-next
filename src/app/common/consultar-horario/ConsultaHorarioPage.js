@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter  } from "next/navigation";
 import HorarioSearch from "@/admin-dashboard/horario/components/HorarioSearch";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
@@ -11,10 +11,10 @@ import TablaTurnos from "@/admin-dashboard/horario/components/TablaTurnos";
 import { FaPlus } from "react-icons/fa";
 
 export default function ConsultaHorarioPage() {
-    
     const [selectedHorario, setSelectedHorario] = useState(null);
     const [horarioSeleccionadoParaTurnos, setHorarioSeleccionadoParaTurnos] = useState(null);
     const pathname = usePathname();
+    const router = useRouter();
 
     const handleHorarioSelect = (data) => {
         setSelectedHorario(data);
@@ -38,6 +38,23 @@ export default function ConsultaHorarioPage() {
         }));
     };
     
+    // * Para actualizar horario
+    const handleActualizarHorario = (horario) => {
+        // Redirige con los datos necesarios por query
+        const params = new URLSearchParams({
+            id: horario.id_horario,
+            id_medico: horario.id_medico,
+            institucion: horario.institucion,
+            fecha_horario: horario.fecha_horario,
+            hora_inicio: horario.hora_inicio,
+            hora_fin: horario.hora_fin,
+            consulta_maxima: horario.consulta_maxima,
+            asignado: horario.asignado,
+            turno_extra: horario.turno_extra,
+        }).toString();
+    
+        router.push(`/admin-dashboard/horario/actualizar-horario?${params}`);
+    };
 
     const buttons = [
         { label: "Nuevo Horario", icon: FaPlus, action: "nuevo-horario", href: "/admin-dashboard/horario/registrar-horario" },
@@ -71,6 +88,7 @@ export default function ConsultaHorarioPage() {
                                 horarios={selectedHorario.horarios}
                                 onSeleccionarHorario={handleVerTurnos}
                                 onActualizarTurnoExtra={handleActualizarTurnoExtra}
+                                onActualizarHorario={handleActualizarHorario}
                             />
                             {horarioSeleccionadoParaTurnos ? (
                                     <TablaTurnos

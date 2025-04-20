@@ -11,7 +11,7 @@ export async function getHorario(query) {
     return response.data?.horarios || null;
 }
 
-// Registrar horario
+// *Registrar horario
 export const RegistrarHorario = async (data, identificacion, setMensaje, setSuccess) => {
     try {
         if (!identificacion) {
@@ -59,3 +59,17 @@ export const RegistrarHorario = async (data, identificacion, setMensaje, setSucc
 };
 
 
+// *Actualizar horario
+// *Actualizar horario
+export async function ActualizarHorario(data, id_horario, setMensaje, setSuccess) {
+    try {
+        const response = await authAxios.put(`/api/horario/put/${id_horario}`, data);
+        console.log("Horario actualizado:", response.data);
+        setSuccess(true);
+        setMensaje("");
+    } catch (error) {
+        console.error("Error actualizando horario:", error);
+        setMensaje("Error al actualizar el horario. Intente nuevamente.");
+        setSuccess(false);
+    }
+}

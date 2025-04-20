@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import DynamicTable from "@/components/table/DynamicTable";
-
-export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarTurnoExtra }) {
+import { FaEye, FaEdit } from "react-icons/fa";
+export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarTurnoExtra, onActualizarHorario }) {
 
     const columns = [
         { name: "Fecha", uid: "fecha_horario" },
@@ -31,17 +31,27 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
                     className="w-4 h-4 cursor-default"
                 />
             )
-        },        
+        },
         {
-            name: "Ver Turnos",
+            name: "Acción",
             uid: "acciones",
             render: (horario) => (
-                <button
-                    onClick={() => onSeleccionarHorario(horario)}
-                    className="bg-gray-100 text-gray-600 text-xs px-4 py-1 rounded-lg hover:bg-gray-200 flex items-center gap-2 shadow-md active:translate-y-0.5 active:shadow-inner transition-all duration-150"
-                >
-                    Ver turnos
-                </button>
+                <div className="flex gap-3 justify-center items-center text-gray-600 text-lg">
+                    <button
+                        onClick={() => onSeleccionarHorario(horario)}
+                        className="text-blue-600 hover:text-blue-700 transition-colors"
+                        title="Ver turnos"
+                    >
+                        <FaEye />
+                    </button>
+                    <button
+                        onClick={() => onActualizarHorario(horario)}
+                        className="text-green-600 hover:text-green-700 transition-colors"
+                        title="Editar horario"
+                    >
+                        <FaEdit />
+                    </button>
+                </div>
             ),
         },
     ];
@@ -67,4 +77,5 @@ TablaHorarios.propTypes = {
     horarios: PropTypes.arrayOf(PropTypes.object).isRequired,
     onSeleccionarHorario: PropTypes.func.isRequired,
     onActualizarTurnoExtra: PropTypes.func.isRequired,
+    onActualizarHorario: PropTypes.func.isRequired,
 };
