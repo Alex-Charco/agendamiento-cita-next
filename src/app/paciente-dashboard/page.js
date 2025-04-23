@@ -13,7 +13,7 @@ const HomePage = () => {
       <NavbarComponent
         menuServices={[
           { name: "Agendar Cita", path: "/crear-cita" },
-          { name: "Consultar Cita", path: "/ver-citas" },
+          { name: "Consultar Cita", path: "/paciente-dashboard/cita/consultar-cita" },
         ]}
         showExtraOptions={true}
       />

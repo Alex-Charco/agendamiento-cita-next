@@ -14,7 +14,13 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       <NavbarComponent
         menuServices={[
-          { name: "Cita", path: "/common/crear-cita" },
+          { name: "Cita", 
+            subMenu: [
+              { name: "Consultar Cita", path: "/admin-dashboard/cita/consultar-cita" },
+              { name: "Nueva Cita", path: "/admin-dashboard/horario/registrar-horario" },
+            ], 
+
+          },
           {
             name: "Horario",
             subMenu: [
