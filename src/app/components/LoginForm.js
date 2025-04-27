@@ -26,12 +26,6 @@ export default function LoginForm() {
         }
     }, []);
 
-    useEffect(() => {
-        if (!isAuthenticated()) {
-            router.push(ROUTES.LOGIN); // Redirigir si no está autenticado
-        }
-    }, [router]);
-
     const handleLogout = () => {
         logout();
         router.push(ROUTES.LOGIN);
