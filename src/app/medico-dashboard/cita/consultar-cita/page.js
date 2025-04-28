@@ -1,5 +1,5 @@
-import ConsultaCitaPage from "@/common/citas/consultar-cita/ConsultaCitaPage";
+import ConsultaCitaMedicoPage from "@/common/citas/consultar-cita/ConsultaCitaMedicoPage";
 
 export default function MedicoCitaPage() {
-  return <ConsultaCitaPage />
+  return <ConsultaCitaMedicoPage />
 };

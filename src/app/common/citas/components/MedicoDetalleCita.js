@@ -12,12 +12,11 @@ export default function MedicoDetalleCita({ medico, mostrarCampos }) {
     const debeMostrar = (campo) => !mostrarCampos || mostrarCampos.includes(campo);
 
     return (
-        <div className="flex flex-col justify-center py-2">
-            <div className="flex flex-col w-full gap-4 border rounded bg-gray-50">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-2 py-4">
-
-                    {/* Datos del Médico */}
-                    <div className="relative border rounded-lg p-4 text-left bg-white">
+        <div className="flex flex-col justify-center py-2 pt-4 w-full">
+            <div className="w-full px-4">
+                <div className="grid grid-cols-1 gap-6 w-full">
+                    
+                    <div className="relative w-full border rounded-lg p-3 bg-white">
                         <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
                             Datos Personales
                         </div>
