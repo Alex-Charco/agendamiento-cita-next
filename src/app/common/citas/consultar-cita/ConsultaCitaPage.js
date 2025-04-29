@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import PacienteDetalle from "@/common/citas/components/PacienteDetalle";
@@ -22,20 +22,24 @@ export default function ConsultaCitaPage() {
 
   console.log("selectedCita:", selectedCita);
 
-  const transformarCitasParaTabla = (citas, nombrePaciente) => {
-    return citas.map((cita) => ({
-      id_cita: cita.id_cita,
-      nombre_medico: cita.medico.nombre,
-      especialidad: cita.medico.especialidad.nombre,
-      tipo_atencion: cita.medico.especialidad.atencion,
-      consultorio: cita.medico.especialidad.consultorio,
-      fecha_turno: cita.turno.horario.fecha_horario,
-      hora_turno: cita.turno.hora_turno,
-      numero_turno: cita.turno.id_turno,
-      usuario: nombrePaciente,
-      fecha_creacion: cita.fecha_creacion,
-      estado: cita.estado_cita,
-    }));
+  const transformarCitasParaTabla = (citas) => {
+    return citas.map((cita, index) => {
+      const citaTransformada = {
+        id_cita: index, // Si no hay ID en la API, usamos el índice
+        nombre_medico: cita.datos_medico?.nombre || "No disponible",
+        especialidad: cita.datos_especialidad?.nombre || "No disponible",
+        tipo_atencion: cita.datos_especialidad?.atencion || "No disponible",
+        consultorio: cita.datos_especialidad?.consultorio || "No disponible",
+        fecha_turno: cita.datos_turno?.fecha_horario || "No disponible",
+        hora_turno: cita.datos_turno?.hora_turno || "No disponible",
+        numero_turno: cita.datos_turno?.numero_turno || "No disponible",
+        fecha_creacion: cita.datos_cita?.fecha_creacion || "No disponible",
+        estado: cita.datos_cita?.estado_cita || "No disponible",
+      };
+
+      console.log("Cita procesada:", citaTransformada);
+      return citaTransformada;
+    });
   };
 
 

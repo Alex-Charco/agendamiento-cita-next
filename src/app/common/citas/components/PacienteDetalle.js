@@ -13,7 +13,7 @@ export default function PacienteDetalle({ paciente, mostrarCampos }) {
     return (
         <div className="flex flex-col justify-center py-2 pt-4 w-full">
             <div className="w-full px-4">
-                <div className="grid grid-cols-1 gap-6 w-full">
+                <div className="grid grid-cols-1 w-full">
                     
                     <div className="relative w-full border rounded-lg p-3 bg-white">
                         <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
@@ -21,7 +21,7 @@ export default function PacienteDetalle({ paciente, mostrarCampos }) {
                         </div>
 
                         {/* Grid interna: 2 columnas y 2 filas en pantallas medianas en adelante */}
-                        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-2 text-xs text-gray-700">
+                        <div className="mt-1 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-700">
                             {debeMostrar("nombre") && (
                                 <p>
                                     <span className="font-semibold">Nombre:</span>{" "}
@@ -32,18 +32,6 @@ export default function PacienteDetalle({ paciente, mostrarCampos }) {
                                 <p>
                                     <span className="font-semibold">Identificación:</span>{" "}
                                     {paciente.identificacion}
-                                </p>
-                            )}
-                            {debeMostrar("nombre_usuario") && (
-                                <p>
-                                    <span className="font-semibold">Usuario:</span>{" "}
-                                    {paciente.nombre_usuario}
-                                </p>
-                            )}
-                            {debeMostrar("correo") && (
-                                <p>
-                                    <span className="font-semibold">Correo:</span>{" "}
-                                    {paciente.correo}
                                 </p>
                             )}
                         </div>

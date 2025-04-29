@@ -22,14 +22,7 @@ export default function TablaCitas({ citas, onVerCita, onEditarCita }) {
 	];
 	
 	// Capitaliza los campos de texto de cada cita
-	  const citasTransformadas = citas.map((cita) => ({
-		...cita,
-		//nombre_medico: capitalize(cita.nombre_medico),
-		especialidad: capitalize(cita.especialidad),
-		tipo_atencion: capitalize(cita.tipo_atencion),
-		consultorio: capitalize(cita.consultorio),
-		estado: capitalize(cita.estado),
-	  }));
+	const citasTransformadas = citas;
 
     return (
         <div className="flex justify-center py-2">
