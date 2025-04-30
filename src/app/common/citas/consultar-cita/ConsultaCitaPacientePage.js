@@ -4,12 +4,12 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
-import PacienteDetalle from "@/common/citas/components/PacienteDetalle";
-import TablaCitas from "@/common/citas/components/TablaCitas";
+import PacienteDetalle from "@/common/citas/consultar-cita/components/PacienteDetalle";
+import TablaCitas from "@/common/citas/consultar-cita/components/TablaCitas";
 import { FaPlus } from "react-icons/fa";
-import CitaSearch from "@/common/citas/components/CitaSearch";
+import CitaSearch from "@/common/citas/consultar-cita/components/CitaSearch";
 
-export default function ConsultaCitaPage() {
+export default function ConsultaCitaPacientePage() {
   const [selectedCita, setSelectedCita] = useState(null);
   const pathname = usePathname();
 
@@ -55,7 +55,7 @@ export default function ConsultaCitaPage() {
 
   return (
     <div className="bg-gray-50 border border-gray-200 min-h-screen">
-      <NavbarComponent title="Consultar Cita" buttons={buttons} />
+      <NavbarComponent title="Consultar Cita Paciente" buttons={buttons} />
 
       <div className="flex justify-center py-2">
         <div className="relative flex flex-col w-full max-w-5xl border rounded shadow-lg p-4 bg-gray-50 mx-2">

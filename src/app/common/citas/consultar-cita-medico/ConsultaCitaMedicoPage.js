@@ -4,10 +4,10 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
-import MedicoDetalleCita from "@/common/citas/components/MedicoDetalleCita"; 
-import TablaCitasMedico from "@/common/citas/components/TablaCitasMedico"; // 👈 usar la tabla correcta
+import MedicoDetalleCita from "@/common/citas/consultar-cita-medico/components/MedicoDetalleCita"; 
+import TablaCitasMedico from "@/common/citas/consultar-cita-medico/components/TablaCitasMedico"; // 👈 usar la tabla correcta
 import { FaPlus } from "react-icons/fa";
-import CitaSearchMedico from "@/common/citas/components/CitaSearchMedico"; 
+import CitaSearchMedico from "@/common/citas/consultar-cita-medico/components/CitaSearchMedico"; 
 
 export default function ConsultaCitaMedicoPage() {
   const [selectedMedico, setSelectedMedico] = useState(null);

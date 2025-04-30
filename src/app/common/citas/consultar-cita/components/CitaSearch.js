@@ -36,7 +36,7 @@ function CitaSearch({ rol = "medico", identificacion: idInicial = "", onSelectCi
 
     return (
         <SearchInput
-            label="No. Identificación"
+            label="No. Identificación del Paciente"
             placeholder="Ej. 123456789"
             value={identificacion}
             onChange={(e) => setIdentificacion(e.target.value)}

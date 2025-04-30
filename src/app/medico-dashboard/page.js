@@ -15,14 +15,14 @@ const HomePage = () => {
           {
             name: "Paciente",
             subMenu: [
-              { name: "Consultar Cita", path: "/medico-dashboard/cita/consultar-cita" },
+              { name: "Consultar Cita", path: "/medico-dashboard/cita/consultar-cita-paciente" },
               { name: "Reagendar Cita", path: "/admin-dashboard/horario/registrar-horario" },
             ],
           },
           {
             name: "Médico",
             subMenu: [
-              { name: "Consultar Citas", path: "/medico-dashboard/cita/consultar-cita" },
+              { name: "Consultar Citas", path: "/medico-dashboard/cita/consultar-cita-medico" },
               { name: "Consultar Horario", path: "/medico-dashboard/consultar-horario" },
             ],
           },
