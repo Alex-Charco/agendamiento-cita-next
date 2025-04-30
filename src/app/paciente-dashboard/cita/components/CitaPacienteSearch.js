@@ -16,7 +16,7 @@ function CitaPacienteSearch({ rol = "medico", identificacion: idInicial = "", on
         setError(null);
 
         try {
-            const response = await authAxios.get(`/api/cita/get/paciente/${identificacion}`);
+            const response = await authAxios.get(`/api/cita/get/paciente/${identificacion}?desdeHoy=true`);
             console.log("Citas response:", response);
             onSelectCita?.(response.data);
         } catch (err) {

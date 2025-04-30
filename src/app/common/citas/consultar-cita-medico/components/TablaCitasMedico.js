@@ -1,12 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DynamicTable from "@/components/table/DynamicTable";
+import { capitalize } from "@/utils/stringUtils";
 
-// Función para capitalizar la primera letra de un string
-const capitalize = (text) => {
-    if (typeof text !== "string") return text;
-    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-};
 
 export default function TablaCitasMedico({ citas, onVerCita, onEditarCita }) {
     const columns = [

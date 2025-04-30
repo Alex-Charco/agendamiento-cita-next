@@ -22,7 +22,6 @@ const HomePage = () => {
           {
             name: "Médico",
             subMenu: [
-              { name: "Consultar Citas", path: "/medico-dashboard/cita/consultar-cita-medico" },
               { name: "Consultar Horario", path: "/medico-dashboard/consultar-horario" },
             ],
           },

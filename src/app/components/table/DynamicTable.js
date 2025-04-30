@@ -73,13 +73,14 @@ export default function DynamicTable({
     };
 
     const renderCellContent = (uid, item) => {
+        const value = item[uid];
         if (uid === "status") {
-            const status = item[uid];
-            const color = status === "active" ? "success" : "danger";
-            return <Chip color={color}>{capitalize(status)}</Chip>;
+            const color = value === "active" ? "success" : "danger";
+            return <Chip color={color}>{capitalize(value)}</Chip>;
         }
-        return item[uid];
+        return typeof value === "string" ? capitalize(value) : value;
     };
+    
 
     return (
         <div className="text-gray-600">

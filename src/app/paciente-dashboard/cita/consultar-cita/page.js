@@ -25,7 +25,7 @@ export default function ConsultaCitaPacientePage() {
     useEffect(() => {
         const fetchCitasPaciente = async (identificacion) => {
             try {
-                const response = await authAxios.get(`/api/cita/get/paciente/${identificacion}`);
+                const response = await authAxios.get(`/api/cita/get/paciente/${identificacion}?desdeHoy=true`);
                 console.log("Citas obtenidas:", response.data);
                 setSelectedCita(response.data);
             } catch (error) {
@@ -48,20 +48,21 @@ export default function ConsultaCitaPacientePage() {
     };
 
     const transformarCitasParaTabla = (citas, nombrePaciente) => {
-        return citas.map((cita) => ({
-            id_cita: cita.id_cita,
-            nombre_medico: cita.medico.nombre,
-            especialidad: cita.medico.especialidad.nombre,
-            tipo_atencion: cita.medico.especialidad.atencion,
-            consultorio: cita.medico.especialidad.consultorio,
-            fecha_turno: cita.turno.horario.fecha_horario,
-            hora_turno: cita.turno.hora_turno,
-            numero_turno: cita.turno.id_turno,
+        return citas.map((cita, index) => ({
+            id_cita: index + 1, // o usa un ID real si está disponible
+            nombre_medico: cita.datos_medico.nombre,
+            especialidad: cita.datos_especialidad.nombre,
+            tipo_atencion: cita.datos_especialidad.atencion,
+            consultorio: cita.datos_especialidad.consultorio,
+            fecha_turno: cita.datos_turno.fecha_horario,
+            hora_turno: cita.datos_turno.hora_turno,
+            numero_turno: cita.datos_turno.numero_turno,
             usuario: nombrePaciente,
-            fecha_creacion: cita.fecha_creacion,
-            estado: cita.estado_cita,
+            fecha_creacion: cita.datos_cita.fecha_creacion,
+            estado: cita.datos_cita.estado_cita,
         }));
     };
+
 
     const buttons = [
         {

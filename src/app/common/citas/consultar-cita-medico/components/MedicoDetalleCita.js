@@ -28,9 +28,6 @@ export default function MedicoDetalleCita({ medico, mostrarCampos }) {
                                     {medico.nombre}
                                 </p>
                             )}
-                            {debeMostrar("identificacion") && (
-                                <p><span className="font-semibold">Identificación:</span> {medico.identificacion}</p>
-                            )}
                             
                             {debeMostrar("especialidad") && (
                                 <p><span className="font-semibold">Especialidad:</span> {medico.especialidad}</p>
