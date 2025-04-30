@@ -1,4 +1,4 @@
-import ConsultaCitaPacientePage from "@/common/citas/consultar-cita/ConsultaCitaPacientePage";
+import ConsultaCitaPacientePage from "@/admin-dashboard/cita/components/ConsultaCitaPacientePage";
 
 export default function AdminCitaPage() {
   return <ConsultaCitaPacientePage />;

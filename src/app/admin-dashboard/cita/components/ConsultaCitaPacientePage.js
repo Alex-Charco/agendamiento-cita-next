@@ -4,10 +4,10 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
-import PacienteDetalle from "@/common/citas/consultar-cita/components/PacienteDetalle";
-import TablaCitas from "@/common/citas/consultar-cita/components/TablaCitas";
+import PacienteDetalle from "@/admin-dashboard/cita/components/PacienteDetalle";
+import TablaCitas from "@/admin-dashboard/cita/components/TablaCitas";
 import { FaPlus } from "react-icons/fa";
-import CitaSearch from "@/common/citas/consultar-cita/components/CitaSearch";
+import CitaSearch from "@/admin-dashboard/cita/components/CitaSearch";
 
 export default function ConsultaCitaPacientePage() {
   const [selectedCita, setSelectedCita] = useState(null);
