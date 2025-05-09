@@ -18,7 +18,7 @@ export default function LoginForm() {
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
-    // 🔽 Aquí va el useEffect para detectar sesión expirada
+    // UseEffect para detectar sesion expirada
     useEffect(() => {
         if (localStorage.getItem("expiredSession") === "true") {
             setErrorMessage("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
@@ -73,7 +73,7 @@ export default function LoginForm() {
                 case 3: // ADMINISTRADOR
                     router.push(ROUTES.ADMIN_DASHBOARD);
                     break;
-                case 2: // MÉDICO
+                case 2: // MEDICO
                     router.push(ROUTES.MEDICO_DASHBOARD);
                     break;
                 case 1: // PACIENTE
@@ -83,7 +83,12 @@ export default function LoginForm() {
                     setErrorMessage("Rol no reconocido.");
             }
         } catch (error) {
-            setErrorMessage("Error en la autenticación. Verifica tus datos.");
+            if (error.response?.data?.message) {
+                setErrorMessage(error.response.data.message);
+            } else {
+                setErrorMessage("Error en la autenticación. Verifica tus datos.");
+            }
+
             console.error(
                 "Error en la petición:",
                 error.response?.data || error.message
@@ -106,21 +111,21 @@ export default function LoginForm() {
                     }}
                 >
                     <CardHeader className="text-center p-0 mb-6">
-						<div className="relative w-full h-[12rem]"> {/* Ajusta la altura según necesites */}
-							<Image
-								src="/images/logo.png"
-								alt="Logo"
-								fill
-								className="object-cover"
-								priority
-							/>
-						</div>
+                        <div className="relative w-full h-[12rem]">
+                            <Image
+                                src="/images/logo.png"
+                                alt="Logo"
+                                fill
+                                className="object-cover"
+                                priority
+                            />
+                        </div>
 
-					</CardHeader>
+                    </CardHeader>
                     <CardBody>
-                        <form className="flex flex-col gap-4" onSubmit={onSubmit}>
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center w-full">
+                        <form className="flex flex-col gap-6" onSubmit={onSubmit}>
+                            <div className="flex flex-col">
+                                <div className="flex items-center w-full mb-4">
                                     <label
                                         className="text-sm text-gray-700 w-1/3 text-left"
                                         htmlFor="nombre_usuario"
@@ -173,7 +178,7 @@ export default function LoginForm() {
                                     Ingresar
                                 </Button>
                                 <p className="flex justify-center text-xs text-gray-700 mt-2">
-                                    Olvidó la contraseña:{" "}
+                                    ¿Olvidaste tu contraseña?:{" "}
                                     <Link href="/auth/reset-password" className="text-blue-600 hover:underline">
                                         Recuperar contraseña
                                     </Link>
