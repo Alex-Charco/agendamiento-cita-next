@@ -63,6 +63,28 @@ La librería permite personalizar las notificaciones:
 
 	npm install sweetalert2
 
+#### Dependencias para pruebas unitarias
+
+    npm install -testing-library/react @testing-library/jest-dom
+
+    npm install --save-dev jest-environment-jsdom
+
+    npm install --save-dev babel-jest @babel/preset-env @babel/preset-react
+
+*Explicación:*
+
+1. **`@testing-library/react`**: Herramienta para realizar pruebas unitarias facilitando la interacción con el DOM.
+
+2. **`@testing-library/jest-dom`**: Extiende `jest` para agregar aserciones personalizadas, mejorando la experiencia de las pruebas.
+
+3. **`jest-environment-jsdom`**: Configura Jest para usar un entorno simulado de navegador (JS DOM) durante las pruebas unitarias.
+
+4. **`babel-jest`**: Permite que Jest use Babel para transpilar código JavaScript durante las pruebas.
+
+5. **`@babel/preset-env`**: Preajuste de Babel para compilar código JavaScript a versiones compatibles con los navegadores actuales.
+
+6. **`@babel/preset-react`**: Preajuste de Babel para compilar JSX y características específicas de React en JavaScript.
+
 ---
 
 #### NOTA

@@ -123,7 +123,7 @@ export default function LoginForm() {
 
                     </CardHeader>
                     <CardBody>
-                        <form className="flex flex-col gap-6" onSubmit={onSubmit}>
+                        <form className="flex flex-col gap-6" onSubmit={onSubmit} data-testid="login-form">
                             <div className="flex flex-col">
                                 <div className="flex items-center w-full mb-4">
                                     <label
