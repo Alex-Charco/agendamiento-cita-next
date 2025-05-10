@@ -8,15 +8,15 @@ import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
 import { ROUTES } from "@/routes/index.routes";
-import { isAuthenticated, logout } from "@/utils/auth";
+import { logout } from "@/utils/auth";
 import Link from "next/link";
 
 export default function LoginForm() {
     const [errorMessage, setErrorMessage] = useState(null);
     const router = useRouter();
     const [isVisible, setIsVisible] = useState(false);
-
     const toggleVisibility = () => setIsVisible(!isVisible);
+    const [loginSuccess, setLoginSuccess] = useState(false);
 
     // UseEffect para detectar sesion expirada
     useEffect(() => {
@@ -62,6 +62,7 @@ export default function LoginForm() {
                 return;
             }
 
+            // Guardar token y usuario
             localStorage.setItem("authToken", token);
             localStorage.setItem("user", JSON.stringify(user));
 
@@ -69,6 +70,10 @@ export default function LoginForm() {
             const timeUntilExpiration = (decodedToken.exp - Date.now() / 1000) * 1000;
             setTimeout(handleLogout, timeUntilExpiration);
 
+            // Después de redirigir:
+            setLoginSuccess(true);
+
+            // Redirigir según el rol
             switch (user.rol.id_rol) {
                 case 3: // ADMINISTRADOR
                     router.push(ROUTES.ADMIN_DASHBOARD);
@@ -82,6 +87,7 @@ export default function LoginForm() {
                 default:
                     setErrorMessage("Rol no reconocido.");
             }
+
         } catch (error) {
             if (error.response?.data?.message) {
                 setErrorMessage(error.response.data.message);
@@ -188,6 +194,11 @@ export default function LoginForm() {
 
                         {errorMessage && (
                             <div className="text-red-500 mt-2">{errorMessage}</div>
+                        )}
+                        {loginSuccess && (
+                            <div className="text-green-600 mt-2 text-center">
+                                Inicio de sesión exitoso. Redirigiendo...
+                            </div>
                         )}
                         <p className="text-sm text-center font-bold text-blue-700 mt-4 border-t border-plomo-claro pt-2 w-full mx-0">
                             Sistema de Gestión Hospitalaria

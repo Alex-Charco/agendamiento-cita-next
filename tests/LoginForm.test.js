@@ -1,8 +1,9 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, act} from "@testing-library/react";
 import LoginForm from "@/components/LoginForm";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+
 
 // Mock de useRouter
 jest.mock("next/navigation", () => ({
@@ -11,13 +12,13 @@ jest.mock("next/navigation", () => ({
 
 // Silenciar console.error durante las pruebas
 beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(console, 'error').mockImplementation(() => { });
 });
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
-
+// * Prueba 1: Validación de campos vacíos
 test("muestra un mensaje de error si no se ingresan credenciales", async () => {
     // Mock del router
     const push = jest.fn();
@@ -36,7 +37,7 @@ test("muestra un mensaje de error si no se ingresan credenciales", async () => {
     expect(errorMessage).toBeInTheDocument();
 });
 
-//Prueba 2: Comprobar si se muestra un mensaje de error cuando las credenciales son incorrectas
+// *Prueba 2: Comprobar si se muestra un mensaje de error cuando las credenciales son incorrectas
 test("muestra un mensaje de error si las credenciales son incorrectas", async () => {
     // Mock del router
     const push = jest.fn();
@@ -54,7 +55,7 @@ test("muestra un mensaje de error si las credenciales son incorrectas", async ()
     // Llenar el formulario con datos incorrectos
     fireEvent.change(screen.getByLabelText(/Usuario:/), { target: { value: "usuario_incorrecto" } });
     fireEvent.change(screen.getByLabelText(/Contraseña:/), { target: { value: "password_incorrecta" } });
-    
+
     // Enviar el formulario
     const form = screen.getByTestId("login-form");
     fireEvent.submit(form);
@@ -64,3 +65,27 @@ test("muestra un mensaje de error si las credenciales son incorrectas", async ()
     expect(errorMessage).toBeInTheDocument();
 });
 
+// * Prueba 3: Comprobar si la contraseña es visible cuando el ícono de visibilidad está activado
+test("la contraseña es visible cuando el ícono de visibilidad está activado", () => {
+    render(<LoginForm />);
+
+    const passwordInput = screen.getByLabelText(/Contraseña:/);
+    const toggleVisibilityButton = screen.getByRole("button", { name: /toggle password visibility/i });
+
+    // Asegurarse de que la contraseña esté inicialmente oculta
+    expect(passwordInput.type).toBe("password");
+
+    // Hacer clic en el botón para mostrar la contraseña
+    fireEvent.click(toggleVisibilityButton);
+
+    // Comprobar que la contraseña ahora es visible
+    expect(passwordInput.type).toBe("text");
+
+    // Hacer clic nuevamente para ocultar la contraseña
+    fireEvent.click(toggleVisibilityButton);
+
+    // Comprobar que la contraseña vuelve a estar oculta
+    expect(passwordInput.type).toBe("password");
+});
+
+// * Prueba 4: Verificar si la autenticación redirige correctamente según el rol
