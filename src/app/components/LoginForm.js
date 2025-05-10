@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
-import { ROUTES } from "@/routes/index.routes";
 import { logout } from "@/utils/auth";
 import Link from "next/link";
+import { redirectByRole } from "@/utils/redirectByRole";
 
 export default function LoginForm() {
     const [errorMessage, setErrorMessage] = useState(null);
@@ -74,19 +74,7 @@ export default function LoginForm() {
             setLoginSuccess(true);
 
             // Redirigir según el rol
-            switch (user.rol.id_rol) {
-                case 3: // ADMINISTRADOR
-                    router.push(ROUTES.ADMIN_DASHBOARD);
-                    break;
-                case 2: // MEDICO
-                    router.push(ROUTES.MEDICO_DASHBOARD);
-                    break;
-                case 1: // PACIENTE
-                    router.push(ROUTES.PACIENTE_DASHBOARD);
-                    break;
-                default:
-                    setErrorMessage("Rol no reconocido.");
-            }
+            redirectByRole(user, router, setErrorMessage);
 
         } catch (error) {
             if (error.response?.data?.message) {
