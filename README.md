@@ -71,6 +71,8 @@ La librería permite personalizar las notificaciones:
 
     npm install --save-dev babel-jest @babel/preset-env @babel/preset-react
 
+    npm install --save-dev jest
+
 *Explicación:*
 
 1. **`@testing-library/react`**: Herramienta para realizar pruebas unitarias facilitando la interacción con el DOM.
@@ -84,6 +86,7 @@ La librería permite personalizar las notificaciones:
 5. **`@babel/preset-env`**: Preajuste de Babel para compilar código JavaScript a versiones compatibles con los navegadores actuales.
 
 6. **`@babel/preset-react`**: Preajuste de Babel para compilar JSX y características específicas de React en JavaScript.
+7. **`jest`**: es necesaria para hacer las pruebas.
 
 ---
 
