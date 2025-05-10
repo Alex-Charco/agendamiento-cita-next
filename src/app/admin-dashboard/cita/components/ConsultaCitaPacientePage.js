@@ -15,9 +15,9 @@ export default function ConsultaCitaPacientePage() {
 
   const handleCitaSelect = (data) => {
     console.log("handleCitaSelect recibió:", data);
-    if (data && data.paciente && Array.isArray(data.citas)) {
-      setSelectedCita(data); // ✅ almacena todo el objeto
-    }
+    if (data?.paciente && Array.isArray(data?.citas)) {
+      setSelectedCita(data);
+    }    
   };
 
   console.log("selectedCita:", selectedCita);
