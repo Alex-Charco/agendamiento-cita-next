@@ -184,6 +184,16 @@ describe("LoginForm", () => {
         });
     });
 
+    // * Prueba 8: Prueba del enlace "Recuperar contraseña"
+    test("el enlace de 'Recuperar contraseña' redirige correctamente", () => {
+        render(<LoginForm />);
+        
+        const forgotPasswordLink = screen.getByRole("link", { name: /recuperar contraseña/i });
+        expect(forgotPasswordLink).toBeInTheDocument();
+        expect(forgotPasswordLink).toHaveAttribute("href", "/auth/reset-password");
+
+    });
+    
 
 });
 
