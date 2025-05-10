@@ -13,6 +13,12 @@ jest.mock("axios");
 // Silenciar console.error durante las pruebas
 beforeEach(() => {
     jest.spyOn(console, "error").mockImplementation(() => { });
+    localStorage.clear(); // limpiar localStorage antes de cada test
+});
+
+// Silenciar console.error durante las pruebas
+beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => { });
 });
 
 afterEach(() => {
@@ -103,4 +109,81 @@ describe("LoginForm", () => {
             expect(push).toHaveBeenCalledWith("/admin-dashboard");
         });
     });
+
+    // * Prueba 5: para intentos fallidos
+    test("muestra un mensaje de error cuando las credenciales son incorrectas", async () => {
+        // Simulamos una respuesta de error del servidor
+        axios.post = jest.fn().mockRejectedValue({
+            response: {
+                data: {
+                    message: "Usuario o contraseña incorrectos."
+                }
+            }
+        });
+
+        render(<LoginForm />);
+
+        // Simula el llenado del formulario con credenciales incorrectas
+        const form = screen.getByTestId("login-form");
+        const usuarioInput = screen.getByLabelText(/Usuario: \*/);
+        const passwordInput = screen.getByLabelText(/Contraseña: \*/);
+
+        fireEvent.change(usuarioInput, { target: { value: "usuario_incorrecto" } });
+        fireEvent.change(passwordInput, { target: { value: "contraseña_incorrecta" } });
+
+        fireEvent.submit(form);
+
+        // Esperar que el mensaje de error aparezca
+        const errorMessage = await screen.findByText(/Usuario o contraseña incorrectos/i);
+        expect(errorMessage).toBeInTheDocument();
+    });
+
+    // * Prueba 6: Sesión expirada
+    test("muestra mensaje de sesión expirada si existe expiredSession en localStorage", async () => {
+        localStorage.setItem("expiredSession", "true");
+
+        render(<LoginForm />);
+
+        const expiredMessage = await screen.findByText(/Tu sesión ha expirado. Por favor, inicia sesión nuevamente./i);
+        expect(expiredMessage).toBeInTheDocument();
+
+        // Asegura que se borre de localStorage después de mostrarlo
+        expect(localStorage.getItem("expiredSession")).toBeNull();
+    });
+
+    // * Prueba 7: Persistencia de sesión. El token queda guardado en localStorage
+    test("guarda el token JWT en localStorage después del login exitoso", async () => {
+        const push = jest.fn();
+        useRouter.mockReturnValue({ push });
+
+        const fakeToken = "token123";
+        const fakeUser = {
+            rol: { id_rol: 2 },
+        };
+
+        axios.post.mockResolvedValue({
+            data: {
+                token: fakeToken,
+                user: fakeUser,
+            },
+        });
+
+        render(<LoginForm />);
+
+        fireEvent.change(screen.getByPlaceholderText(/Ingresar el usuario/i), {
+            target: { value: "medico" },
+        });
+        fireEvent.change(screen.getByPlaceholderText(/Ingresar la contraseña/i), {
+            target: { value: "123456" },
+        });
+
+        fireEvent.click(screen.getByRole("button", { name: /Ingresar/i }));
+
+        await waitFor(() => {
+            expect(localStorage.getItem("authToken")).toBe(fakeToken);
+        });
+    });
+
+
 });
+
