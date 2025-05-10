@@ -75,7 +75,7 @@ export default function ConsultaCitaPacientePage() {
               />
 
               <TablaCitas
-                citas={transformarCitasParaTabla(selectedCita.citas, selectedCita.paciente.nombre)}
+                citas={transformarCitasParaTabla(selectedCita.citas)}
                 onVerCita={(cita) => console.log("Ver cita", cita)}
                 onEditarCita={(cita) => console.log("Editar cita", cita)}
               />

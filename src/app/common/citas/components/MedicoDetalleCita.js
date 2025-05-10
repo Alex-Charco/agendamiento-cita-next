@@ -50,6 +50,7 @@ export default function MedicoDetalleCita({ medico, mostrarCampos }) {
 // ✅ Validación completa de props
 MedicoDetalleCita.propTypes = {
     medico: PropTypes.shape({
+        nombre: PropTypes.string.isRequired,
         identificacion: PropTypes.string,
         primer_nombre: PropTypes.string.isRequired,
         segundo_nombre: PropTypes.string,

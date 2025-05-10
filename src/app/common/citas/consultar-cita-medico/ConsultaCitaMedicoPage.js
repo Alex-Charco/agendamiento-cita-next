@@ -15,9 +15,9 @@ export default function ConsultaCitaMedicoPage() {
 
   const handleCitaSelect = (data) => {
     console.log("handleCitaSelect recibió:", data);
-    if (data && data.medico && Array.isArray(data.citas)) {
+    if (data?.medico && Array.isArray(data?.citas)) {
       setSelectedMedico(data);
-    }
+    }    
   };
 
   const transformarCitasParaTabla = (citas) => {
