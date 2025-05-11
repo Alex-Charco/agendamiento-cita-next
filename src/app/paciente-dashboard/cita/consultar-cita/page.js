@@ -42,7 +42,7 @@ export default function ConsultaCitaPacientePage() {
 
     const handleCitaSelect = (data) => {
         console.log("handleCitaSelect recibió:", data);
-        if (data && data.paciente && Array.isArray(data.citas)) {
+        if (data?.paciente && Array.isArray(data?.citas)) {
             setSelectedCita(data);
         }
     };

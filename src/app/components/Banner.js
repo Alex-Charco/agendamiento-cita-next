@@ -1,11 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
+import Link from "next/link";
 import Button from "./Button";
 
 const Banner = ({ title, description, buttons, imageUrl }) => {
-    const router = useRouter();
 
     return (
         <section className="relative w-full h-[400px] flex flex-col items-center justify-center text-center p-10">
@@ -26,13 +25,13 @@ const Banner = ({ title, description, buttons, imageUrl }) => {
                 {/* Botones */}
                 {buttons && buttons.length > 0 && (
                     <div className="mt-6 flex justify-center flex-wrap gap-6">
-                        {buttons.map((btn, index) => (
-                            <Button 
-                                key={btn.link}
-                                text={btn.text} 
-                                onClick={() => router.push(btn.link)} 
-                                variant={btn.variant || "primary"} // Soporta botones primarios y secundarios
+                        {buttons.map((btn) => (
+                            <Link key={btn.link} href={btn.link}>
+                            <Button
+                                text={btn.text}
+                                variant={btn.variant || "primary"}
                             />
+                        </Link>
                         ))}
                     </div>
                 )}
