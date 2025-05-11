@@ -4,7 +4,7 @@ import NavbarComponent from "@/components/navbars/Navbar";
 import CardGrid from "@/components/CardGrid";
 import Footer from "@/components/Footer";
 import Banner from "@/components/Banner";
-import menuServices from "@/utils/menuServices"
+import menuServicesAdmin from "@/utils/menuServices"
 import adminCards from "@/data/adminCards";
 
 const HomePage = () => {
@@ -12,7 +12,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       <NavbarComponent
-        menuServices={menuServices}
+        menuServices={menuServicesAdmin}
         showExtraOptions={true}
       />
 

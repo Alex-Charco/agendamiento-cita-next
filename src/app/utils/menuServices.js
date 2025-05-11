@@ -1,6 +1,4 @@
-// src/config/menuServices.js
-
-const menuServices = [
+const menuServicesAdmin = [
     {
         name: "Cita",
         subMenu: [
@@ -33,4 +31,4 @@ const menuServices = [
     },
 ];
 
-export default menuServices;
+export default menuServicesAdmin;
