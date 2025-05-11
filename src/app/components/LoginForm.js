@@ -45,6 +45,12 @@ export default function LoginForm() {
             setErrorMessage("Por favor, ingresa tu usuario y contraseña.");
             return;
         }
+		
+		// 🔐 Validación de longitud mínima de la contraseña
+		if (password.length < 10) {
+			setErrorMessage("La contraseña debe tener al menos 10 caracteres.");
+			return;
+		}
 
         try {
             const response = await axios.post(

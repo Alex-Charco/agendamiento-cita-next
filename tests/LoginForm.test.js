@@ -100,7 +100,7 @@ describe("LoginForm", () => {
             target: { value: "admin" },
         });
         fireEvent.change(screen.getByPlaceholderText(/Ingresar la contraseña/i), {
-            target: { value: "123456" },
+            target: { value: "Pasword123456" },
         });
 
         fireEvent.click(screen.getByRole("button", { name: /Ingresar/i }));
@@ -174,7 +174,7 @@ describe("LoginForm", () => {
             target: { value: "medico" },
         });
         fireEvent.change(screen.getByPlaceholderText(/Ingresar la contraseña/i), {
-            target: { value: "123456" },
+            target: { value: "Password123456" },
         });
 
         fireEvent.click(screen.getByRole("button", { name: /Ingresar/i }));
