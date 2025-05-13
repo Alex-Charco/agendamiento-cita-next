@@ -1,67 +1,20 @@
 "use client";
-import { useState } from "react";
+
 import Image from "next/image";
-import axios from "axios";
+import ResetForm from "@/components/reset/ResetForm";
 
-export default function RequestResetPassword() {
-    const [email, setEmail] = useState("");
-    const [message, setMessage] = useState("");
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // Cambia la URL de la API aquí
-            const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/request-password-reset`,  // Cambiado a /api/auth
-                { email }
-            );
-            setMessage(response.data.message || "Si el correo está registrado, recibirás un enlace.");
-        } catch (error) {
-            setMessage("Ocurrió un error, intenta nuevamente.");
-            console.error(error);
-        }
-    };
-
+export default function ResetPage() {
     return (
-        <div className="flex flex-col h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/images/background.svg')" }}>
-            <div className="absolute inset-0 bg-black bg-opacity-5 pointer-events-none"></div>
-
-            {/* Imagen fuera del formulario, centrada */}
-            <div className="mb-4">
-                <Image
-                    src="/images/reset.svg" // Cambia la ruta a tu imagen
-                    alt="Logo"
-                    width={150} // Establece el tamaño de la imagen
-                    height={150} // Establece el tamaño de la imagen
-                    className="mx-auto" // Centra la imagen
-                    priority
-                />
-            </div>
-
-            {/* Formulario */}
-
-            <form onSubmit={handleSubmit} className="bg-white p-5 rounded shadow-lg w-96" style={{
-                border: '4px solid rgba(0, 56, 255, 0.3)',
-                boxShadow: '0 4px 10px rgba(0, 56, 255, 0.5)',
-            }}>
-                <h2 className="text-lg text-gray-600 font-bold mb-5 text-center">Recuperar contraseña</h2>
-                <input
-                    type="email"
-                    className="border p-2 w-full text-gray-500"
-                    placeholder="Ingresa tu correo"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                {/* Botón centrado */}
-                <div className="mt-4 flex justify-center">
-                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-                        Enviar enlace
-                    </button>
+        <div className="relative min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('/images/background.svg')" }}>
+            <div className="absolute inset-0 bg-black bg-opacity-5" />
+            <div className="relative z-10 flex items-center justify-center min-h-screen p-6">
+                <div className="w-full max-w-md">
+                    <div className="flex justify-center mb-6">
+                        <Image src="/images/reset.svg" alt="Reset Password" width={160} height={160} />
+                    </div>
+                    <ResetForm />
                 </div>
-                {message && <p className="mt-2 text-sm text-gray-600">{message}</p>}
-            </form>
+            </div>
         </div>
     );
 }
