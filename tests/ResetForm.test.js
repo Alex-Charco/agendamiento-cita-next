@@ -47,7 +47,7 @@ describe("ResetForm", () => {
             );
         });
     });
-    
+
     test("✅ Renderiza el título del formulario correctamente", () => {
         render(<ResetForm />);
         expect(screen.getByText("Recuperar Contraseña")).toBeInTheDocument();
@@ -96,6 +96,27 @@ describe("ResetForm", () => {
                 title: "Error",
                 text: "Correo no encontrado",
             });
+        });
+    });
+
+    test("🛑 Muestra error de red si falla la solicitud", async () => {
+        fetch.mockRejectedValueOnce(new Error("Fallo de red"));
+
+        render(<ResetForm />);
+
+        fireEvent.change(screen.getByPlaceholderText("Correo electrónico"), {
+            target: { value: "test@example.com" },
+        });
+
+        fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
+
+        await waitFor(() => {
+            expect(require("sweetalert2").fire).toHaveBeenCalledWith(
+                "Error de red",
+                "No se pudo completar la solicitud. Verifica tu conexión e intenta nuevamente.",
+                "error"
+            );
+
         });
     });
 
