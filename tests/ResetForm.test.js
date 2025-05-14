@@ -31,6 +31,21 @@ describe("ResetForm", () => {
         });
     });
 
-    
+    test("✅ Muestra mensaje de error si el email es inválido", async () => {
+        render(<ResetForm />);
+
+        const input = screen.getByPlaceholderText("Correo electrónico");
+        fireEvent.change(input, { target: { value: "correo@invalido" } });
+
+        fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
+
+        await waitFor(() => {
+            expect(require("sweetalert2").fire).toHaveBeenCalledWith(
+                "Correo inválido",
+                "Por favor ingresa un correo electrónico válido.",
+                "error"
+            );
+        });
+    });
     
 });
