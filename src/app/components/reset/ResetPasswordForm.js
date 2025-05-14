@@ -47,34 +47,47 @@ export default function ResetPasswordForm() {
 
         // Llamada a la API después de todas las validaciones
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/reset-password`, {
-                token,
-                nombre_usuario: nombreUsuario,
-                newPassword: password,
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/reset-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    token,
+                    nombre_usuario: nombreUsuario,
+                    newPassword: password,
+                }),
             });
 
-            Swal.fire({
-                icon: "success",
-                title: "Éxito",
-                text: response.data.message || "Contraseña restablecida con éxito.",
-                confirmButtonText: "Aceptar",
-            }).then(() => {
-                setPassword("");
-                setNombreUsuario("");
-                setPasswordErrors([]);
-                window.location.href = "/auth/login"; // Redirige a la página de login
-            });
+            const data = await response.json();
+
+            if (response.ok) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Éxito",
+                    text: data.message || "Contraseña restablecida con éxito.",
+                    confirmButtonText: "Aceptar",
+                }).then(() => {
+                    setPassword("");
+                    setNombreUsuario("");
+                    setPasswordErrors([]);
+                    window.location.href = "/auth/login"; // Redirige a la página de login
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: data.message || "Ocurrió un error al restablecer la contraseña.",
+                });
+            }
 
         } catch (error) {
-            console.error("Error de Axios:", error);
+            console.error("Error al restablecer la contraseña:", error);
             Swal.fire(
-                "Error",
-                "Ocurrió un error al restablecer la contraseña. Intenta nuevamente.",
+                "Error de red",
+                "No se pudo completar la solicitud. Verifica tu conexión e intenta nuevamente.",
                 "error"
             );
         }
     };
-
 
     return (
         <Card className="max-w-lg w-full bg-gradient-to-b from-celeste-fuerte to-[#F5F7FC] bg-opacity-50"
