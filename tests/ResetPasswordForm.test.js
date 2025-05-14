@@ -51,4 +51,19 @@ describe("ResetPasswordForm", () => {
       "error"
     );
   });
+
+  test("muestra errores si la contraseña no cumple las validaciones", () => {
+    render(<ResetPasswordForm />);
+
+    const usernameInput = screen.getByPlaceholderText(/ingresar el usuario/i);
+    const passwordInput = screen.getByPlaceholderText(/nueva contraseña/i);
+    const submitButton = screen.getByRole("button", { name: /enviar/i });
+
+    fireEvent.change(usernameInput, { target: { value: "usuario123" } });
+    fireEvent.change(passwordInput, { target: { value: "short" } });
+    fireEvent.click(submitButton);
+
+    expect(screen.getByText(/La contraseña debe tener al menos 10 caracteres/i)).toBeInTheDocument();
+});
+
 });
