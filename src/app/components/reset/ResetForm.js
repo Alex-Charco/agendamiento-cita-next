@@ -1,9 +1,10 @@
 "use client";
 
+import React from "react";
 import { Card } from "@heroui/react";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import '@/globals.css';
 import { MdEmail } from "react-icons/md";
 
 export default function ResetForm() {

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'sweetalert2/dist/sweetalert2.min.css';
+
 :root {
   --background: #f9f2fd;
   --foreground: #171717;

@@ -9,6 +9,7 @@ module.exports = {
 
     // Alias para importar rutas y mock de estilos
     moduleNameMapper: {
+        "^@/globals.css$": "<rootDir>/__mocks__/styleMock.js",
         "\\.(css|less|scss|sass)$": "identity-obj-proxy", // Mock estilos
         "^@/(.*)$": "<rootDir>/src/app/$1", // Alias "@/"
     },
