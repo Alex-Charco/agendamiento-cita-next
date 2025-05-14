@@ -6,6 +6,7 @@ import axios from "axios";
 import { validarPassword } from "@/utils/validarPassword.js";
 import { Card } from "@heroui/react";
 import { FaUserAlt } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 export default function ResetPasswordForm() {
     const searchParams = useSearchParams();
@@ -59,6 +60,7 @@ export default function ResetPasswordForm() {
                     <h2 className="text-center text-xl font-bold text-blue-800">Restablecer contraseña</h2>
                 </div>
                 <form onSubmit={handleSubmit} className="p-6">
+                    {/* Usuario */}
                     <div className="mb-5 relative">
                         <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
                             <FaUserAlt />
@@ -76,7 +78,10 @@ export default function ResetPasswordForm() {
                     </div>
 
                     {/* Contraseña */}
-                    <div className="mb-4">
+                    <div className="mb-4 relative">
+                        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
+                            <RiLockPasswordFill />
+                        </span>
                         <input
                             id="password"
                             name="password"
@@ -91,6 +96,7 @@ export default function ResetPasswordForm() {
                             required
                         />
                     </div>
+
 
                     {/* Errores */}
                     {passwordErrors.length > 0 && (
