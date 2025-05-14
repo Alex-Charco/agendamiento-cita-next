@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { validarPassword } from "@/utils/validarPassword.js";
 import { Card } from "@heroui/react";
 import { FaUserAlt } from "react-icons/fa";
@@ -14,14 +15,13 @@ export default function ResetPasswordForm() {
 
     const [password, setPassword] = useState("");
     const [nombreUsuario, setNombreUsuario] = useState("");
-    const [message, setMessage] = useState("");
     const [passwordErrors, setPasswordErrors] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!token) {
-            setMessage("El token es inválido o ha expirado.");
+            Swal.fire("Token inválido", "El token es inválido o ha expirado.", "error");
             return;
         }
 
@@ -38,13 +38,23 @@ export default function ResetPasswordForm() {
                 newPassword: password,
             });
 
-            setMessage(response.data.message || "Contraseña restablecida con éxito.");
+            Swal.fire({
+                icon: "success",
+                title: "Éxito",
+                text: response.data.message || "Contraseña restablecida con éxito.",
+                confirmButtonText: "Aceptar",
+            });
+
             setPassword("");
             setNombreUsuario("");
             setPasswordErrors([]);
         } catch (error) {
             console.error("Error de Axios:", error);
-            setMessage("Ocurrió un error, intenta nuevamente.");
+            Swal.fire(
+                "Error",
+                "Ocurrió un error al restablecer la contraseña. Intenta nuevamente.",
+                "error"
+            );
         }
     };
 
@@ -97,7 +107,6 @@ export default function ResetPasswordForm() {
                         />
                     </div>
 
-
                     {/* Errores */}
                     {passwordErrors.length > 0 && (
                         <ul className="text-red-600 text-sm mb-4 list-disc list-inside">
@@ -113,10 +122,6 @@ export default function ResetPasswordForm() {
                     >
                         Enviar
                     </button>
-
-                    {message && (
-                        <p className="mt-4 text-sm text-center text-green-600">{message}</p>
-                    )}
                 </form>
             </div>
         </Card>

@@ -4,6 +4,7 @@ import "@testing-library/jest-dom";
 import ResetForm from "@/components/reset/ResetForm";
 
 // Mock de SweetAlert2
+import Swal from "sweetalert2";
 jest.mock("sweetalert2", () => ({
     fire: jest.fn(),
 }));
@@ -14,7 +15,7 @@ global.fetch = jest.fn();
 describe("ResetForm", () => {
     beforeEach(() => {
         fetch.mockClear();
-        require("sweetalert2").fire.mockClear();
+        Swal.fire.mockClear();
     });
 
     test("✅ Muestra mensaje de error si el campo email está vacío", async () => {
@@ -23,7 +24,7 @@ describe("ResetForm", () => {
         fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
 
         await waitFor(() => {
-            expect(require("sweetalert2").fire).toHaveBeenCalledWith(
+            expect(Swal.fire).toHaveBeenCalledWith(
                 "Campo vacío",
                 "Por favor ingresa un correo electrónico.",
                 "error"
@@ -40,7 +41,7 @@ describe("ResetForm", () => {
         fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
 
         await waitFor(() => {
-            expect(require("sweetalert2").fire).toHaveBeenCalledWith(
+            expect(Swal.fire).toHaveBeenCalledWith(
                 "Correo inválido",
                 "Por favor ingresa un correo electrónico válido.",
                 "error"
@@ -67,7 +68,7 @@ describe("ResetForm", () => {
         fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
 
         await waitFor(() => {
-            expect(require("sweetalert2").fire).toHaveBeenCalledWith({
+            expect(Swal.fire).toHaveBeenCalledWith({
                 icon: "success",
                 title: "Solicitud enviada",
                 text: "Correo enviado",
@@ -91,7 +92,7 @@ describe("ResetForm", () => {
         fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
 
         await waitFor(() => {
-            expect(require("sweetalert2").fire).toHaveBeenCalledWith({
+            expect(Swal.fire).toHaveBeenCalledWith({
                 icon: "error",
                 title: "Error",
                 text: "Correo no encontrado",
@@ -100,14 +101,14 @@ describe("ResetForm", () => {
     });
 
     test("🛑 Muestra error de red si falla la solicitud", async () => {
+        const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => { });
+
         fetch.mockRejectedValueOnce(new Error("Fallo de red"));
 
         render(<ResetForm />);
-
         fireEvent.change(screen.getByPlaceholderText("Correo electrónico"), {
             target: { value: "test@example.com" },
         });
-
         fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
 
         await waitFor(() => {
@@ -116,8 +117,9 @@ describe("ResetForm", () => {
                 "No se pudo completar la solicitud. Verifica tu conexión e intenta nuevamente.",
                 "error"
             );
-
         });
+
+        consoleErrorSpy.mockRestore(); // Restaurar después del test
     });
 
 });
