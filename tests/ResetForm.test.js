@@ -76,4 +76,27 @@ describe("ResetForm", () => {
         });
     });
 
+    test("❌ Muestra error si la API responde con error", async () => {
+        fetch.mockResolvedValueOnce({
+            ok: false,
+            json: async () => ({ message: "Correo no encontrado" }),
+        });
+
+        render(<ResetForm />);
+
+        fireEvent.change(screen.getByPlaceholderText("Correo electrónico"), {
+            target: { value: "test@example.com" },
+        });
+
+        fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
+
+        await waitFor(() => {
+            expect(require("sweetalert2").fire).toHaveBeenCalledWith({
+                icon: "error",
+                title: "Error",
+                text: "Correo no encontrado",
+            });
+        });
+    });
+
 });
