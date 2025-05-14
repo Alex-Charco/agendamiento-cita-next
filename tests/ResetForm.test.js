@@ -53,4 +53,27 @@ describe("ResetForm", () => {
         expect(screen.getByText("Recuperar Contraseña")).toBeInTheDocument();
     });
 
+    test("✅ Muestra mensaje de éxito al enviar un correo válido", async () => {
+        fetch.mockResolvedValueOnce({
+            ok: true,
+            json: async () => ({ message: "Correo enviado" }),
+        });
+
+        render(<ResetForm />);
+
+        const input = screen.getByPlaceholderText("Correo electrónico");
+        fireEvent.change(input, { target: { value: "test@example.com" } });
+
+        fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
+
+        await waitFor(() => {
+            expect(require("sweetalert2").fire).toHaveBeenCalledWith({
+                icon: "success",
+                title: "Solicitud enviada",
+                text: "Correo enviado",
+                confirmButtonText: "Aceptar",
+            });
+        });
+    });
+
 });
