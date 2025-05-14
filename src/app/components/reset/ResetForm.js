@@ -40,9 +40,11 @@ export default function ResetForm() {
                     title: "Solicitud enviada",
                     text: data.message || "Si el correo está registrado, recibirás un enlace.",
                     confirmButtonText: "Aceptar",
+                }).then(() => {
+                    setEmail("");
+                    setMensaje("");
+                    window.location.href = "/auth/login"; // Redirige a la página de login
                 });
-                setEmail("");
-                setMensaje("");
             } else {
                 Swal.fire({
                     icon: "error",

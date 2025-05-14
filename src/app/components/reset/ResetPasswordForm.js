@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
@@ -20,17 +21,31 @@ export default function ResetPasswordForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!token) {
+        // Verificación del token antes de cualquier otro campo
+        if (!token || token === 'expired') {
             Swal.fire("Token inválido", "El token es inválido o ha expirado.", "error");
             return;
         }
 
+        // Validación de campos vacíos
+        if (!nombreUsuario.trim()) {
+            Swal.fire("Campo vacío", "Por favor ingresa el nombre de usuario.", "error");
+            return;
+        }
+
+        if (!password.trim()) {
+            Swal.fire("Campo vacío", "Por favor ingresa una nueva contraseña.", "error");
+            return;
+        }
+
+        // Validación de la contraseña (estructura)
         const validation = validarPassword(password);
         if (!validation.isValid) {
             setPasswordErrors(validation.errors);
             return;
         }
 
+        // Llamada a la API después de todas las validaciones
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/reset-password`, {
                 token,
@@ -43,11 +58,13 @@ export default function ResetPasswordForm() {
                 title: "Éxito",
                 text: response.data.message || "Contraseña restablecida con éxito.",
                 confirmButtonText: "Aceptar",
+            }).then(() => {
+                setPassword("");
+                setNombreUsuario("");
+                setPasswordErrors([]);
+                window.location.href = "/auth/login"; // Redirige a la página de login
             });
 
-            setPassword("");
-            setNombreUsuario("");
-            setPasswordErrors([]);
         } catch (error) {
             console.error("Error de Axios:", error);
             Swal.fire(
@@ -57,6 +74,7 @@ export default function ResetPasswordForm() {
             );
         }
     };
+
 
     return (
         <Card className="max-w-lg w-full bg-gradient-to-b from-celeste-fuerte to-[#F5F7FC] bg-opacity-50"
@@ -69,7 +87,7 @@ export default function ResetPasswordForm() {
                 <div className="bg-white py-8 px-6 rounded-t-2xl">
                     <h2 className="text-center text-xl font-bold text-blue-800">Restablecer contraseña</h2>
                 </div>
-                <form onSubmit={handleSubmit} className="p-6">
+                <form onSubmit={handleSubmit} className="p-6" data-testid="reset-password-form">
                     {/* Usuario */}
                     <div className="mb-5 relative">
                         <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
@@ -83,7 +101,6 @@ export default function ResetPasswordForm() {
                             className="w-full pl-12 pr-4 py-3 rounded-[16px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value={nombreUsuario}
                             onChange={(e) => setNombreUsuario(e.target.value)}
-                            required
                         />
                     </div>
 
@@ -103,7 +120,6 @@ export default function ResetPasswordForm() {
                                 setPassword(e.target.value);
                                 setPasswordErrors([]);
                             }}
-                            required
                         />
                     </div>
 
