@@ -48,4 +48,9 @@ describe("ResetForm", () => {
         });
     });
     
+    test("✅ Renderiza el título del formulario correctamente", () => {
+        render(<ResetForm />);
+        expect(screen.getByText("Recuperar Contraseña")).toBeInTheDocument();
+    });
+
 });
