@@ -18,7 +18,7 @@ export default function ResetForm() {
             return;
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailRegex.test(email)) {
             Swal.fire("Correo inválido", "Por favor ingresa un correo electrónico válido.", "error");
             return;
