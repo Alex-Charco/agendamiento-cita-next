@@ -1,4 +1,4 @@
-import { FaUserInjured, FaCalendarCheck, FaFileAlt , FaCalendarAlt } from "react-icons/fa";
+import { FaUserInjured, FaCalendarCheck, FaFileAlt } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 
 const adminCards = [

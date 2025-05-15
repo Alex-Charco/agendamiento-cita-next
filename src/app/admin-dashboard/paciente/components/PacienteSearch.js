@@ -3,7 +3,7 @@
 import React from 'react';
 
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import authAxios from "@/utils/api/authAxios";
 import { FaSearch } from "react-icons/fa";
 

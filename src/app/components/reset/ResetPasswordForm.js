@@ -1,9 +1,7 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { validarPassword } from "@/utils/validarPassword.js";
 import { Card } from "@heroui/react";
