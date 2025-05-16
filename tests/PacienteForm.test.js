@@ -79,4 +79,16 @@ describe("PacienteForm", () => {
         expect(screen.getByLabelText(/Nombre de usuario/i)).toHaveValue("usuario123");
     });
 
+    // * Prueba 5
+    test("llama onSubmit con los datos del paciente al enviar el formulario", () => {
+        const mockSubmit = jest.fn();
+        render(<PacienteForm onSubmit={mockSubmit} />);
+
+        const input = screen.getByLabelText(/Primer nombre/i);
+        fireEvent.change(input, { target: { value: "Carlos" } });
+
+        fireEvent.submit(screen.getByRole("form"));
+        expect(mockSubmit).toHaveBeenCalled();
+        expect(mockSubmit.mock.calls[0][0].primer_nombre).toBe("Carlos");
+    });
 });
