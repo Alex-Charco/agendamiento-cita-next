@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { FaSearch, FaSyncAlt} from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";

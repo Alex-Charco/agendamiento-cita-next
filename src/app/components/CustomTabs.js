@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import PropTypes from "prop-types";
 import { Tabs, Tab, Card, CardBody } from "@heroui/react";
 

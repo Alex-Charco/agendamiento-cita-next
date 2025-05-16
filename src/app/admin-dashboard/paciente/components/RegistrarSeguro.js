@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import SeguroForm from "@/admin-dashboard/paciente/components/SeguroForm";
 import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import '@/globals.css';
 
 export default function RegistrarSeguro() {
     const [mensaje, setMensaje] = useState("");

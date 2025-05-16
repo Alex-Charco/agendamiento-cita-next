@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import UsuarioForm from "@/admin-dashboard/usuario/components/UsuarioForm";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import '@/globals.css';
 
 export default function RegistrarUsuario() {
     const [mensaje, setMensaje] = useState("");
