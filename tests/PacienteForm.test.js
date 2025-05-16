@@ -72,4 +72,11 @@ describe("PacienteForm", () => {
         expect(screen.getByLabelText(/Empresa/i)).toHaveValue("Empresa XYZ");
     });
     
+    // * Prueba 4
+    test("carga nombre_usuario desde localStorage", () => {
+        localStorage.setItem("nombre_usuario", "usuario123");
+        render(<PacienteForm onSubmit={jest.fn()} />);
+        expect(screen.getByLabelText(/Nombre de usuario/i)).toHaveValue("usuario123");
+    });
+
 });
