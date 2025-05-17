@@ -114,4 +114,117 @@ describe("PacienteForm", () => {
         expect(generoSeleccionado).toBeInTheDocument();
     });
 
+    // * Prueba 7
+    test('puede seleccionar estado civil desde el dropdown', async () => {
+        render(<PacienteForm />);
+
+        const formulario = screen.getByRole('form');
+        const estadoCivilDropdown = within(formulario).getByText(/Seleccione un estado civil/i);
+
+        expect(estadoCivilDropdown).toBeInTheDocument();
+
+        userEvent.click(estadoCivilDropdown);
+
+        const opcionCasado = await screen.findByText(/Casado\/a/i);
+        userEvent.click(opcionCasado);
+
+        const estadoSeleccionado = within(formulario).getByText(/Casado\/a/i);
+        expect(estadoSeleccionado).toBeInTheDocument();
+    });
+    // * Prueba 8
+    test('puede seleccionar grupo sanguíneo desde el dropdown', async () => {
+        render(<PacienteForm />);
+
+        const formulario = screen.getByRole('form');
+        const grupoSanguineoDropdown = within(formulario).getByText(/Seleccione un grupo sanguíneo/i);
+
+        expect(grupoSanguineoDropdown).toBeInTheDocument();
+
+        userEvent.click(grupoSanguineoDropdown);
+
+        const opcionARHPos = await screen.findByText(/A RH\+/i);
+        userEvent.click(opcionARHPos);
+
+        const grupoSeleccionado = within(formulario).getByText(/A RH\+/i);
+        expect(grupoSeleccionado).toBeInTheDocument();
+    });
+
+    // * Prueba 9
+    test('puede seleccionar nivel de instrucción desde el dropdown', async () => {
+        render(<PacienteForm />);
+
+        const formulario = screen.getByRole('form');
+        const instruccionDropdown = within(formulario).getByText(/Seleccione nivel de instrucción/i);
+
+        expect(instruccionDropdown).toBeInTheDocument();
+
+        userEvent.click(instruccionDropdown);
+
+        const opcionBachillerato = await screen.findByText(/Bachillerato/i);
+        userEvent.click(opcionBachillerato);
+
+        const instruccionSeleccionada = within(formulario).getByText(/Bachillerato/i);
+        expect(instruccionSeleccionada).toBeInTheDocument();
+    });
+
+
+    // * Prueba 10
+    test('puede seleccionar ocupación desde el dropdown', async () => {
+        render(<PacienteForm />);
+
+        const formulario = screen.getByRole('form');
+        const ocupacionDropdown = within(formulario).getByText(/Seleccione la ocupación/i);
+
+        expect(ocupacionDropdown).toBeInTheDocument();
+
+        userEvent.click(ocupacionDropdown);
+
+        const opcionDocente = await screen.findByText(/Docente/i);
+        userEvent.click(opcionDocente);
+
+        const ocupacionSeleccionada = within(formulario).getByText(/Docente/i);
+        expect(ocupacionSeleccionada).toBeInTheDocument();
+    });
+
+
+    // * Prueba 11
+    test('puede seleccionar discapacidad desde el dropdown', async () => {
+        render(<PacienteForm />);
+
+        const formulario = screen.getByRole('form');
+        const [discapacidadDropdown] = within(formulario).getAllByText(/¿Tiene discapacidad\?/i);
+
+        expect(discapacidadDropdown).toBeInTheDocument();
+
+        userEvent.click(discapacidadDropdown);
+
+        const opcionSi = await screen.findByText(/Sí/i);
+        userEvent.click(opcionSi);
+
+        const discapacidadSeleccionada = within(formulario).getByText(/Sí/i);
+        expect(discapacidadSeleccionada).toBeInTheDocument();
+    });
+
+    // * Prueba 12
+    test('puede seleccionar orientación desde el dropdown', async () => {
+        render(<PacienteForm />);
+
+        const formulario = screen.getByRole('form');
+        const orientacionDropdown = within(formulario).getByText(/Seleccione la orientación/i);
+
+        expect(orientacionDropdown).toBeInTheDocument();
+
+        userEvent.click(orientacionDropdown);
+
+        const opcionOrientacion = await screen.findByText(/Heterosexual/i);
+        userEvent.click(opcionOrientacion);
+
+        const orientacionSeleccionada = within(formulario).getByText(/Heterosexual/i);
+        expect(orientacionSeleccionada).toBeInTheDocument();
+    });
+
+
+
+
+
 });
