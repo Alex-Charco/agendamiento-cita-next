@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent, within } from "@testing-library/react";
+import { render, screen, fireEvent, within, waitFor } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 
@@ -223,8 +223,21 @@ describe("PacienteForm", () => {
         expect(orientacionSeleccionada).toBeInTheDocument();
     });
 
+    // * Prueba 13
+    test('puede seleccionar identidad de género desde el dropdown', async () => {
+        render(<PacienteForm />);
 
+        const formulario = screen.getByRole('form');
+        const identidadDropdown = within(formulario).getByText(/Seleccione la identidad/i);
 
+        expect(identidadDropdown).toBeInTheDocument();
 
+        userEvent.click(identidadDropdown);
 
+        const opcionIdentidad = screen.getByText(/Cisgénero/i);
+        userEvent.click(opcionIdentidad);
+
+        const identidadSeleccionada = screen.getByText(/Cisgénero/i);
+        expect(identidadSeleccionada).toBeInTheDocument();
+    });
 });
