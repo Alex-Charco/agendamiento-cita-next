@@ -1,5 +1,6 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
+import userEvent from '@testing-library/user-event';
 import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 
 describe("PacienteForm", () => {
@@ -56,9 +57,9 @@ describe("PacienteForm", () => {
             correo: "ana@example.com",
             empresa: "Empresa XYZ",
         };
-    
+
         render(<PacienteForm onSubmit={jest.fn()} pacienteData={pacienteMock} />);
-    
+
         expect(screen.getByLabelText(/Nombre de usuario/i)).toHaveValue("anauser");
         expect(screen.getByLabelText(/Identificación/i)).toHaveValue("12345678");
         expect(screen.getByLabelText(/Primer nombre/i)).toHaveValue("Ana");
@@ -71,7 +72,7 @@ describe("PacienteForm", () => {
         expect(screen.getByLabelText(/Correo/i)).toHaveValue("ana@example.com");
         expect(screen.getByLabelText(/Empresa/i)).toHaveValue("Empresa XYZ");
     });
-    
+
     // * Prueba 4
     test("carga nombre_usuario desde localStorage", () => {
         localStorage.setItem("nombre_usuario", "usuario123");
@@ -91,4 +92,26 @@ describe("PacienteForm", () => {
         expect(mockSubmit).toHaveBeenCalled();
         expect(mockSubmit.mock.calls[0][0].primer_nombre).toBe("Carlos");
     });
+
+    // * Prueba 6
+    test('puede seleccionar género desde el dropdown', async () => {
+        render(<PacienteForm />);
+
+        const formulario = screen.getByRole('form');
+        const generoDropdown = within(formulario).getByText(/Seleccione un género/i);
+
+        expect(generoDropdown).toBeInTheDocument();
+
+        userEvent.click(generoDropdown);
+
+        const opcionMasculino = await screen.findByText(/Masculino/i);
+        userEvent.click(opcionMasculino);
+
+        // Ahora buscamos el nodo que muestra el valor seleccionado
+        // Por ejemplo, buscamos un elemento que contenga "Masculino"
+        const generoSeleccionado = within(formulario).getByText(/Masculino/i);
+
+        expect(generoSeleccionado).toBeInTheDocument();
+    });
+
 });

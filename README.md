@@ -73,6 +73,9 @@ La librería permite personalizar las notificaciones:
 
     npm install --save-dev jest
 
+    npm install --save-dev @testing-library/user-event
+
+
 *Explicación:*
 
 1. **`@testing-library/react`**: Herramienta para realizar pruebas unitarias facilitando la interacción con el DOM.
