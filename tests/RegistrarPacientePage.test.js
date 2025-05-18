@@ -1,4 +1,3 @@
-// tests/RegistrarPacientePage.test.jsx
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import RegistrarPacientePage from "@/admin-dashboard/paciente/registrar-paciente/page.js"; // ajusta la ruta si es diferente

@@ -29,22 +29,34 @@ jest.mock('next/router', () => ({
 }));
 
 // Mock de subcomponentes
-jest.mock("@/admin-dashboard/paciente/components/PacienteSearch", () => ({ onSelectPaciente }) => {
-  return <button onClick={() => onSelectPaciente(mockPaciente)}>Seleccionar Paciente</button>;
+jest.mock("@/admin-dashboard/paciente/components/PacienteSearch", () => {
+  const PacienteSearchMock = ({ onSelectPaciente }) => {
+    return <button onClick={() => onSelectPaciente(mockPaciente)}>Seleccionar Paciente</button>;
+  };
+  PacienteSearchMock.displayName = "PacienteSearchMock";
+  return PacienteSearchMock;
 });
 
-jest.mock("@/components/navbars/NavbarComponent", () => () => <div>Navbar</div>);
+jest.mock("@/components/navbars/NavbarComponent", () => {
+  const NavbarComponentMock = () => <div>Navbar</div>;
+  NavbarComponentMock.displayName = "NavbarComponentMock";
+  return NavbarComponentMock;
+});
 
-jest.mock("@/components/CustomTabs", () => ({ tabs }) => (
-  <div>
-    {tabs.map((tab) => (
-      <div key={tab.key}>
-        <h2>{tab.title}</h2>
-        {tab.content}
-      </div>
-    ))}
-  </div>
-));
+jest.mock("@/components/CustomTabs", () => {
+  const CustomTabsMock = ({ tabs }) => (
+    <div>
+      {tabs.map((tab) => (
+        <div key={tab.key}>
+          <h2>{tab.title}</h2>
+          {tab.content}
+        </div>
+      ))}
+    </div>
+  );
+  CustomTabsMock.displayName = "CustomTabsMock";
+  return CustomTabsMock;
+});
 
 // Mock para fetchInfoMilitar
 const mockInfoMilitar = {

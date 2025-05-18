@@ -1,11 +1,11 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import '@/globals.css';
 
 function ActualizarPaciente({ pacienteData }) {
   const [mensaje, setMensaje] = useState("");
