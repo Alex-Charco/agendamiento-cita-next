@@ -10,6 +10,10 @@ jest.mock("sweetalert2", () => ({
     fire: jest.fn()
 }));
 
+beforeAll(() => {
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+});  
+
 // Mock del formulario (si no quieres probarlo directamente aquí)
 jest.mock("@/admin-dashboard/usuario/components/EstatusUsuarioForm", () => {
     const MockComponent = (props) => {
