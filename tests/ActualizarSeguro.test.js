@@ -24,6 +24,14 @@ jest.mock("@/admin-dashboard/paciente/components/SeguroForm", () => {
     return SeguroFormMock;
 });
 
+beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => { });
+});
+
+afterEach(() => {
+    console.error.mockRestore();
+});
+
 
 describe("ActualizarSeguro", () => {
 

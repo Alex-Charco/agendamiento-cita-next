@@ -3,6 +3,14 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import ConsultaPacientePage from "@/common/consultar-paciente/ConsultaPacientePage";
 import * as api from "@/utils/api";
 
+beforeEach(() => {
+  jest.spyOn(console, "log").mockImplementation(() => {});
+});
+
+afterEach(() => {
+  console.log.mockRestore();
+});
+
 jest.mock("next/navigation", () => ({
   usePathname: () => "/admin-dashboard",
 }));
