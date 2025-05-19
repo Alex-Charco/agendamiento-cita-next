@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import '@/globals.css';
 
 const useSuccessAlert = (success, setSuccess, message = "¡Registro exitoso!") => {
   useEffect(() => {

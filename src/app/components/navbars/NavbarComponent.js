@@ -1,7 +1,7 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   Navbar,
@@ -11,9 +11,9 @@ import {
   NavbarMenu,
   NavbarContent,
   NavbarItem,
-  Image,
   Button,
 } from "@heroui/react";
+import Image from "next/image";
 
 function NavbarComponent({ title, buttons, onAction }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,6 +31,8 @@ function NavbarComponent({ title, buttons, onAction }) {
           <Image
             src="/images/logo-hospital.png"
             alt="Logo"
+            width={44}
+            height={44}
             className="max-h-[55px] min-h-[44px] w-auto rounded-none min-w-[44px]"
           />
           <h1 className="text-lg font-semibold text-white whitespace-nowrap">

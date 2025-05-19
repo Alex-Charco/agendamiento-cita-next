@@ -3,10 +3,31 @@ import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ResetForm from "@/components/reset/ResetForm";
 
+beforeEach(() => {
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            json: () => Promise.resolve({ success: true }),
+        })
+    );
+});
+
+
+beforeEach(() => {
+    delete window.location;
+    window.location = { href: '' };
+});
+
+beforeEach(() => {
+    fetch.mockClear();
+    Swal.fire.mockClear();
+    jest.spyOn(console, "log").mockImplementation(() => { }); // 🔇 silencia console.log
+});
+
+
 // Mock de SweetAlert2
 import Swal from "sweetalert2";
 jest.mock("sweetalert2", () => ({
-    fire: jest.fn(),
+    fire: jest.fn(() => Promise.resolve({})),
 }));
 
 // Mock del fetch global

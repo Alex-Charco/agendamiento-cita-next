@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import ResidenciaForm from "@/admin-dashboard/paciente/components/ResidenciaForm";
 import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import '@/globals.css';
 
 export default function RegistrarResidencia() {
     const [mensaje, setMensaje] = useState("");

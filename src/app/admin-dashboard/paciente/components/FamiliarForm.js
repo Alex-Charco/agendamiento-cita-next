@@ -1,7 +1,7 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect } from "react";
 import SectionTitle from "@/components/ui/SectionTitle";
 import SubmitButton from "@/components/ui/SubmitButton";
 import CustomInput from "@/components/form/CustomInput";

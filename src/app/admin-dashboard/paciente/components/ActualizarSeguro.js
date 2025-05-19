@@ -1,11 +1,11 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SeguroForm from "@/admin-dashboard/paciente/components/SeguroForm";
 import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
+import '@/globals.css';
 
 function ActualizarSeguro({ seguroData }) {
   const [mensaje, setMensaje] = useState("");

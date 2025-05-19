@@ -4,6 +4,8 @@ import NavbarComponent from "@/components/navbars/Navbar";
 import CardFeature from "@/components/CardFeature";
 import Footer from "@/components/Footer";
 import Banner from "@/components/Banner";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { IoSearchSharp } from "react-icons/io5";
 
 const HomePage = () => {
 
@@ -25,13 +27,19 @@ const HomePage = () => {
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
           { text: "Agendar Cita Médica", link: "/crear-cita", variant: "primary" },
-          { text: "Consultar Cita Médica", link: "/ver-citas", variant: "secondary" },
+          { text: "Consultar Cita Médica", link: "/paciente-dashboard/cita/consultar-cita", variant: "secondary" },
         ]}
       />
 
       <section className="p-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <CardFeature icon="📅" title="Agendar Citas" description="Seleccione una fecha, hora, especialidadd y médico para su consulta." />
-        <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas  médicas." />
+        <CardFeature 
+			icon={<FaRegCalendarAlt className="text-blue-700" size={24} />} 
+			title="Agendar Citas" 
+			description="Programa fácilmente tu cita médica eligiendo la fecha, hora, especialidad y médico de tu preferencia." />
+        <CardFeature 
+			icon={<IoSearchSharp className="text-green-700" size={24} />}  
+			title="Consultar Citas" 
+			description="Consulta el historial de tus citas médicas y accede a los detalles de cada una en cualquier momento." />
       </section>
 
       <Footer />

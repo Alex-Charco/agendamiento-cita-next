@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
 import { Card } from "@heroui/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import '@/globals.css';
 import { MdEmail } from "react-icons/md";
@@ -19,7 +18,7 @@ export default function ResetForm() {
             return;
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailRegex.test(email)) {
             Swal.fire("Correo inválido", "Por favor ingresa un correo electrónico válido.", "error");
             return;
@@ -31,26 +30,30 @@ export default function ResetForm() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
             });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Solicitud enviada",
-                    text: data.message || "Si el correo está registrado, recibirás un enlace.",
-                    confirmButtonText: "Aceptar",
-                });
-                setEmail("");
-                setMensaje("");
-            } else {
+        
+            if (!res.ok) {
+                // Aquí estamos verificando si la respuesta es exitosa
+                const data = await res.json();
+                console.log('Error en respuesta:', data); // Esto te ayudará a ver el contenido de la respuesta de error
                 Swal.fire({
                     icon: "error",
                     title: "Error",
                     text: data.message || "Ocurrió un error al procesar la solicitud.",
                 });
+                return;
             }
-
+        
+            const data = await res.json();  // Esto ahora debería estar seguro
+            Swal.fire({
+                icon: "success",
+                title: "Solicitud enviada",
+                text: data.message || "Si el correo está registrado, recibirás un enlace.",
+                confirmButtonText: "Aceptar",
+            }).then(() => {
+                setEmail("");
+                setMensaje("");
+                window.location.href = "/auth/login"; // Redirige a la página de login
+            });
         } catch (error) {
             console.error("Error al enviar solicitud de reset:", error);
             Swal.fire(
@@ -58,9 +61,9 @@ export default function ResetForm() {
                 "No se pudo completar la solicitud. Verifica tu conexión e intenta nuevamente.",
                 "error"
             );
-        }
-    };
-
+        }     
+    }
+    
     return (
         <Card className="max-w-lg w-full bg-gradient-to-b from-celeste-fuerte to-[#F5F7FC] bg-opacity-50"
             style={{

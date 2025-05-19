@@ -15,9 +15,9 @@ const CardFeature = ({ icon, title, description }) => {
 };
 
 CardFeature.propTypes = {
-  icon: PropTypes.object,
-  title: PropTypes.object,
-  description: PropTypes.object,
-}
+  icon: PropTypes.node,         // acepta cualquier elemento renderizable
+  title: PropTypes.string,
+  description: PropTypes.string,
+};
 
 export default CardFeature;

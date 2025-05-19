@@ -150,6 +150,7 @@ import SubmitButton from "@/components/ui/SubmitButton";
     <form
       onSubmit={handleSubmit}
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
+      role="form"
     >
 
       <SectionTitle text="Datos del Paciente" />
