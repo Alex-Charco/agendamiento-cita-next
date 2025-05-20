@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
 import UsuarioForm from "@/admin-dashboard/usuario/components/UsuarioForm";
 import '@/globals.css';
 
