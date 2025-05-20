@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { validarPassword } from "@/utils/validarPassword";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
 import { FaHospitalUser } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -19,6 +20,7 @@ function UsuarioForm({ onSubmit, usuarioData = {} }) {
     });
 
     const [isVisible, setIsVisible] = useState(false);
+    const [passwordErrors, setPasswordErrors] = useState([]);
 
     const toggleVisibility = () => setIsVisible((prev) => !prev);
 
@@ -32,6 +34,16 @@ function UsuarioForm({ onSubmit, usuarioData = {} }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const { isValid, errors } = validarPassword(usuario.password);
+
+        if (!isValid) {
+            setPasswordErrors(errors);
+            return;
+        }
+
+        setPasswordErrors([]);
+
         if (onSubmit) onSubmit(usuario);
     };
 
@@ -54,25 +66,39 @@ function UsuarioForm({ onSubmit, usuarioData = {} }) {
                 onChange={handleInputChange}
             />
 
-            <Input
-                isRequired
-                className="w-full"
-                label="Contraseña"
-                name="password"
-                type={isVisible ? "text" : "password"}
-                value={usuario.password}
-                onChange={handleInputChange}
-                endContent={
-                    <button
-                        type="button"
-                        onClick={toggleVisibility}
-                        className="h-full flex items-center text-gray-600 hover:text-gray-800 focus:outline-none"
-                        aria-label="Mostrar u ocultar contraseña"
-                    >
-                        {isVisible ? <FaEyeSlash className="w-5 h-5" /> : <FaEye className="w-5 h-5" />}
-                    </button>
-                }
-            />
+            <div>
+                <Input
+                    isRequired
+                    className="w-full"
+                    label="Contraseña"
+                    name="password"
+                    type={isVisible ? "text" : "password"}
+                    value={usuario.password}
+                    onChange={handleInputChange}
+                    endContent={
+                        <button
+                            type="button"
+                            onClick={toggleVisibility}
+                            className="h-full flex items-center text-gray-600 hover:text-gray-800 focus:outline-none"
+                            aria-label="Mostrar u ocultar contraseña"
+                        >
+                            {isVisible ? (
+                                <FaEyeSlash className="w-5 h-5" />
+                            ) : (
+                                <FaEye className="w-5 h-5" />
+                            )}
+                        </button>
+                    }
+                />
+
+                {passwordErrors.length > 0 && (
+                    <ul className="mt-2 text-sm text-red-600 list-disc list-inside">
+                        {passwordErrors.map((error, index) => (
+                            <li key={index}>{error}</li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
             <Select
                 isRequired
@@ -104,7 +130,7 @@ function UsuarioForm({ onSubmit, usuarioData = {} }) {
 }
 
 UsuarioForm.propTypes = {
-    onSubmit: PropTypes.object,
+    onSubmit: PropTypes.func,
     usuarioData: PropTypes.object,
 };
 
