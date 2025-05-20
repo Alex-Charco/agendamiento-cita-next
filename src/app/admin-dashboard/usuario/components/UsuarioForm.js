@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Button, Input, Select, SelectItem } from "@heroui/react";
 import { FaHospitalUser } from "react-icons/fa6";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const roles = [
     { key: "3", label: "Administrador" },
@@ -17,6 +18,10 @@ function UsuarioForm({ onSubmit, usuarioData = {} }) {
         id_rol: usuarioData.id_rol || "",
     });
 
+    const [isVisible, setIsVisible] = useState(false);
+
+    const toggleVisibility = () => setIsVisible((prev) => !prev);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setUsuario((prev) => ({
@@ -31,7 +36,10 @@ function UsuarioForm({ onSubmit, usuarioData = {} }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto">
+        <form
+            onSubmit={handleSubmit}
+            className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto"
+        >
             <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
                 <FaHospitalUser className="text-blue-600" /> Registrar usuario
             </h2>
@@ -51,23 +59,38 @@ function UsuarioForm({ onSubmit, usuarioData = {} }) {
                 className="w-full"
                 label="Contraseña"
                 name="password"
-                type="password"
+                type={isVisible ? "text" : "password"}
                 value={usuario.password}
                 onChange={handleInputChange}
+                endContent={
+                    <button
+                        type="button"
+                        onClick={toggleVisibility}
+                        className="h-full flex items-center text-gray-600 hover:text-gray-800 focus:outline-none"
+                        aria-label="Mostrar u ocultar contraseña"
+                    >
+                        {isVisible ? <FaEyeSlash className="w-5 h-5" /> : <FaEye className="w-5 h-5" />}
+                    </button>
+                }
             />
 
-            {/* Select con icono alineado más a la derecha */}
             <Select
-				isRequired
-                className="w-full relative"
+                isRequired
+                className="w-full"
                 label="Rol"
                 placeholder="Seleccionar rol"
                 selectedKeys={usuario.id_rol ? [usuario.id_rol] : []}
-                onSelectionChange={(keys) => setUsuario({ ...usuario, id_rol: Array.from(keys)[0] })}
+                onSelectionChange={(keys) =>
+                    setUsuario({ ...usuario, id_rol: Array.from(keys)[0] })
+                }
                 items={roles}
                 aria-label="Seleccionar rol de usuario"
             >
-                {(role) => <SelectItem className="text-gray-600" key={role.key}>{role.label}</SelectItem>}
+                {(role) => (
+                    <SelectItem className="text-gray-600" key={role.key}>
+                        {role.label}
+                    </SelectItem>
+                )}
             </Select>
 
             <Button
