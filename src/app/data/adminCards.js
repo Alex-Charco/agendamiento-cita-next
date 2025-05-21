@@ -3,6 +3,7 @@ import { FaUserDoctor } from "react-icons/fa6";
 
 const adminCards = [
     {
+        id: 'horarios',
         title: "Horarios",
         icon: <FaCalendarCheck className="text-green-500 text-3xl" />,
         description: (
@@ -17,12 +18,13 @@ const adminCards = [
         href: "/admin-dashboard/horario/consultar-horario",
     },
     {
+        id: 'medicos',
         title: "Médicos",
         icon: <FaUserDoctor className="text-azul text-3xl" />,
         description: (
             <>
                 <span className="block text-left text-sm mt-2">
-                    Podrá consultar, registrar y actualizar la información 
+                    Podrá consultar, registrar y actualizar la información
                     de los médicos ingresando el número de identificación.
                 </span>
                 <br />
@@ -32,12 +34,13 @@ const adminCards = [
         href: "/admin-dashboard/médico/consultar-medico",
     },
     {
+        id: 'pacientes',
         title: "Pacientes",
         icon: <FaUserInjured className="text-red-500 text-3xl" />,
         description: (
             <>
                 <span className="block text-left text-sm mt-2">
-                    Podrá consultar, registrar y actualizar la información 
+                    Podrá consultar, registrar y actualizar la información
                     de los pacientes ingresando el número de identificación.
                 </span>
                 <br />
@@ -47,6 +50,7 @@ const adminCards = [
         href: "/admin-dashboard/paciente/consultar-paciente",
     },
     {
+        id: 'reportes',
         title: "Reportes",
         icon: <FaFileAlt className="text-indigo-600 text-3xl" />,
         description: (
