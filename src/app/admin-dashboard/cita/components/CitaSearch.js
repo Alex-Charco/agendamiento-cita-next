@@ -27,7 +27,8 @@ function CitaSearch({ rol = "medico", identificacion: idInicial = "", onSelectCi
         console.error("Error al obtener citas:", err);
 
         if (err.response?.status === 401) return;
-
+        
+        //mensaje de error//
         setError("No se pudieron obtener las citas. Inténtalo de nuevo.");
     } finally {
         setLoading(false);
