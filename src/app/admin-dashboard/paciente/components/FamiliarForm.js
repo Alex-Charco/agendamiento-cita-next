@@ -85,6 +85,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
           isRequired
           label="Identificación paciente"
           name="identificacion_paciente"
+		  placeholder="Escribir la identificación"
           type="text"
           value={familiar.identificacion_paciente}
           onChange={handleChange}

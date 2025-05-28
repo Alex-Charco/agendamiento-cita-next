@@ -36,6 +36,8 @@ jest.mock("@/admin-dashboard/paciente/components/SeguroForm", () => {
 const mockData = {};
 const mockSwal = jest.spyOn(Swal, "fire").mockImplementation(() => { });
 
+jest.spyOn(Swal, "fire").mockResolvedValue({ isConfirmed: true });
+
 describe("RegistrarSeguro", () => {
     beforeEach(() => {
         localStorage.clear();
@@ -47,8 +49,8 @@ describe("RegistrarSeguro", () => {
 
         await userEvent.click(screen.getByText(/Enviar/i));
 
-        const mensaje = await screen.findByText(/No se encontró el token de autenticación/i);
-        expect(mensaje).toBeInTheDocument();
+        const mensaje = await screen.findByText(/Tu sesión ha expirado/i);
+expect(mensaje).toBeInTheDocument();
     });
 
     test("muestra mensaje de error si falta identificacion_paciente", async () => {

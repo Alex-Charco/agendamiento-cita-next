@@ -80,7 +80,7 @@ function InfoMilitarForm({ onSubmit, infoMilitarData = {} }) {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<CustomInput
 					name="identificacion"
-					label="Identificación"
+					label="Identificación paciente"
 					placeholder="Escribir la identificación"
 					value={infoMilitar.identificacion ?? ""}
 					onChange={handleChange} // Aquí se usa el handleChange del useFormReducer

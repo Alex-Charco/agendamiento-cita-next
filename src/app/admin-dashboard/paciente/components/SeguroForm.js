@@ -65,11 +65,13 @@ function SeguroForm({ onSubmit, SeguroData = {} }) {
         <CustomInput
           label="Identificación paciente"
           name="identificacion_paciente"
+		  placeholder="Escribir la identificación"
           type="text"
           value={seguro.identificacion_paciente}
           onChange={handleChange}
         />
         <CustomSelect
+		  name="tipo"
           label="Tipo de seguro"
           placeholder="Seleccionar tipo de seguro"
           value={seguro.tipo}
@@ -77,6 +79,7 @@ function SeguroForm({ onSubmit, SeguroData = {} }) {
           items={tipoSeguroOptions}
         />
         <CustomSelect
+		  name="beneficiario"
           label="Beneficiario"
           placeholder="Seleccionar tipo de beneficiario"
           value={seguro.beneficiario}
@@ -137,8 +140,9 @@ function SeguroForm({ onSubmit, SeguroData = {} }) {
 }
 
 SeguroForm.propTypes = {
-  onSubmit: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired, 
   SeguroData: PropTypes.object,
-}
+};
+
 
 export default SeguroForm;

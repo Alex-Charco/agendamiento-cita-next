@@ -148,6 +148,7 @@ import SubmitButton from "@/components/ui/SubmitButton";
 
   return (
     <form
+	  data-testid="formulario-paciente"
       onSubmit={handleSubmit}
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
     >
@@ -166,7 +167,7 @@ import SubmitButton from "@/components/ui/SubmitButton";
         />
         <CustomInput
           name="identificacion"
-          label="Identificación"
+          label="Identificación del paciente"
           value={paciente.identificacion}
           onChange={handleChange}
           placeholder="Ingrese la identificación"
