@@ -274,3 +274,24 @@ export const ActualizarResidencia = async (data, setMensaje, setSuccess) => {
     }
 };
 
+export const fetchHistorialPaciente = async (identificacion, setHistorialMedico) => {
+  try {
+    const token = localStorage.getItem("authToken");
+    if (!token) throw new Error("No se encontró un token de autenticación.");
+
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/get/historial/${identificacion}`;
+	console.log("URL que se está consultando:", apiUrl);
+    const response = await axios.get(apiUrl, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response.data) {
+      setHistorialMedico(response.data);
+    } else {
+      setHistorialMedico([]);
+    }
+  } catch (error) {
+    console.error("Error al obtener historial médico:", error);
+    setHistorialMedico([]);
+  }
+};

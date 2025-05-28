@@ -124,14 +124,16 @@ export default function DynamicTable({
                 </Dropdown>
 
                 {/* Botón de redirección */}
-                <Button
-                    color="primary"
-                    className="text-white"
-                    onClick={handleRedirect}
-                    isDisabled={!hasPermission}
-                >
-                    {actionLabel}
-                </Button>
+                {actionLabel && actionRoute && (
+					<Button
+						color="primary"
+						className="text-white"
+						onClick={handleRedirect}
+						isDisabled={!hasPermission}
+					>
+						{actionLabel}
+					</Button>
+				)}
             </div>
 
             {/* Tabla */}
