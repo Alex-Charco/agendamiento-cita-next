@@ -12,7 +12,6 @@ import useSuccessAlert from "@/hooks/useSuccessAlert";
 import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
-
 export default function RegistrarMedicoPage() {
 
     const [selectedUsuario] = useState(null);

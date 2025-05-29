@@ -1,10 +1,22 @@
 import authAxios from "@/utils/api/authAxios"; 
+import Swal from "sweetalert2";
+import { mostrarToastExito, mostrarToastError, manejarSesionExpirada } from "@/utils/toast";
+import { confirmarRegistro } from "@/utils/confirmacion";
 
 //   ***MÉDICO***
 
-// Función para RegistrarMedico
 export const RegistrarMedico = async (data, setMensaje, setSuccess) => {
     try {
+        // Confirmación antes de registrar
+        const confirmado = await confirmarRegistro(
+            "¿Estás seguro de que deseas guardar este médico en la base de datos?"
+        );
+
+        if (!confirmado) {
+            await Swal.fire("Cancelado", "El médico no fue registrado.", "info");
+            return;
+        }
+
         localStorage.setItem("identificacion", data.identificacion);
 
         await authAxios.post(
@@ -16,14 +28,25 @@ export const RegistrarMedico = async (data, setMensaje, setSuccess) => {
                 },
             }
         );
-
-        // Mostrar alerta de éxito
-        setSuccess(true);
+		
+		mostrarToastExito("¡Médico registrado exitosamente!");
+        setMensaje("");
     } catch (error) {
-        console.error("Error al registrar paciente:", error.response?.data || error.message);
-        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+        console.error("Error al registrar médico:", error.response?.data || error.message);
+
+        const status = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+
+        if (status === 401) {
+            manejarSesionExpirada(setMensaje);
+        } else {
+            const mensajeError = serverMessage || error.message || "Error desconocido";
+            setMensaje(`Error: ${mensajeError}`);
+            mostrarToastError(error);
+        }
     }
 };
+
 
 // Función para actualizar al médico
 export const ActualizarMedico = async (data, setMensaje, setSuccess) => {

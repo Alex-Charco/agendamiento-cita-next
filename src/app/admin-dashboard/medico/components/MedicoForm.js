@@ -22,13 +22,14 @@ function MedicoForm({ onSubmit, medicoData = {} }) {
 
   return (
     <form
+	  data-testid="formulario-medico"
       onSubmit={handleSubmit}
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
     >
       <SectionTitle text="Datos del Medico" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
         <CustomInput
-          isReadOnly={true}
+          //isReadOnly={true}
           name="nombre_usuario"
           label="Nombre de usuario"
           value={medico.nombre_usuario}
