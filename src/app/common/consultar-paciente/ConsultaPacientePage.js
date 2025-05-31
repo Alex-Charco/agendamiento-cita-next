@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import { FaPlus, FaSyncAlt } from "react-icons/fa";
+import { FaPlus, FaSyncAlt, FaHistory } from "react-icons/fa";
 import PacienteSearch from "@/admin-dashboard/paciente/components/PacienteSearch";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
@@ -31,9 +31,10 @@ export default function ConsultaPacientePage() {
     };
 
     const buttons = [
-        { label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", href: "/admin-dashboard/paciente/registrar-paciente" },
         { label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", href: "/admin-dashboard/paciente/actualizar-paciente" },
-        ...getCommonButtonsByPath(pathname)
+        { label: "Historial", icon: FaHistory, action: "historial-paciente", href: "/admin-dashboard/paciente/historial-paciente" },
+		{ label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", href: "/admin-dashboard/paciente/registrar-paciente" },
+		...getCommonButtonsByPath(pathname)
     ];
 
     const tabsConfig = [

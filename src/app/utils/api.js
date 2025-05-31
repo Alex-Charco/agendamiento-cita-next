@@ -129,7 +129,6 @@ export const RegistrarPaciente = async (data, setMensaje, setSuccess) => {
     setSuccess(false);
   }
 };
-
 // Registrar familiar
 export const RegistrarFamiliar = async (data, setMensaje, setSuccess) => {
     try {
@@ -178,7 +177,6 @@ export const RegistrarFamiliar = async (data, setMensaje, setSuccess) => {
         setSuccess(false);
     }
 };
-
 // Registrar información militar
 export const RegistrarInfoMilitar = async (data, setMensaje, setSuccess) => {
     try {
@@ -215,7 +213,9 @@ export const RegistrarInfoMilitar = async (data, setMensaje, setSuccess) => {
         setSuccess(false);
     }
 };
+
 // *Código para actualizar*
+
 export const ActualizarFamiliar = async (data, setMensaje, setSuccess) => {
     try {
         const token = localStorage.getItem("authToken");
@@ -309,6 +309,7 @@ export const ActualizarResidencia = async (data, setMensaje, setSuccess) => {
     }
 };
 
+// *Consultar historial de cambios de paciente
 export const fetchHistorialPaciente = async (identificacion, setHistorialMedico) => {
   try {
     const token = localStorage.getItem("authToken");

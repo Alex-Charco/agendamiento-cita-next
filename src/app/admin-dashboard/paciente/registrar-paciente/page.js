@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import { FaSearch, FaSyncAlt } from "react-icons/fa";
+import { FaSearch, FaSyncAlt, FaHistory } from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import FormWrapper from "@/components/FormWrapper";
@@ -95,8 +95,9 @@ export default function RegistrarPacientePage() {
   };
 
   const buttons = [
+	{ label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", href: "/admin-dashboard/paciente/actualizar-paciente" },
     { label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", href: "/admin-dashboard/paciente/consultar-paciente" },
-    { label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", href: "/admin-dashboard/paciente/actualizar-paciente" },
+	{ label: "Historial", icon: FaHistory, action: "historial-paciente", href: "/admin-dashboard/paciente/historial-paciente" },
     ...getCommonButtonsByPath(pathname)
   ];
 

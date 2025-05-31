@@ -14,7 +14,7 @@ import ResidenciaForm from "@/admin-dashboard/paciente/components/ResidenciaForm
 import ActualizarSeguro from "@/admin-dashboard/paciente/components/ActualizarSeguro";
 import UsuarioSearch from "@/admin-dashboard/usuario/components/UsuarioSearch";
 import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/ActualizarEstatusUsuario";
-import { FaSearch, FaPlus } from "react-icons/fa";
+import { FaSearch, FaPlus, FaHistory } from "react-icons/fa";
 import useSuccessAlert from "@/hooks/useSuccessAlert";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
@@ -88,6 +88,7 @@ export default function ActualizarPacientePage() {
 
 	const buttons = [
 		{ label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", href: "/admin-dashboard/paciente/consultar-paciente" },
+		{ label: "Historial", icon: FaHistory, action: "historial-paciente", href: "/admin-dashboard/paciente/historial-paciente" },
 		{ label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", href: "/admin-dashboard/paciente/registrar-paciente" },
 		...getCommonButtonsByPath(pathname)
 	];

@@ -40,8 +40,8 @@ const adminCards = [
         description: (
             <>
                 <span className="block text-left text-sm mt-2">
-                    Podrá consultar, registrar y actualizar la información
-                    de los pacientes ingresando el número de identificación.
+                    Podrá consultar, registrar, actualizar la información
+                    de los pacientes ingresando el número de identificación. Además podrá ver el historial de cambios en los datos del paciente.
                 </span>
                 <br />
                 <span className="text-blue-500 text-sm block">Ingresar</span>
