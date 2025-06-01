@@ -47,18 +47,19 @@ export const RegistrarMedico = async (data, setMensaje, setSuccess) => {
     }
 };
 
-
 // Función para actualizar al médico
 export const ActualizarMedico = async (data, setMensaje, setSuccess) => {
     try {
         const medicoId = localStorage.getItem("identificacion");
 
         if (!medicoId) {
-            setMensaje("No se encontró la identificación del médico. Por favor, vuelve a iniciar sesión.");
+            const mensaje = "No se encontró la identificación del médico. Por favor, vuelve a iniciar sesión.";
+            setMensaje(mensaje);
+            mostrarToastError(mensaje);
             return;
         }
 
-        const apiUrl = `/api/medico/put/${medicoId}`; // ya no necesitas poner el baseURL
+        const apiUrl = `/api/medico/put/${medicoId}`;
 
         await authAxios.put(apiUrl, JSON.stringify(data), {
             headers: {
@@ -66,10 +67,21 @@ export const ActualizarMedico = async (data, setMensaje, setSuccess) => {
             },
         });
 
-        setSuccess(true); // Marca éxito para mostrar alerta en componente
+        mostrarToastExito("¡Médico actualizado exitosamente!");
+        setMensaje("");
     } catch (error) {
         console.error("❌ Error al actualizar médico:", error.response?.data || error.message);
-        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+
+        const status = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+
+        if (status === 401) {
+            manejarSesionExpirada(setMensaje);
+        } else {
+            const mensajeError = serverMessage || error.message || "Error desconocido";
+            setMensaje(`Error: ${mensajeError}`);
+            mostrarToastError(error);
+        }
     }
 };
 
