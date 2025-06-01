@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { FaSearch, FaPlus } from "react-icons/fa";
+import { FaSearch, FaPlus, FaHistory } from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { ActualizarMedico } from "@/utils/api/medicoApi";
@@ -63,6 +63,7 @@ export default function ActualizarMedicoPage() {
 
 	const buttons = [
 		{ label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", href: "/admin-dashboard/medico/consultar-medico" },
+		{ label: "Historial", icon: FaHistory, action: "historial-medico", href: "/admin-dashboard/medico/historial-medico" },
 		{ label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico",  href: "/admin-dashboard/medico/registrar-medico" },
 		...getCommonButtonsByPath(pathname)
 	];

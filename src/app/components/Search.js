@@ -3,7 +3,7 @@
 import PropTypes from "prop-types";
 import { FaSearch } from "react-icons/fa";
 
-export default function HistorialSearch({
+export default function Search({
   query,
   setQuery,
   onBuscarClick,
@@ -46,7 +46,7 @@ export default function HistorialSearch({
   );
 }
 
-HistorialSearch.propTypes = {
+Search.propTypes = {
   query: PropTypes.string.isRequired,
   setQuery: PropTypes.func.isRequired,
   onBuscarClick: PropTypes.func.isRequired,

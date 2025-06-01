@@ -19,6 +19,7 @@ const menuServicesAdmin = [
             { name: "Actualizar Médico", path: "/admin-dashboard/medico/actualizar-medico" },
             { name: "Consultar Médico", path: "/admin-dashboard/medico/consultar-medico" },
             { name: "Nuevo Médico", path: "/admin-dashboard/medico/registrar-medico" },
+			{ name: "Historial Médico", path: "/admin-dashboard/medico/historial-medico" },
         ],
     },
     {

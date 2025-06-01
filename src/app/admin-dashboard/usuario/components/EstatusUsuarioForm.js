@@ -44,7 +44,7 @@ function EstatusUsuarioForm({ onSubmit, estatusUsuarioData = {} }) {
       className="space-y-8 bg-white p-8 rounded-lg shadow-2xl max-w-4xl mx-auto mt-8"
     >
       <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-        <FaHospitalUser className="text-blue-600" /> Datos del Usuario 111
+        <FaHospitalUser className="text-blue-600" /> Datos del Usuario
       </h2>
         {/* Campo de Nombre de Usuario y nombre_rol - No Editable */}
         <Input

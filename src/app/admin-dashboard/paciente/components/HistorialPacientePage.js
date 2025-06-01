@@ -6,7 +6,7 @@ import { FaPlus, FaSyncAlt, FaSearch } from "react-icons/fa";
 import axios from "axios";
 
 import NavbarComponent from "@/components/navbars/NavbarComponent";
-import HistorialSearch from "@/admin-dashboard/paciente/components/HistorialSearch";
+import Search from "@/components/Search";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import { fetchHistorialPaciente } from "@/utils/api";
 import DynamicTable from "@/components/table/DynamicTable";
@@ -120,7 +120,7 @@ export default function HistorialCambiosPacientePage() {
 
       <div className="flex justify-center bg-white py-4 border-b border-gray-100">
         <div className="w-full max-w-4xl px-4">
-          <HistorialSearch
+          <Search
             query={query}
             setQuery={setQuery}
             onBuscarClick={handleBuscar}

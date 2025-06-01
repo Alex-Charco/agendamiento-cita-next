@@ -73,3 +73,21 @@ export const ActualizarMedico = async (data, setMensaje, setSuccess) => {
     }
 };
 
+// Función para obtener el historial de cambios del médico
+export const fetchHistorialMedico = async (identificacion, setHistorialMedico) => {
+  try {
+    const apiUrl = `/api/medico/get/historial/${identificacion}`; // No necesitas el baseURL, authAxios ya lo incluye
+    console.log("URL que se está consultando:", apiUrl);
+
+    const response = await authAxios.get(apiUrl);
+
+    if (response.data) {
+      setHistorialMedico(response.data);
+    } else {
+      setHistorialMedico([]);
+    }
+  } catch (error) {
+    console.error("Error al obtener historial médico:", error.response?.data || error.message);
+    setHistorialMedico([]);
+  }
+};
