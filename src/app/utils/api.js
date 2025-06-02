@@ -109,9 +109,8 @@ export const RegistrarPaciente = async (data, setMensaje, setSuccess) => {
       },
     });
 
-    setSuccess(true);
-    setMensaje("¡Paciente registrado exitosamente!");
     mostrarToastExito("¡Paciente registrado exitosamente!");
+	setMensaje("");
   } catch (error) {
     const status = error.response?.status;
     const serverMessage = error.response?.data?.message;
@@ -159,8 +158,8 @@ export const RegistrarFamiliar = async (data, setMensaje, setSuccess) => {
             },
         });
 
-        setSuccess(true);
         mostrarToastExito("¡Familiar registrado exitosamente!");
+		setMensaje("");
     } catch (error) {
         const status = error.response?.status;
         const serverMessage = error.response?.data?.message;
@@ -177,6 +176,7 @@ export const RegistrarFamiliar = async (data, setMensaje, setSuccess) => {
         setSuccess(false);
     }
 };
+
 // Registrar información militar
 export const RegistrarInfoMilitar = async (data, setMensaje, setSuccess) => {
     try {
@@ -195,8 +195,8 @@ export const RegistrarInfoMilitar = async (data, setMensaje, setSuccess) => {
             },
         });
 
-        setSuccess(true);
         mostrarToastExito("¡Información militar registrada exitosamente!");
+		setMensaje("");
     } catch (error) {
         const status = error.response?.status;
         const serverMessage = error.response?.data?.message;
@@ -243,8 +243,18 @@ export const ActualizarFamiliar = async (data, setMensaje, setSuccess) => {
         setSuccess(true); // Marca éxito para mostrar alerta en componente
     } catch (error) {
         console.error("❌ Error al actualizar familiar:", error.response?.data || error.message);
-        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
-    }
+        
+		const status = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+		
+		if (status === 401) {
+            manejarSesionExpirada(setMensaje);
+        } else {
+            const mensajeError = serverMessage || error.message || "Error desconocido";
+            setMensaje(`Error: ${mensajeError}`);
+            mostrarToastError(error);
+        }
+	}
 };
 
 export const ActualizarInfoMilitar = async (data, setMensaje, setSuccess) => {
@@ -274,7 +284,17 @@ export const ActualizarInfoMilitar = async (data, setMensaje, setSuccess) => {
         setSuccess(true); // Marca éxito para mostrar alerta en componente
     } catch (error) {
         console.error("❌ Error al actualizar información militar:", error.response?.data || error.message);
-        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+        
+		const status = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+
+        if (status === 401) {
+            manejarSesionExpirada(setMensaje);
+        } else {
+            const mensajeError = serverMessage || error.message || "Error desconocido";
+            setMensaje(`Error: ${mensajeError}`);
+            mostrarToastError(error);
+        }
     }
 };
 
@@ -305,7 +325,17 @@ export const ActualizarResidencia = async (data, setMensaje, setSuccess) => {
         setSuccess(true); // Marca éxito para mostrar alerta en componente
     } catch (error) {
         console.error("❌ Error al actualizar residencia:", error.response?.data || error.message);
-        setMensaje(`Error: ${error.response?.data?.message || "Error desconocido"}`);
+        
+		const status = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+
+        if (status === 401) {
+            manejarSesionExpirada(setMensaje);
+        } else {
+            const mensajeError = serverMessage || error.message || "Error desconocido";
+            setMensaje(`Error: ${mensajeError}`);
+            mostrarToastError(error);
+        }
     }
 };
 
@@ -328,6 +358,16 @@ export const fetchHistorialPaciente = async (identificacion, setHistorialMedico)
     }
   } catch (error) {
     console.error("Error al obtener historial médico:", error);
-    setHistorialMedico([]);
+    
+	const status = error.response?.status;
+        const serverMessage = error.response?.data?.message;
+
+        if (status === 401) {
+            manejarSesionExpirada(setMensaje);
+        } else {
+            const mensajeError = serverMessage || error.message || "Error desconocido";
+            setMensaje(`Error: ${mensajeError}`);
+            mostrarToastError(error);
+        }
   }
 };

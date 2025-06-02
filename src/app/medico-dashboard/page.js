@@ -11,6 +11,10 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
 
       <NavbarComponent
+	    menuItems={[
+			{ name: "Inicio", path: "/medico-dashboard" },
+			{ name: "Contacto", path: "/medico-dashboard/contacto" },
+		]}
         menuServices={[
           {
             name: "Paciente",
@@ -39,9 +43,10 @@ const HomePage = () => {
         ]}
       />
 
-      <section className="p-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+		<CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas médicas." />
+		<CardFeature icon="🔍" title="Consultar Horarios" description="Revise su horario y turnos de disponibilidad de citas médicas." />
         <CardFeature icon="📅" title="Reagendar Citas" description="Seleccione una fecha, hora, especialidadd y médico para reagendar la cita médica." />
-        <CardFeature icon="🔍" title="Consultar Citas" description="Revise su historial y próximas citas médicas." />
       </section>
 
       <Footer />
