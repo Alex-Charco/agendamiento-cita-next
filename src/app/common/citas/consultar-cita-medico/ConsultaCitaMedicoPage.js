@@ -1,28 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
-import MedicoDetalleCita from "@/common/citas/components/MedicoDetalleCita"; 
-import TablaCitasMedico from "@/common/citas/components/TablaCitasMedico"; // 👈 usar la tabla correcta
+import MedicoDetalleCita from "@/common/citas/components/MedicoDetalleCita";
+import TablaCitasMedico from "@/common/citas/components/TablaCitasMedico";
 import { FaPlus } from "react-icons/fa";
-import CitaSearchMedico from "@/common/citas/components/CitaSearchMedico"; 
+import authAxios from "@/utils/api/authAxios";
 
 export default function ConsultaCitaMedicoPage() {
   const [selectedMedico, setSelectedMedico] = useState(null);
+  const [error, setError] = useState(null);
   const pathname = usePathname();
 
-  const handleCitaSelect = (data) => {
-    console.log("handleCitaSelect recibió:", data);
-    if (data?.medico && Array.isArray(data?.citas)) {
-      setSelectedMedico(data);
-    }    
-  };
+  useEffect(() => {
+    const fetchCitasAutomaticamente = async () => {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) return;
+
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        const id = parsedUser?.identificacion;
+        if (!id) return;
+
+        const response = await authAxios.get(`/api/cita/get/medico/${id}?desdeHoy=true`);
+        console.log("Citas response:", response);
+        setSelectedMedico(response.data);
+      } catch (err) {
+        console.error("Error al obtener citas automáticamente:", err);
+        setError("No se pudieron obtener las citas. Inténtalo de nuevo.");
+      }
+    };
+
+    fetchCitasAutomaticamente();
+  }, []);
 
   const transformarCitasParaTabla = (citas) => {
     return citas.map((cita) => ({
-      nombre: cita.paciente?.nombre || "", // 👈 tomar datos del paciente
+      nombre: cita.paciente?.nombre || "",
       identificacion: cita.paciente?.identificacion || "",
       correo: cita.paciente?.correo || "",
       fecha_turno: cita.turno?.horario?.fecha_horario || "",
@@ -35,32 +51,38 @@ export default function ConsultaCitaMedicoPage() {
 
   const buttons = [
     {
-      label: "",
+      label: "Nueva Cita",
       icon: FaPlus,
       action: "nueva-cita",
-      href: "/admin-dashboard/cita/nueva-cita"
+      href: "/admin-dashboard/cita/nueva-cita",
     },
     ...getCommonButtonsByPath(pathname),
   ];
 
   return (
     <div className="bg-gray-50 border border-gray-200 min-h-screen">
-      <NavbarComponent title="Consultar Cita Médico" buttons={buttons} />
+      <NavbarComponent title="Buscar Cita Médico" buttons={buttons} />
 
       <div className="flex justify-center py-2">
         <div className="relative flex flex-col w-full max-w-5xl border rounded shadow-lg p-4 bg-gray-50 mx-2">
-
           <div className="absolute -top-2 left-4 bg-white px-2 text-[10px] text-blue-800">
             Citas Médico
           </div>
 
-          <CitaSearchMedico onSelectCita={handleCitaSelect} />
+          {error && (
+            <p className="text-center text-red-500 mt-4">{error}</p>
+          )}
 
           {selectedMedico?.medico ? (
             <>
               <MedicoDetalleCita
                 medico={selectedMedico.medico}
-                mostrarCampos={["nombre", "identificacion", "especialidad", "correo"]}
+                mostrarCampos={[
+                  "nombre",
+                  "identificacion",
+                  "especialidad",
+                  "correo",
+                ]}
               />
 
               <TablaCitasMedico
@@ -70,11 +92,12 @@ export default function ConsultaCitaMedicoPage() {
               />
             </>
           ) : (
-            <p className="text-center text-gray-500 mt-4">
-              Selecciona un médico para ver sus citas.
-            </p>
+            !error && (
+              <p className="text-center text-gray-500 mt-4">
+                Cargando citas del médico...
+              </p>
+            )
           )}
-
         </div>
       </div>
     </div>

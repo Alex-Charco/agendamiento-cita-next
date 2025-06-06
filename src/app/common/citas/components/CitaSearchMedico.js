@@ -4,7 +4,7 @@ import { useState } from "react";
 import authAxios from "@/utils/api/authAxios";
 import PropTypes from "prop-types";
 import SearchInput from "@/components/search/SearchInput";
-
+// PERTENECE MEDICO ADFMIN
 function CitaSearchMedico({ identificacion: idInicial = "", onSelectCita }) {
     const [identificacion, setIdentificacion] = useState(idInicial);
     const [loading, setLoading] = useState(false);
