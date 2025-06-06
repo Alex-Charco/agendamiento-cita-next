@@ -35,7 +35,7 @@ export default function ConsultaCitaMedicoPage() {
 
   const buttons = [
     {
-      label: "Nueva Cita",
+      label: "",
       icon: FaPlus,
       action: "nueva-cita",
       href: "/admin-dashboard/cita/nueva-cita"

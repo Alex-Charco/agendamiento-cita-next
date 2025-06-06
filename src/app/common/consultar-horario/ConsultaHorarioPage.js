@@ -61,7 +61,7 @@ export default function ConsultaHorarioPage() {
 
     return (
         <div className="bg-gray-50 border-1 border-gray-200">
-            <NavbarComponent title="Consultar Horario" buttons={buttons} />
+            <NavbarComponent title="Buscar Horario" buttons={buttons} />
 
             <div className="flex justify-center py-2">
                 <div className="relative flex flex-col w-full border rounded shadow-lg p-2 bg-gray-50 mx-2 text-center">

@@ -55,7 +55,7 @@ export default function ConsultaCitaPacientePage() {
 
   return (
     <div className="bg-gray-50 border border-gray-200 min-h-screen">
-      <NavbarComponent title="Consultar Cita Paciente" buttons={buttons} />
+      <NavbarComponent title="Buscar Cita" buttons={buttons} />
 
       <div className="flex justify-center py-2">
         <div className="relative flex flex-col w-full max-w-5xl border rounded shadow-lg p-4 bg-gray-50 mx-2">

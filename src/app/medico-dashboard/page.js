@@ -19,14 +19,14 @@ const HomePage = () => {
           {
             name: "Paciente",
             subMenu: [
-              { name: "Consultar Cita", path: "/medico-dashboard/cita/consultar-cita-paciente" },
+              { name: "Buscar Cita", path: "/medico-dashboard/cita/consultar-cita-medico" },
               { name: "Reagendar Cita", path: "/admin-dashboard/horario/registrar-horario" },
             ],
           },
           {
             name: "Médico",
             subMenu: [
-              { name: "Consultar Horario", path: "/medico-dashboard/consultar-horario" },
+              { name: "Buscar Horario", path: "/medico-dashboard/consultar-horario" },
             ],
           },
         ]}
@@ -39,7 +39,7 @@ const HomePage = () => {
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
           { text: "Reagendar Cita Médica", link: "/crear-cita", variant: "primary" },
-          { text: "Consultar Cita Médica", link: "/ver-citas", variant: "secondary" },
+          { text: "Buscar Cita Médica", link: "/ver-citas", variant: "secondary" },
         ]}
       />
 

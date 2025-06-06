@@ -33,7 +33,7 @@ export default function TablaCitasMedico({ citas, onVerCita, onEditarCita }) {
                     columns={columns}
                     data={citasTransformadas}
                     filterPlaceholder="Filtrar citas..."
-                    actionLabel="Nueva cita" i
+                    actionLabel="" i
                     actionRoute="/admin-dashboard/citas/crear"
                 />
             </div>

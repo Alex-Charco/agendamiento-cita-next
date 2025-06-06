@@ -209,7 +209,7 @@ export default function ConsultaPacientePage() {
 
     return (
         <div className="bg-white">
-            <NavbarComponent title="Consultar Paciente" buttons={buttons} />
+            <NavbarComponent title="Buscar Paciente" buttons={buttons} />
             <CustomTabs tabs={tabsConfig} />
         </div>
     );

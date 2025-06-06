@@ -26,7 +26,7 @@ const HomePage = () => {
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
           { text: "Reagendar Cita Médica", link: "/crear-cita", variant: "primary" },
-          { text: "Consultar Cita Médica", link: "/admin-dashboard/cita/consultar-cita", variant: "secondary" },
+          { text: "Buscar Cita Médica", link: "/admin-dashboard/cita/consultar-cita", variant: "secondary" },
         ]}
       />
 

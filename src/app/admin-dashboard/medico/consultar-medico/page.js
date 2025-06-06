@@ -35,7 +35,7 @@ export default function ConsultaMedicoPage() {
     return (
         <div className="bg-white">
             <NavbarComponent
-                title="Consultar Médicos"
+                title="Buscar Médicos"
                 buttons={buttons}
                 onAction={(action) => {
                     console.log(action);
