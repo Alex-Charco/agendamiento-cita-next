@@ -4,13 +4,10 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
-import { FaCalendarPlus } from "react-icons/fa";
 import authAxios from "@/utils/api/authAxios";
 import TablaTurnosCita from "@/common/citas/components/TablaTurnosCita";
 import { useDisclosure } from "@heroui/react";
 import ModalRegistrarCita from "@/common/citas/components/ModalRegistrarCita";
-
-// RegistrarCitaPage.jsx
 
 export default function RegistrarCitaPage() {
   const [turnos, setTurnos] = useState([]);

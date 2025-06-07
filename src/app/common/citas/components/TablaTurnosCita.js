@@ -61,5 +61,5 @@ export default function TablaTurnosCita({ turnos, onSeleccionarTurno }) {
 
 TablaTurnosCita.propTypes = {
     turnos: PropTypes.arrayOf(PropTypes.object).isRequired,
-    onSeleccionarTurno: PropTypes.func, // 👈 ya no es obligatorio
+    onSeleccionarTurno: PropTypes.func, // no es obligatorio
 };
