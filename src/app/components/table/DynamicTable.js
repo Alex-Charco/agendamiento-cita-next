@@ -30,13 +30,27 @@ export default function DynamicTable({
     rowsPerPage = 5,
     filterPlaceholder = "Buscar",
     actionLabel = "Nuevo horario",
-    actionRoute = "/admin-dashboard/medico/consultar-medico"
+    actionRoute = "/admin-dashboard/medico/consultar-medico",
+    showActionButton = true,
 }) {
     const [filterValue, setFilterValue] = React.useState("");
     const [page, setPage] = React.useState(1);
     const [visibleColumns, setVisibleColumns] = React.useState(
         new Set(columns.map((c) => c.uid))
     );
+
+    const extractText = (node) => {
+        if (typeof node === 'string') return node;
+        if (typeof node === 'number') return node.toString();
+        if (React.isValidElement(node)) {
+            return extractText(node.props.children);
+        }
+        if (Array.isArray(node)) {
+            return node.map(extractText).join(' ');
+        }
+        return '';
+    };
+
 
     const visibleColumnObjects = columns.filter((col) =>
         visibleColumns.has(col.uid)
@@ -45,14 +59,24 @@ export default function DynamicTable({
     // Filtrar los datos
     const filteredItems = React.useMemo(() => {
         return data.filter((item) =>
-            visibleColumnObjects.some((column) =>
-                item[column.uid]
+            visibleColumnObjects.some((column) => {
+                let cellContent;
+
+                if (column.render) {
+                    const rendered = column.render(item);
+                    cellContent = extractText(rendered);
+                } else {
+                    cellContent = item[column.uid];
+                }
+
+                return cellContent
                     ?.toString()
                     .toLowerCase()
-                    .includes(filterValue.toLowerCase())
-            )
+                    .includes(filterValue.toLowerCase());
+            })
         );
     }, [data, filterValue, visibleColumnObjects]);
+
 
     // Paginación
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -80,7 +104,6 @@ export default function DynamicTable({
         }
         return typeof value === "string" ? capitalize(value) : value;
     };
-    
 
     return (
         <div className="text-gray-600">
@@ -124,16 +147,16 @@ export default function DynamicTable({
                 </Dropdown>
 
                 {/* Botón de redirección */}
-                {actionLabel && actionRoute && (
-					<Button
-						color="primary"
-						className="text-white"
-						onClick={handleRedirect}
-						isDisabled={!hasPermission}
-					>
-						{actionLabel}
-					</Button>
-				)}
+                {showActionButton && actionLabel && actionRoute && (
+                    <Button
+                        color="primary"
+                        className="text-white"
+                        onClick={handleRedirect}
+                        isDisabled={!hasPermission}
+                    >
+                        {actionLabel}
+                    </Button>
+                )}
             </div>
 
             {/* Tabla */}
@@ -180,7 +203,7 @@ DynamicTable.propTypes = {
         PropTypes.shape({
             uid: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
-            render: PropTypes.func, // si algunas columnas usan función de renderizado
+            render: PropTypes.func,
         })
     ).isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -188,4 +211,14 @@ DynamicTable.propTypes = {
     filterPlaceholder: PropTypes.string,
     actionLabel: PropTypes.string,
     actionRoute: PropTypes.string,
+    showActionButton: PropTypes.bool, // ✅ nuevo
+};
+
+DynamicTable.defaultProps = {
+    rowsPerPage: 5,
+    filterPlaceholder: "Buscar",
+    actionLabel: "Nuevo horario",
+    actionRoute: "/admin-dashboard/medico/consultar-medico",
+    showActionButton: PropTypes.bool,
+
 };

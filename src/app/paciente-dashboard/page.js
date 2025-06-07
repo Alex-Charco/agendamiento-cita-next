@@ -14,7 +14,7 @@ const HomePage = () => {
       
       <NavbarComponent
         menuServices={[
-          { name: "Agendar Cita", path: "/crear-cita" },
+          { name: "Agendar Cita", path: "/paciente-dashboard/cita/registrar-cita" },
           { name: "Consultar Cita", path: "/paciente-dashboard/cita/consultar-cita" },
         ]}
         showExtraOptions={true}
@@ -26,7 +26,7 @@ const HomePage = () => {
         description="Gestione sus citas médicas fácilmente"
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
-          { text: "Agendar Cita Médica", link: "/crear-cita", variant: "primary" },
+          { text: "Agendar Cita Médica", link: "/paciente-dashboard/cita/registrar-cita", variant: "primary" },
           { text: "Consultar Cita Médica", link: "/paciente-dashboard/cita/consultar-cita", variant: "secondary" },
         ]}
       />
