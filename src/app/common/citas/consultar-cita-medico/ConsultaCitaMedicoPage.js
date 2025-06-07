@@ -50,12 +50,6 @@ export default function ConsultaCitaMedicoPage() {
   };
 
   const buttons = [
-    {
-      label: "Nueva Cita",
-      icon: FaPlus,
-      action: "nueva-cita",
-      href: "/admin-dashboard/cita/nueva-cita",
-    },
     ...getCommonButtonsByPath(pathname),
   ];
 
@@ -79,9 +73,9 @@ export default function ConsultaCitaMedicoPage() {
                 medico={selectedMedico.medico}
                 mostrarCampos={[
                   "nombre",
-                  "identificacion",
                   "especialidad",
-                  "correo",
+                  "atencion",
+                  "consultorio",
                 ]}
               />
 

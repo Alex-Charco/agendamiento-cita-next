@@ -35,7 +35,7 @@ export default function TablaCitas({ citas, onVerCita, onEditarCita }) {
                     columns={columns}
                     data={citasTransformadas}
                     filterPlaceholder="Filtrar citas..."
-                    actionLabel="Nueva cita"
+                    actionLabel=""
                     actionRoute="/admin-dashboard/citas/crear"
                 />
             </div>
