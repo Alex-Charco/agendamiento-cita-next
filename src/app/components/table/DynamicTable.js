@@ -27,7 +27,7 @@ export const capitalize = (s) => {
 export default function DynamicTable({
     columns = [],
     data = [],
-    rowsPerPage = 5,
+    rowsPerPage = 6,
     filterPlaceholder = "Buscar",
     actionLabel = "Nuevo horario",
     actionRoute = "/admin-dashboard/medico/consultar-medico",
