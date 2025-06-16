@@ -3,7 +3,6 @@ const menuServicesAdmin = [
         name: "Cita",
         subMenu: [
             { name: "Buscar Cita", path: "/admin-dashboard/cita/consultar-cita" },
-            { name: "Nueva Cita", path: "/admin-dashboard/horario/registrar-horario" },
         ],
     },
     {

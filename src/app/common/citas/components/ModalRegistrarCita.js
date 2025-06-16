@@ -38,7 +38,9 @@ const ModalRegistrarCita = ({ turno, isOpen, onClose, onCitaRegistrada }) => {
       if (typeof window !== "undefined") {
         // 1. Intentar desde localStorage (modo paciente)
         const storedUser = localStorage.getItem("user");
+        console.log("Intentando obtener datos del paciente...");
         if (storedUser) {
+          console.log("Datos desde localStorage:", storedUser);
           const usuario = JSON.parse(storedUser);
           id_paciente = usuario?.id_paciente;
           nombrePaciente = obtenerNombreCompleto(usuario);
@@ -46,6 +48,9 @@ const ModalRegistrarCita = ({ turno, isOpen, onClose, onCitaRegistrada }) => {
 
         // 2. Si no se obtuvo desde localStorage, intentar desde sessionStorage (modo admin/médico)
         if (!id_paciente) {
+          console.log("Buscando en sessionStorage...");
+          console.log("id_paciente_reagendar:", sessionStorage.getItem("id_paciente_reagendar"));
+          console.log("nombre_paciente_reagendar:", sessionStorage.getItem("nombre_paciente_reagendar"));
           id_paciente = sessionStorage.getItem("id_paciente_reagendar");
           nombrePaciente = sessionStorage.getItem("nombre_paciente_reagendar") || nombrePaciente;
         }
@@ -81,11 +86,16 @@ const ModalRegistrarCita = ({ turno, isOpen, onClose, onCitaRegistrada }) => {
   let nombrePaciente = "Paciente desconocido";
   if (typeof window !== "undefined") {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const usuario = JSON.parse(storedUser);
+    const usuario = storedUser ? JSON.parse(storedUser) : null;
+    const idPacienteLocal = usuario?.id_paciente;
+
+    if (idPacienteLocal) {
       nombrePaciente = obtenerNombreCompleto(usuario);
+      console.log("👤 Nombre desde localStorage (modo paciente):", nombrePaciente);
     } else {
-      nombrePaciente = sessionStorage.getItem("nombre_paciente_reagendar") || nombrePaciente;
+      const nombreSession = sessionStorage.getItem("nombre_paciente_reagendar");
+      nombrePaciente = nombreSession || nombrePaciente;
+      console.log("👤 Nombre desde sessionStorage (modo admin/médico):", nombrePaciente);
     }
   }
 

@@ -18,29 +18,29 @@ export default function RegistrarCitaPage() {
   const pathname = usePathname();
 
   const fetchTurnos = async () => {
-	  try {
-		setLoading(true);
-		const res = await authAxios.get("/api/turno/get/disponibles");
-		const data = res.data.turnos;
-		console.log("📦 Respuesta completa:", res.data);
+    try {
+      setLoading(true);
+      const res = await authAxios.get("/api/turno/get/disponibles");
+      const data = res.data.turnos;
+      console.log("📦 Respuesta completa:", res.data);
 
 
-		// Validar que data sea un array antes de setearlo
-		if (Array.isArray(data)) {
-		  setTurnos(data);
-		} else {
-		  console.error("❌ La respuesta no es un arreglo:", data);
-		  setTurnos([]); // fallback vacío
-		}
+      // Validar que data sea un array antes de setearlo
+      if (Array.isArray(data)) {
+        setTurnos(data);
+      } else {
+        console.error("❌ La respuesta no es un arreglo:", data);
+        setTurnos([]); // fallback vacío
+      }
 
-	  } catch (error) {
-		console.error("❌ Error al obtener turnos:", error.response?.data || error.message);
-		setError("No se pudieron cargar los turnos disponibles.");
-		setTurnos([]); // fallback vacío
-	  } finally {
-		setLoading(false);
-	  }
-	};
+    } catch (error) {
+      console.error("❌ Error al obtener turnos:", error.response?.data || error.message);
+      setError("No se pudieron cargar los turnos disponibles.");
+      setTurnos([]); // fallback vacío
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchTurnos();

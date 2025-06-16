@@ -8,10 +8,11 @@ import MedicoDetalleCita from "@/common/citas/components/MedicoDetalleCita";
 import TablaCitas from "@/admin-dashboard/cita/components/TablaCitas";
 import TablaCitasMedico from "@/common/citas/components/TablaCitasMedico";
 import CitaSearchWrapper from "@/admin-dashboard/cita/components/CitaSearchWrapper";
-import ModalRegistrarAsistencia from "@/admin-dashboard/cita/components/ModalRegistrarAsistencia";
+import ModalRegistrarAsistencia from "@/common/citas/components/ModalRegistrarAsistencia";
 import { FaPlus } from "react-icons/fa";
 import { usePathname,  useRouter } from "next/navigation";
 import { mostrarToastExito } from "@/utils/toast";
+import { handleReagendarCita as handleReagendarCitaUtil } from "@/utils/citasHandlers";
 
 export default function ConsultaCitaAdminPage() {
   const [data, setData] = useState(null);
@@ -26,30 +27,15 @@ export default function ConsultaCitaAdminPage() {
   };
 
   const handleReagendarCita = (cita) => {
-	  const idPaciente = data?.paciente?.id_paciente || null;
-	  const nombrePaciente = [
-		data?.paciente?.primer_nombre,
-		data?.paciente?.segundo_nombre,
-		data?.paciente?.primer_apellido,
-		data?.paciente?.segundo_apellido
-	  ].filter(Boolean).join(" ");
-
-	  if (idPaciente) {
-		sessionStorage.setItem("id_paciente_reagendar", idPaciente);
-		sessionStorage.setItem("nombre_paciente_reagendar", nombrePaciente);
-	  }
-
-	  console.log("Reagendar cita", cita);
-
-	  setCitaSeleccionada({
-		id_cita: cita.id_cita,
-		estadoPorDefecto: "REAGENDADA",
+	  handleReagendarCitaUtil({
+		cita,
+		data,
+		setCitaSeleccionada,
+		setAccionActual,
+		setModalOpen,
 	  });
-
-	  setAccionActual("reagendar");
-	  setModalOpen(true);
 	};
-	
+
   const handleRegistrarAsistencia = (cita) => {
     console.log("Registrar asistencia para cita", cita);
     setCitaSeleccionada({

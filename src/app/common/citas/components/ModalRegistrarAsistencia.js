@@ -28,7 +28,7 @@ const ModalRegistrarAsistencia = ({
 }) => {
   const [estadoAsistencia, setEstadoAsistencia] = useState("");
   const [comentario, setComentario] = useState("");
-  
+
   // Al abrir el modal, establecer el estado por defecto si existe
   useEffect(() => {
     if (estadoPorDefecto && isOpen) {
@@ -84,14 +84,14 @@ const ModalRegistrarAsistencia = ({
 
             <ModalBody className="px-4 py-2">
               <div className="mt-2">
-				  <label className="text-sm font-bold text-gray-700 mb-1 block">ID Cita</label>
-				  <Input
-					isReadOnly
-					value={id_cita}
-					variant="light"
-					className="bg-gray-100 text-gray-800 rounded-md border-none shadow-none cursor-default"
-				  />
-				</div>
+                <label className="text-sm font-bold text-gray-700 mb-1 block">ID Cita</label>
+                <Input
+                  isReadOnly
+                  value={id_cita}
+                  variant="light"
+                  className="bg-gray-100 text-gray-800 rounded-md border-none shadow-none cursor-default"
+                />
+              </div>
 
               <div className="flex flex-col gap-1">
                 <label className="text-sm font-medium text-gray-700">Estado de asistencia</label>
@@ -101,7 +101,7 @@ const ModalRegistrarAsistencia = ({
                   fullWidth
                   placeholder="Selecciona estado"
                   onChange={(e) => setEstadoAsistencia(e.target.value)}
-				  className="bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md shadow-sm focus:outline-none transition-colors duration-200"
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md shadow-sm focus:outline-none transition-colors duration-200"
                 >
                   {["CONFIRMADA", "CANCELADA", "REAGENDADA", "NO_ASISTIO"].map((estado) => (
                     <SelectItem
