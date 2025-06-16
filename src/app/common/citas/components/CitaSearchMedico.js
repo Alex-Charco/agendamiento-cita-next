@@ -4,31 +4,22 @@ import { useState } from "react";
 import authAxios from "@/utils/api/authAxios";
 import PropTypes from "prop-types";
 import SearchInput from "@/components/search/SearchInput";
+import { obtenerCitas } from "@/utils/api/obtenerCitas";
+
 // PERTENECE MEDICO ADFMIN
 function CitaSearchMedico({ identificacion: idInicial = "", onSelectCita }) {
     const [identificacion, setIdentificacion] = useState(idInicial);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const fetchCitas = async () => {
-        if (!identificacion.trim()) return;
-        setLoading(true);
-        setError(null);
-
-        try {
-            const response = await authAxios.get(`/api/cita/get/medico/${identificacion}?desdeHoy=true`);
-            console.log("Citas response:", response);
-            console.log("Citas obtenidas:", response.data);
-
-            onSelectCita?.(response.data);
-
-        } catch (err) {
-            console.error("Error al obtener citas:", err);
-            if (err.response?.status === 401) return;
-            setError("No se pudieron obtener las citas. Inténtalo de nuevo.");
-        } finally {
-            setLoading(false);
-        }
+    const handleBuscarCitas = () => {
+        obtenerCitas({
+            identificacion,
+            rol: "medico",
+            setLoading,
+            setError,
+            onSelectCita,
+        });
     };
 
     return (
@@ -37,7 +28,7 @@ function CitaSearchMedico({ identificacion: idInicial = "", onSelectCita }) {
             placeholder="Ej. 1723456789"
             value={identificacion}
             onChange={(e) => setIdentificacion(e.target.value)}
-            onClick={fetchCitas}
+            onClick={handleBuscarCitas} 
             loading={loading}
             error={error}
         />
