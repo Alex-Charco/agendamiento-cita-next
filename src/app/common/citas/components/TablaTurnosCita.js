@@ -50,7 +50,7 @@ export default function TablaTurnosCita({ turnos, onSeleccionarTurno }) {
                 </div>
                 <DynamicTable
                     columns={columns}
-                    data={turnos}
+                    data={Array.isArray(turnos) ? turnos : []}
                     filterPlaceholder="Filtrar turnos..."
                     showActionButton={false}
                 />

@@ -27,45 +27,67 @@ const obtenerNombreCompleto = (user) => {
 
 const ModalRegistrarCita = ({ turno, isOpen, onClose, onCitaRegistrada }) => {
   const registrarCita = async () => {
-  const confirmado = await confirmarRegistro("¿Deseas registrar esta cita?");
-  if (!confirmado) return;
+    const confirmado = await confirmarRegistro("¿Deseas registrar esta cita?");
+    if (!confirmado) return;
 
-  try {
+    try {
+      let id_paciente = null;
+      let nombrePaciente = "Paciente desconocido";
+
+      // Solo si estamos en entorno de navegador
+      if (typeof window !== "undefined") {
+        // 1. Intentar desde localStorage (modo paciente)
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const usuario = JSON.parse(storedUser);
+          id_paciente = usuario?.id_paciente;
+          nombrePaciente = obtenerNombreCompleto(usuario);
+        }
+
+        // 2. Si no se obtuvo desde localStorage, intentar desde sessionStorage (modo admin/médico)
+        if (!id_paciente) {
+          id_paciente = sessionStorage.getItem("id_paciente_reagendar");
+          nombrePaciente = sessionStorage.getItem("nombre_paciente_reagendar") || nombrePaciente;
+        }
+      }
+
+      if (!id_paciente) {
+        throw new Error("Identificación del paciente no disponible");
+      }
+
+      if (!turno?.id_turno) {
+        throw new Error("ID del turno no disponible");
+      }
+
+      const payload = {
+        id_turno: turno.id_turno,
+        id_paciente,
+      };
+
+      console.log("Enviando datos a la API:", payload);
+
+      await authAxios.post("/api/cita/registrar", payload);
+
+      mostrarToastExito("Cita registrada con éxito");
+      onCitaRegistrada?.();
+      onClose();
+    } catch (error) {
+      console.error("Error al registrar cita:", error);
+      mostrarToastError(error, "No se pudo registrar la cita");
+    }
+  };
+
+  // Mostrar nombre del paciente en el modal (solo visual)
+  let nombrePaciente = "Paciente desconocido";
+  if (typeof window !== "undefined") {
     const storedUser = localStorage.getItem("user");
-    if (!storedUser) throw new Error("Usuario no encontrado");
-
-    const usuario = JSON.parse(storedUser);
-    const id_paciente = usuario?.id_paciente;
-
-    if (!id_paciente) {
-      throw new Error("Identificación del paciente no disponible");
+    if (storedUser) {
+      const usuario = JSON.parse(storedUser);
+      nombrePaciente = obtenerNombreCompleto(usuario);
+    } else {
+      nombrePaciente = sessionStorage.getItem("nombre_paciente_reagendar") || nombrePaciente;
     }
-
-    if (!turno?.id_turno) {
-      throw new Error("ID del turno no disponible");
-    }
-
-    const payload = {
-      id_turno: turno.id_turno,
-      id_paciente,
-    };
-
-    console.log("Enviando datos a la API:", payload);
-
-    await authAxios.post("/api/cita/registrar", payload);
-
-    mostrarToastExito("Cita registrada con éxito");
-    onCitaRegistrada?.();
-    onClose();
-  } catch (error) {
-    console.error("Error al registrar cita:", error);
-    mostrarToastError(error, "No se pudo registrar la cita");
   }
-};
-
-  const storedUser = typeof window !== "undefined" ? localStorage.getItem("user") : null;
-  const usuario = storedUser ? JSON.parse(storedUser) : {};
-  const nombrePaciente = obtenerNombreCompleto(usuario);
 
   return (
     <Modal

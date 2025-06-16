@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import PacienteDetalle from "@/admin-dashboard/cita/components/PacienteDetalle";
@@ -8,24 +8,84 @@ import MedicoDetalleCita from "@/common/citas/components/MedicoDetalleCita";
 import TablaCitas from "@/admin-dashboard/cita/components/TablaCitas";
 import TablaCitasMedico from "@/common/citas/components/TablaCitasMedico";
 import CitaSearchWrapper from "@/admin-dashboard/cita/components/CitaSearchWrapper";
+import ModalRegistrarAsistencia from "@/admin-dashboard/cita/components/ModalRegistrarAsistencia";
 import { FaPlus } from "react-icons/fa";
-import { usePathname } from "next/navigation";
+import { usePathname,  useRouter } from "next/navigation";
+import { mostrarToastExito } from "@/utils/toast";
 
 export default function ConsultaCitaAdminPage() {
   const [data, setData] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [citaSeleccionada, setCitaSeleccionada] = useState(null);
+  const [accionActual, setAccionActual] = useState(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleCitaSelect = (responseData) => {
     setData(responseData);
   };
 
+  const handleReagendarCita = (cita) => {
+	  const idPaciente = data?.paciente?.id_paciente || null;
+	  const nombrePaciente = [
+		data?.paciente?.primer_nombre,
+		data?.paciente?.segundo_nombre,
+		data?.paciente?.primer_apellido,
+		data?.paciente?.segundo_apellido
+	  ].filter(Boolean).join(" ");
+
+	  if (idPaciente) {
+		sessionStorage.setItem("id_paciente_reagendar", idPaciente);
+		sessionStorage.setItem("nombre_paciente_reagendar", nombrePaciente);
+	  }
+
+	  console.log("Reagendar cita", cita);
+
+	  setCitaSeleccionada({
+		id_cita: cita.id_cita,
+		estadoPorDefecto: "REAGENDADA",
+	  });
+
+	  setAccionActual("reagendar");
+	  setModalOpen(true);
+	};
+	
+  const handleRegistrarAsistencia = (cita) => {
+    console.log("Registrar asistencia para cita", cita);
+    setCitaSeleccionada({
+      id_cita: cita.id_cita,
+      id_paciente: data?.paciente?.id_paciente || null,
+      estadoPorDefecto: "CONFIRMADA",
+    });
+    setAccionActual("asistencia");
+    setModalOpen(true);
+  };
+	
+  const handleAsistenciaRegistrada = ({ estado_asistencia }) => {
+
+    if (accionActual === "asistencia") {
+      if (estado_asistencia === "CONFIRMADA") {
+        mostrarToastExito("Asistencia registrada con estado CONFIRMADA");
+        router.push(`/admin-dashboard/nota-evolutiva`);
+      } else {
+        mostrarToastExito("Asistencia registrada");
+        setModalOpen(false);
+      }
+    }
+
+    if (accionActual === "reagendar") {
+      if (estado_asistencia === "REAGENDADA") {
+        mostrarToastExito("Asistencia registrada como REAGENDADA, redirigiendo...");
+        console.log("Redirigiendo a registrar-cita con id_paciente:");
+        router.push(`/admin-dashboard/cita/reagendar-cita`);
+      } else {
+        mostrarToastExito("Asistencia registrada");
+        setModalOpen(false);
+      }
+    }
+  };
+
   const buttons = [
-    {
-      label: "Nueva Cita",
-      icon: FaPlus,
-      action: "nueva-cita",
-      href: "/admin-dashboard/cita/nueva-cita",
-    },
     ...getCommonButtonsByPath(pathname),
   ];
 
@@ -38,10 +98,12 @@ export default function ConsultaCitaAdminPage() {
             mostrarCampos={["nombre", "identificacion"]}
           />
           <TablaCitas
-            citas={transformarCitasPaciente(data.citas)}
-            onVerCita={(c) => console.log("Ver cita", c)}
-            onEditarCita={(c) => console.log("Editar cita", c)}
-          />
+			  citas={transformarCitasPaciente(data.citas)}
+			  onVerCita={(c) => console.log("Ver cita", c)}
+			  onEditarCita={(c) => console.log("Editar cita", c)}
+			  onRegistrarAsistencia={handleRegistrarAsistencia}
+			  onReagendarCita={handleReagendarCita}
+			/>
         </>
       );
     }
@@ -73,7 +135,7 @@ export default function ConsultaCitaAdminPage() {
     <div className="bg-gray-50 border border-gray-200 min-h-screen">
       <NavbarComponent title="Buscar Cita" buttons={buttons} />
       <div className="flex justify-center py-2">
-        <div className="relative flex flex-col w-full max-w-5xl border rounded shadow-lg p-4 bg-gray-50 mx-2">
+        <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50 mx-2">
           <div className="absolute -top-2 left-4 bg-white px-2 text-[10px] text-blue-800">
             Citas
           </div>
@@ -83,6 +145,14 @@ export default function ConsultaCitaAdminPage() {
           {renderDetalleYTabla()}
         </div>
       </div>
+
+      <ModalRegistrarAsistencia
+		  isOpen={modalOpen}
+		  onClose={() => setModalOpen(false)}
+		  id_cita={citaSeleccionada?.id_cita}
+		  id_paciente={citaSeleccionada?.id_paciente}
+		  onAsistenciaRegistrada={handleAsistenciaRegistrada}
+		/>
     </div>
   );
 }
@@ -90,7 +160,7 @@ export default function ConsultaCitaAdminPage() {
 // Transformadores de citas
 function transformarCitasPaciente(citas) {
   return citas.map((cita, index) => ({
-    id_cita: index,
+    id_cita: cita.datos_cita?.id_cita || index,
     nombre_medico: cita.datos_medico?.nombre || "No disponible",
     especialidad: cita.datos_especialidad?.nombre || "No disponible",
     tipo_atencion: cita.datos_especialidad?.atencion || "No disponible",

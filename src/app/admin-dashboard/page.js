@@ -25,8 +25,8 @@ const HomePage = () => {
         description="Sistema de Gestión Hospitalaria"
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
-          { text: "Reagendar Cita Médica", link: "/crear-cita", variant: "primary" },
-          { text: "Buscar Cita Médica", link: "/admin-dashboard/cita/consultar-cita", variant: "secondary" },
+          { text: "Buscar Cita Médica", link: "/admin-dashboard/cita/consultar-cita", variant: "primary" },
+          { text: "Buscar Paciente", link: "/admin-dashboard/paciente/consultar-paciente", variant: "secondary" },
         ]}
       />
 

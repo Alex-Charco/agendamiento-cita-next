@@ -219,6 +219,6 @@ DynamicTable.defaultProps = {
     filterPlaceholder: "Buscar",
     actionLabel: "Nuevo horario",
     actionRoute: "/admin-dashboard/medico/consultar-medico",
-    showActionButton: PropTypes.bool,
+    showActionButton: false,
 
 };
