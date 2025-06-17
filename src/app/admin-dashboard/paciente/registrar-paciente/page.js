@@ -17,19 +17,15 @@ import FamiliarForm from "@/admin-dashboard/paciente/components/FamiliarForm";
 import InfoMilitarForm from "@/admin-dashboard/paciente/components/InfoMilitarForm";
 import RegistrarResidencia from "@/admin-dashboard/paciente/components/RegistrarResidencia";
 import RegistrarSeguro from "@/admin-dashboard/paciente/components/RegistrarSeguro";
-import useSuccessAlert from "@/hooks/useSuccessAlert";
 import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import Swal from "sweetalert2";
-import { mostrarToastExito, mostrarToastError } from "@/utils/toast";
 import { confirmarRegistro } from "@/utils/confirmacion";
 
 export default function RegistrarPacientePage() {
   const [selectedUsuario] = useState(null);
-  const [selectedResidencia] = useState(null);
-  const [selectedSeguro] = useState(null);
   const [mensaje, setMensaje] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [setSuccess] = useState(false);
   const pathname = usePathname();
 
   useClearLocalStorage(["identificacion", "nombre_usuario"]);

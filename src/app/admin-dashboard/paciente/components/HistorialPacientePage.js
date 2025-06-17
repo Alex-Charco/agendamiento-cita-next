@@ -46,6 +46,7 @@ export default function HistorialCambiosPacientePage() {
         limpiarEstadoConError("No se encontró historial para ese paciente.");
       }
     } catch (err) {
+		console.error("Error al buscar historial del paciente:", err);
       limpiarEstadoConError("No se encontró el paciente o ocurrió un error.");
     } finally {
       setLoading(false);

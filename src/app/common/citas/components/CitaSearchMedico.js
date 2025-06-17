@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import authAxios from "@/utils/api/authAxios";
 import PropTypes from "prop-types";
 import SearchInput from "@/components/search/SearchInput";
 import { obtenerCitas } from "@/utils/api/obtenerCitas";

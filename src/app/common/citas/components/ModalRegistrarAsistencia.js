@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import {
   Modal,
   ModalContent,
@@ -40,6 +41,7 @@ const ModalRegistrarAsistencia = ({
   }, [estadoPorDefecto, isOpen]);
 
   const registrarAsistencia = async () => {
+	  console.log("Iniciando registro de asistencia");
     const confirmado = await confirmarRegistro("¿Deseas registrar esta asistencia?");
     if (!confirmado) return;
 
@@ -70,7 +72,7 @@ const ModalRegistrarAsistencia = ({
   return (
     <Modal
       isOpen={isOpen}
-      onOpenChange={onClose}
+      onOpenChange={(open) => { if (!open) onClose(); }}
       isDismissable={false}
       isKeyboardDismissDisabled={true}
     >
@@ -153,3 +155,18 @@ const ModalRegistrarAsistencia = ({
 };
 
 export default ModalRegistrarAsistencia;
+
+ModalRegistrarAsistencia.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  id_cita: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
+  id_paciente: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  estadoPorDefecto: PropTypes.string,
+  onAsistenciaRegistrada: PropTypes.func,
+};
