@@ -29,7 +29,7 @@ export default function DynamicTable({
     data = [],
     rowsPerPage = 6,
     filterPlaceholder = "Buscar",
-    actionLabel = "Nuevo horario",
+    actionLabel = "",
     actionRoute = "/admin-dashboard/medico/consultar-medico",
     showActionButton = true,
 }) {

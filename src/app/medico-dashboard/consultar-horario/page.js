@@ -104,6 +104,7 @@ export default function ConsultaHorarioMedicoPage() {
                                     onSeleccionarHorario={handleVerTurnos}
                                     onActualizarTurnoExtra={handleActualizarTurnoExtra}
                                     onActualizarHorario={null}
+									rol="medico"
                                 />
                                 {horarioSeleccionadoParaTurnos && (
                                     <TablaTurnos

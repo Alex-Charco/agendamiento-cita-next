@@ -12,7 +12,6 @@ const HomePage = () => {
 
       <NavbarComponent
 	    menuItems={[
-			{ name: "Inicio", path: "/medico-dashboard" },
 			{ name: "Contacto", path: "/medico-dashboard/contacto" },
 		]}
         menuServices={[

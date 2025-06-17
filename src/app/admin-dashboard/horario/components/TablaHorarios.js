@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import DynamicTable from "@/components/table/DynamicTable";
 import { FaEye, FaEdit } from "react-icons/fa";
-export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarHorario }) {
+export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarHorario, rol }) {
 
     const columns = [
         { name: "Fecha", uid: "fecha_horario" },
@@ -19,7 +19,6 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
                 return <span>{disponible}</span>;
             },
         },
-        { name: "Seleccionar", uid: "seleccion" },
         {
             name: "Turno extra",
             uid: "turno_extra",
@@ -44,13 +43,15 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
                     >
                         <FaEye />
                     </button>
-                    <button
-                        onClick={() => onActualizarHorario(horario)}
-                        className="text-green-600 hover:text-green-700 transition-colors"
-                        title="Editar horario"
-                    >
-                        <FaEdit />
-                    </button>
+                    {rol === 'administrador' && (
+                        <button
+                            onClick={() => onActualizarHorario(horario)}
+                            className="text-green-600 hover:text-green-700 transition-colors"
+                            title="Editar horario"
+                        >
+                            <FaEdit />
+                        </button>
+                    )}
                 </div>
             ),
         },
@@ -77,4 +78,5 @@ TablaHorarios.propTypes = {
     horarios: PropTypes.arrayOf(PropTypes.object).isRequired,
     onSeleccionarHorario: PropTypes.func.isRequired,
     onActualizarHorario: PropTypes.func.isRequired,
+	rol: PropTypes.oneOf(['administrador', 'medico']).isRequired
 };
