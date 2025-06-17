@@ -92,7 +92,7 @@ function FamiliarForm({ onSubmit, familiarData = {} }) {
         />
         <CustomInput
           isRequired
-          label="Identificación familiar"
+          label="Identificación"
           name="identificacion"
           placeholder="Escribir la identificación"
           type="text"
