@@ -56,6 +56,7 @@ function ResidenciaForm({ onSubmit, residenciaData = {} }) {
         <CustomInput
           name="identificacion_paciente"
           label="Identificación paciente"
+		  placeholder="Escribir la identificación"
           type="text"
           value={residencia.identificacion_paciente}
           onChange={handleChange}

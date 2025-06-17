@@ -11,58 +11,74 @@ export default function ResetForm() {
     const [mensaje, setMensaje] = useState("");
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        if (!email.trim()) {
-            Swal.fire("Campo vacío", "Por favor ingresa un correo electrónico.", "error");
-            return;
-        }
-
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            Swal.fire("Correo inválido", "Por favor ingresa un correo electrónico válido.", "error");
-            return;
-        }
-
-        try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/request-password-reset`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
-            });
-        
-            if (!res.ok) {
-                // Aquí estamos verificando si la respuesta es exitosa
-                const data = await res.json();
-                console.log('Error en respuesta:', data); // Esto te ayudará a ver el contenido de la respuesta de error
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: data.message || "Ocurrió un error al procesar la solicitud.",
-                });
-                return;
-            }
-        
-            const data = await res.json();  // Esto ahora debería estar seguro
-            Swal.fire({
-                icon: "success",
-                title: "Solicitud enviada",
-                text: data.message || "Si el correo está registrado, recibirás un enlace.",
-                confirmButtonText: "Aceptar",
-            }).then(() => {
-                setEmail("");
-                setMensaje("");
-                window.location.href = "/auth/login"; // Redirige a la página de login
-            });
-        } catch (error) {
-            console.error("Error al enviar solicitud de reset:", error);
-            Swal.fire(
-                "Error de red",
-                "No se pudo completar la solicitud. Verifica tu conexión e intenta nuevamente.",
-                "error"
-            );
-        }     
+    if (!email.trim()) {
+        Swal.fire("Campo vacío", "Por favor ingresa un correo electrónico.", "error");
+        return;
     }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        Swal.fire("Correo inválido", "Por favor ingresa un correo electrónico válido.", "error");
+        return;
+    }
+
+    // Confirmación previa al envío
+    const confirmResult = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Se enviará una solicitud para restablecer tu contraseña.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, enviar",
+        cancelButtonText: "Cancelar",
+    });
+
+    if (!confirmResult.isConfirmed) {
+        // Si el usuario cancela, no se envía la solicitud
+        Swal.fire("Cancelado", "La solicitud no fue enviada.", "info");
+        return;
+    }
+
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/request-password-reset`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+        });
+
+        if (!res.ok) {
+            const data = await res.json();
+            console.log('Error en respuesta:', data);
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: data.message || "Ocurrió un error al procesar la solicitud.",
+            });
+            return;
+        }
+
+        const data = await res.json();
+        Swal.fire({
+            icon: "success",
+            title: "Solicitud enviada",
+            text: data.message || "Si el correo está registrado, recibirás un enlace.",
+            confirmButtonText: "Aceptar",
+        }).then(() => {
+            setEmail("");
+            setMensaje("");
+            window.location.href = "/auth/login";
+        });
+    } catch (error) {
+        console.error("Error al enviar solicitud de reset:", error);
+        Swal.fire(
+            "Error de red",
+            "No se pudo completar la solicitud. Verifica tu conexión e intenta nuevamente.",
+            "error"
+        );
+    }
+};
+
     
     return (
         <Card className="max-w-lg w-full bg-gradient-to-b from-celeste-fuerte to-[#F5F7FC] bg-opacity-50"

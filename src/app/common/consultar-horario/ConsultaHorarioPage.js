@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname, useRouter  } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import HorarioSearch from "@/admin-dashboard/horario/components/HorarioSearch";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
@@ -18,7 +18,7 @@ export default function ConsultaHorarioPage() {
 
     const handleHorarioSelect = (data) => {
         setSelectedHorario(data);
-        setHorarioSeleccionadoParaTurnos(null); 
+        setHorarioSeleccionadoParaTurnos(null);
     };
 
     const handleVerTurnos = (horario) => {
@@ -31,16 +31,14 @@ export default function ConsultaHorarioPage() {
                 ? { ...horario, turno_extra: nuevoValor }
                 : horario
         );
-    
+
         setSelectedHorario(prev => ({
             ...prev,
             horarios: nuevosHorarios
         }));
     };
-    
-    // * Para actualizar horario
+
     const handleActualizarHorario = (horario) => {
-        // Redirige con los datos necesarios por query
         const params = new URLSearchParams({
             id: horario.id_horario,
             id_medico: horario.id_medico,
@@ -52,7 +50,7 @@ export default function ConsultaHorarioPage() {
             asignado: horario.asignado,
             turno_extra: horario.turno_extra,
         }).toString();
-    
+
         router.push(`/admin-dashboard/horario/actualizar-horario?${params}`);
     };
 
@@ -63,7 +61,7 @@ export default function ConsultaHorarioPage() {
 
     return (
         <div className="bg-gray-50 border-1 border-gray-200">
-            <NavbarComponent title="Consultar Horario" buttons={buttons} />
+            <NavbarComponent title="Buscar Horario" buttons={buttons} />
 
             <div className="flex justify-center py-2">
                 <div className="relative flex flex-col w-full border rounded shadow-lg p-2 bg-gray-50 mx-2 text-center">
@@ -84,23 +82,35 @@ export default function ConsultaHorarioPage() {
                                 }}
                                 mostrarCampos={["nombre", "identificacion", "correo", "especialidad"]}
                             />
-                            <TablaHorarios
-                                horarios={selectedHorario.horarios}
-                                onSeleccionarHorario={handleVerTurnos}
-                                onActualizarTurnoExtra={handleActualizarTurnoExtra}
-                                onActualizarHorario={handleActualizarHorario}
-                            />
-                            {horarioSeleccionadoParaTurnos ? (
-                                    <TablaTurnos
-                                        turnos={horarioSeleccionadoParaTurnos.turnos.map(turno => ({
-                                            ...turno,
-                                            fecha: horarioSeleccionadoParaTurnos.fecha_horario
-                                        }))}
-                                    />
-                            ) : (
-                                <p className="text-center text-gray-500">
-                                    Selecciona un horario para ver sus turnos.
+
+                            {/* Si no tiene horarios disponibles */}
+                            {selectedHorario.horarios.length === 0 ? (
+                                <p className="text-center text-gray-500 py-4">
+                                    Este médico no tiene ningún horario disponible.
                                 </p>
+                            ) : (
+                                <>
+                                    <TablaHorarios
+                                        horarios={selectedHorario.horarios}
+                                        onSeleccionarHorario={handleVerTurnos}
+                                        onActualizarTurnoExtra={handleActualizarTurnoExtra}
+                                        onActualizarHorario={handleActualizarHorario}
+                                    />
+
+                                    {/* Mostrar turnos solo si se selecciona un horario */}
+                                    {horarioSeleccionadoParaTurnos ? (
+                                        <TablaTurnos
+                                            turnos={horarioSeleccionadoParaTurnos.turnos.map(turno => ({
+                                                ...turno,
+                                                fecha: horarioSeleccionadoParaTurnos.fecha_horario
+                                            }))}
+                                        />
+                                    ) : (
+                                        <p className="text-center text-gray-500 py-4">
+                                            Selecciona un horario para ver sus turnos.
+                                        </p>
+                                    )}
+                                </>
                             )}
                         </>
                     )}
@@ -108,5 +118,4 @@ export default function ConsultaHorarioPage() {
             </div>
         </div>
     );
-
 }

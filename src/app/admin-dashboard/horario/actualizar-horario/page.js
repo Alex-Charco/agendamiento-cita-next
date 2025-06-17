@@ -21,23 +21,27 @@ export default function ActualizarHorarioPage() {
     const router = useRouter();
 
     useEffect(() => {
-        const searchParams = new URLSearchParams(window.location.search);
-    
-        const id_horario = searchParams.get("id");
-        const newHorario = {
-            id_horario: id_horario ? parseInt(id_horario) : null,
-            id_medico: parseInt(searchParams.get("id_medico")),
-            institucion: searchParams.get("institucion"),
-            fecha_horario: searchParams.get("fecha_horario"),
-            hora_inicio: searchParams.get("hora_inicio"),
-            hora_fin: searchParams.get("hora_fin"),
-            consulta_maxima: parseInt(searchParams.get("consulta_maxima")),
-            asignado: parseInt(searchParams.get("asignado")),
-            turno_extra: parseInt(searchParams.get("turno_extra")),
-        };
-    
-        setHorarioData(newHorario);
-    }, []);
+		const searchParams = new URLSearchParams(window.location.search);
+
+		const getIntParam = (key) => {
+			const value = searchParams.get(key);
+			return value !== null ? parseInt(value, 10) : null;
+		};
+
+		const newHorario = {
+			id_horario: getIntParam("id"),
+			id_medico: getIntParam("id_medico"),
+			institucion: searchParams.get("institucion") || "",
+			fecha_horario: searchParams.get("fecha_horario") || "",
+			hora_inicio: searchParams.get("hora_inicio") || "",
+			hora_fin: searchParams.get("hora_fin") || "",
+			consulta_maxima: getIntParam("consulta_maxima") ?? 0,
+			asignado: getIntParam("asignado") ?? 0,
+			turno_extra: getIntParam("turno_extra") ?? 0,
+		};
+
+		setHorarioData(newHorario);
+	}, []);
 
     const handleHorarioSubmit = async (data) => {
         await ActualizarHorario(data, horarioData.id_horario, setMensaje, setSuccess);
@@ -61,8 +65,8 @@ export default function ActualizarHorarioPage() {
     }, "¡Horario actualizado exitosamente!");
     
     const buttons = [
+		{ label: "Buscar Horario", icon: FaSearch, action: "buscar-horario", href: "/admin-dashboard/horario/consultar-horario" },
         { label: "Registrar Horario", icon: FaPlus, action: "registrar-horario", href: "/admin-dashboard/horario/registrar-horario" },
-        { label: "Buscar Horario", icon: FaSearch, action: "buscar-horario", href: "/admin-dashboard/horario/consultar-horario" },
         ...getCommonButtonsByPath(pathname),
     ];
 

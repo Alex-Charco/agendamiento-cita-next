@@ -12,6 +12,10 @@ const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       <NavbarComponent
+	    menuItems={[
+			{ name: "Inicio", path: "/admin-dashboard" },
+			{ name: "Contacto", path: "/admi-dashboard/contacto" },
+		  ]}
         menuServices={menuServicesAdmin}
         showExtraOptions={true}
       />
@@ -21,8 +25,8 @@ const HomePage = () => {
         description="Sistema de Gestión Hospitalaria"
         imageUrl="/images/hospital-banner.jpg"
         buttons={[
-          { text: "Reagendar Cita Médica", link: "/crear-cita", variant: "primary" },
-          { text: "Consultar Cita Médica", link: "/admin-dashboard/cita/consultar-cita", variant: "secondary" },
+          { text: "Buscar Cita Médica", link: "/admin-dashboard/cita/consultar-cita", variant: "primary" },
+          { text: "Buscar Paciente", link: "/admin-dashboard/paciente/consultar-paciente", variant: "secondary" },
         ]}
       />
 

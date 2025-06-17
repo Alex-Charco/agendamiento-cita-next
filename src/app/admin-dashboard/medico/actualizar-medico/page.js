@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { FaSearch, FaPlus } from "react-icons/fa";
+import { FaSearch, FaPlus, FaHistory } from "react-icons/fa";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";
 import { ActualizarMedico } from "@/utils/api/medicoApi";
@@ -13,6 +13,7 @@ import ActualizarEstatusUsuario from "@/admin-dashboard/usuario/components/Actua
 import useSuccessAlert from "@/hooks/useSuccessAlert";
 import { useClearLocalStorage } from "@/hooks/useClearLocalStorage";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
+import { confirmarRegistro } from "@/utils/confirmacion";
 
 
 export default function ActualizarMedicoPage() {
@@ -50,8 +51,33 @@ export default function ActualizarMedicoPage() {
 	};
 
 	const handleMedicoSubmit = async (data) => {
-		await ActualizarMedico(data, setMensaje, setSuccess);
-	};
+	try {
+		const confirmado = await confirmarRegistro?.(
+			"¿Estás seguro de que deseas actualizar este médico?"
+		);
+
+		if (confirmado === false) {
+			return;
+		}
+
+		const user = JSON.parse(localStorage.getItem("user"));
+
+		if (!user || !user.id_usuario) {
+			setMensaje("No se encontró el ID del usuario. Por favor, vuelve a iniciar sesión.");
+			return;
+		}
+
+		const dataConModificador = {
+			...data,
+			id_usuario_modificador: user.id_usuario,
+		};
+
+		await ActualizarMedico(dataConModificador, setMensaje, setSuccess);
+	} catch (error) {
+		console.error("❌ Error al preparar datos para actualizar médico:", error);
+		setMensaje("Ocurrió un error al enviar los datos.");
+	}
+};
 
 	// Mostrar la alerta si se registra con éxito
     useSuccessAlert(success, setSuccess, "¡Médico actualizado exitosamente!");
@@ -63,6 +89,7 @@ export default function ActualizarMedicoPage() {
 
 	const buttons = [
 		{ label: "Buscar Médico", icon: FaSearch, action: "buscar-medico", href: "/admin-dashboard/medico/consultar-medico" },
+		{ label: "Historial", icon: FaHistory, action: "historial-medico", href: "/admin-dashboard/medico/historial-medico" },
 		{ label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico",  href: "/admin-dashboard/medico/registrar-medico" },
 		...getCommonButtonsByPath(pathname)
 	];

@@ -18,7 +18,7 @@ export default function MedicoDetalleCita({ medico, mostrarCampos }) {
                     
                     <div className="relative w-full border rounded-lg p-3 bg-white">
                         <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
-                            Datos Personales
+                            Datos Personales Médico
                         </div>
 
 						<div className="mt-2 grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-2 text-xs text-gray-700">
@@ -33,10 +33,10 @@ export default function MedicoDetalleCita({ medico, mostrarCampos }) {
                                 <p><span className="font-semibold">Especialidad:</span> {medico.especialidad}</p>
                             )}
                             {debeMostrar("atencion") && (
-                                <p><span className="font-semibold">Consultorio:</span> {medico.atencion}</p>
+                                <p><span className="font-semibold">Atención:</span> {medico.atencion}</p>
                             )}
                             {debeMostrar("consultorio") && (
-                                <p><span className="font-semibold">Atencion:</span> {medico.atencion}</p>
+                                <p><span className="font-semibold">Consultorio:</span> {medico.consultorio}</p>
                             )}
                         </div>
                     </div>

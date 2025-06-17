@@ -64,74 +64,70 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
         </NavbarBrand>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem isActive href="/" className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100">
-            Inicio
-          </NavbarItem>
-
-          <NavbarItem>
-            <NextLink href="/contacto" className="hover:bg-gray-100 text-blue-800 font-medium px-4 py-2 rounded">Contacto</NextLink>
-          </NavbarItem>
-
           {menuItems.map((item) => (
-            <NavbarItem key={item.path} href={item.path}>
-              {item.name}
+            <NavbarItem key={item.path}>
+              <NextLink
+                href={item.path}
+                className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+              >
+                {item.name}
+              </NextLink>
             </NavbarItem>
           ))}
 
           {menuServices.length > 0 && showExtraOptions && (
-  <div className="relative">
-    <button
-      onClick={() => setIsServicesOpen(!isServicesOpen)}
-      className="hover:bg-gray-100 px-4 py-2 rounded flex items-center justify-between gap-2 w-full text-blue-800"
-    >
-      Servicios
-      {isServicesOpen ? (
-        <FaChevronUp className="ml-2 text-gray-300 text-lg" />
-      ) : (
-        <FaChevronDown className="ml-2 text-gray-300 text-lg" />
-      )}
-    </button>
-    {isServicesOpen && (
-      <div className="absolute left-0 mt-2 w-56 bg-white text-gray-900 shadow-lg rounded-md z-10">
-        {menuServices.map((item) =>
-          item.subMenu ? (
-            <div key={item.name}>
+            <div className="relative">
               <button
-                className="w-full flex justify-between text-left text-blue-800 px-4 py-2 hover:bg-gray-100"
-                onClick={() => toggleSubmenu(item.name)}
+                onClick={() => setIsServicesOpen(!isServicesOpen)}
+                className="hover:bg-gray-100 px-4 py-2 rounded flex items-center justify-between gap-2 w-full text-blue-800"
               >
-                <span>{item.name}</span>
-                {isSubmenuOpen[item.name] ? <FaChevronUp /> : <FaChevronDown />}
+                Servicios
+                {isServicesOpen ? (
+                  <FaChevronUp className="ml-2 text-gray-300 text-lg" />
+                ) : (
+                  <FaChevronDown className="ml-2 text-gray-300 text-lg" />
+                )}
               </button>
-              {isSubmenuOpen[item.name] && (
-                <div className="pl-4">
-                  {item.subMenu.map((subItem) => (
-                    <NextLink
-                      key={subItem.path}
-                      href={subItem.path}
-                      className="block px-4 py-2 hover:bg-gray-200 text-blue-700"
-                    >
-                      {subItem.name}
-                    </NextLink>
-                  ))}
+              {isServicesOpen && (
+                <div className="absolute left-0 mt-2 w-56 bg-white text-gray-900 shadow-lg rounded-md z-10">
+                  {menuServices.map((item) =>
+                    item.subMenu ? (
+                      <div key={item.name}>
+                        <button
+                          className="w-full flex justify-between text-left text-blue-800 px-4 py-2 hover:bg-gray-100"
+                          onClick={() => toggleSubmenu(item.name)}
+                        >
+                          <span>{item.name}</span>
+                          {isSubmenuOpen[item.name] ? <FaChevronUp /> : <FaChevronDown />}
+                        </button>
+                        {isSubmenuOpen[item.name] && (
+                          <div className="pl-4">
+                            {item.subMenu.map((subItem) => (
+                              <NextLink
+                                key={subItem.path}
+                                href={subItem.path}
+                                className="block px-4 py-2 hover:bg-gray-200 text-blue-700"
+                              >
+                                {subItem.name}
+                              </NextLink>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <NextLink
+                        key={item.path}
+                        href={item.path}
+                        className="block px-4 py-2 hover:bg-gray-100 text-blue-800"
+                      >
+                        {item.name}
+                      </NextLink>
+                    )
+                  )}
                 </div>
               )}
             </div>
-          ) : (
-            <NextLink
-              key={item.path}
-              href={item.path}
-              className="block px-4 py-2 hover:bg-gray-100 text-blue-800"
-            >
-              {item.name}
-            </NextLink>
-          )
-        )}
-      </div>
-    )}
-  </div>
-)}
-
+          )}
         </NavbarContent>
 
         <NavbarItem>
@@ -179,85 +175,77 @@ const NavbarComponent = ({ menuItems = [], menuServices = [], showExtraOptions =
       </NavbarContent>
 
       <NavbarMenu className={isMenuOpen ? "block" : "hidden"}>
-        <NavbarMenuItem>
-          <NextLink href="/" className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100">
-            Inicio
-          </NextLink>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <NextLink href="/contacto" className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100">
-            Contacto
-          </NextLink>
-        </NavbarMenuItem>
         {menuItems.map((item) => (
           <NavbarMenuItem key={item.path}>
-            <NextLink href={item.path} className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100">
+            <NextLink
+              href={item.path}
+              className="block w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+            >
               {item.name}
             </NextLink>
           </NavbarMenuItem>
         ))}
 
         {menuServices.length > 0 && showExtraOptions && (
-  <>
-    <NavbarMenuItem>
-      <button
-        onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-        className="w-full flex justify-between items-center text-left text-blue-800 mx-2"
-      >
-        <span>Servicios</span>
-        {isMobileServicesOpen ? <FaChevronUp /> : <FaChevronDown />}
-      </button>
-    </NavbarMenuItem>
-
-    {isMobileServicesOpen &&
-      menuServices.map((item) =>
-        item.subMenu ? (
-          <div key={item.name}>
+          <>
             <NavbarMenuItem>
               <button
-                onClick={() => toggleSubmenu(item.name)}
-                className="flex justify-between items-center w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+                onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                className="w-full flex justify-between items-center text-left text-blue-800 mx-2"
               >
-                <span>{item.name}</span>
-                {isSubmenuOpen[item.name] ? <FaChevronUp /> : <FaChevronDown />}
+                <span>Servicios</span>
+                {isMobileServicesOpen ? <FaChevronUp /> : <FaChevronDown />}
               </button>
             </NavbarMenuItem>
-            {isSubmenuOpen[item.name] && (
-              <div className="pl-4 bg-gray-50">
-                {item.subMenu.map((subItem) => (
-                  <NavbarMenuItem key={subItem.path}>
+
+            {isMobileServicesOpen &&
+              menuServices.map((item) =>
+                item.subMenu ? (
+                  <div key={item.name}>
+                    <NavbarMenuItem>
+                      <button
+                        onClick={() => toggleSubmenu(item.name)}
+                        className="flex justify-between items-center w-full text-left text-blue-800 font-medium p-2 hover:bg-gray-100"
+                      >
+                        <span>{item.name}</span>
+                        {isSubmenuOpen[item.name] ? <FaChevronUp /> : <FaChevronDown />}
+                      </button>
+                    </NavbarMenuItem>
+                    {isSubmenuOpen[item.name] && (
+                      <div className="pl-4 bg-gray-50">
+                        {item.subMenu.map((subItem) => (
+                          <NavbarMenuItem key={subItem.path}>
+                            <NextLink
+                              href={subItem.path}
+                              className="block w-full px-4 py-2 hover:bg-gray-200 text-blue-700"
+                            >
+                              {subItem.name}
+                            </NextLink>
+                          </NavbarMenuItem>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <NavbarMenuItem key={item.path}>
                     <NextLink
-                      href={subItem.path}
-                      className="block w-full px-4 py-2 hover:bg-gray-200 text-blue-700"
+                      href={item.path}
+                      className="block w-full px-4 py-2 hover:bg-gray-100 text-blue-800"
                     >
-                      {subItem.name}
+                      {item.name}
                     </NextLink>
                   </NavbarMenuItem>
-                ))}
-              </div>
-            )}
-          </div>
-        ) : (
-          <NavbarMenuItem key={item.path}>
-            <NextLink
-              href={item.path}
-              className="block w-full px-4 py-2 hover:bg-gray-100 text-blue-800"
-            >
-              {item.name}
-            </NextLink>
-          </NavbarMenuItem>
-        )
-      )}
-  </>
-)}
-
+                )
+              )}
+          </>
+        )}
       </NavbarMenu>
     </Navbar>
   );
 };
 
 NavbarComponent.propTypes = {
-  menuItems: PropTypes.array,
+  menuItems: PropTypes.array.isRequired,
   menuServices: PropTypes.array,
   showExtraOptions: PropTypes.bool,
 };

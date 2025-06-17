@@ -5,19 +5,24 @@ import PacienteForm from "@/admin-dashboard/paciente/components/PacienteForm";
 
 describe("PacienteForm", () => {
     // *Prueba 1
-    test("renderiza todos los inputs y envía los datos", () => {
-        const mockSubmit = jest.fn();
+    test("renderiza todos los inputs y envía los datos", async () => {
+    const mockSubmit = jest.fn();
 
-        render(<PacienteForm onSubmit={mockSubmit} />);
+    render(<PacienteForm onSubmit={mockSubmit} />);
 
-        const inputNombreUsuario = screen.getByPlaceholderText("Ingrese el nombre de usuario");
-        const inputIdentificacion = screen.getByPlaceholderText("Ingrese la identificación");
+    const inputNombreUsuario = screen.getByPlaceholderText("Ingrese el nombre de usuario");
+    const inputIdentificacion = screen.getByPlaceholderText("Ingrese la identificación");
 
-        fireEvent.change(inputNombreUsuario, { target: { value: "juan123" } });
-        fireEvent.change(inputIdentificacion, { target: { value: "12345678" } });
+    // Simulamos que el usuario escribe en los campos
+    fireEvent.change(inputNombreUsuario, { target: { value: "juan123" } });
+    fireEvent.change(inputIdentificacion, { target: { value: "12345678" } });
 
-        fireEvent.submit(screen.getByRole("form"));
+    // Simulamos el envío del formulario
+    const formulario = screen.getByTestId('formulario-paciente');
+    fireEvent.submit(formulario);
 
+    // Esperamos a que el mockSubmit haya sido llamado
+    await waitFor(() => {
         expect(mockSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
                 nombre_usuario: "juan123",
@@ -25,6 +30,8 @@ describe("PacienteForm", () => {
             })
         );
     });
+});
+
 
     // *Prueba 2
     test("renderiza el formulario con valores iniciales vacíos", () => {
@@ -88,7 +95,7 @@ describe("PacienteForm", () => {
         const input = screen.getByLabelText(/Primer nombre/i);
         fireEvent.change(input, { target: { value: "Carlos" } });
 
-        fireEvent.submit(screen.getByRole("form"));
+        fireEvent.submit(screen.getByTestId('formulario-paciente'));
         expect(mockSubmit).toHaveBeenCalled();
         expect(mockSubmit.mock.calls[0][0].primer_nombre).toBe("Carlos");
     });
@@ -97,7 +104,7 @@ describe("PacienteForm", () => {
     test('puede seleccionar género desde el dropdown', async () => {
         render(<PacienteForm />);
 
-        const formulario = screen.getByRole('form');
+        const formulario = screen.getByTestId('formulario-paciente');
         const generoDropdown = within(formulario).getByText(/Seleccione un género/i);
 
         expect(generoDropdown).toBeInTheDocument();
@@ -118,7 +125,7 @@ describe("PacienteForm", () => {
     test('puede seleccionar estado civil desde el dropdown', async () => {
         render(<PacienteForm />);
 
-        const formulario = screen.getByRole('form');
+        const formulario = screen.getByTestId('formulario-paciente');
         const estadoCivilDropdown = within(formulario).getByText(/Seleccione un estado civil/i);
 
         expect(estadoCivilDropdown).toBeInTheDocument();
@@ -135,7 +142,7 @@ describe("PacienteForm", () => {
     test('puede seleccionar grupo sanguíneo desde el dropdown', async () => {
         render(<PacienteForm />);
 
-        const formulario = screen.getByRole('form');
+        const formulario = screen.getByTestId('formulario-paciente');
         const grupoSanguineoDropdown = within(formulario).getByText(/Seleccione un grupo sanguíneo/i);
 
         expect(grupoSanguineoDropdown).toBeInTheDocument();
@@ -153,7 +160,7 @@ describe("PacienteForm", () => {
     test('puede seleccionar nivel de instrucción desde el dropdown', async () => {
         render(<PacienteForm />);
 
-        const formulario = screen.getByRole('form');
+        const formulario = screen.getByTestId('formulario-paciente');
         const instruccionDropdown = within(formulario).getByText(/Seleccione nivel de instrucción/i);
 
         expect(instruccionDropdown).toBeInTheDocument();
@@ -172,7 +179,7 @@ describe("PacienteForm", () => {
     test('puede seleccionar ocupación desde el dropdown', async () => {
         render(<PacienteForm />);
 
-        const formulario = screen.getByRole('form');
+        const formulario = screen.getByTestId('formulario-paciente');
         const ocupacionDropdown = within(formulario).getByText(/Seleccione la ocupación/i);
 
         expect(ocupacionDropdown).toBeInTheDocument();
@@ -191,7 +198,7 @@ describe("PacienteForm", () => {
     test('puede seleccionar discapacidad desde el dropdown', async () => {
         render(<PacienteForm />);
 
-        const formulario = screen.getByRole('form');
+        const formulario = screen.getByTestId('formulario-paciente');
         const [discapacidadDropdown] = within(formulario).getAllByText(/¿Tiene discapacidad\?/i);
 
         expect(discapacidadDropdown).toBeInTheDocument();
@@ -209,7 +216,7 @@ describe("PacienteForm", () => {
     test('puede seleccionar orientación desde el dropdown', async () => {
         render(<PacienteForm />);
 
-        const formulario = screen.getByRole('form');
+        const formulario = screen.getByTestId('formulario-paciente');
         const orientacionDropdown = within(formulario).getByText(/Seleccione la orientación/i);
 
         expect(orientacionDropdown).toBeInTheDocument();
@@ -227,7 +234,7 @@ describe("PacienteForm", () => {
     test('puede seleccionar identidad de género desde el dropdown', async () => {
         render(<PacienteForm />);
 
-        const formulario = screen.getByRole('form');
+        const formulario = screen.getByTestId('formulario-paciente');
         const identidadDropdown = within(formulario).getByText(/Seleccione la identidad/i);
 
         expect(identidadDropdown).toBeInTheDocument();

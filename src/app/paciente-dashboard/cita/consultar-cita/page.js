@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import PacienteDetalle from "@/admin-dashboard/cita/components/PacienteDetalle";
-import TablaCitas from "@/admin-dashboard/cita/components/TablaCitas";
+import TablaCitasPaciente from "@/paciente-dashboard/cita/components/TablaCitasPaciente";
 import { FaPlus } from "react-icons/fa";
 import CitaPacienteSearch from "@/paciente-dashboard/cita/components/CitaPacienteSearch";
 import authAxios from "@/utils/api/authAxios";
@@ -69,7 +69,7 @@ export default function ConsultaCitaPacientePage() {
             label: "Nueva Cita",
             icon: FaPlus,
             action: "nueva-cita",
-            href: "/admin-dashboard/cita/nueva-cita"
+            href: "/paciente-dashboard/cita/registrar-cita"
         },
         ...getCommonButtonsByPath(pathname),
     ];
@@ -97,7 +97,7 @@ export default function ConsultaCitaPacientePage() {
                                 mostrarCampos={["nombre", "identificacion", "nombre_usuario", "correo"]}
                             />
 
-                            <TablaCitas
+                            <TablaCitasPaciente
                                 citas={transformarCitasParaTabla(selectedCita.citas, selectedCita.paciente.nombre)}
                                 onVerCita={(cita) => console.log("Ver cita", cita)}
                                 onEditarCita={(cita) => console.log("Editar cita", cita)}

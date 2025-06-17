@@ -23,8 +23,8 @@ function HorarioSearch({ onHorarioEncontrado }) {
 
             const { medico, horarios, turnos } = response.data;
 
-            if (medico && horarios) {
-                const especialidad = medico.especialidad || {};
+            if (medico) {
+            const especialidad = medico.especialidad || {};
 
                 localStorage.setItem("identificacion", medico.identificacion);
                 localStorage.setItem("nombre_medico", `${medico.primer_nombre} ${medico.primer_apellido}`);
@@ -32,8 +32,8 @@ function HorarioSearch({ onHorarioEncontrado }) {
                 const data = {
                     medico,
                     especialidad,
-                    horarios,
-                    turnos,
+                    horarios: horarios || [],
+					turnos: turnos || [],
                 };
 
                 onHorarioEncontrado(data);
@@ -42,15 +42,31 @@ function HorarioSearch({ onHorarioEncontrado }) {
             }
 
         } catch (err) {
-            console.error("Error al obtener horarios:", err);
+    console.error("Error al obtener horarios:", err);
 
-            if (err.response?.status === 401) return;
+    if (err.response?.status === 500 && err.response?.data?.message?.includes("sin horarios")) {
+        // Caso especial: el médico existe pero no tiene horarios → NO es un error real
+        const medico = err.response.data.medico || { identificacion: query };
+        const especialidad = medico.especialidad || {};
 
-            setError("Error al obtener los datos. Inténtelo nuevamente.");
-        } finally {
-            setLoading(false);
-        }
-    };
+        const data = {
+            medico,
+            especialidad,
+            horarios: [],
+            turnos: [],
+        };
+
+        onHorarioEncontrado(data);
+    } else if (err.response?.status === 404) {
+        setError("Médico no encontrado.");
+    } else {
+        setError("Ocurrió un error al consultar el horario.");
+    }
+}
+ finally {
+			setLoading(false);
+		}
+	};
 
     return (
         <SearchInput

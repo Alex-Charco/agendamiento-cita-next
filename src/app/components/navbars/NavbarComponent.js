@@ -68,7 +68,6 @@ function NavbarComponent({ title, buttons, onAction }) {
               </Link>
             ) : (
               <Button
-                as="a"
                 color={color}
                 variant="flat"
                 onClick={() => onAction(action)}
@@ -117,7 +116,6 @@ function NavbarComponent({ title, buttons, onAction }) {
                 </Link>
               ) : (
                 <Button
-                  as="a"
                   color={color}
                   variant="flat"
                   onClick={() => onAction(action)}
