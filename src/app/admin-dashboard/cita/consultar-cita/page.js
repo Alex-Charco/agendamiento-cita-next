@@ -9,7 +9,6 @@ import TablaCitas from "@/admin-dashboard/cita/components/TablaCitas";
 import TablaCitasMedico from "@/common/citas/components/TablaCitasMedico";
 import CitaSearchWrapper from "@/admin-dashboard/cita/components/CitaSearchWrapper";
 import ModalRegistrarAsistencia from "@/common/citas/components/ModalRegistrarAsistencia";
-import { FaPlus } from "react-icons/fa";
 import { usePathname,  useRouter } from "next/navigation";
 import { mostrarToastExito } from "@/utils/toast";
 import { handleReagendarCita as handleReagendarCitaUtil } from "@/utils/citasHandlers";

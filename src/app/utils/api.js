@@ -46,14 +46,19 @@ export const fetchSeguro = async (identificacion, setSelectedSeguro) => {
     }
 };
 
-export const fetchHistorialPaciente = async (identificacion, setHistorialMedico) => {
+export const fetchHistorialPaciente = async (identificacion) => {
     try {
         const response = await authAxios.get(`/api/paciente/get/historial/${identificacion}`);
         console.log("URL consultada:", `/api/paciente/get/historial/${identificacion}`);
-        setHistorialMedico(response.data || []);
+
+        if (response.data && response.data.historial) {
+            return response.data.historial;  // devolvemos directamente el historial
+        } else {
+            return null;  // en caso de que no haya historial
+        }
     } catch (error) {
         console.error("Error al obtener historial médico:", error);
-        setHistorialMedico([]);
+        throw error;
     }
 };
 

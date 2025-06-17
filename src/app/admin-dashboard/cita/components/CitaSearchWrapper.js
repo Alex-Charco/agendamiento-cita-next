@@ -1,4 +1,4 @@
-
+import PropTypes from "prop-types";
 import { useState } from "react";
 import CitaSearch from "@/admin-dashboard/cita/components/CitaSearch";
 import CitaSearchMedico from "@/common/citas/components/CitaSearchMedico";
@@ -25,3 +25,8 @@ export default function CitaSearchWrapper({ onSelectCita }) {
         </div>
     );
 }
+
+// Agregamos la validación de props:
+CitaSearchWrapper.propTypes = {
+    onSelectCita: PropTypes.func.isRequired
+};

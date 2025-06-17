@@ -3,13 +3,11 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { FaPlus, FaSyncAlt, FaSearch } from "react-icons/fa";
-import axios from "axios";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import Search from "@/components/Search";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import { fetchHistorialMedico } from "@/utils/api/medicoApi";
 import DynamicTable from "@/components/table/DynamicTable";
-import CustomTabs from "@/components/CustomTabs";
 
 export default function HistorialCambiosMedicoPage() {
     const pathname = usePathname();
