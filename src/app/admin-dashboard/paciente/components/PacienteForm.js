@@ -167,7 +167,7 @@ import SubmitButton from "@/components/ui/SubmitButton";
         />
         <CustomInput
           name="identificacion"
-          label="Identificación del paciente"
+          label="Identificación paciente"
           value={paciente.identificacion}
           onChange={handleChange}
           placeholder="Ingrese la identificación"
