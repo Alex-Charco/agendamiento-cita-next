@@ -7,7 +7,7 @@ export default function TablaCitasMedico({ citas, onRegistrarAsistencia, onReage
   const columns = [
     { name: "Paciente", uid: "nombre" },
     { name: "Identificación", uid: "identificacion" },
-    { name: "Correo", uid: "correo" },
+    { name: "Correo", uid: "correo", render: (cita) => <span>{cita.correo}</span> },
     { name: "Fecha Turno", uid: "fecha_turno" },
     { name: "Hora Turno", uid: "hora_turno" },
     { name: "No. Turno", uid: "numero_turno" },
@@ -38,6 +38,7 @@ export default function TablaCitasMedico({ citas, onRegistrarAsistencia, onReage
   const citasTransformadas = citas.map((cita) => ({
     ...cita,
     estado: capitalize(cita.estado),
+	correo: cita.correo.toLowerCase(),
   }));
 
   return (
