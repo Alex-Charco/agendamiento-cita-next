@@ -9,7 +9,7 @@ import TablaCitas from "@/admin-dashboard/cita/components/TablaCitas";
 import TablaCitasMedico from "@/common/citas/components/TablaCitasMedico";
 import CitaSearchWrapper from "@/admin-dashboard/cita/components/CitaSearchWrapper";
 import ModalRegistrarAsistencia from "@/common/citas/components/ModalRegistrarAsistencia";
-import { usePathname,  useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { mostrarToastExito } from "@/utils/toast";
 import { handleReagendarCita as handleReagendarCitaUtil } from "@/utils/citasHandlers";
 
@@ -26,14 +26,14 @@ export default function ConsultaCitaAdminPage() {
   };
 
   const handleReagendarCita = (cita) => {
-	  handleReagendarCitaUtil({
-		cita,
-		data,
-		setCitaSeleccionada,
-		setAccionActual,
-		setModalOpen,
-	  });
-	};
+    handleReagendarCitaUtil({
+      cita,
+      data,
+      setCitaSeleccionada,
+      setAccionActual,
+      setModalOpen,
+    });
+  };
 
   const handleRegistrarAsistencia = (cita) => {
     console.log("Registrar asistencia para cita", cita);
@@ -45,7 +45,7 @@ export default function ConsultaCitaAdminPage() {
     setAccionActual("asistencia");
     setModalOpen(true);
   };
-	
+
   const handleAsistenciaRegistrada = ({ estado_asistencia }) => {
 
     if (accionActual === "asistencia") {
@@ -80,15 +80,15 @@ export default function ConsultaCitaAdminPage() {
         <>
           <PacienteDetalle
             paciente={data.paciente}
-            mostrarCampos={["nombre", "identificacion"]}
+            mostrarCampos={["nombre", "identificacion", "fecha_nacimiento", "telefono", "celular", "genero", "edad", "grupo_etario"]}
           />
           <TablaCitas
-			  citas={transformarCitasPaciente(data.citas)}
-			  onVerCita={(c) => console.log("Ver cita", c)}
-			  onEditarCita={(c) => console.log("Editar cita", c)}
-			  onRegistrarAsistencia={handleRegistrarAsistencia}
-			  onReagendarCita={handleReagendarCita}
-			/>
+            citas={transformarCitasPaciente(data.citas)}
+            onVerCita={(c) => console.log("Ver cita", c)}
+            onEditarCita={(c) => console.log("Editar cita", c)}
+            onRegistrarAsistencia={handleRegistrarAsistencia}
+            onReagendarCita={handleReagendarCita}
+          />
         </>
       );
     }
@@ -132,12 +132,12 @@ export default function ConsultaCitaAdminPage() {
       </div>
 
       <ModalRegistrarAsistencia
-		  isOpen={modalOpen}
-		  onClose={() => setModalOpen(false)}
-		  id_cita={citaSeleccionada?.id_cita}
-		  id_paciente={citaSeleccionada?.id_paciente}
-		  onAsistenciaRegistrada={handleAsistenciaRegistrada}
-		/>
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        id_cita={citaSeleccionada?.id_cita}
+        id_paciente={citaSeleccionada?.id_paciente}
+        onAsistenciaRegistrada={handleAsistenciaRegistrada}
+      />
     </div>
   );
 }
