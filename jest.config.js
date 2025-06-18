@@ -14,7 +14,7 @@ module.exports = {
         "^@/(.*)$": "<rootDir>/src/app/$1", // Alias "@/"
     },
 
-    // Tratar archivos JSX como módulos ES
+    // Tratar los archivos JSX como módulos ES
     extensionsToTreatAsEsm: [".jsx"],
 
     // Usar Babel para transformar los archivos de JS/TS/JSX/TSX
