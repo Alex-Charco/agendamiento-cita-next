@@ -2,8 +2,6 @@ import authAxios from "@/utils/api/authAxios";
 import Swal from "sweetalert2";
 import {
   mostrarToastExito,
-  mostrarToastError,
-  manejarSesionExpirada,
 } from "@/utils/toast";
 import { confirmarRegistro } from "@/utils/confirmacion";
 import { manejarError } from "@/utils/manejadorErrores";

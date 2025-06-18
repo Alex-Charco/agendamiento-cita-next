@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import DynamicTable from "@/components/table/DynamicTable";
-import { FaEye, FaEdit } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarHorario, rol }) {
 
     const columns = [
