@@ -13,6 +13,9 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       
       <NavbarComponent
+		menuItems={[
+			{ name: "Contacto", path: "/medico-dashboard/contacto" },
+		]}
         menuServices={[
           { name: "Agendar Cita", path: "/paciente-dashboard/cita/registrar-cita" },
           { name: "Consultar Cita", path: "/paciente-dashboard/cita/consultar-cita" },

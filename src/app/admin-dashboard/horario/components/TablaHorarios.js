@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import DynamicTable from "@/components/table/DynamicTable";
-import { FaEye, FaEdit } from "react-icons/fa";
-export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarHorario }) {
+import { FaEdit } from "react-icons/fa";
+export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarHorario, rol }) {
 
     const columns = [
         { name: "Fecha", uid: "fecha_horario" },
@@ -19,7 +19,6 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
                 return <span>{disponible}</span>;
             },
         },
-        { name: "Seleccionar", uid: "seleccion" },
         {
             name: "Turno extra",
             uid: "turno_extra",
@@ -39,18 +38,20 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
                 <div className="flex gap-3 justify-center items-center text-gray-600 text-lg">
                     <button
                         onClick={() => onSeleccionarHorario(horario)}
-                        className="text-blue-600 hover:text-blue-700 transition-colors"
+                        className="text-white bg-blue-700 hover:bg-blue-700 px-3 py-1 rounded text-[12px]"
                         title="Ver turnos"
                     >
-                        <FaEye />
+                        Ver turno
                     </button>
-                    <button
-                        onClick={() => onActualizarHorario(horario)}
-                        className="text-green-600 hover:text-green-700 transition-colors"
-                        title="Editar horario"
-                    >
-                        <FaEdit />
-                    </button>
+                    {rol === 'administrador' && (
+                        <button
+                            onClick={() => onActualizarHorario(horario)}
+                            className="text-green-600 hover:text-green-700 transition-colors"
+                            title="Editar horario"
+                        >
+                            <FaEdit />
+                        </button>
+                    )}
                 </div>
             ),
         },
@@ -77,4 +78,5 @@ TablaHorarios.propTypes = {
     horarios: PropTypes.arrayOf(PropTypes.object).isRequired,
     onSeleccionarHorario: PropTypes.func.isRequired,
     onActualizarHorario: PropTypes.func.isRequired,
+	rol: PropTypes.oneOf(['administrador', 'medico']).isRequired
 };

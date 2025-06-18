@@ -15,7 +15,7 @@ export default function ConsultaPacientePage() {
     const pathname = usePathname();
 
     const handlePacienteSelect = (paciente) => {
-        console.log("Paciente seleccionado:", paciente);
+        console.log("const handlePacienteSelect- Paciente seleccionado:", paciente);
         setSelectedPaciente(paciente);
 
         // Verificar si el paciente es de tipo militar antes de intentar obtener la info militar
@@ -80,8 +80,8 @@ export default function ConsultaPacientePage() {
                 <div className="flex justify-center py-8">
                     <div className="flex flex-col w-full max-w-4xl gap-4 border rounded-xl shadow-lg p-6 bg-white">
                         <h2 className="text-2xl font-semibold text-gray-800 border-b pb-4">Información Familiar</h2>
-                        {selectedPaciente?.Familiars?.length > 0 ? (
-                            selectedPaciente.Familiars.map((familiar) => (
+                        {selectedPaciente?.familiares?.length > 0 ? (
+                            selectedPaciente.familiares.map((familiar) => (
 							<div
 								key={familiar.identificacion}
                                     className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-gray-700 border rounded-lg p-4 bg-gray-50"

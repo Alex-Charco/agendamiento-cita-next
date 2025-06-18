@@ -95,6 +95,7 @@ export default function ConsultaHorarioPage() {
                                         onSeleccionarHorario={handleVerTurnos}
                                         onActualizarTurnoExtra={handleActualizarTurnoExtra}
                                         onActualizarHorario={handleActualizarHorario}
+										rol="administrador"
                                     />
 
                                     {/* Mostrar turnos solo si se selecciona un horario */}

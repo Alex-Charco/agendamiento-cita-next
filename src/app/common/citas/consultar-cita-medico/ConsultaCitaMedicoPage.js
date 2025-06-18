@@ -6,9 +6,8 @@ import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import MedicoDetalleCita from "@/common/citas/components/MedicoDetalleCita";
 import TablaCitasMedico from "@/common/citas/components/TablaCitasMedico";
-import { FaPlus } from "react-icons/fa";
 import authAxios from "@/utils/api/authAxios";
-import { mostrarToastExito, mostrarToastError } from "@/utils/toast";
+import { mostrarToastExito } from "@/utils/toast";
 import ModalRegistrarAsistencia from "@/common/citas/components/ModalRegistrarAsistencia";
 
 export default function ConsultaCitaMedicoPage() {

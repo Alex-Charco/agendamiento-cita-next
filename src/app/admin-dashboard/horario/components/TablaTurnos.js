@@ -21,7 +21,7 @@ export default function TablaTurnos({ turnos }) {
             <DynamicTable 
 				columns={columns} 
 				data={turnos}
-				actionLabel="Nuevo Turno"
+				actionLabel=""
 				actionRoute="/admin-dashborad/paciente/consultar-paciente"
 				filterPlaceholder="Buscar turno..." />
 			</div>

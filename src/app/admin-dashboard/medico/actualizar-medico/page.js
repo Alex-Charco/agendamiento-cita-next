@@ -62,7 +62,7 @@ export default function ActualizarMedicoPage() {
 
 		const user = JSON.parse(localStorage.getItem("user"));
 
-		if (!user || !user.id_usuario) {
+		if (!user?.id_usuario) {
 			setMensaje("No se encontró el ID del usuario. Por favor, vuelve a iniciar sesión.");
 			return;
 		}

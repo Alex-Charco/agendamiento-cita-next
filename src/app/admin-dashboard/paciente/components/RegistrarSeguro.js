@@ -55,7 +55,7 @@ export default function RegistrarSeguro() {
       console.log("✅ Respuesta de la API:", response.data);
 
       mostrarToastExito("✅ Seguro registrado con éxito");
-      setMensaje(""); // Limpiar mensaje si todo sale bien
+      setMensaje(""); // Limpiar mensaje si no hay error
     } catch (error) {
       const status = error.response?.status;
       const serverMessage = error.response?.data?.message;

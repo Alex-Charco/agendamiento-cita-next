@@ -34,6 +34,42 @@ export default function PacienteDetalle({ paciente, mostrarCampos }) {
                                     {paciente.identificacion}
                                 </p>
                             )}
+							{debeMostrar("fecha_nacimiento") && (
+                                <p>
+                                    <span className="font-semibold">F. Nacimiento:</span>{" "}
+                                    {paciente.fecha_nacimiento}
+                                </p>
+                            )}
+							{debeMostrar("telefono") && (
+                                <p>
+                                    <span className="font-semibold">Teléfono:</span>{" "}
+                                    {paciente.telefono}
+                                </p>
+                            )}
+							{debeMostrar("celular") && (
+                                <p>
+                                    <span className="font-semibold">Celular:</span>{" "}
+                                    {paciente.celular}
+                                </p>
+                            )}
+							{debeMostrar("genero") && (
+                                <p>
+                                    <span className="font-semibold">Género:</span>{" "}
+                                    {paciente.genero}
+                                </p>
+                            )}
+							{debeMostrar("edad") && (
+                                <p>
+                                    <span className="font-semibold">Edad:</span>{" "}
+                                    {paciente.edad}
+                                </p>
+                            )}
+							{debeMostrar("grupo_etario") && (
+                                <p>
+                                    <span className="font-semibold">Grupo Etario:</span>{" "}
+                                    {paciente.grupo_etario}
+                                </p>
+                            )}
                         </div>
                     </div>
 

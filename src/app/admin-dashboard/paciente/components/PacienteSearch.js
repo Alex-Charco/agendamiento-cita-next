@@ -90,7 +90,7 @@ function PacienteSearch({ onSelectPaciente }) {
 }
 
 PacienteSearch.propTypes = {
-  onSelectPaciente: PropTypes.object,
+  onSelectPaciente: PropTypes.func.isRequired,
 }
 
 export default PacienteSearch; 

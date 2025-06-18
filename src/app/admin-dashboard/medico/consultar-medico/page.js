@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { FaSearch, FaPlus, FaSyncAlt, FaHistory } from "react-icons/fa";
+import { FaPlus, FaSyncAlt, FaHistory } from "react-icons/fa";
 import MedicoSearch from "@/admin-dashboard/medico/components/MedicoSearch";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import CustomTabs from "@/components/CustomTabs";

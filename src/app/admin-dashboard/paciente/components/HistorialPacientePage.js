@@ -3,14 +3,13 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { FaPlus, FaSyncAlt, FaSearch } from "react-icons/fa";
-import axios from "axios";
 
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import Search from "@/components/Search";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
-import { fetchHistorialPaciente } from "@/utils/api";
 import DynamicTable from "@/components/table/DynamicTable";
 import CustomTabs from "@/components/CustomTabs";
+import { fetchHistorialPaciente } from "@/utils/api";
 
 export default function HistorialCambiosPacientePage() {
   const pathname = usePathname();
@@ -27,51 +26,34 @@ export default function HistorialCambiosPacientePage() {
   });
 
   const handleBuscar = async () => {
-  if (!query.trim()) return;
-  setLoading(true);
-  setError(null);
+    if (!query.trim()) return;
+    setLoading(true);
+    setError(null);
 
-  try {
-    const token = localStorage.getItem("authToken");
-    if (!token) throw new Error("No se encontró un token de autenticación.");
-
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/paciente/get/historial/${query}`;
-    console.log("URL que se está consultando:", apiUrl);
-
-    const response = await axios.get(apiUrl, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (response.data && response.data.historial) {
-      // Ajuste para mapear 'familiares' a 'familiar' para el estado si quieres mantenerlo igual
-      const historial = response.data.historial;
-
-      setHistorialCambios({
-        paciente: historial.paciente || [],
-        familiar: historial.familiares || [], // corregido 'familiares' del backend
-        info_militar: historial.info_militar || [],
-        residencia: historial.residencia || [],
-        seguro: historial.seguro || [],
-      });
-
-      // Puedes setear selectedPaciente para mostrar las tabs solo si quieres
-      setSelectedPaciente(query);
-
-    } else {
-      setHistorialCambios({
-        paciente: [],
-        familiar: [],
-        info_militar: [],
-        residencia: [],
-        seguro: [],
-      });
-      setSelectedPaciente(null);
-      setError("No se encontró historial para ese paciente.");
+    try {
+      const historial = await fetchHistorialPaciente(query);
+      
+      if (historial) {
+        setHistorialCambios({
+          paciente: historial.paciente || [],
+          familiar: historial.familiares || [],
+          info_militar: historial.info_militar || [],
+          residencia: historial.residencia || [],
+          seguro: historial.seguro || [],
+        });
+        setSelectedPaciente(query);
+      } else {
+        limpiarEstadoConError("No se encontró historial para ese paciente.");
+      }
+    } catch (err) {
+		console.error("Error al buscar historial del paciente:", err);
+      limpiarEstadoConError("No se encontró el paciente o ocurrió un error.");
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error("Error al buscar paciente:", err);
-    setError("No se encontró el paciente o ocurrió un error.");
-    setSelectedPaciente(null);
+  };
+
+  const limpiarEstadoConError = (mensaje) => {
     setHistorialCambios({
       paciente: [],
       familiar: [],
@@ -79,14 +61,13 @@ export default function HistorialCambiosPacientePage() {
       residencia: [],
       seguro: [],
     });
-  } finally {
-    setLoading(false);
-  }
-};
+    setSelectedPaciente(null);
+    setError(mensaje);
+  };
 
-  const buttons = [	
-	{ label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", href: "/admin-dashboard/paciente/actualizar-paciente" },
-	{ label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", href: "/admin-dashboard/paciente/consultar-paciente" },
+  const buttons = [
+    { label: "Actualizar Paciente", icon: FaSyncAlt, action: "actualizar-paciente", href: "/admin-dashboard/paciente/actualizar-paciente" },
+    { label: "Buscar Paciente", icon: FaSearch, action: "buscar-paciente", href: "/admin-dashboard/paciente/consultar-paciente" },
     { label: "Nuevo Paciente", icon: FaPlus, action: "nuevo-paciente", href: "/admin-dashboard/paciente/registrar-paciente" },
     ...getCommonButtonsByPath(pathname),
   ];
@@ -151,7 +132,7 @@ export default function HistorialCambiosPacientePage() {
                     actionRoute=""
                   />
                 ) : (
-                  <p className="text-gray-600">No hay cambios registrados en {tab.label.toLowerCase()}.</p>
+                  <p className="text-gray-600">No hay cambios registrados en {tab.title.toLowerCase()}.</p>
                 ),
               }))}
             />
