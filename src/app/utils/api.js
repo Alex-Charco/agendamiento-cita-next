@@ -1,7 +1,8 @@
 import authAxios from "@/utils/api/authAxios";
 import Swal from "sweetalert2";
-import { mostrarToastExito, mostrarToastError, manejarSesionExpirada, manejarError } from "@/utils/toast";
+import { mostrarToastExito, mostrarToastError, manejarSesionExpirada } from "@/utils/toast";
 import { confirmarRegistro } from "@/utils/confirmacion";
+import { manejarError } from "@/utils/manejadorErrores";
 import "@/globals.css";
 
 // *** CONSULTAS ***
@@ -51,13 +52,10 @@ export const fetchHistorialPaciente = async (identificacion) => {
         const response = await authAxios.get(`/api/paciente/get/historial/${identificacion}`);
         console.log("URL consultada:", `/api/paciente/get/historial/${identificacion}`);
 
-        if (response.data && response.data.historial) {
-            return response.data.historial;  // devolvemos directamente el historial
-        } else {
-            return null;  // en caso de que no haya historial
-        }
+        return response.data?.historial || null;
     } catch (error) {
         console.error("Error al obtener historial médico:", error);
+		manejarError(error);
         throw error;
     }
 };
@@ -138,7 +136,7 @@ export const ActualizarFamiliar = async (data, setMensaje, setSuccess) => {
       return;
     }
 
-    if (!user || !user.id_usuario) {
+    if (!user?.id_usuario) {
       setMensaje("No se encontró el ID del usuario. Por favor, vuelve a iniciar sesión.");
       return;
     }
@@ -192,7 +190,7 @@ export const ActualizarInfoMilitar = async (data, setMensaje, setSuccess) => {
       return;
     }
 
-    if (!user || !user.id_usuario) {
+    if (!user?.id_usuario) {
       setMensaje("No se encontró el ID del usuario. Por favor, vuelve a iniciar sesión.");
       return;
     }
@@ -245,7 +243,7 @@ export const ActualizarResidencia = async (data, setMensaje, setSuccess) => {
       return;
     }
 
-    if (!user || !user.id_usuario) {
+    if (!user?.id_usuario) {
       setMensaje("No se encontró el ID del usuario. Por favor, vuelve a iniciar sesión.");
       return;
     }

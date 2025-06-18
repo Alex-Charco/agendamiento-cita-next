@@ -1,5 +1,6 @@
 "use client";
 
+import PropTypes from "prop-types";
 import {
   Modal,
   ModalContent,
@@ -135,5 +136,25 @@ const ModalRegistrarCita = ({ turno, isOpen, onClose, onCitaRegistrada }) => {
     </Modal>
   );
 };
+
+ModalRegistrarCita.propTypes = {
+  turno: PropTypes.shape({
+    id_turno: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    medico: PropTypes.shape({
+      medico: PropTypes.string,
+      Especialidad: PropTypes.shape({
+        especialidad: PropTypes.string,
+        atencion: PropTypes.string,
+        consultorio: PropTypes.string,
+      }),
+    }),
+    fecha: PropTypes.string,
+    hora: PropTypes.string,
+  }).isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onCitaRegistrada: PropTypes.func,
+};
+
 
 export default ModalRegistrarCita;

@@ -49,41 +49,42 @@ export default function RegistrarCitaPage() {
   const buttons = [...getCommonButtonsByPath(pathname)];
 
   return (
-    <div className="bg-gray-50 border-1 border-gray-200 min-h-screen">
-      <NavbarComponent title="Registrar Cita" buttons={buttons} />
+	  <div className="bg-gray-50 border-1 border-gray-200 min-h-screen">
+		<NavbarComponent title="Registrar Cita" buttons={buttons} />
 
-      <div className="flex justify-center py-2">
-        <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50 mx-2 text-center">
+		<div className="flex justify-center py-2">
+		  <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50 mx-2 text-center">
+			{(() => {
+			  if (loading) {
+				return <p className="text-gray-600 py-4">Cargando turnos...</p>;
+			  }
+			  if (error) {
+				return <p className="text-red-600 py-4">{error}</p>;
+			  }
+			  if (turnos.length === 0) {
+				return <p className="text-gray-500 py-4">No hay turnos disponibles actualmente.</p>;
+			  }
+			  return (
+				<TablaTurnosCita
+				  turnos={turnos}
+				  onSeleccionarTurno={(turno) => {
+					setTurnoSeleccionado(turno);
+					onOpen();
+				  }}
+				/>
+			  );
+			})()}
+		  </div>
+		</div>
 
-          {loading ? (
-            <p className="text-gray-600 py-4">Cargando turnos...</p>
-          ) : error ? (
-            <p className="text-red-600 py-4">{error}</p>
-          ) : turnos.length === 0 ? (
-            <p className="text-gray-500 py-4">No hay turnos disponibles actualmente.</p>
-          ) : (
-            <TablaTurnosCita
-              turnos={turnos}
-              onSeleccionarTurno={(turno) => {
-                setTurnoSeleccionado(turno);
-                onOpen(); // Abrir modal
-              }}
-            />
-          )}
-        </div>
-      </div>
-
-      {/* ✅ Modal */}
-      {turnoSeleccionado && (
-        <ModalRegistrarCita
-          turno={turnoSeleccionado}
-          isOpen={isOpen}
-          onClose={onOpenChange}
-          onCitaRegistrada={() => {
-            fetchTurnos(); // 👈 recargar los turnos disponibles
-          }}
-        />
-      )}
-    </div>
-  );
+		{turnoSeleccionado && (
+		  <ModalRegistrarCita
+			turno={turnoSeleccionado}
+			isOpen={isOpen}
+			onClose={onOpenChange}
+			onCitaRegistrada={fetchTurnos}
+		  />
+		)}
+	  </div>
+	);
 }

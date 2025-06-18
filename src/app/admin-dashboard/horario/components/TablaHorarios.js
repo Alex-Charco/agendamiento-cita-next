@@ -38,10 +38,10 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
                 <div className="flex gap-3 justify-center items-center text-gray-600 text-lg">
                     <button
                         onClick={() => onSeleccionarHorario(horario)}
-                        className="text-blue-600 hover:text-blue-700 transition-colors"
+                        className="text-white bg-blue-700 hover:bg-blue-700 px-3 py-1 rounded text-[12px]"
                         title="Ver turnos"
                     >
-                        <FaEye />
+                        Ver turno
                     </button>
                     {rol === 'administrador' && (
                         <button

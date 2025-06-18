@@ -6,23 +6,7 @@ import {
   manejarSesionExpirada,
 } from "@/utils/toast";
 import { confirmarRegistro } from "@/utils/confirmacion";
-
-// Función genérica para manejar errores
-function manejarError(error, setMensaje, setSuccess) {
-  const status = error.response?.status;
-  const serverMessage = error.response?.data?.message;
-
-  console.error("Error:", { status, serverMessage, fullError: error });
-
-  if (status === 401) {
-    manejarSesionExpirada(setMensaje);
-  } else {
-    const mensajeError = serverMessage || error.message || "Error desconocido";
-    setMensaje(`Error: ${mensajeError}`);
-    mostrarToastError(error);
-  }
-  setSuccess(false);
-}
+import { manejarError } from "@/utils/manejadorErrores";
 
 // Función genérica para confirmación previa
 async function confirmarAccion(mensaje) {

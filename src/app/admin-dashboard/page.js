@@ -13,7 +13,7 @@ const HomePage = () => {
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
       <NavbarComponent
 	    menuItems={[
-			{ name: "Contacto", path: "/admi-dashboard/contacto" },
+			{ name: "Contacto", path: "/admin-dashboard/contacto" },
 		  ]}
         menuServices={menuServicesAdmin}
         showExtraOptions={true}

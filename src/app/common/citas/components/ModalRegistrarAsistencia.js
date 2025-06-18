@@ -30,18 +30,17 @@ const ModalRegistrarAsistencia = ({
   const [estadoAsistencia, setEstadoAsistencia] = useState("");
   const [comentario, setComentario] = useState("");
 
-  // Al abrir el modal, establecer el estado por defecto si existe
   useEffect(() => {
     if (estadoPorDefecto && isOpen) {
       setEstadoAsistencia(estadoPorDefecto);
     } else if (!isOpen) {
-      setEstadoAsistencia(""); // limpiar si se cierra
+      setEstadoAsistencia("");
       setComentario("");
     }
   }, [estadoPorDefecto, isOpen]);
 
   const registrarAsistencia = async () => {
-	  console.log("Iniciando registro de asistencia");
+    console.log("Iniciando registro de asistencia");
     const confirmado = await confirmarRegistro("¿Deseas registrar esta asistencia?");
     if (!confirmado) return;
 
@@ -55,7 +54,6 @@ const ModalRegistrarAsistencia = ({
       };
 
       await authAxios.post("/api/asistencia/registrar", payload);
-
       mostrarToastExito("Asistencia registrada con éxito");
 
       onAsistenciaRegistrada?.({
@@ -86,8 +84,11 @@ const ModalRegistrarAsistencia = ({
 
             <ModalBody className="px-4 py-2">
               <div className="mt-2">
-                <label className="text-sm font-bold text-gray-700 mb-1 block">ID Cita</label>
+                <label htmlFor="id-cita" className="text-sm font-bold text-gray-700 mb-1 block">
+                  ID Cita
+                </label>
                 <Input
+                  id="id-cita"
                   isReadOnly
                   value={id_cita}
                   variant="light"
@@ -96,8 +97,11 @@ const ModalRegistrarAsistencia = ({
               </div>
 
               <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-gray-700">Estado de asistencia</label>
+                <label htmlFor="estado-asistencia" className="text-sm font-medium text-gray-700">
+                  Estado de asistencia
+                </label>
                 <Select
+                  id="estado-asistencia"
                   aria-label="Estado de asistencia"
                   variant="light"
                   fullWidth
@@ -118,8 +122,11 @@ const ModalRegistrarAsistencia = ({
               </div>
 
               <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-gray-700">Comentario (opcional)</label>
+                <label htmlFor="comentario" className="text-sm font-medium text-gray-700">
+                  Comentario (opcional)
+                </label>
                 <Textarea
+                  id="comentario"
                   placeholder="Escribe un comentario si es necesario..."
                   value={comentario}
                   onChange={(e) => setComentario(e.target.value)}
@@ -154,8 +161,6 @@ const ModalRegistrarAsistencia = ({
   );
 };
 
-export default ModalRegistrarAsistencia;
-
 ModalRegistrarAsistencia.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -170,3 +175,5 @@ ModalRegistrarAsistencia.propTypes = {
   estadoPorDefecto: PropTypes.string,
   onAsistenciaRegistrada: PropTypes.func,
 };
+
+export default ModalRegistrarAsistencia;

@@ -93,9 +93,9 @@ function UsuarioForm({ onSubmit, usuarioData = {} }) {
 
                 {passwordErrors.length > 0 && (
                     <ul className="mt-2 text-sm text-red-600 list-disc list-inside">
-                        {passwordErrors.map((error, index) => (
-                            <li key={index}>{error}</li>
-                        ))}
+                        {passwordErrors.map((error) => (
+						  <li key={error}>{error}</li>
+						))}
                     </ul>
                 )}
             </div>

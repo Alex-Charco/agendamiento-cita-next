@@ -1,14 +1,12 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import Footer from "@/components/Footer";
 import { MdPhone, MdEmail, MdLocationOn } from "react-icons/md";
-import { FaArrowLeft } from "react-icons/fa";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 
 const Contacto = () => {
-  const router = useRouter();
   const pathname = usePathname();
   
   const buttons = [

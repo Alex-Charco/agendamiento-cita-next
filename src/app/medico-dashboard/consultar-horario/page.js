@@ -35,7 +35,7 @@ export default function ConsultaHorarioMedicoPage() {
         const fetchHorarioDelMedico = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user"));
-                if (!user || !user.identificacion) {
+                if (!user?.identificacion) {
                     setError("No se encontró la información del médico en localStorage.");
                     return;
                 }
