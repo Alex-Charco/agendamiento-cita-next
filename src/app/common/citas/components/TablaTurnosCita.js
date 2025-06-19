@@ -34,7 +34,7 @@ export default function TablaTurnosCita({ turnos, onSeleccionarTurno }) {
             render: (turno) => (
                 <button
                     onClick={() => onSeleccionarTurno?.(turno)} // 👈 evita crash si es undefined
-                    className="text-white bg-blue-700 hover:bg-blue-700 px-3 py-1 rounded text-[12px]"
+                    className="text-white bg-blue-700 hover:bg-blue-700 px-3 py-1 rounded-lg text-[12px]"
                 >
                     Registrar Cita
                 </button>

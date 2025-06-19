@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import DynamicTable from "@/components/table/DynamicTable";
-import { FaEdit } from "react-icons/fa";
 export default function TablaHorarios({ horarios, onSeleccionarHorario, onActualizarHorario, rol }) {
 
     const columns = [
@@ -38,7 +37,7 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
                 <div className="flex gap-3 justify-center items-center text-gray-600 text-lg">
                     <button
                         onClick={() => onSeleccionarHorario(horario)}
-                        className="text-white bg-blue-700 hover:bg-blue-700 px-3 py-1 rounded text-[12px]"
+                        className="flex-1 sm:flex-none bg-blue-700 text-white text-[12px] px-3 py-1 rounded-lg shadow hover:bg-blue-800 transition-all"
                         title="Ver turnos"
                     >
                         Ver turno
@@ -46,10 +45,10 @@ export default function TablaHorarios({ horarios, onSeleccionarHorario, onActual
                     {rol === 'administrador' && (
                         <button
                             onClick={() => onActualizarHorario(horario)}
-                            className="text-green-600 hover:text-green-700 transition-colors"
-                            title="Editar horario"
+                            className="flex-1 sm:flex-none bg-gray-200 text-gray-700 text-[12px] border border-gray-300 px-3 py-1 rounded-lg shadow hover:bg-gray-300 transition-all"
+                            title="Actualizar horario"
                         >
-                            <FaEdit />
+                            Actualizar
                         </button>
                     )}
                 </div>
