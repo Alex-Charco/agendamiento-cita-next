@@ -43,7 +43,7 @@ export default function TablaTurnosCita({ turnos, onSeleccionarTurno }) {
     ];
 
     return (
-        <div className="flex justify-center py-2">
+        <div className="flex w-full justify-center py-2 mx-2">
             <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50 text-center">
                 <div className="absolute -top-2 left-4 bg-white px-2 text-[10px] text-blue-800">
                     Turnos disponibles

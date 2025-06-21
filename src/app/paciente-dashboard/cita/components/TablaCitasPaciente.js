@@ -11,6 +11,8 @@ const capitalize = (text) => {
 export default function TablaCitasPaciente({ citas, onVerCita, onEditarCita }) {
     const columns = [
         { name: "Médico", uid: "nombre_medico" },
+		{ name: "Celular", uid: "celular" },
+		{ name: "Correo", uid: "correo" },
         { name: "Especialidad", uid: "especialidad" },
         { name: "Tipo Atención", uid: "tipo_atencion" },
         { name: "Consultorio", uid: "consultorio" },

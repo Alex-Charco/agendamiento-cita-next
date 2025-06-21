@@ -102,6 +102,10 @@ export default function DynamicTable({
             const color = value === "active" ? "success" : "danger";
             return <Chip color={color}>{capitalize(value)}</Chip>;
         }
+		// No capitalizar el campo correo
+		if (uid === "correo") {
+			return value;
+		}
         return typeof value === "string" ? capitalize(value) : value;
     };
 

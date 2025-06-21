@@ -52,11 +52,10 @@ export default function RegistrarCitaPage() {
 	...getCommonButtonsByPath(pathname)];
 
   return (
-	  <div className="bg-gray-50 border-1 border-gray-200 min-h-screen">
+	  <div className="bg-gray-50 border-1 border-gray-200">
 		<NavbarComponent title="Registrar Cita" buttons={buttons} />
 
 		<div className="flex justify-center py-2">
-		  <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50 mx-2 text-center">
 			{(() => {
 			  if (loading) {
 				return <p className="text-gray-600 py-4">Cargando turnos...</p>;
@@ -77,7 +76,6 @@ export default function RegistrarCitaPage() {
 				/>
 			  );
 			})()}
-		  </div>
 		</div>
 
 		{turnoSeleccionado && (

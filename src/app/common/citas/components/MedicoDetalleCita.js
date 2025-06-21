@@ -13,7 +13,7 @@ export default function MedicoDetalleCita({ medico, mostrarCampos }) {
 
     return (
         <div className="flex flex-col justify-center py-2 pt-4 w-full">
-            <div className="w-full px-4">
+            <div className="w-full">
                 <div className="grid grid-cols-1 gap-6 w-full">
                     
                     <div className="relative w-full border rounded-lg p-3 bg-white">

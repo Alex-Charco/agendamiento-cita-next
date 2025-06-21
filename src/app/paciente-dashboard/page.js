@@ -38,11 +38,13 @@ const HomePage = () => {
         <CardFeature 
 			icon={<FaRegCalendarAlt className="text-blue-700" size={24} />} 
 			title="Agendar Citas" 
-			description="Programa fácilmente tu cita médica eligiendo la fecha, hora, especialidad y médico de tu preferencia." />
+			description="Programa fácilmente tu cita médica eligiendo la fecha, hora, especialidad y médico de tu preferencia." 
+		/>
         <CardFeature 
 			icon={<IoSearchSharp className="text-green-700" size={24} />}  
 			title="Consultar Citas" 
-			description="Consulta el historial de tus citas médicas y accede a los detalles de cada una en cualquier momento." />
+			description="Consulta el historial de tus citas médicas y accede a los detalles de cada una en cualquier momento." 
+		/>
       </section>
 
       <Footer />
