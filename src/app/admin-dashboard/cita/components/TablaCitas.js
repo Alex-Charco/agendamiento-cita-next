@@ -15,15 +15,15 @@ export default function TablaCitas({
   onReagendarCita,
 }) {
   const columns = [
+	{ name: "Fecha Turno", uid: "fecha_turno" },
+    { name: "Hora Turno", uid: "hora_turno" },
+    { name: "No. Turno", uid: "numero_turno" },
     { name: "Médico", uid: "nombre_medico" },
     { name: "Especialidad", uid: "especialidad" },
     { name: "Tipo Atención", uid: "tipo_atencion" },
     { name: "Consultorio", uid: "consultorio" },
-    { name: "Fecha Turno", uid: "fecha_turno" },
-    { name: "Hora Turno", uid: "hora_turno" },
-    { name: "No. Turno", uid: "numero_turno" },
-    { name: "Fecha Creación", uid: "fecha_creacion" },
     { name: "Estado", uid: "estado" },
+	{ name: "Fecha Creación", uid: "fecha_creacion" },
     {
       name: "Acciones",
       uid: "acciones",

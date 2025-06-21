@@ -10,14 +10,14 @@ export default function TablaCitasMedico({
   mostrarAsistencia = false,
 }) {
   const columns = [
+	{ name: "Fecha Turno", uid: "fecha_turno" },
+    { name: "Hora Turno", uid: "hora_turno" },
+    { name: "No. Turno", uid: "numero_turno" },
     { name: "Paciente", uid: "nombre" },
     { name: "Identificación", uid: "identificacion" },
     { name: "Correo", uid: "correo", render: (cita) => <span>{cita.correo}</span> },
-    { name: "Fecha Turno", uid: "fecha_turno" },
-    { name: "Hora Turno", uid: "hora_turno" },
-    { name: "No. Turno", uid: "numero_turno" },
+	{ name: "Estado", uid: "estado" },
     { name: "Fecha Creación", uid: "fecha_creacion" },
-    { name: "Estado", uid: "estado" },
     {
       name: "Acciones",
       uid: "acciones",

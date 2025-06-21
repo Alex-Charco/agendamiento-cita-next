@@ -10,17 +10,17 @@ const capitalize = (text) => {
 
 export default function TablaCitasPaciente({ citas, onVerCita, onEditarCita }) {
     const columns = [
+		{ name: "Fecha Turno", uid: "fecha_turno" },
+        { name: "Hora Turno", uid: "hora_turno" },
+        { name: "No. Turno", uid: "numero_turno" },
         { name: "Médico", uid: "nombre_medico" },
-		{ name: "Celular", uid: "celular" },
-		{ name: "Correo", uid: "correo" },
         { name: "Especialidad", uid: "especialidad" },
         { name: "Tipo Atención", uid: "tipo_atencion" },
         { name: "Consultorio", uid: "consultorio" },
-        { name: "Fecha Turno", uid: "fecha_turno" },
-        { name: "Hora Turno", uid: "hora_turno" },
-        { name: "No. Turno", uid: "numero_turno" },
+        { name: "Celular", uid: "celular" },
+		{ name: "Correo", uid: "correo" },
+		{ name: "Estado", uid: "estado" },
         { name: "Fecha Creación", uid: "fecha_creacion" },
-        { name: "Estado", uid: "estado" },
     ];
 
     // Capitaliza los campos de texto de cada cita
