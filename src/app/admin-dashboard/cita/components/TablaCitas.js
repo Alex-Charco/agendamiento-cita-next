@@ -30,12 +30,6 @@ export default function TablaCitas({
       render: (cita) => (
         <div className="flex flex-col sm:flex-row sm:justify-center gap-2">
           <button
-            className="flex-1 sm:flex-none bg-blue-700 text-white text-[12px] px-3 py-1 rounded-lg shadow hover:bg-blue-800 transition-all"
-            onClick={() => onRegistrarAsistencia(cita)}
-          >
-            Asistencia
-          </button>
-          <button
 		  className="flex-1 sm:flex-none bg-gray-200 text-gray-700 text-[12px] border border-gray-300 px-3 py-1 rounded-lg shadow hover:bg-gray-300 transition-all"
 		  onClick={() => onReagendarCita(cita)}
 		>

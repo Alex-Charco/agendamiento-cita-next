@@ -42,21 +42,23 @@ export default function ConsultaCitaMedicoPage() {
   }, []);
 
   const transformarCitasParaTabla = (citas) => {
-    return citas.map((cita) => ({
-      nombre: cita.paciente?.nombre || "",
-      identificacion: cita.paciente?.identificacion || "",
-      correo: cita.paciente?.correo || "",
-      fecha_turno: cita.turno?.horario?.fecha_horario || "",
-      hora_turno: cita.turno?.hora_turno || "",
-      numero_turno: cita.turno?.id_turno || "",
-      fecha_creacion: cita.fecha_creacion || "",
-      estado: cita.estado_cita || "",
-      original: cita,
-    }));
-  };
+	  return citas.map((cita) => ({
+		nombre: cita.paciente?.nombre || "",
+		identificacion: cita.paciente?.identificacion || "",
+		correo: cita.paciente?.correo || "",
+		fecha_turno: cita.turno?.horario?.fecha_horario || "",
+		hora_turno: cita.turno?.hora_turno || "",
+		numero_turno: cita.turno?.id_turno || "",
+		fecha_creacion: cita.fecha_creacion || "",
+		estado: cita.estado_cita || "",
+		id_cita: cita.id_cita || "",
+		id_paciente: cita.paciente?.id_paciente || "",  // AGREGAMOS ESTO
+		original: cita,
+	  }));
+	};
 
   const manejarAccion = (cita, accion) => {
-    setCitaSeleccionada(cita.original);
+    setCitaSeleccionada(cita);
     setTipoAccion(accion);
     setMostrarModal(true);
 
@@ -126,14 +128,15 @@ export default function ConsultaCitaMedicoPage() {
                 citas={transformarCitasParaTabla(selectedMedico.citas)}
                 onRegistrarAsistencia={(cita) => manejarAccion(cita, "asistencia")}
                 onReagendarCita={(cita) => manejarAccion(cita, "reagendar")}
+				mostrarAsistencia={true}
               />
 
               <ModalRegistrarAsistencia
                 isOpen={mostrarModal}
                 onClose={cerrarModal}
                 id_cita={citaSeleccionada?.id_cita}
-                id_paciente={citaSeleccionada?.paciente?.id_paciente}
-                estadoPorDefecto={citaSeleccionada?.estado_cita}
+                id_paciente={citaSeleccionada?.id_paciente}
+                estadoPorDefecto={tipoAccion === "asistencia" ? "CONFIRMADA" : "REAGENDADA"}
                 onAsistenciaRegistrada={handleAsistenciaRegistrada}
               />
             </>

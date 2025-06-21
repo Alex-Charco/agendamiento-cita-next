@@ -26,6 +26,7 @@ const ModalRegistrarAsistencia = ({
   id_paciente,
   estadoPorDefecto,
   onAsistenciaRegistrada,
+  opcionesPermitidas = ["CONFIRMADA", "CANCELADA", "REAGENDADA", "NO_ASISTIO"],  // Nuevo prop con valores por defecto
 }) => {
   const [estadoAsistencia, setEstadoAsistencia] = useState("");
   const [comentario, setComentario] = useState("");
@@ -66,6 +67,19 @@ const ModalRegistrarAsistencia = ({
       mostrarToastError(error, "No se pudo registrar la asistencia");
     }
   };
+
+  // Todas las posibles opciones
+  const todasLasOpciones = [
+    { value: "CONFIRMADA", label: "Confirmada" },
+    { value: "CANCELADA", label: "Cancelada" },
+    { value: "REAGENDADA", label: "Reagendada" },
+    { value: "NO_ASISTIO", label: "No asistió" }
+  ];
+
+  // Filtrar las opciones según lo permitido
+  const opcionesFiltradas = todasLasOpciones.filter(opcion => 
+    opcionesPermitidas.includes(opcion.value)
+  );
 
   return (
     <Modal
@@ -109,13 +123,13 @@ const ModalRegistrarAsistencia = ({
                   onChange={(e) => setEstadoAsistencia(e.target.value)}
                   className="bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md shadow-sm focus:outline-none transition-colors duration-200"
                 >
-                  {["CONFIRMADA", "CANCELADA", "REAGENDADA", "NO_ASISTIO"].map((estado) => (
+                  {opcionesFiltradas.map((opcion) => (
                     <SelectItem
-                      key={estado}
-                      value={estado}
+                      key={opcion.value}
+                      value={opcion.value}
                       className="text-blue-700 font-medium"
                     >
-                      {estado}
+                      {opcion.label}
                     </SelectItem>
                   ))}
                 </Select>
@@ -174,6 +188,7 @@ ModalRegistrarAsistencia.propTypes = {
   ]),
   estadoPorDefecto: PropTypes.string,
   onAsistenciaRegistrada: PropTypes.func,
+  opcionesPermitidas: PropTypes.arrayOf(PropTypes.string), // NUEVO PROP VALIDADO
 };
 
 export default ModalRegistrarAsistencia;

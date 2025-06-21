@@ -8,6 +8,7 @@ import authAxios from "@/utils/api/authAxios";
 import TablaTurnosCita from "@/common/citas/components/TablaTurnosCita";
 import { useDisclosure } from "@heroui/react";
 import ModalRegistrarCita from "@/common/citas/components/ModalRegistrarCita";
+import { FaSearch } from "react-icons/fa";
 
 export default function RegistrarCitaPage() {
   const [turnos, setTurnos] = useState([]);
@@ -46,7 +47,9 @@ export default function RegistrarCitaPage() {
     fetchTurnos();
   }, []);
 
-  const buttons = [...getCommonButtonsByPath(pathname)];
+  const buttons = [
+	{ label: "Buscar Cita", icon: FaSearch, action: "buscar-cita", href: "/paciente-dashboard/cita/consultar-cita" },
+	...getCommonButtonsByPath(pathname)];
 
   return (
 	  <div className="bg-gray-50 border-1 border-gray-200 min-h-screen">
