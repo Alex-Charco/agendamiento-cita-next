@@ -19,6 +19,7 @@ const HomePage = () => {
             name: "Paciente",
             subMenu: [
               { name: "Buscar Cita", path: "/medico-dashboard/cita/consultar-cita-medico" },
+			  { name: "Nota Evolutiva", path: "/medico-dashboard/nota-evolutiva" },
             ],
           },
           {

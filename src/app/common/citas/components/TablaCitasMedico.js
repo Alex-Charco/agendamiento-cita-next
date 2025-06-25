@@ -3,27 +3,34 @@ import PropTypes from "prop-types";
 import DynamicTable from "@/components/table/DynamicTable";
 import { capitalize } from "@/utils/stringUtils";
 
-export default function TablaCitasMedico({ citas, onRegistrarAsistencia, onReagendarCita }) {
+export default function TablaCitasMedico({
+  citas,
+  onRegistrarAsistencia,
+  onReagendarCita,
+  mostrarAsistencia = false,
+}) {
   const columns = [
+	{ name: "Fecha Turno", uid: "fecha_turno" },
+    { name: "Hora Turno", uid: "hora_turno" },
+    { name: "No. Turno", uid: "numero_turno" },
     { name: "Paciente", uid: "nombre" },
     { name: "Identificación", uid: "identificacion" },
     { name: "Correo", uid: "correo", render: (cita) => <span>{cita.correo}</span> },
-    { name: "Fecha Turno", uid: "fecha_turno" },
-    { name: "Hora Turno", uid: "hora_turno" },
-    { name: "No. Turno", uid: "numero_turno" },
+	{ name: "Estado", uid: "estado" },
     { name: "Fecha Creación", uid: "fecha_creacion" },
-    { name: "Estado", uid: "estado" },
     {
       name: "Acciones",
       uid: "acciones",
       render: (cita) => (
         <div className="flex flex-col sm:flex-row sm:justify-center gap-2">
-          <button
-            className="flex-1 sm:flex-none bg-blue-700 text-white text-[12px] px-3 py-1 rounded-lg shadow hover:bg-blue-800 transition-all"
-            onClick={() => onRegistrarAsistencia(cita)}
-          >
-            Asistencia
-          </button>
+          {mostrarAsistencia && (
+            <button
+              className="flex-1 sm:flex-none bg-blue-700 text-white text-[12px] px-3 py-1 rounded-lg shadow hover:bg-blue-800 transition-all"
+              onClick={() => onRegistrarAsistencia(cita)}
+            >
+              Nota evolutiva
+            </button>
+          )}
           <button
             className="flex-1 sm:flex-none bg-gray-200 text-gray-700 text-[12px] border border-gray-300 px-3 py-1 rounded-lg shadow hover:bg-gray-300 transition-all"
             onClick={() => onReagendarCita(cita)}
@@ -38,7 +45,8 @@ export default function TablaCitasMedico({ citas, onRegistrarAsistencia, onReage
   const citasTransformadas = citas.map((cita) => ({
     ...cita,
     estado: capitalize(cita.estado),
-	correo: cita.correo.toLowerCase(),
+    correo: cita.correo.toLowerCase(),
+	original: cita.original
   }));
 
   return (
@@ -49,7 +57,7 @@ export default function TablaCitasMedico({ citas, onRegistrarAsistencia, onReage
         </div>
         <DynamicTable
           columns={columns}
-          data={citasTransformadas}
+          data={citas}
           filterPlaceholder="Filtrar citas..."
           actionLabel=""
           actionRoute=""
@@ -61,6 +69,7 @@ export default function TablaCitasMedico({ citas, onRegistrarAsistencia, onReage
 
 TablaCitasMedico.propTypes = {
   citas: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onRegistrarAsistencia: PropTypes.func.isRequired,
+  onRegistrarAsistencia: PropTypes.func,  
   onReagendarCita: PropTypes.func.isRequired,
+  mostrarAsistencia: PropTypes.bool,
 };

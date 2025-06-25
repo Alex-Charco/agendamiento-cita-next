@@ -26,6 +26,8 @@ export default function ConsultaCitaAdminPage() {
   };
 
   const handleReagendarCita = (cita) => {
+  // Si viene data.paciente (caso paciente), simplemente llamamos igual que antes:
+  if (data?.paciente) {
     handleReagendarCitaUtil({
       cita,
       data,
@@ -33,7 +35,26 @@ export default function ConsultaCitaAdminPage() {
       setAccionActual,
       setModalOpen,
     });
-  };
+  } 
+  // Si viene data.medico (caso médico), construimos el objeto data para que no falle la lógica
+  else if (data?.medico) {
+    const dataSimulada = {
+      paciente: {
+        id_paciente: cita.id_paciente,
+        nombre: cita.nombre, // Este es el nombre completo ya generado en transformarCitasMedico
+      }
+    };
+
+    handleReagendarCitaUtil({
+      cita,
+      data: dataSimulada,
+      setCitaSeleccionada,
+      setAccionActual,
+      setModalOpen,
+    });
+  }
+};
+
 
   const handleRegistrarAsistencia = (cita) => {
     console.log("Registrar asistencia para cita", cita);
@@ -101,10 +122,9 @@ export default function ConsultaCitaAdminPage() {
             mostrarCampos={["nombre", "especialidad", "atencion", "consultorio"]}
           />
           <TablaCitasMedico
-            citas={transformarCitasMedico(data.citas)}
-            onVerCita={(c) => console.log("Ver cita", c)}
-            onEditarCita={(c) => console.log("Editar cita", c)}
-          />
+			  citas={transformarCitasMedico(data.citas)}
+			  onReagendarCita={handleReagendarCita}
+			/>
         </>
       );
     }
@@ -137,6 +157,7 @@ export default function ConsultaCitaAdminPage() {
         id_cita={citaSeleccionada?.id_cita}
         id_paciente={citaSeleccionada?.id_paciente}
         onAsistenciaRegistrada={handleAsistenciaRegistrada}
+		opcionesPermitidas={["REAGENDADA"]}
       />
     </div>
   );
@@ -160,6 +181,8 @@ function transformarCitasPaciente(citas) {
 
 function transformarCitasMedico(citas) {
   return citas.map((cita) => ({
+	id_cita: cita.id_cita,
+	id_paciente: cita.paciente?.id_paciente || "",
     nombre: cita.paciente?.nombre || "",
     identificacion: cita.paciente?.identificacion || "",
     correo: cita.paciente?.correo || "",

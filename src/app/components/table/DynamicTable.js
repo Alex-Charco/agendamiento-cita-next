@@ -27,11 +27,17 @@ export const capitalize = (s) => {
 export default function DynamicTable({
     columns = [],
     data = [],
-    rowsPerPage = 6,
+    rowsPerPage = 5,
     filterPlaceholder = "Buscar",
     actionLabel = "",
     actionRoute = "/admin-dashboard/medico/consultar-medico",
     showActionButton = true,
+
+    // 🚩 NUEVOS PARAMETROS PARA PAGINACIÓN REMOTA
+    remotePagination = false,
+    currentPage = 1,
+    totalPages = 1,
+    onPageChange = () => {},
 }) {
     const [filterValue, setFilterValue] = React.useState("");
     const [page, setPage] = React.useState(1);
@@ -51,47 +57,54 @@ export default function DynamicTable({
         return '';
     };
 
-
     const visibleColumnObjects = columns.filter((col) =>
         visibleColumns.has(col.uid)
     );
 
-    // Filtrar los datos
-    const filteredItems = React.useMemo(() => {
-        return data.filter((item) =>
-            visibleColumnObjects.some((column) => {
-                let cellContent;
+    // Filtrado local (se aplica en ambos modos)
+		const filteredItems = React.useMemo(() => {
+		if (remotePagination) {
+			// Si es paginación remota, no aplicar filtro local
+			return data;
+		}
+		return data.filter((item) =>
+			visibleColumnObjects.some((column) => {
+				let cellContent;
+				if (column.render) {
+					const rendered = column.render(item);
+					cellContent = extractText(rendered);
+				} else {
+					cellContent = item[column.uid];
+				}
+				return cellContent?.toString().toLowerCase().includes(filterValue.toLowerCase());
+			})
+		);
+	}, [data, filterValue, visibleColumnObjects, remotePagination]);
 
-                if (column.render) {
-                    const rendered = column.render(item);
-                    cellContent = extractText(rendered);
-                } else {
-                    cellContent = item[column.uid];
-                }
-
-                return cellContent
-                    ?.toString()
-                    .toLowerCase()
-                    .includes(filterValue.toLowerCase());
-            })
-        );
-    }, [data, filterValue, visibleColumnObjects]);
-
-
-    // Paginación
-    const pages = Math.ceil(filteredItems.length / rowsPerPage);
+    // Paginación local (solo si no es remoto)
+    const pages = remotePagination ? totalPages : Math.ceil(filteredItems.length / rowsPerPage);
     const items = React.useMemo(() => {
+        if (remotePagination) return filteredItems; // Backend ya entrega datos paginados
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
         return filteredItems.slice(start, end);
-    }, [page, filteredItems, rowsPerPage]);
+    }, [filteredItems, page, remotePagination, rowsPerPage]);
+
+    // Cambio de página
+    const handlePageChange = (newPage) => {
+        if (remotePagination) {
+            onPageChange(newPage);
+        } else {
+            setPage(newPage);
+        }
+    };
 
     // Obtener el rol desde localStorage
     const user = JSON.parse(localStorage.getItem("user"));
     const userRole = user?.rol?.nombre_rol || "";
     const hasPermission = userRole === "ADMINISTRADOR";
 
-    // Función de navegación ahora redirige según la prop
+    // Redirección (si tiene actionRoute)
     const handleRedirect = () => {
         window.location.href = actionRoute;
     };
@@ -102,6 +115,9 @@ export default function DynamicTable({
             const color = value === "active" ? "success" : "danger";
             return <Chip color={color}>{capitalize(value)}</Chip>;
         }
+        if (uid === "correo") {
+            return value;
+        }
         return typeof value === "string" ? capitalize(value) : value;
     };
 
@@ -109,7 +125,6 @@ export default function DynamicTable({
         <div className="text-gray-600">
             {/* Filtros y acciones */}
             <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-                {/* Filtro de búsqueda */}
                 <Input
                     type="text"
                     placeholder={filterPlaceholder}
@@ -118,7 +133,6 @@ export default function DynamicTable({
                     startContent={<FaSearch className="text-gray-500 mr-2" />}
                     className="max-w-xs border shadow-inner rounded-2xl"
                 />
-                {/* Dropdown de columnas */}
                 <Dropdown>
                     <DropdownTrigger>
                         <Button
@@ -146,7 +160,6 @@ export default function DynamicTable({
                     </DropdownMenu>
                 </Dropdown>
 
-                {/* Botón de redirección */}
                 {showActionButton && actionLabel && actionRoute && (
                     <Button
                         color="primary"
@@ -159,8 +172,10 @@ export default function DynamicTable({
                 )}
             </div>
 
-            {/* Tabla */}
-            <Table aria-label="Tabla dinámica">
+            <Table 
+				aria-label="Tabla dinámica"
+				pagination={!remotePagination}
+				>
                 <TableHeader>
                     {visibleColumnObjects.map((column) => (
                         <TableColumn key={column.uid} className="text-center">
@@ -169,7 +184,7 @@ export default function DynamicTable({
                     ))}
                 </TableHeader>
 
-                <TableBody>
+                <TableBody items={[]}>
                     {items.map((item, index) => (
                         <TableRow key={item.id || index}>
                             {visibleColumnObjects.map((column) => (
@@ -184,15 +199,14 @@ export default function DynamicTable({
                 </TableBody>
             </Table>
 
-            {/* Paginación */}
             <Pagination
                 className="py-4"
                 isCompact
                 showControls
                 showShadow
                 total={pages}
-                current={page}
-                onChange={setPage}
+                current={remotePagination ? currentPage : page}
+                onChange={handlePageChange}
             />
         </div>
     );
@@ -211,7 +225,13 @@ DynamicTable.propTypes = {
     filterPlaceholder: PropTypes.string,
     actionLabel: PropTypes.string,
     actionRoute: PropTypes.string,
-    showActionButton: PropTypes.bool, // ✅ nuevo
+    showActionButton: PropTypes.bool,
+
+    // 🚩 Nuevos props de paginación remota
+    remotePagination: PropTypes.bool,
+    currentPage: PropTypes.number,
+    totalPages: PropTypes.number,
+    onPageChange: PropTypes.func,
 };
 
 DynamicTable.defaultProps = {
@@ -221,4 +241,9 @@ DynamicTable.defaultProps = {
     actionRoute: "/admin-dashboard/medico/consultar-medico",
     showActionButton: false,
 
+    // 🚩 Nuevos default
+    remotePagination: false,
+    currentPage: 1,
+    totalPages: 1,
+    onPageChange: () => {},
 };
