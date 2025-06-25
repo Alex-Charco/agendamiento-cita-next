@@ -40,15 +40,15 @@ const Contacto = () => {
               <MdEmail className="h-6 w-6 text-indigo-600" />
               <div>
                 <h3 className="font-semibold">Correo electrónico</h3>
-                <p>contacto@hospitalcentral.com</p>
+                <p>brigadaselva17hostipal@ejercito.mil.ec</p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
               <MdLocationOn className="h-6 w-6 text-red-500" />
               <div>
-                <h3 className="font-semibold">Dirección</h3>
-                <p>Av. Ceslao Marín, Puyo</p>
+                <h3 className="font-semibold">Dirección: </h3>
+                <p>Av. General Eloy Alfaro y Calle Ceslao Marin, cerca de Iglesia Católica Jesús del Gran Poder - Pindo (El Dorado), así como del terreno de juego de CANCHA DE USO MULTIPLE.</p>
               </div>
             </div>
           </div>
