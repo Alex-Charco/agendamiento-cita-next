@@ -8,6 +8,31 @@ import { usePathname, useRouter } from "next/navigation";
 import DetalleDatosPaciente from "@/medico-dashboard/nota-evolutiva/components/DetalleDatosPaciente";
 import TablaNotasEvolutivas from "@/medico-dashboard/nota-evolutiva/components/TablaNotasEvolutivas";
 import FormularioNotaEvolutiva from "@/medico-dashboard/nota-evolutiva/components/FormularioNotaEvolutiva";
+import { mostrarToastExito, mostrarToastError } from "@/utils/toast";
+import { confirmarRegistro } from "@/utils/confirmacion";
+
+// 🧠 Estado inicial extraído como constante reutilizable
+const estadoInicialNota = {
+  motivo_consulta: "",
+  enfermedad: "",
+  tratamiento: "",
+  resultado_examen: "",
+  decision_consulta: "",
+  reporte_decision: "",
+  diagnosticos: [],
+  links: [],
+  signos_vitales: {
+    presion_arterial_sistolica: "",
+    presion_arterial_diastolica: "",
+    frecuencia_cardiaca: "",
+    frecuencia_respiratoria: "",
+    temperatura: "",
+    saturacion_oxigeno: "",
+    peso: "",
+    talla: "",
+    observaciones: ""
+  }
+};
 
 export default function NotaEvolutivaPage() {
   const [paciente, setPaciente] = useState(null);
@@ -23,27 +48,7 @@ export default function NotaEvolutivaPage() {
   const idPaciente = 19;
   const limit = 5;
 
-  const [formNota, setFormNota] = useState({
-    motivo_consulta: "",
-    enfermedad: "",
-    tratamiento: "",
-    resultado_examen: "",
-    decision_consulta: "",
-    reporte_decision: "",
-    diagnosticos: [],
-    links: [],
-	signos_vitales: {
-    presion_arterial_sistolica: "",
-    presion_arterial_diastolica: "",
-    frecuencia_cardiaca: "",
-    frecuencia_respiratoria: "",
-    temperatura: "",
-    saturacion_oxigeno: "",
-    peso: "",
-    talla: "",
-    observaciones: ""
-  }
-  });
+  const [formNota, setFormNota] = useState(estadoInicialNota);
 
   useEffect(() => {
     const fetchDatos = async () => {
@@ -75,24 +80,19 @@ export default function NotaEvolutivaPage() {
   };
 
   const guardarNotaEvolutiva = async () => {
+    const confirmado = await confirmarRegistro("¿Deseas registrar esta nota evolutiva?");
+    if (!confirmado) return;
+
     try {
       const payload = { id_cita: idCita, ...formNota };
       await authAxios.post("/api/nota-evolutiva/registrar", payload);
-      alert("Nota evolutiva registrada correctamente");
-      setFormNota({
-        motivo_consulta: "",
-        enfermedad: "",
-        tratamiento: "",
-        resultado_examen: "",
-        decision_consulta: "",
-        reporte_decision: "",
-        diagnosticos: [],
-        links: []
-      });
+
+      mostrarToastExito("Nota evolutiva registrada correctamente");
+
+      setFormNota(estadoInicialNota);
       setCurrentPage(1);
     } catch (err) {
-      console.error("Error al guardar:", err);
-      alert("Error al registrar la nota.");
+      mostrarToastError(err, "Error al registrar la nota evolutiva");
     }
   };
 

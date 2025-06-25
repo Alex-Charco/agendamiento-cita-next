@@ -59,7 +59,7 @@ export default function NotaEvolutivaDetallePage() {
 
   const diagnosticoColumns = [
     { name: "Condición", uid: "condicion" },
-	{ name: "Tipo", uid: "tipo" },
+    { name: "Tipo", uid: "tipo" },
     { name: "CIE-10", uid: "cie_10" },
     { name: "Descripción", uid: "descripcion" },
     {
@@ -67,20 +67,20 @@ export default function NotaEvolutivaDetallePage() {
       uid: "accion",
       render: (item) => (
         // Dentro del render:
-		<button
-		  onClick={() => setExpanded(expanded === item.id_diagnostico ? null : item.id_diagnostico)}
-		  className="bg-blue-700 text-white px-4 py-2 rounded-lg text-xs shadow hover:bg-blue-700 transition-all"
-		>
-		  {expanded === item.id_diagnostico ? (
-			<>
-			  <FaSearch className="inline mr-[2px]" /> Ocultar <FaChevronUp className="inline ml-[2px]" />
-			</>
-		  ) : (
-			<>
-			  <FaSearch className="inline mr-[2px]" /> Ver <FaChevronDown className="inline ml-[2px]" />
-			</>
-		  )}
-		</button>
+        <button
+          onClick={() => setExpanded(expanded === item.id_diagnostico ? null : item.id_diagnostico)}
+          className="bg-blue-700 text-white px-4 py-2 rounded-lg text-xs shadow hover:bg-blue-700 transition-all"
+        >
+          {expanded === item.id_diagnostico ? (
+            <>
+              <FaSearch className="inline mr-[2px]" /> Ocultar <FaChevronUp className="inline ml-[2px]" />
+            </>
+          ) : (
+            <>
+              <FaSearch className="inline mr-[2px]" /> Ver <FaChevronDown className="inline ml-[2px]" />
+            </>
+          )}
+        </button>
       ),
     },
   ];
@@ -89,7 +89,7 @@ export default function NotaEvolutivaDetallePage() {
     ...diag,
     id_diagnostico: diag.id_diagnostico,
     condicion: diag.condicion,
-	tipo: diag.tipo,
+    tipo: diag.tipo,
     cie_10: diag.cie_10,
     descripcion: diag.descripcion,
   }));
@@ -118,26 +118,26 @@ export default function NotaEvolutivaDetallePage() {
               expanded === diag.id_diagnostico && (
                 <div key={`proc-${diag.id_diagnostico}`} className="mt-4">
                   <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
-					<div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
-					  Procedimientos
-					</div>
-                  {diag.Procedimientos?.length > 0 ? (
-                    <DynamicTable
-                      columns={[
-                        { name: "Código", uid: "codigo" },
-                        { name: "Descripción", uid: "descripcion_proc" }
-                      ]}
-                      data={diag.Procedimientos.map((proc) => ({
-                        codigo: proc.codigo,
-                        descripcion_proc: proc.descripcion_proc
-                      }))}
-                      pagination={false}
-                    />
-                  ) : (
-                    <div className="text-sm text-gray-500 italic">No existen procedimientos para este diagnóstico.</div>
-                  )}
+                    <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
+                      Procedimientos
+                    </div>
+                    {diag.Procedimientos?.length > 0 ? (
+                      <DynamicTable
+                        columns={[
+                          { name: "Código", uid: "codigo" },
+                          { name: "Descripción", uid: "descripcion_proc" }
+                        ]}
+                        data={diag.Procedimientos.map((proc) => ({
+                          codigo: proc.codigo,
+                          descripcion_proc: proc.descripcion_proc
+                        }))}
+                        pagination={false}
+                      />
+                    ) : (
+                      <div className="text-sm text-gray-500 italic">No existen procedimientos para este diagnóstico.</div>
+                    )}
+                  </div>
                 </div>
-				</div>
               )
             ))}
           </div>
