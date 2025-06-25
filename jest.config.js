@@ -5,7 +5,6 @@ module.exports = {
     setupFilesAfterEnv: ["<rootDir>/tests/setupTests.js"],
 
     // Ignorar estos directorios al buscar pruebas
-    
 
     // Alias para importar rutas y mock de estilos
     moduleNameMapper: {
