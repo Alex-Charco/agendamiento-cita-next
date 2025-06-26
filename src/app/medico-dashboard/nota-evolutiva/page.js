@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import NavbarComponent from "@/components/navbars/NavbarComponent";
 import authAxios from "@/utils/api/authAxios";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
@@ -10,6 +10,7 @@ import TablaNotasEvolutivas from "@/medico-dashboard/nota-evolutiva/components/T
 import FormularioNotaEvolutiva from "@/medico-dashboard/nota-evolutiva/components/FormularioNotaEvolutiva";
 import { mostrarToastExito, mostrarToastError } from "@/utils/toast";
 import { confirmarRegistro } from "@/utils/confirmacion";
+import { FaArrowLeft } from "react-icons/fa";
 
 // 🧠 Estado inicial extraído como constante reutilizable
 const estadoInicialNota = {
@@ -43,32 +44,51 @@ export default function NotaEvolutivaPage() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Simulación de IDs
-  const idCita = 40;
-  const idPaciente = 19;
+  const [idCita, setIdCita] = useState(null);
+  const [idPaciente, setIdPaciente] = useState(null);
   const limit = 5;
 
   const [formNota, setFormNota] = useState(estadoInicialNota);
 
   useEffect(() => {
-    const fetchDatos = async () => {
-      try {
+    const storedIdCita = sessionStorage.getItem("notaEvolutiva_id_cita");
+    const storedIdPaciente = sessionStorage.getItem("notaEvolutiva_id_paciente");
+
+    if (storedIdCita && storedIdPaciente) {
+      setIdCita(Number(storedIdCita));
+      setIdPaciente(Number(storedIdPaciente));
+    } else {
+      setError("No se encontró información de la cita o paciente en la sesión.");
+    }
+  }, []);
+
+  // 🔁 Función para obtener datos (historial y paciente)
+  const fetchDatos = useCallback(async () => {
+    try {
+      if (idCita && idPaciente) {
         if (!paciente) {
           const responsePaciente = await authAxios.get(`/api/paciente/get/detalle-por-cita/${idCita}`);
           setPaciente(responsePaciente.data.paciente);
         }
-
-        const responseNotas = await authAxios.get(`/api/nota-evolutiva/get?id_paciente=${idPaciente}&page=${currentPage}&limit=${limit}`);
+  
+        const responseNotas = await authAxios.get(
+          `/api/nota-evolutiva/get?id_paciente=${idPaciente}&page=${currentPage}&limit=${limit}`
+        );
         setNotas(responseNotas.data.data);
         setTotalPages(responseNotas.data.pages);
-      } catch (err) {
-        console.error("Error al obtener datos:", err);
-        setError("No se pudieron obtener los datos.");
       }
-    };
+    } catch (err) {
+      console.error("Error al obtener datos:", err);
+      setError("No se pudieron obtener los datos.");
+    }
+  }, [idCita, idPaciente, currentPage, paciente]); // <-- dependencias necesarias
+  
 
+  // Cargar datos cuando se tenga idCita y idPaciente
+  useEffect(() => {
     fetchDatos();
-  }, [currentPage, paciente]);
+  }, [fetchDatos]);
+  
 
   const handleVerDetalle = (nota) => {
     sessionStorage.setItem("notaDetalleParams", JSON.stringify({
@@ -91,12 +111,17 @@ export default function NotaEvolutivaPage() {
 
       setFormNota(estadoInicialNota);
       setCurrentPage(1);
+
+      // 🔄 Recargar historial y datos actualizados
+      await fetchDatos();
     } catch (err) {
       mostrarToastError(err, "Error al registrar la nota evolutiva");
     }
   };
 
-  const buttons = [...(getCommonButtonsByPath(pathname) || [])];
+  const buttons = [
+    { label: "Regresar", icon: FaArrowLeft, action: "regresar", href: "/medico-dashboard/cita/consultar-cita-medico" },
+    ...(getCommonButtonsByPath(pathname) || [])];
 
   return (
     <div className="bg-gray-100 min-h-screen">

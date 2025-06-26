@@ -6,7 +6,7 @@ import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import authAxios from "@/utils/api/authAxios";
 import DetalleDatosPaciente from "@/medico-dashboard/nota-evolutiva/components/DetalleDatosPaciente";
-import { FaSearch, FaFilePdf, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaArrowLeft, FaSearch, FaFilePdf, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DynamicTable from "@/components/table/DynamicTable";
 
 export default function NotaEvolutivaDetallePage() {
@@ -15,7 +15,7 @@ export default function NotaEvolutivaDetallePage() {
   const [error, setError] = useState(null);
   const [idNota, setIdNota] = useState(null);
   const [idCita, setIdCita] = useState(null);
-  const [expanded, setExpanded] = useState(null);  // <- Estado de fila expandida
+  const [expanded, setExpanded] = useState(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function NotaEvolutivaDetallePage() {
   if (!paciente || !notaDetalle) return <p className="text-center text-gray-500">Cargando datos...</p>;
 
   const buttons = [
-    { label: "Buscar nota evolutiva", icon: FaSearch, action: "buscar-nota", href: "/medico-dashboard/nota-evolutiva" },
+    { label: "Regresar", icon: FaArrowLeft, action: "regresar", href: "/medico-dashboard/nota-evolutiva" },
     ...getCommonButtonsByPath(pathname)
   ];
 
@@ -77,7 +77,7 @@ export default function NotaEvolutivaDetallePage() {
             </>
           ) : (
             <>
-              <FaSearch className="inline mr-[2px]" /> Ver <FaChevronDown className="inline ml-[2px]" />
+              <FaSearch className="inline mr-[2px]" /> Ver Procedimiento <FaChevronDown className="inline ml-[2px]" />
             </>
           )}
         </button>
@@ -96,14 +96,50 @@ export default function NotaEvolutivaDetallePage() {
 
   return (
     <div className="bg-gray-50 min-h-screen border">
-      <NavbarComponent title="Detalle Nota Evolutiva" buttons={buttons} />
+      <NavbarComponent title="Detalle de la Nota Evolución" buttons={buttons} />
       <div className="flex flex-col justify-center py-2 w-full">
         <div className="w-full relative border rounded-lg p-3 bg-white mx-2">
           <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
-            Información de la Nota Evolutiva
+            Información de la Nota de Evolución
           </div>
 
           <DetalleDatosPaciente paciente={paciente} />
+
+          {/* Signos Vitales */}
+          {notaDetalle.signosVitales && (
+            <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
+              <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
+                Signos Vitales
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 text-sm text-gray-700">
+                <div>
+                  <strong>Presión Arterial:</strong> {notaDetalle.signosVitales.presion_arterial_sistolica} / {notaDetalle.signosVitales.presion_arterial_diastolica} mmHg
+                </div>
+                <div>
+                  <strong>Frecuencia Cardíaca:</strong> {notaDetalle.signosVitales.frecuencia_cardiaca} lpm
+                </div>
+                <div>
+                  <strong>Frecuencia Respiratoria:</strong> {notaDetalle.signosVitales.frecuencia_respiratoria} rpm
+                </div>
+                <div>
+                  <strong>Temperatura:</strong> {notaDetalle.signosVitales.temperatura} °C
+                </div>
+                <div>
+                  <strong>Saturación de Oxígeno:</strong> {notaDetalle.signosVitales.saturacion_oxigeno} %
+                </div>
+                <div>
+                  <strong>Peso:</strong> {notaDetalle.signosVitales.peso} kg
+                </div>
+                <div>
+                  <strong>Talla:</strong> {notaDetalle.signosVitales.talla} m
+                </div>
+                <div>
+                  <strong>Observaciones:</strong> {notaDetalle.signosVitales.observaciones || "Sin observaciones."}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Tabla Diagnósticos */}
           <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
@@ -146,30 +182,43 @@ export default function NotaEvolutivaDetallePage() {
           {notaDetalle.links?.length > 0 && (
             <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
               <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
-                Decisión de la Consulta
+                Documentos Adjuntos
               </div>
 
               <DynamicTable
                 columns={[
                   { name: "Categoría", uid: "categoria" },
+                  { name: "Nombre del Documento", uid: "nombre_documento" },
+                  { name: "Descripción", uid: "descripcion" },
                   {
                     name: "Archivo",
                     uid: "archivo",
                     render: (item) => (
-                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-red-600 text-xl flex items-center justify-center">
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-600 text-xl flex items-center justify-center"
+                        title={item.nombre_documento}
+                      >
                         <FaFilePdf />
                       </a>
-                    )
-                  }
+                    ),
+                  },
                 ]}
                 data={notaDetalle.links.map((link) => ({
                   categoria: link.categoria,
-                  url: link.url
+                  nombre_documento: link.nombre_documento,
+                  descripcion: link.descripcion,
+                  url: link.url,
                 }))}
                 pagination={false}
               />
             </div>
           )}
+
+
+
         </div>
       </div>
     </div>
