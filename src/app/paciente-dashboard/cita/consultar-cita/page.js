@@ -93,7 +93,6 @@ export default function ConsultaCitaPacientePage() {
                         <CitaPacienteSearch onSelectCita={handleCitaSelect} />
                     )}
 					
-					//NOSONAR
                     {loading ? (
                         <p className="text-center text-gray-500 mt-4">Cargando citas...</p>
                     ) : selectedCita?.paciente ? (
