@@ -22,7 +22,7 @@ const estadoInicialNota = {
   reporte_decision: "",
   diagnosticos: [],
   links: [],
-  signos_vitales: {
+  signo_vital: {
     presion_arterial_sistolica: "",
     presion_arterial_diastolica: "",
     frecuencia_cardiaca: "",

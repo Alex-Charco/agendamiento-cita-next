@@ -106,7 +106,7 @@ export default function NotaEvolutivaDetallePage() {
           <DetalleDatosPaciente paciente={paciente} />
 
           {/* Signos Vitales */}
-          {notaDetalle.signosVitales && (
+          {notaDetalle.signoVital && (
             <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
               <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
                 Signos Vitales
@@ -114,28 +114,28 @@ export default function NotaEvolutivaDetallePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 text-sm text-gray-700">
                 <div>
-                  <strong>Presión Arterial:</strong> {notaDetalle.signosVitales.presion_arterial_sistolica} / {notaDetalle.signosVitales.presion_arterial_diastolica} mmHg
+                  <strong>Presión Arterial:</strong> {notaDetalle.signoVital.presion_arterial_sistolica} / {notaDetalle.signoVital.presion_arterial_diastolica} mmHg
                 </div>
                 <div>
-                  <strong>Frecuencia Cardíaca:</strong> {notaDetalle.signosVitales.frecuencia_cardiaca} lpm
+                  <strong>Frecuencia Cardíaca:</strong> {notaDetalle.signoVital.frecuencia_cardiaca} lpm
                 </div>
                 <div>
-                  <strong>Frecuencia Respiratoria:</strong> {notaDetalle.signosVitales.frecuencia_respiratoria} rpm
+                  <strong>Frecuencia Respiratoria:</strong> {notaDetalle.signoVital.frecuencia_respiratoria} rpm
                 </div>
                 <div>
-                  <strong>Temperatura:</strong> {notaDetalle.signosVitales.temperatura} °C
+                  <strong>Temperatura:</strong> {notaDetalle.signoVital.temperatura} °C
                 </div>
                 <div>
-                  <strong>Saturación de Oxígeno:</strong> {notaDetalle.signosVitales.saturacion_oxigeno} %
+                  <strong>Saturación de Oxígeno:</strong> {notaDetalle.signoVital.saturacion_oxigeno} %
                 </div>
                 <div>
-                  <strong>Peso:</strong> {notaDetalle.signosVitales.peso} kg
+                  <strong>Peso:</strong> {notaDetalle.signoVital.peso} kg
                 </div>
                 <div>
-                  <strong>Talla:</strong> {notaDetalle.signosVitales.talla} m
+                  <strong>Talla:</strong> {notaDetalle.signoVital.talla} m
                 </div>
                 <div>
-                  <strong>Observaciones:</strong> {notaDetalle.signosVitales.observaciones || "Sin observaciones."}
+                  <strong>Observaciones:</strong> {notaDetalle.signoVital.observaciones || "Sin observaciones."}
                 </div>
               </div>
             </div>

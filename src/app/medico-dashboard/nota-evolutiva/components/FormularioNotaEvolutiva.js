@@ -16,7 +16,7 @@ export default function FormularioNotaEvolutiva({
 	onGuardar,
 }) {
 	const [errores, setErrores] = useState({});
-	const [mostrarSignosVitales, setMostrarSignosVitales] = useState(false);
+	const [mostrarSignoVital, setMostrarSignoVital] = useState(false);
 
 	const handleInputChange = (field, value) => {
 		setFormNota((prev) => ({ ...prev, [field]: value }));
@@ -38,11 +38,11 @@ export default function FormularioNotaEvolutiva({
 		}
 	};
 
-	const handleSignosVitalesChange = (field, value) => {
+	const handleSignoVitalChange = (field, value) => {
 		setFormNota((prev) => ({
 			...prev,
-			signos_vitales: {
-				...prev.signos_vitales,
+			signo_vital: {
+				...prev.signo_vital,
 				[field]: value,
 			},
 		}));
@@ -50,7 +50,7 @@ export default function FormularioNotaEvolutiva({
 		const error = validarCampoSimple(field, value, false); // Puedes poner true si quieres que sea obligatorio
 		setErrores((prev) => ({
 			...prev,
-			[`signos_vitales.${field}`]: error || undefined,
+			[`signo_vital.${field}`]: error || undefined,
 		}));
 	};
 
@@ -225,120 +225,120 @@ export default function FormularioNotaEvolutiva({
 				})}
 			</div>
 
-			{/* Signos Vitales */}
+			{/* Signo Vital */}
 			<div className="mb-4 relative border rounded-lg p-4 mt-5">
 				<div className="absolute bg-white -top-3 left-2 px-2 text-[11px] text-blue-800 font-semibold">
 					Signos Vitales
 				</div>
 				<div className="flex justify-center mb-4 w-full bg-gradient-to-b from-celeste-plomado-oscuro to-[#F5F7FC] p-2 shadow-lg">
 					<Button
-						onClick={() => setMostrarSignosVitales((prev) => !prev)}
+						onClick={() => setMostrarSignoVital((prev) => !prev)}
 						className="mb-3 bg-gray-100 text-gray-800 shadow hover:bg-gray-200"
 					>
 						<FaPlus className="mr-2" />
-						{mostrarSignosVitales
+						{mostrarSignoVital
 							? "Ocultar Signos Vitales"
 							: "Agregar Signos Vitales"}
 					</Button>
 				</div>
 
-				{mostrarSignosVitales && (
+				{mostrarSignoVital && (
 					<>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 							<Input
 								label="Presión Sistólica (mmHg)"
-								value={formNota.signos_vitales.presion_arterial_sistolica}
+								value={formNota.signo_vital.presion_arterial_sistolica}
 								onChange={(e) =>
-									handleSignosVitalesChange(
+									handleSignoVitalChange(
 										"presion_arterial_sistolica",
 										e.target.value
 									)
 								}
 								isInvalid={
-									!!errores["signos_vitales.presion_arterial_sistolica"]
+									!!errores["signo_vital.presion_arterial_sistolica"]
 								}
 								errorMessage={
-									errores["signos_vitales.presion_arterial_sistolica"]
+									errores["signo_vital.presion_arterial_sistolica"]
 								}
 							/>
 							<Input
 								label="Presión Diastólica (mmHg)"
-								value={formNota.signos_vitales.presion_arterial_diastolica}
+								value={formNota.signo_vital.presion_arterial_diastolica}
 								onChange={(e) =>
-									handleSignosVitalesChange(
+									handleSignoVitalChange(
 										"presion_arterial_diastolica",
 										e.target.value
 									)
 								}
 								isInvalid={
-									!!errores["signos_vitales.presion_arterial_diastolica"]
+									!!errores["signo_vital.presion_arterial_diastolica"]
 								}
 								errorMessage={
-									errores["signos_vitales.presion_arterial_diastolica"]
+									errores["signo_vital.presion_arterial_diastolica"]
 								}
 							/>
 							<Input
 								label="Frecuencia Cardíaca (lpm)"
-								value={formNota.signos_vitales.frecuencia_cardiaca}
+								value={formNota.signo_vital.frecuencia_cardiaca}
 								onChange={(e) =>
-									handleSignosVitalesChange(
+									handleSignoVitalChange(
 										"frecuencia_cardiaca",
 										e.target.value
 									)
 								}
-								isInvalid={!!errores["signos_vitales.frecuencia_cardiaca"]}
-								errorMessage={errores["signos_vitales.frecuencia_cardiaca"]}
+								isInvalid={!!errores["signo_vital.frecuencia_cardiaca"]}
+								errorMessage={errores["signo_vital.frecuencia_cardiaca"]}
 							/>
 							<Input
 								label="Frecuencia Respiratoria (rpm)"
-								value={formNota.signos_vitales.frecuencia_respiratoria}
+								value={formNota.signo_vital.frecuencia_respiratoria}
 								onChange={(e) =>
-									handleSignosVitalesChange(
+									handleSignoVitalChange(
 										"frecuencia_respiratoria",
 										e.target.value
 									)
 								}
-								isInvalid={!!errores["signos_vitales.frecuencia_respiratoria"]}
-								errorMessage={errores["signos_vitales.frecuencia_respiratoria"]}
+								isInvalid={!!errores["signo_vital.frecuencia_respiratoria"]}
+								errorMessage={errores["signo_vital.frecuencia_respiratoria"]}
 							/>
 							<Input
 								label="Temperatura (°C)"
-								value={formNota.signos_vitales.temperatura}
+								value={formNota.signo_vital.temperatura}
 								onChange={(e) =>
-									handleSignosVitalesChange("temperatura", e.target.value)
+									handleSignoVitalChange("temperatura", e.target.value)
 								}
-								isInvalid={!!errores["signos_vitales.temperatura"]}
-								errorMessage={errores["signos_vitales.temperatura"]}
+								isInvalid={!!errores["signo_vital.temperatura"]}
+								errorMessage={errores["signo_vital.temperatura"]}
 							/>
 							<Input
 								label="Saturación de Oxígeno (%)"
-								value={formNota.signos_vitales.saturacion_oxigeno}
+								value={formNota.signo_vital.saturacion_oxigeno}
 								onChange={(e) =>
-									handleSignosVitalesChange(
+									handleSignoVitalChange(
 										"saturacion_oxigeno",
 										e.target.value
 									)
 								}
-								isInvalid={!!errores["signos_vitales.saturacion_oxigeno"]}
-								errorMessage={errores["signos_vitales.saturacion_oxigeno"]}
+								isInvalid={!!errores["signo_vital.saturacion_oxigeno"]}
+								errorMessage={errores["signo_vital.saturacion_oxigeno"]}
 							/>
 							<Input
 								label="Peso (Kg)"
-								value={formNota.signos_vitales.peso}
+								value={formNota.signo_vital.peso}
 								onChange={(e) =>
-									handleSignosVitalesChange("peso", e.target.value)
+									handleSignoVitalChange("peso", e.target.value)
 								}
-								isInvalid={!!errores["signos_vitales.peso"]}
-								errorMessage={errores["signos_vitales.peso"]}
+								isInvalid={!!errores["signo_vital.peso"]}
+								errorMessage={errores["signo_vital.peso"]}
 							/>
 							<Input
 								label="Talla (cm)"
-								value={formNota.signos_vitales.talla}
+								value={formNota.signo_vital.talla}
 								onChange={(e) =>
-									handleSignosVitalesChange("talla", e.target.value)
+									handleSignoVitalChange("talla", e.target.value)
 								}
-								isInvalid={!!errores["signos_vitales.talla"]}
-								errorMessage={errores["signos_vitales.talla"]}
+								isInvalid={!!errores["signo_vital.talla"]}
+								errorMessage={errores["signo_vital.talla"]}
 							/>
 						</div>
 
@@ -346,12 +346,12 @@ export default function FormularioNotaEvolutiva({
 						<div className="mt-4">
 							<Textarea
 								label="Observaciones"
-								value={formNota.signos_vitales.observaciones}
+								value={formNota.signo_vital.observaciones}
 								onChange={(e) =>
-									handleSignosVitalesChange("observaciones", e.target.value)
+									handleSignoVitalChange("observaciones", e.target.value)
 								}
-								isInvalid={!!errores["signos_vitales.observaciones"]}
-								errorMessage={errores["signos_vitales.observaciones"]}
+								isInvalid={!!errores["signo_vital.observaciones"]}
+								errorMessage={errores["signo_vital.observaciones"]}
 							/>
 						</div>
 					</>
@@ -372,7 +372,6 @@ export default function FormularioNotaEvolutiva({
 					</Button>
 				</div>
 				
-				//NOSONAR
 				{formNota.diagnosticos.map((diag, i) => (
 					<div
 						key={i}
@@ -455,8 +454,7 @@ export default function FormularioNotaEvolutiva({
 									<FaPlus className="mr-1" /> Agregar Procedimiento
 								</Button>
 							</div>
-							
-							//NOSONAR
+
 							{diag.procedimientos.map((proc, j) => (
 								<div
 									key={j}
@@ -548,8 +546,7 @@ export default function FormularioNotaEvolutiva({
 						<FaPlus className="mr-2" /> Agregar Link
 					</Button>
 				</div>
-				
-				//NOSONAR
+
 				{formNota.links.map((link, i) => (
 					<div
 						key={i}
@@ -665,7 +662,7 @@ FormularioNotaEvolutiva.propTypes = {
 		resultado_examen: PropTypes.string.isRequired,
 		decision_consulta: PropTypes.string.isRequired,
 		reporte_decision: PropTypes.string.isRequired,
-		signos_vitales: PropTypes.shape({
+		signo_vital: PropTypes.shape({
 			presion_arterial_sistolica: PropTypes.string,
 			presion_arterial_diastolica: PropTypes.string,
 			frecuencia_cardiaca: PropTypes.string,
