@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DynamicTable from "@/components/table/DynamicTable";
-import { capitalize } from "@/utils/stringUtils";
 
 export default function TablaCitasMedico({
   citas,

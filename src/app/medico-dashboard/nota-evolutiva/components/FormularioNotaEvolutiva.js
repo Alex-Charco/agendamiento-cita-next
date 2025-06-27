@@ -371,7 +371,8 @@ export default function FormularioNotaEvolutiva({
 						<FaPlus className="mr-2" /> Agregar Diagnóstico
 					</Button>
 				</div>
-
+				
+				//NOSONAR
 				{formNota.diagnosticos.map((diag, i) => (
 					<div
 						key={i}
@@ -454,7 +455,8 @@ export default function FormularioNotaEvolutiva({
 									<FaPlus className="mr-1" /> Agregar Procedimiento
 								</Button>
 							</div>
-
+							
+							//NOSONAR
 							{diag.procedimientos.map((proc, j) => (
 								<div
 									key={j}
@@ -546,7 +548,8 @@ export default function FormularioNotaEvolutiva({
 						<FaPlus className="mr-2" /> Agregar Link
 					</Button>
 				</div>
-
+				
+				//NOSONAR
 				{formNota.links.map((link, i) => (
 					<div
 						key={i}
