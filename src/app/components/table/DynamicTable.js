@@ -17,6 +17,7 @@ import {
     Button,
 } from "@heroui/react";
 import { FaSearch, FaChevronDown } from "react-icons/fa";
+import { capitalizeNueva } from "@/utils/stringUtils";
 
 // Función para Capitalizar el Texto
 export const capitalize = (s) => {
@@ -118,7 +119,7 @@ export default function DynamicTable({
         if (uid === "correo") {
             return value;
         }
-        return typeof value === "string" ? capitalize(value) : value;
+        return typeof value === "string" ? capitalizeNueva(value) : value;
     };
 
     return (

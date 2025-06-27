@@ -1,22 +1,30 @@
 "use client";
 
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { FaPlus, FaSave } from "react-icons/fa";
 import { Button, Input, Select, SelectItem, Textarea } from "@heroui/react";
-import { validarNotaEvolutiva, validarCampoSimple } from "@/utils/validarNotaEvolutiva";
+import {
+	validarNotaEvolutiva,
+	validarCampoSimple,
+} from "@/utils/validarNotaEvolutiva";
 import { limitsNotaEvolutiva as limits } from "@/utils/notaEvolutivaLimits";
 
-export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuardar }) {
+export default function FormularioNotaEvolutiva({
+	formNota,
+	setFormNota,
+	onGuardar,
+}) {
 	const [errores, setErrores] = useState({});
 	const [mostrarSignosVitales, setMostrarSignosVitales] = useState(false);
 
 	const handleInputChange = (field, value) => {
-		setFormNota(prev => ({ ...prev, [field]: value }));
+		setFormNota((prev) => ({ ...prev, [field]: value }));
 
 		const error = validarCampoSimple(field, value, field === "motivo_consulta");
-		setErrores(prev => ({
+		setErrores((prev) => ({
 			...prev,
-			[field]: error || undefined
+			[field]: error || undefined,
 		}));
 	};
 
@@ -31,53 +39,53 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 	};
 
 	const handleSignosVitalesChange = (field, value) => {
-		setFormNota(prev => ({
+		setFormNota((prev) => ({
 			...prev,
 			signos_vitales: {
 				...prev.signos_vitales,
-				[field]: value
-			}
+				[field]: value,
+			},
 		}));
 
-		const error = validarCampoSimple(field, value, false);  // Puedes poner true si quieres que sea obligatorio
-		setErrores(prev => ({
+		const error = validarCampoSimple(field, value, false); // Puedes poner true si quieres que sea obligatorio
+		setErrores((prev) => ({
 			...prev,
-			[`signos_vitales.${field}`]: error || undefined
+			[`signos_vitales.${field}`]: error || undefined,
 		}));
 	};
 
 	const handleDiagnosticoChange = (i, field, value) => {
 		const nuevosDiagnosticos = [...formNota.diagnosticos];
 		nuevosDiagnosticos[i][field] = value;
-		setFormNota(prev => ({ ...prev, diagnosticos: nuevosDiagnosticos }));
+		setFormNota((prev) => ({ ...prev, diagnosticos: nuevosDiagnosticos }));
 
 		const fieldMap = { descripcion: "descripcion_diag" };
 		const limitKey = fieldMap[field] || field;
 		const error = validarCampoSimple(limitKey, value, true);
 
-		setErrores(prev => ({
+		setErrores((prev) => ({
 			...prev,
-			[`diagnosticos.${i}.${field}`]: error || undefined
+			[`diagnosticos.${i}.${field}`]: error || undefined,
 		}));
 	};
 
 	const handleProcedimientoChange = (i, j, field, value) => {
 		const nuevosDiagnosticos = [...formNota.diagnosticos];
 		nuevosDiagnosticos[i].procedimientos[j][field] = value;
-		setFormNota(prev => ({ ...prev, diagnosticos: nuevosDiagnosticos }));
+		setFormNota((prev) => ({ ...prev, diagnosticos: nuevosDiagnosticos }));
 
 		const error = validarCampoSimple(field, value, true);
 
-		setErrores(prev => ({
+		setErrores((prev) => ({
 			...prev,
-			[`diagnosticos.${i}.procedimientos.${j}.${field}`]: error || undefined
+			[`diagnosticos.${i}.procedimientos.${j}.${field}`]: error || undefined,
 		}));
 	};
 
 	const handleLinkChange = (i, field, value) => {
 		const nuevosLinks = [...formNota.links];
 		nuevosLinks[i][field] = value;
-		setFormNota(prev => ({ ...prev, links: nuevosLinks }));
+		setFormNota((prev) => ({ ...prev, links: nuevosLinks }));
 
 		let error = null;
 
@@ -91,29 +99,44 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 			error = validarCampoSimple("descripcion_link", value, false);
 		}
 
-		setErrores(prev => ({
+		setErrores((prev) => ({
 			...prev,
-			[`links.${i}.${field}`]: error || undefined
+			[`links.${i}.${field}`]: error || undefined,
 		}));
 	};
 
 	const agregarDiagnostico = () => {
-		setFormNota(prev => ({
+		setFormNota((prev) => ({
 			...prev,
-			diagnosticos: [...prev.diagnosticos, { condicion: "", tipo: "", cie_10: "", descripcion: "", procedimientos: [] }]
+			diagnosticos: [
+				...prev.diagnosticos,
+				{
+					condicion: "",
+					tipo: "",
+					cie_10: "",
+					descripcion: "",
+					procedimientos: [],
+				},
+			],
 		}));
 	};
 
 	const agregarProcedimiento = (i) => {
 		const nuevosDiagnosticos = [...formNota.diagnosticos];
-		nuevosDiagnosticos[i].procedimientos.push({ codigo: "", descripcion_proc: "" });
-		setFormNota(prev => ({ ...prev, diagnosticos: nuevosDiagnosticos }));
+		nuevosDiagnosticos[i].procedimientos.push({
+			codigo: "",
+			descripcion_proc: "",
+		});
+		setFormNota((prev) => ({ ...prev, diagnosticos: nuevosDiagnosticos }));
 	};
 
 	const agregarLink = () => {
-		setFormNota(prev => ({
+		setFormNota((prev) => ({
 			...prev,
-			links: [...prev.links, { categoria: "EXAMEN", url: "", nombre_documento: "", descripcion: "" }]
+			links: [
+				...prev.links,
+				{ categoria: "EXAMEN", url: "", nombre_documento: "", descripcion: "" },
+			],
 		}));
 	};
 
@@ -124,15 +147,18 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 	};
 
 	const eliminarProcedimiento = (indexDiagnostico, indexProcedimiento) => {
-		setFormNota(prev => {
+		setFormNota((prev) => {
 			const nuevosDiagnosticos = [...prev.diagnosticos];
-			nuevosDiagnosticos[indexDiagnostico].procedimientos.splice(indexProcedimiento, 1);
+			nuevosDiagnosticos[indexDiagnostico].procedimientos.splice(
+				indexProcedimiento,
+				1
+			);
 			return { ...prev, diagnosticos: nuevosDiagnosticos };
 		});
 	};
 
 	const eliminarLink = (index) => {
-		setFormNota(prev => ({
+		setFormNota((prev) => ({
 			...prev,
 			links: prev.links.filter((_, i) => i !== index),
 		}));
@@ -147,12 +173,28 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 			{/* Campos principales */}
 			<div className="flex flex-col gap-2 mb-4">
 				{[
-					{ field: "motivo_consulta", label: "Motivo de la Consulta", type: "input" },
+					{
+						field: "motivo_consulta",
+						label: "Motivo de la Consulta",
+						type: "input",
+					},
 					{ field: "enfermedad", label: "Enfermedad", type: "input" },
 					{ field: "tratamiento", label: "Tratamiento", type: "input" },
-					{ field: "resultado_examen", label: "Resultado de Examen", type: "input" },
-					{ field: "decision_consulta", label: "Decisión de la Consulta", type: "textarea" },
-					{ field: "reporte_decision", label: "Reporte de la Decisión", type: "textarea" }
+					{
+						field: "resultado_examen",
+						label: "Resultado de Examen",
+						type: "input",
+					},
+					{
+						field: "decision_consulta",
+						label: "Decisión de la Consulta",
+						type: "textarea",
+					},
+					{
+						field: "reporte_decision",
+						label: "Reporte de la Decisión",
+						type: "textarea",
+					},
 				].map(({ field, label, type }) => {
 					const isMotivoConsulta = field === "motivo_consulta";
 					const labelWithAsterisk = isMotivoConsulta ? `${label} ` : label;
@@ -162,7 +204,7 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							key={field}
 							label={labelWithAsterisk}
 							value={formNota[field]}
-							onChange={e => handleInputChange(field, e.target.value)}
+							onChange={(e) => handleInputChange(field, e.target.value)}
 							description={`${formNota[field].length}/${limits[field]} caracteres`}
 							isInvalid={!!errores[field]}
 							errorMessage={errores[field]}
@@ -173,7 +215,7 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							key={field}
 							label={labelWithAsterisk}
 							value={formNota[field]}
-							onChange={e => handleInputChange(field, e.target.value)}
+							onChange={(e) => handleInputChange(field, e.target.value)}
 							description={`${formNota[field].length}/${limits[field]} caracteres`}
 							isInvalid={!!errores[field]}
 							errorMessage={errores[field]}
@@ -185,14 +227,18 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 
 			{/* Signos Vitales */}
 			<div className="mb-4 relative border rounded-lg p-4 mt-5">
-				<div className="absolute bg-white -top-3 left-2 px-2 text-[11px] text-blue-800 font-semibold">Signos Vitales</div>
+				<div className="absolute bg-white -top-3 left-2 px-2 text-[11px] text-blue-800 font-semibold">
+					Signos Vitales
+				</div>
 				<div className="flex justify-center mb-4 w-full bg-gradient-to-b from-celeste-plomado-oscuro to-[#F5F7FC] p-2 shadow-lg">
 					<Button
-						onClick={() => setMostrarSignosVitales(prev => !prev)}
+						onClick={() => setMostrarSignosVitales((prev) => !prev)}
 						className="mb-3 bg-gray-100 text-gray-800 shadow hover:bg-gray-200"
 					>
 						<FaPlus className="mr-2" />
-						{mostrarSignosVitales ? "Ocultar Signos Vitales" : "Agregar Signos Vitales"}
+						{mostrarSignosVitales
+							? "Ocultar Signos Vitales"
+							: "Agregar Signos Vitales"}
 					</Button>
 				</div>
 
@@ -202,58 +248,97 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							<Input
 								label="Presión Sistólica (mmHg)"
 								value={formNota.signos_vitales.presion_arterial_sistolica}
-								onChange={e => handleSignosVitalesChange('presion_arterial_sistolica', e.target.value)}
-								isInvalid={!!errores['signos_vitales.presion_arterial_sistolica']}
-								errorMessage={errores['signos_vitales.presion_arterial_sistolica']}
+								onChange={(e) =>
+									handleSignosVitalesChange(
+										"presion_arterial_sistolica",
+										e.target.value
+									)
+								}
+								isInvalid={
+									!!errores["signos_vitales.presion_arterial_sistolica"]
+								}
+								errorMessage={
+									errores["signos_vitales.presion_arterial_sistolica"]
+								}
 							/>
 							<Input
 								label="Presión Diastólica (mmHg)"
 								value={formNota.signos_vitales.presion_arterial_diastolica}
-								onChange={e => handleSignosVitalesChange('presion_arterial_diastolica', e.target.value)}
-								isInvalid={!!errores['signos_vitales.presion_arterial_diastolica']}
-								errorMessage={errores['signos_vitales.presion_arterial_diastolica']}
+								onChange={(e) =>
+									handleSignosVitalesChange(
+										"presion_arterial_diastolica",
+										e.target.value
+									)
+								}
+								isInvalid={
+									!!errores["signos_vitales.presion_arterial_diastolica"]
+								}
+								errorMessage={
+									errores["signos_vitales.presion_arterial_diastolica"]
+								}
 							/>
 							<Input
 								label="Frecuencia Cardíaca (lpm)"
 								value={formNota.signos_vitales.frecuencia_cardiaca}
-								onChange={e => handleSignosVitalesChange('frecuencia_cardiaca', e.target.value)}
-								isInvalid={!!errores['signos_vitales.frecuencia_cardiaca']}
-								errorMessage={errores['signos_vitales.frecuencia_cardiaca']}
+								onChange={(e) =>
+									handleSignosVitalesChange(
+										"frecuencia_cardiaca",
+										e.target.value
+									)
+								}
+								isInvalid={!!errores["signos_vitales.frecuencia_cardiaca"]}
+								errorMessage={errores["signos_vitales.frecuencia_cardiaca"]}
 							/>
 							<Input
 								label="Frecuencia Respiratoria (rpm)"
 								value={formNota.signos_vitales.frecuencia_respiratoria}
-								onChange={e => handleSignosVitalesChange('frecuencia_respiratoria', e.target.value)}
-								isInvalid={!!errores['signos_vitales.frecuencia_respiratoria']}
-								errorMessage={errores['signos_vitales.frecuencia_respiratoria']}
+								onChange={(e) =>
+									handleSignosVitalesChange(
+										"frecuencia_respiratoria",
+										e.target.value
+									)
+								}
+								isInvalid={!!errores["signos_vitales.frecuencia_respiratoria"]}
+								errorMessage={errores["signos_vitales.frecuencia_respiratoria"]}
 							/>
 							<Input
 								label="Temperatura (°C)"
 								value={formNota.signos_vitales.temperatura}
-								onChange={e => handleSignosVitalesChange('temperatura', e.target.value)}
-								isInvalid={!!errores['signos_vitales.temperatura']}
-								errorMessage={errores['signos_vitales.temperatura']}
+								onChange={(e) =>
+									handleSignosVitalesChange("temperatura", e.target.value)
+								}
+								isInvalid={!!errores["signos_vitales.temperatura"]}
+								errorMessage={errores["signos_vitales.temperatura"]}
 							/>
 							<Input
 								label="Saturación de Oxígeno (%)"
 								value={formNota.signos_vitales.saturacion_oxigeno}
-								onChange={e => handleSignosVitalesChange('saturacion_oxigeno', e.target.value)}
-								isInvalid={!!errores['signos_vitales.saturacion_oxigeno']}
-								errorMessage={errores['signos_vitales.saturacion_oxigeno']}
+								onChange={(e) =>
+									handleSignosVitalesChange(
+										"saturacion_oxigeno",
+										e.target.value
+									)
+								}
+								isInvalid={!!errores["signos_vitales.saturacion_oxigeno"]}
+								errorMessage={errores["signos_vitales.saturacion_oxigeno"]}
 							/>
 							<Input
 								label="Peso (Kg)"
 								value={formNota.signos_vitales.peso}
-								onChange={e => handleSignosVitalesChange('peso', e.target.value)}
-								isInvalid={!!errores['signos_vitales.peso']}
-								errorMessage={errores['signos_vitales.peso']}
+								onChange={(e) =>
+									handleSignosVitalesChange("peso", e.target.value)
+								}
+								isInvalid={!!errores["signos_vitales.peso"]}
+								errorMessage={errores["signos_vitales.peso"]}
 							/>
 							<Input
 								label="Talla (cm)"
 								value={formNota.signos_vitales.talla}
-								onChange={e => handleSignosVitalesChange('talla', e.target.value)}
-								isInvalid={!!errores['signos_vitales.talla']}
-								errorMessage={errores['signos_vitales.talla']}
+								onChange={(e) =>
+									handleSignosVitalesChange("talla", e.target.value)
+								}
+								isInvalid={!!errores["signos_vitales.talla"]}
+								errorMessage={errores["signos_vitales.talla"]}
 							/>
 						</div>
 
@@ -262,28 +347,39 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							<Textarea
 								label="Observaciones"
 								value={formNota.signos_vitales.observaciones}
-								onChange={e => handleSignosVitalesChange('observaciones', e.target.value)}
-								isInvalid={!!errores['signos_vitales.observaciones']}
-								errorMessage={errores['signos_vitales.observaciones']}
+								onChange={(e) =>
+									handleSignosVitalesChange("observaciones", e.target.value)
+								}
+								isInvalid={!!errores["signos_vitales.observaciones"]}
+								errorMessage={errores["signos_vitales.observaciones"]}
 							/>
 						</div>
 					</>
 				)}
 			</div>
 
-
 			{/* Diagnósticos */}
 			<div className="mb-4 relative border rounded-lg p-4 mt-5">
-				<div className="absolute bg-white -top-3 left-2 px-2 text-[11px] text-blue-800 font-semibold">Diagnósticos</div>
+				<div className="absolute bg-white -top-3 left-2 px-2 text-[11px] text-blue-800 font-semibold">
+					Diagnósticos
+				</div>
 				<div className="flex justify-center mb-4 w-full bg-gradient-to-b from-celeste-plomado-oscuro to-[#F5F7FC] p-2 shadow-lg">
-					<Button onClick={agregarDiagnostico} className="bg-gray-100 text-gray-800 shadow hover:bg-gray-200">
+					<Button
+						onClick={agregarDiagnostico}
+						className="bg-gray-100 text-gray-800 shadow hover:bg-gray-200"
+					>
 						<FaPlus className="mr-2" /> Agregar Diagnóstico
 					</Button>
 				</div>
 
 				{formNota.diagnosticos.map((diag, i) => (
-					<div key={i} className="relative border p-4 mb-4 mt-2 rounded bg-white grid grid-cols-1 md:grid-cols-2 gap-4 pt-12">
-						<div className="absolute bg-white -top-3 left-2 px-2 text-[11px] text-blue-800 font-semibold">Diagnóstico</div>
+					<div
+						key={i}
+						className="relative border p-4 mb-4 mt-2 rounded bg-white grid grid-cols-1 md:grid-cols-2 gap-4 pt-12"
+					>
+						<div className="absolute bg-white -top-3 left-2 px-2 text-[11px] text-blue-800 font-semibold">
+							Diagnóstico
+						</div>
 
 						{/* Botón Eliminar Diagnóstico */}
 						<div className="absolute top-2 right-2 z-10">
@@ -302,7 +398,9 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							isRequired
 							label="Condición"
 							value={diag.condicion}
-							onChange={e => handleDiagnosticoChange(i, "condicion", e.target.value)}
+							onChange={(e) =>
+								handleDiagnosticoChange(i, "condicion", e.target.value)
+							}
 							description={`${diag.condicion.length}/${limits.condicion} caracteres`}
 							isInvalid={!!errores[`diagnosticos.${i}.condicion`]}
 							errorMessage={errores[`diagnosticos.${i}.condicion`]}
@@ -311,7 +409,9 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							isRequired
 							label="Tipo"
 							value={diag.tipo}
-							onChange={e => handleDiagnosticoChange(i, "tipo", e.target.value)}
+							onChange={(e) =>
+								handleDiagnosticoChange(i, "tipo", e.target.value)
+							}
 							description={`${diag.tipo.length}/${limits.tipo} caracteres`}
 							isInvalid={!!errores[`diagnosticos.${i}.tipo`]}
 							errorMessage={errores[`diagnosticos.${i}.tipo`]}
@@ -320,7 +420,9 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							isRequired
 							label="CIE-10"
 							value={diag.cie_10}
-							onChange={e => handleDiagnosticoChange(i, "cie_10", e.target.value)}
+							onChange={(e) =>
+								handleDiagnosticoChange(i, "cie_10", e.target.value)
+							}
 							description={`${diag.cie_10.length}/${limits.cie_10} caracteres`}
 							isInvalid={!!errores[`diagnosticos.${i}.cie_10`]}
 							errorMessage={errores[`diagnosticos.${i}.cie_10`]}
@@ -329,7 +431,9 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							isRequired
 							label="Descripción Diagnóstico"
 							value={diag.descripcion}
-							onChange={e => handleDiagnosticoChange(i, "descripcion", e.target.value)}
+							onChange={(e) =>
+								handleDiagnosticoChange(i, "descripcion", e.target.value)
+							}
 							description={`${diag.descripcion.length}/${limits.descripcion_diag} caracteres`}
 							isInvalid={!!errores[`diagnosticos.${i}.descripcion`]}
 							errorMessage={errores[`diagnosticos.${i}.descripcion`]}
@@ -352,8 +456,10 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 							</div>
 
 							{diag.procedimientos.map((proc, j) => (
-								<div key={j} className="relative w-full mb-2 border p-4 rounded-md flex flex-col md:flex-row gap-4 pt-12 bg-white">
-
+								<div
+									key={j}
+									className="relative w-full mb-2 border p-4 rounded-md flex flex-col md:flex-row gap-4 pt-12 bg-white"
+								>
 									{/* Botón Eliminar Procedimiento (estilo igual al de Diagnóstico) */}
 									<div className="absolute top-2 right-2 z-10">
 										<button
@@ -372,10 +478,23 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 											isRequired
 											label="Código"
 											value={proc.codigo}
-											onChange={e => handleProcedimientoChange(i, j, "codigo", e.target.value)}
+											onChange={(e) =>
+												handleProcedimientoChange(
+													i,
+													j,
+													"codigo",
+													e.target.value
+												)
+											}
 											description={`${proc.codigo.length}/${limits.codigo_proc} caracteres`}
-											isInvalid={!!errores[`diagnosticos.${i}.procedimientos.${j}.codigo`]}
-											errorMessage={errores[`diagnosticos.${i}.procedimientos.${j}.codigo`]}
+											isInvalid={
+												!!errores[
+												`diagnosticos.${i}.procedimientos.${j}.codigo`
+												]
+											}
+											errorMessage={
+												errores[`diagnosticos.${i}.procedimientos.${j}.codigo`]
+											}
 										/>
 									</div>
 
@@ -385,15 +504,29 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 											isRequired
 											label="Descripción Procedimiento"
 											value={proc.descripcion_proc}
-											onChange={e => handleProcedimientoChange(i, j, "descripcion_proc", e.target.value)}
+											onChange={(e) =>
+												handleProcedimientoChange(
+													i,
+													j,
+													"descripcion_proc",
+													e.target.value
+												)
+											}
 											description={`${proc.descripcion_proc.length}/${limits.descripcion_proc} caracteres`}
-											isInvalid={!!errores[`diagnosticos.${i}.procedimientos.${j}.descripcion_proc`]}
-											errorMessage={errores[`diagnosticos.${i}.procedimientos.${j}.descripcion_proc`]}
+											isInvalid={
+												!!errores[
+												`diagnosticos.${i}.procedimientos.${j}.descripcion_proc`
+												]
+											}
+											errorMessage={
+												errores[
+												`diagnosticos.${i}.procedimientos.${j}.descripcion_proc`
+												]
+											}
 										/>
 									</div>
 								</div>
 							))}
-
 						</div>
 					</div>
 				))}
@@ -415,8 +548,10 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 				</div>
 
 				{formNota.links.map((link, i) => (
-					<div key={i} className="flex flex-col gap-4 mb-4 relative border p-4 rounded-md pt-12 bg-white">
-
+					<div
+						key={i}
+						className="flex flex-col gap-4 mb-4 relative border p-4 rounded-md pt-12 bg-white"
+					>
 						{/* Botón eliminar */}
 						<div className="absolute top-2 right-2 z-10">
 							<button
@@ -436,7 +571,9 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 									isRequired
 									label="Nombre del Documento"
 									value={link.nombre_documento}
-									onChange={e => handleLinkChange(i, "nombre_documento", e.target.value)}
+									onChange={(e) =>
+										handleLinkChange(i, "nombre_documento", e.target.value)
+									}
 									description={`${link.nombre_documento.length}/${limits.nombre_documento} caracteres`}
 									isInvalid={!!errores[`links.${i}.nombre_documento`]}
 									errorMessage={errores[`links.${i}.nombre_documento`]}
@@ -448,7 +585,7 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 									isRequired
 									label="URL"
 									value={link.url}
-									onChange={e => handleLinkChange(i, "url", e.target.value)}
+									onChange={(e) => handleLinkChange(i, "url", e.target.value)}
 									description={`${link.url.length}/${limits.url} caracteres`}
 									isInvalid={!!errores[`links.${i}.url`]}
 									errorMessage={errores[`links.${i}.url`]}
@@ -463,14 +600,24 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 									isRequired
 									label="Categoría"
 									selectedKeys={[link.categoria]}
-									onSelectionChange={keys => handleLinkChange(i, "categoria", [...keys][0])}
+									onSelectionChange={(keys) =>
+										handleLinkChange(i, "categoria", [...keys][0])
+									}
 									classNames={{
 										trigger: "text-gray-700",
 										popoverContent: "text-blue-700",
 									}}
 								>
-									{["EXAMEN", "PEDIDO", "CERTIFICADO", "OTRO", "TRANSFERIR"].map(cat => (
-										<SelectItem key={cat} value={cat}>{cat}</SelectItem>
+									{[
+										"EXAMEN",
+										"PEDIDO",
+										"CERTIFICADO",
+										"OTRO",
+										"TRANSFERIR",
+									].map((cat) => (
+										<SelectItem key={cat} value={cat}>
+											{cat}
+										</SelectItem>
 									))}
 								</Select>
 							</div>
@@ -479,7 +626,9 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 								<Textarea
 									label="Descripción (opcional)"
 									value={link.descripcion}
-									onChange={e => handleLinkChange(i, "descripcion", e.target.value)}
+									onChange={(e) =>
+										handleLinkChange(i, "descripcion", e.target.value)
+									}
 									description={`${link.descripcion.length}/${limits.descripcion_link} caracteres`}
 									isInvalid={!!errores[`links.${i}.descripcion`]}
 									errorMessage={errores[`links.${i}.descripcion`]}
@@ -492,10 +641,61 @@ export default function FormularioNotaEvolutiva({ formNota, setFormNota, onGuard
 			</div>
 
 			<div className="flex justify-center">
-				<Button color="primary" size="lg" className="w-full sm:w-auto" onClick={handleGuardar}>
+				<Button
+					color="primary"
+					size="lg"
+					className="w-full sm:w-auto"
+					onClick={handleGuardar}
+				>
 					<FaSave className="mr-2" /> Guardar Nota Evolutiva
 				</Button>
 			</div>
 		</div>
 	);
 }
+
+FormularioNotaEvolutiva.propTypes = {
+	formNota: PropTypes.shape({
+		motivo_consulta: PropTypes.string.isRequired,
+		enfermedad: PropTypes.string.isRequired,
+		tratamiento: PropTypes.string.isRequired,
+		resultado_examen: PropTypes.string.isRequired,
+		decision_consulta: PropTypes.string.isRequired,
+		reporte_decision: PropTypes.string.isRequired,
+		signos_vitales: PropTypes.shape({
+			presion_arterial_sistolica: PropTypes.string,
+			presion_arterial_diastolica: PropTypes.string,
+			frecuencia_cardiaca: PropTypes.string,
+			frecuencia_respiratoria: PropTypes.string,
+			temperatura: PropTypes.string,
+			saturacion_oxigeno: PropTypes.string,
+			peso: PropTypes.string,
+			talla: PropTypes.string,
+			observaciones: PropTypes.string,
+		}),
+		diagnosticos: PropTypes.arrayOf(
+			PropTypes.shape({
+				condicion: PropTypes.string.isRequired,
+				tipo: PropTypes.string.isRequired,
+				cie_10: PropTypes.string.isRequired,
+				descripcion: PropTypes.string.isRequired,
+				procedimientos: PropTypes.arrayOf(
+					PropTypes.shape({
+						codigo: PropTypes.string.isRequired,
+						descripcion_proc: PropTypes.string.isRequired,
+					})
+				),
+			})
+		),
+		links: PropTypes.arrayOf(
+			PropTypes.shape({
+				nombre_documento: PropTypes.string.isRequired,
+				url: PropTypes.string.isRequired,
+				categoria: PropTypes.string.isRequired,
+				descripcion: PropTypes.string,
+			})
+		),
+	}).isRequired,
+	setFormNota: PropTypes.func.isRequired,
+	onGuardar: PropTypes.func.isRequired,
+};

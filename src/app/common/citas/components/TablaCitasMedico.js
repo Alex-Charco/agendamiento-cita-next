@@ -42,13 +42,6 @@ export default function TablaCitasMedico({
     },
   ];
 
-  const citasTransformadas = citas.map((cita) => ({
-    ...cita,
-    estado: capitalize(cita.estado),
-    correo: cita.correo.toLowerCase(),
-	original: cita.original
-  }));
-
   return (
     <div className="flex justify-center py-2">
       <div className="relative flex flex-col w-full border rounded shadow-lg p-4 bg-gray-50 text-center">

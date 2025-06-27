@@ -53,7 +53,9 @@ const ModalRegistrarCita = ({ turno, isOpen, onClose, onCitaRegistrada }) => {
           console.log("id_paciente_reagendar:", sessionStorage.getItem("id_paciente_reagendar"));
           console.log("nombre_paciente_reagendar:", sessionStorage.getItem("nombre_paciente_reagendar"));
           id_paciente = sessionStorage.getItem("id_paciente_reagendar");
-          nombrePaciente = sessionStorage.getItem("nombre_paciente_reagendar") || nombrePaciente;
+		  
+		  const nombreSession = sessionStorage.getItem("nombre_paciente_reagendar");
+			nombrePaciente = nombreSession ?? nombrePaciente;
         }
       }
 
