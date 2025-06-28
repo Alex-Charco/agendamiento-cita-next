@@ -27,7 +27,7 @@ export default function TablaCitasMedico({
               className="flex-1 sm:flex-none bg-blue-700 text-white text-[12px] px-3 py-1 rounded-lg shadow hover:bg-blue-800 transition-all"
               onClick={() => onRegistrarAsistencia(cita)}
             >
-              Nota evolutiva
+              Nota médica
             </button>
           )}
           <button

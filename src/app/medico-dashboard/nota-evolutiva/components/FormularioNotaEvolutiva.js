@@ -647,7 +647,7 @@ export default function FormularioNotaEvolutiva({
 					className="w-full sm:w-auto"
 					onClick={handleGuardar}
 				>
-					<FaSave className="mr-2" /> Guardar Nota Evolutiva
+					<FaSave className="mr-2" /> Guardar Nota Médica
 				</Button>
 			</div>
 		</div>

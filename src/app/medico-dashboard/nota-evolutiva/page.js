@@ -89,7 +89,6 @@ export default function NotaEvolutivaPage() {
     fetchDatos();
   }, [fetchDatos]);
   
-
   const handleVerDetalle = (nota) => {
     sessionStorage.setItem("notaDetalleParams", JSON.stringify({
       idNota: nota.id_nota_evolutiva,
@@ -125,7 +124,7 @@ export default function NotaEvolutivaPage() {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <NavbarComponent title="Notas Evolutivas" buttons={buttons} />
+      <NavbarComponent title="Nota Médica" buttons={buttons} />
       <div className="flex flex-col mx-2">
         {error && <p className="text-center text-red-500 mt-4">{error}</p>}
         {paciente ? (
