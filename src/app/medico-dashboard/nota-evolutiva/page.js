@@ -49,6 +49,8 @@ export default function NotaEvolutivaPage() {
   const limit = 5;
 
   const [formNota, setFormNota] = useState(estadoInicialNota);
+  const [idNotaRecienGuardada, setIdNotaRecienGuardada] = useState(null);
+
 
   useEffect(() => {
     const storedIdCita = sessionStorage.getItem("notaEvolutiva_id_cita");
@@ -104,7 +106,9 @@ export default function NotaEvolutivaPage() {
 
     try {
       const payload = { id_cita: idCita, ...formNota };
-      await authAxios.post("/api/nota-evolutiva/registrar", payload);
+      const response = await authAxios.post("/api/nota-evolutiva/registrar", payload);
+	  const idNota = response.data?.id_nota_evolutiva || null;
+	  setIdNotaRecienGuardada(idNota);
 
       mostrarToastExito("Nota evolutiva registrada correctamente");
 
@@ -145,12 +149,23 @@ export default function NotaEvolutivaPage() {
 
             {/* Registrar nueva nota evolutiva más abajo */}
             <div className="mt-4">
-              <FormularioNotaEvolutiva
-                formNota={formNota}
-                setFormNota={setFormNota}
-                onGuardar={guardarNotaEvolutiva}
-              />
-            </div>
+			  <FormularioNotaEvolutiva
+				formNota={formNota}
+				setFormNota={setFormNota}
+				onGuardar={guardarNotaEvolutiva}
+			  />
+			</div>
+
+			{idNotaRecienGuardada && (
+			  <div className="flex justify-center mt-4">
+				<button
+				  onClick={() => router.push(`/medico-dashboard/receta`)}
+				  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+				>
+				  Generar receta médica
+				</button>
+			  </div>
+			)}
 
           </>
         ) : (
