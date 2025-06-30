@@ -1,17 +1,31 @@
 import { limitsNotaEvolutiva as limits } from "./notaEvolutivaLimits";
 
 export function validarCampoSimple(campo, valor, obligatorio = false) {
+  const camposSinMinimo = [
+    "presion_arterial_sistolica",
+    "presion_arterial_diastolica",
+    "frecuencia_cardiaca",
+    "frecuencia_respiratoria",
+    "temperatura",
+    "saturacion_oxigeno",
+    "peso",
+    "talla",
+    "observaciones"
+  ];
+
   if (obligatorio && !valor?.trim()) {
     return "Campo obligatorio";
   }
+
   if (valor?.trim()) {
-    if (valor.length < 3) {
+    if (!camposSinMinimo.includes(campo) && valor.length < 3) {
       return "Debe tener mínimo 3 caracteres";
     }
     if (valor.length > limits[campo]) {
       return `Máximo ${limits[campo]} caracteres permitidos`;
     }
   }
+
   return null;
 }
 

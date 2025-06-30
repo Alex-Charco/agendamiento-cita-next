@@ -14,7 +14,7 @@ export default function PacienteDetalle({ paciente, mostrarCampos }) {
         <div className="flex flex-col justify-center py-2 pt-4 w-full">
             <div className="w-full">
                 <div className="grid grid-cols-1 w-full">
-                    
+
                     <div className="relative w-full border rounded-lg p-3 bg-white">
                         <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
                             Datos Personales
@@ -34,37 +34,37 @@ export default function PacienteDetalle({ paciente, mostrarCampos }) {
                                     {paciente.identificacion}
                                 </p>
                             )}
-							{debeMostrar("fecha_nacimiento") && (
+                            {debeMostrar("fecha_nacimiento") && (
                                 <p>
                                     <span className="font-semibold">F. Nacimiento:</span>{" "}
                                     {paciente.fecha_nacimiento}
                                 </p>
                             )}
-							{debeMostrar("telefono") && (
+                            {debeMostrar("telefono") && (
                                 <p>
                                     <span className="font-semibold">Teléfono:</span>{" "}
                                     {paciente.telefono}
                                 </p>
                             )}
-							{debeMostrar("celular") && (
+                            {debeMostrar("celular") && (
                                 <p>
                                     <span className="font-semibold">Celular:</span>{" "}
                                     {paciente.celular}
                                 </p>
                             )}
-							{debeMostrar("genero") && (
+                            {debeMostrar("genero") && (
                                 <p>
                                     <span className="font-semibold">Género:</span>{" "}
                                     {paciente.genero}
                                 </p>
                             )}
-							{debeMostrar("edad") && (
+                            {debeMostrar("edad") && (
                                 <p>
                                     <span className="font-semibold">Edad:</span>{" "}
                                     {paciente.edad}
                                 </p>
                             )}
-							{debeMostrar("grupo_etario") && (
+                            {debeMostrar("grupo_etario") && (
                                 <p>
                                     <span className="font-semibold">Grupo Etario:</span>{" "}
                                     {paciente.grupo_etario}
@@ -87,6 +87,10 @@ PacienteDetalle.propTypes = {
         edad: PropTypes.number,
         grupo_etario: PropTypes.string,
         nombre_usuario: PropTypes.string,
+        fecha_nacimiento: PropTypes.string,
+        telefono: PropTypes.string,
+        celular: PropTypes.string,
+        genero: PropTypes.string,
     }).isRequired,
     mostrarCampos: PropTypes.arrayOf(PropTypes.string),
 };

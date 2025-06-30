@@ -92,7 +92,7 @@ export default function ConsultaCitaPacientePage() {
                     {usuario?.rol?.nombre_rol !== "PACIENTE" && (
                         <CitaPacienteSearch onSelectCita={handleCitaSelect} />
                     )}
-
+					
                     {loading ? (
                         <p className="text-center text-gray-500 mt-4">Cargando citas...</p>
                     ) : selectedCita?.paciente ? (

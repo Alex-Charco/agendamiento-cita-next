@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DynamicTable from "@/components/table/DynamicTable";
-import { capitalize } from "@/utils/stringUtils";
 
 export default function TablaCitasMedico({
   citas,
@@ -28,7 +27,7 @@ export default function TablaCitasMedico({
               className="flex-1 sm:flex-none bg-blue-700 text-white text-[12px] px-3 py-1 rounded-lg shadow hover:bg-blue-800 transition-all"
               onClick={() => onRegistrarAsistencia(cita)}
             >
-              Nota evolutiva
+              Nota médica
             </button>
           )}
           <button
@@ -41,13 +40,6 @@ export default function TablaCitasMedico({
       ),
     },
   ];
-
-  const citasTransformadas = citas.map((cita) => ({
-    ...cita,
-    estado: capitalize(cita.estado),
-    correo: cita.correo.toLowerCase(),
-	original: cita.original
-  }));
 
   return (
     <div className="flex justify-center py-2">

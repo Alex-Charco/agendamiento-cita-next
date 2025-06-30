@@ -6,7 +6,7 @@ import NavbarComponent from "@/components/navbars/NavbarComponent";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
 import authAxios from "@/utils/api/authAxios";
 import DetalleDatosPaciente from "@/medico-dashboard/nota-evolutiva/components/DetalleDatosPaciente";
-import { FaSearch, FaFilePdf, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaArrowLeft, FaSearch, FaFilePdf, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DynamicTable from "@/components/table/DynamicTable";
 
 export default function NotaEvolutivaDetallePage() {
@@ -15,7 +15,7 @@ export default function NotaEvolutivaDetallePage() {
   const [error, setError] = useState(null);
   const [idNota, setIdNota] = useState(null);
   const [idCita, setIdCita] = useState(null);
-  const [expanded, setExpanded] = useState(null);  // <- Estado de fila expandida
+  const [expanded, setExpanded] = useState(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -53,13 +53,13 @@ export default function NotaEvolutivaDetallePage() {
   if (!paciente || !notaDetalle) return <p className="text-center text-gray-500">Cargando datos...</p>;
 
   const buttons = [
-    { label: "Buscar nota evolutiva", icon: FaSearch, action: "buscar-nota", href: "/medico-dashboard/nota-evolutiva" },
+    { label: "Regresar", icon: FaArrowLeft, action: "regresar", href: "/medico-dashboard/nota-evolutiva" },
     ...getCommonButtonsByPath(pathname)
   ];
 
   const diagnosticoColumns = [
     { name: "Condición", uid: "condicion" },
-	{ name: "Tipo", uid: "tipo" },
+    { name: "Tipo", uid: "tipo" },
     { name: "CIE-10", uid: "cie_10" },
     { name: "Descripción", uid: "descripcion" },
     {
@@ -67,20 +67,20 @@ export default function NotaEvolutivaDetallePage() {
       uid: "accion",
       render: (item) => (
         // Dentro del render:
-		<button
-		  onClick={() => setExpanded(expanded === item.id_diagnostico ? null : item.id_diagnostico)}
-		  className="bg-blue-700 text-white px-4 py-2 rounded-lg text-xs shadow hover:bg-blue-700 transition-all"
-		>
-		  {expanded === item.id_diagnostico ? (
-			<>
-			  <FaSearch className="inline mr-[2px]" /> Ocultar <FaChevronUp className="inline ml-[2px]" />
-			</>
-		  ) : (
-			<>
-			  <FaSearch className="inline mr-[2px]" /> Ver <FaChevronDown className="inline ml-[2px]" />
-			</>
-		  )}
-		</button>
+        <button
+          onClick={() => setExpanded(expanded === item.id_diagnostico ? null : item.id_diagnostico)}
+          className="bg-blue-700 text-white px-4 py-2 rounded-lg text-xs shadow hover:bg-blue-700 transition-all"
+        >
+          {expanded === item.id_diagnostico ? (
+            <>
+              <FaSearch className="inline mr-[2px]" /> Ocultar <FaChevronUp className="inline ml-[2px]" />
+            </>
+          ) : (
+            <>
+              <FaSearch className="inline mr-[2px]" /> Ver Procedimiento <FaChevronDown className="inline ml-[2px]" />
+            </>
+          )}
+        </button>
       ),
     },
   ];
@@ -89,21 +89,57 @@ export default function NotaEvolutivaDetallePage() {
     ...diag,
     id_diagnostico: diag.id_diagnostico,
     condicion: diag.condicion,
-	tipo: diag.tipo,
+    tipo: diag.tipo,
     cie_10: diag.cie_10,
     descripcion: diag.descripcion,
   }));
 
   return (
     <div className="bg-gray-50 min-h-screen border">
-      <NavbarComponent title="Detalle Nota Evolutiva" buttons={buttons} />
+      <NavbarComponent title="Detalle de la Nota Evolución" buttons={buttons} />
       <div className="flex flex-col justify-center py-2 w-full">
         <div className="w-full relative border rounded-lg p-3 bg-white mx-2">
           <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
-            Información de la Nota Evolutiva
+            Información de la Nota de Evolución
           </div>
 
           <DetalleDatosPaciente paciente={paciente} />
+
+          {/* Signos Vitales */}
+          {notaDetalle.signoVital && (
+            <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
+              <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
+                Signos Vitales
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 text-sm text-gray-700">
+                <div>
+                  <strong>Presión Arterial:</strong> {notaDetalle.signoVital.presion_arterial_sistolica} / {notaDetalle.signoVital.presion_arterial_diastolica} mmHg
+                </div>
+                <div>
+                  <strong>Frecuencia Cardíaca:</strong> {notaDetalle.signoVital.frecuencia_cardiaca} lpm
+                </div>
+                <div>
+                  <strong>Frecuencia Respiratoria:</strong> {notaDetalle.signoVital.frecuencia_respiratoria} rpm
+                </div>
+                <div>
+                  <strong>Temperatura:</strong> {notaDetalle.signoVital.temperatura} °C
+                </div>
+                <div>
+                  <strong>Saturación de Oxígeno:</strong> {notaDetalle.signoVital.saturacion_oxigeno} %
+                </div>
+                <div>
+                  <strong>Peso:</strong> {notaDetalle.signoVital.peso} kg
+                </div>
+                <div>
+                  <strong>Talla:</strong> {notaDetalle.signoVital.talla} m
+                </div>
+                <div>
+                  <strong>Observaciones:</strong> {notaDetalle.signoVital.observaciones || "Sin observaciones."}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Tabla Diagnósticos */}
           <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
@@ -118,26 +154,26 @@ export default function NotaEvolutivaDetallePage() {
               expanded === diag.id_diagnostico && (
                 <div key={`proc-${diag.id_diagnostico}`} className="mt-4">
                   <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
-					<div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
-					  Procedimientos
-					</div>
-                  {diag.Procedimientos?.length > 0 ? (
-                    <DynamicTable
-                      columns={[
-                        { name: "Código", uid: "codigo" },
-                        { name: "Descripción", uid: "descripcion_proc" }
-                      ]}
-                      data={diag.Procedimientos.map((proc) => ({
-                        codigo: proc.codigo,
-                        descripcion_proc: proc.descripcion_proc
-                      }))}
-                      pagination={false}
-                    />
-                  ) : (
-                    <div className="text-sm text-gray-500 italic">No existen procedimientos para este diagnóstico.</div>
-                  )}
+                    <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
+                      Procedimientos
+                    </div>
+                    {diag.Procedimientos?.length > 0 ? (
+                      <DynamicTable
+                        columns={[
+                          { name: "Código", uid: "codigo" },
+                          { name: "Descripción", uid: "descripcion_proc" }
+                        ]}
+                        data={diag.Procedimientos.map((proc) => ({
+                          codigo: proc.codigo,
+                          descripcion_proc: proc.descripcion_proc
+                        }))}
+                        pagination={false}
+                      />
+                    ) : (
+                      <div className="text-sm text-gray-500 italic">No existen procedimientos para este diagnóstico.</div>
+                    )}
+                  </div>
                 </div>
-				</div>
               )
             ))}
           </div>
@@ -146,30 +182,43 @@ export default function NotaEvolutivaDetallePage() {
           {notaDetalle.links?.length > 0 && (
             <div className="relative w-full border rounded-lg p-3 bg-white mt-4">
               <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
-                Decisión de la Consulta
+                Documentos Adjuntos
               </div>
 
               <DynamicTable
                 columns={[
                   { name: "Categoría", uid: "categoria" },
+                  { name: "Nombre del Documento", uid: "nombre_documento" },
+                  { name: "Descripción", uid: "descripcion" },
                   {
                     name: "Archivo",
                     uid: "archivo",
                     render: (item) => (
-                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-red-600 text-xl flex items-center justify-center">
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-600 text-xl flex items-center justify-center"
+                        title={item.nombre_documento}
+                      >
                         <FaFilePdf />
                       </a>
-                    )
-                  }
+                    ),
+                  },
                 ]}
                 data={notaDetalle.links.map((link) => ({
                   categoria: link.categoria,
-                  url: link.url
+                  nombre_documento: link.nombre_documento,
+                  descripcion: link.descripcion,
+                  url: link.url,
                 }))}
                 pagination={false}
               />
             </div>
           )}
+
+
+
         </div>
       </div>
     </div>

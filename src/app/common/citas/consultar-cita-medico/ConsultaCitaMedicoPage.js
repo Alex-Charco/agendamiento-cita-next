@@ -42,20 +42,20 @@ export default function ConsultaCitaMedicoPage() {
   }, []);
 
   const transformarCitasParaTabla = (citas) => {
-	  return citas.map((cita) => ({
-		nombre: cita.paciente?.nombre || "",
-		identificacion: cita.paciente?.identificacion || "",
-		correo: cita.paciente?.correo || "",
-		fecha_turno: cita.turno?.horario?.fecha_horario || "",
-		hora_turno: cita.turno?.hora_turno || "",
-		numero_turno: cita.turno?.id_turno || "",
-		fecha_creacion: cita.fecha_creacion || "",
-		estado: cita.estado_cita || "",
-		id_cita: cita.id_cita || "",
-		id_paciente: cita.paciente?.id_paciente || "",  // AGREGAMOS ESTO
-		original: cita,
-	  }));
-	};
+    return citas.map((cita) => ({
+      nombre: cita.paciente?.nombre || "",
+      identificacion: cita.paciente?.identificacion || "",
+      correo: cita.paciente?.correo || "",
+      fecha_turno: cita.turno?.horario?.fecha_horario || "",
+      hora_turno: cita.turno?.hora_turno || "",
+      numero_turno: cita.turno?.id_turno || "",
+      fecha_creacion: cita.fecha_creacion || "",
+      estado: cita.estado_cita || "",
+      id_cita: cita.id_cita || "",
+      id_paciente: cita.paciente?.id_paciente || "",
+      original: cita,
+    }));
+  };
 
   const manejarAccion = (cita, accion) => {
     setCitaSeleccionada(cita);
@@ -64,9 +64,17 @@ export default function ConsultaCitaMedicoPage() {
 
     if (typeof window !== "undefined") {
       const paciente = cita.original?.paciente;
+      const idCita = cita.original?.id_cita;
       if (paciente) {
+        // Reagendar
         sessionStorage.setItem("id_paciente_reagendar", paciente.id_paciente);
         sessionStorage.setItem("nombre_paciente_reagendar", paciente.nombre || "Paciente desconocido");
+        // Nota evolutiva (claves únicas)
+        sessionStorage.setItem("notaEvolutiva_id_paciente", paciente.id_paciente);
+        sessionStorage.setItem("notaEvolutiva_nombre_paciente", paciente.nombre || "Paciente desconocido");
+      }
+      if (idCita) {
+        sessionStorage.setItem("notaEvolutiva_id_cita", idCita);
       }
     }
   };
@@ -128,7 +136,7 @@ export default function ConsultaCitaMedicoPage() {
                 citas={transformarCitasParaTabla(selectedMedico.citas)}
                 onRegistrarAsistencia={(cita) => manejarAccion(cita, "asistencia")}
                 onReagendarCita={(cita) => manejarAccion(cita, "reagendar")}
-				mostrarAsistencia={true}
+                mostrarAsistencia={true}
               />
 
               <ModalRegistrarAsistencia
