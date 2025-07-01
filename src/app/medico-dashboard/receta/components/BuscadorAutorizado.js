@@ -39,8 +39,9 @@ export default function BuscadorAutorizado({ autorizados, setAutorizados }) {
 
       {autorizados.length > 1 && (
         <div className="mb-4">
-          <label className="text-sm text-gray-600">Seleccionar entre paciente y familiar:</label>
+          <label htmlFor="select-autorizado" className="text-sm text-gray-600">Seleccionar entre paciente y familiar:</label>
           <select
+		    id="select-autorizado"
             value={seleccionadoId ?? 0}
             onChange={handleSeleccion}
             className="mt-1 p-2 border rounded-lg w-full text-gray-600"

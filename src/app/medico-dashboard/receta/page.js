@@ -41,8 +41,8 @@ export default function RecetaPage() {
   const pathname = usePathname();
   const router = useRouter();
   
-  const [recetaPdf, setRecetaPdf] = useState(null);
-  const [idCita, setIdCita] = useState(null);
+  const [setRecetaPdf] = useState(null);
+  const [setIdCita] = useState(null);
   
   useEffect(() => {
 	  const storedIdCita = sessionStorage.getItem("notaEvolutiva_id_cita");
@@ -115,10 +115,6 @@ export default function RecetaPage() {
         .catch(err => mostrarToastError(err, "No se encontraron recetas para esta nota"));
     }
   }, [idNotaEvolutiva]);
-
-  const agregarAutorizado = (nuevo) => {
-    setAutorizados(prev => [...prev, nuevo]);
-  };
 
   const agregarMedicamento = (nuevo) => {
     if (modoEdicion && indiceEditar !== null) {
