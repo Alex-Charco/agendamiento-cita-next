@@ -10,7 +10,7 @@ import TablaNotasEvolutivas from "@/medico-dashboard/nota-evolutiva/components/T
 import FormularioNotaEvolutiva from "@/medico-dashboard/nota-evolutiva/components/FormularioNotaEvolutiva";
 import { mostrarToastExito, mostrarToastError } from "@/utils/toast";
 import { confirmarRegistro } from "@/utils/confirmacion";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaFilePrescription } from "react-icons/fa";
 
 // 🧠 Estado inicial extraído como constante reutilizable
 const estadoInicialNota = {
@@ -64,6 +64,11 @@ export default function NotaEvolutivaPage() {
     }
   }, []);
 
+  useEffect(() => {
+    const storedId = sessionStorage.getItem("idNotaRecienGuardada");
+    if (storedId) setIdNotaRecienGuardada(Number(storedId));
+  }, []);
+
   // 🔁 Función para obtener datos (historial y paciente)
   const fetchDatos = useCallback(async () => {
     try {
@@ -72,7 +77,7 @@ export default function NotaEvolutivaPage() {
           const responsePaciente = await authAxios.get(`/api/paciente/get/detalle-por-cita/${idCita}`);
           setPaciente(responsePaciente.data.paciente);
         }
-  
+
         const responseNotas = await authAxios.get(
           `/api/nota-evolutiva/get?id_paciente=${idPaciente}&page=${currentPage}&limit=${limit}`
         );
@@ -84,13 +89,13 @@ export default function NotaEvolutivaPage() {
       setError("No se pudieron obtener los datos.");
     }
   }, [idCita, idPaciente, currentPage, paciente]); // <-- dependencias necesarias
-  
+
 
   // Cargar datos cuando se tenga idCita y idPaciente
   useEffect(() => {
     fetchDatos();
   }, [fetchDatos]);
-  
+
   const handleVerDetalle = (nota) => {
     sessionStorage.setItem("notaDetalleParams", JSON.stringify({
       idNota: nota.id_nota_evolutiva,
@@ -107,9 +112,18 @@ export default function NotaEvolutivaPage() {
     try {
       const payload = { id_cita: idCita, ...formNota };
       const response = await authAxios.post("/api/nota-evolutiva/registrar", payload);
-	  const idNota = response.data?.id_nota_evolutiva || null;
-	  setIdNotaRecienGuardada(idNota);
+      console.log("✅ Respuesta de nota evolutiva:", response.data);
+      const idNota = response.data?.nota?.id_nota_evolutiva || null;
+      console.log("🔁 ID recibido:", idNota);
+      setIdNotaRecienGuardada(idNota);
+      sessionStorage.setItem("idNotaRecienGuardada", idNota);
+      sessionStorage.setItem("notaDetalleParams", JSON.stringify({
+        idNota,
+        idCita,
+        idPaciente
+      }));
 
+      setIdNotaRecienGuardada(idNota);
       mostrarToastExito("Nota evolutiva registrada correctamente");
 
       setFormNota(estadoInicialNota);
@@ -149,23 +163,27 @@ export default function NotaEvolutivaPage() {
 
             {/* Registrar nueva nota evolutiva más abajo */}
             <div className="mt-4">
-			  <FormularioNotaEvolutiva
-				formNota={formNota}
-				setFormNota={setFormNota}
-				onGuardar={guardarNotaEvolutiva}
-			  />
-			</div>
+              <FormularioNotaEvolutiva
+                formNota={formNota}
+                setFormNota={setFormNota}
+                onGuardar={guardarNotaEvolutiva}
+              />
+            </div>
 
-			{idNotaRecienGuardada && (
-			  <div className="flex justify-center mt-4">
-				<button
-				  onClick={() => router.push(`/medico-dashboard/receta`)}
-				  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-				>
-				  Generar receta médica
-				</button>
-			  </div>
-			)}
+            {idNotaRecienGuardada && (
+              <div className="flex justify-center mt-4">
+                <button
+                  onClick={() => {
+                    sessionStorage.setItem("notaEvolutiva_id_cita", idCita); // ✅ necesario
+                    router.push(`/medico-dashboard/receta`);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-2xl mb-4 flex items-center gap-2"
+                >
+                  <FaFilePrescription className="text-white text-lg" />
+                  Nueva Receta médica
+                </button>
+              </div>
+            )}
 
           </>
         ) : (

@@ -11,6 +11,7 @@ import authAxios from "@/utils/api/authAxios";
 import { FaArrowLeft } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
 import { getCommonButtonsByPath } from "@/utils/commonButtons";
+import { generarPDFReceta } from "@/utils/pdf/generarPDFReceta";
 
 const obtenerFechaActual = () => {
   const hoy = new Date();
@@ -39,7 +40,21 @@ export default function RecetaPage() {
 
   const pathname = usePathname();
   const router = useRouter();
-  const ID_PACIENTE_DEV = 1;
+  
+  const [recetaPdf, setRecetaPdf] = useState(null);
+  const [idCita, setIdCita] = useState(null);
+  
+  useEffect(() => {
+	  const storedIdCita = sessionStorage.getItem("notaEvolutiva_id_cita");
+
+	  if (storedIdCita) {
+		const idCitaParsed = Number(storedIdCita);
+		setIdCita(idCitaParsed);
+
+	  } else {
+		console.warn("❗ No se encontró 'notaEvolutiva_id_cita' en sessionStorage");
+	  }
+	}, []);
 
   // Recuperar medicamentos almacenados
   useEffect(() => {
@@ -55,38 +70,38 @@ export default function RecetaPage() {
   }, [medicamentosAgregados]);
 
   useEffect(() => {
-    const storedNotaParams = sessionStorage.getItem("notaDetalleParams");
+	  const storedNotaParams = sessionStorage.getItem("notaDetalleParams");
 
-    let idNota = null;
-    let idPaciente = null;
+	  if (storedNotaParams) {
+		const parsedParams = JSON.parse(storedNotaParams);
+		const idNota = parsedParams.idNota;
+		const idPaciente = parsedParams.idPaciente;
 
-    if (storedNotaParams) {
-      const parsedParams = JSON.parse(storedNotaParams);
-      idNota = parsedParams.idNota;
-      idPaciente = parsedParams.idPaciente;
-      setIdNotaEvolutiva(idNota);
-    }
+		if (!idNota || !idPaciente) {
+		  mostrarToastError("Faltan datos necesarios para cargar la receta.");
+		  return;
+		}
 
-    const pacienteId = idPaciente || ID_PACIENTE_DEV;
+		setIdNotaEvolutiva(idNota);
 
-    if (idNota) {
-      authAxios.get(`/api/receta/get/diagnostico-por-nota/${idNota}`)
-        .then(res => setDiagnosticos(res.data || []))
-        .catch(err => mostrarToastError(err, "Error al cargar diagnósticos"));
-    }
+		// Diagnósticos
+		authAxios.get(`/api/receta/get/diagnostico-por-nota/${idNota}`)
+		  .then(res => setDiagnosticos(res.data || []))
+		  .catch(err => mostrarToastError(err, "Error al cargar diagnósticos"));
 
-    if (pacienteId) {
-      authAxios.get(`/api/receta/get/autorizacion/opciones?id_paciente=${pacienteId}`)
-        .then(res => {
-          const opciones = [];
-          if (res.data.paciente) opciones.push({ ...res.data.paciente, tipo_autorizado: "PACIENTE" });
-          if (res.data.familiar) opciones.push({ ...res.data.familiar, tipo_autorizado: "FAMILIAR" });
-          setAutorizados(opciones);
-          setPaciente(res.data.paciente);
-        })
-        .catch(err => mostrarToastError(err, "Error al obtener autorizados"));
-    }
-  }, []);
+		// Autorizados
+		authAxios.get(`/api/receta/get/autorizacion/opciones?id_paciente=${idPaciente}`)
+		  .then(res => {
+			const opciones = [];
+			if (res.data.paciente) opciones.push({ ...res.data.paciente, tipo_autorizado: "PACIENTE" });
+			if (res.data.familiar) opciones.push({ ...res.data.familiar, tipo_autorizado: "FAMILIAR" });
+			setAutorizados(opciones);
+			setPaciente(res.data.paciente);
+		  })
+		  .catch(err => mostrarToastError(err, "Error al obtener autorizados"));
+	  }
+	}, []);
+
 
   useEffect(() => {
     if (idNotaEvolutiva) {
@@ -138,7 +153,6 @@ export default function RecetaPage() {
 		mostrarToastError("Debe agregar al menos un medicamento antes de guardar la receta.");
 		return;
 	  }
-
 	  // Validar que haya al menos un autorizado
 	  const autorizadoSeleccionado = autorizados.find(a => a.seleccionado);
 	  if (!autorizadoSeleccionado) {
@@ -149,11 +163,11 @@ export default function RecetaPage() {
 	  try {
 		// Construir receta_autorizacion
 		const receta_autorizacion = {
-		  id_paciente: autorizadoSeleccionado.tipo_autorizado === "PACIENTE" ? autorizadoSeleccionado.id_paciente : null,
-		  id_familiar: autorizadoSeleccionado.tipo_autorizado === "FAMILIAR" ? autorizadoSeleccionado.id_familiar : null,
-		  id_persona_externa: autorizadoSeleccionado.tipo_autorizado === "EXTERNO" ? autorizadoSeleccionado.id_persona_externa : null,
+		  id_paciente: autorizadoSeleccionado.tipo_autorizado === "PACIENTE" ? autorizadoSeleccionado.id : null,
+		  id_familiar: autorizadoSeleccionado.tipo_autorizado === "FAMILIAR" ? autorizadoSeleccionado.id : null,
 		  tipo_autorizado: autorizadoSeleccionado.tipo_autorizado,
 		};
+         console.log("📦 Estructura receta_autorizacion:", receta_autorizacion);
 
 		// Adaptar estructura de cada medicamento
 		const medicaciones = medicamentosAgregados.map((med) => {
@@ -192,15 +206,55 @@ export default function RecetaPage() {
 		const payload = {
 		  id_nota_evolutiva: idNotaEvolutiva,
 		  fecha_prescripcion: fechaPrescripcion,
-		  medicaciones,
-		  receta_autorizacion
+		  medicaciones: medicamentosAgregados.map((m) => ({
+			externo: m.externo || false,
+			indicacion: m.indicacion || null,
+			signo_alarma: m.signoAlarma || null,
+			indicacion_no_farmacologica: m.indicacionNoFarmaco || null,
+			recomendacion_no_farmacologica: m.recomendacionNoFarmaco || null,
+			medicamento: {
+			  cum: m.cum || null,
+			  nombre_medicamento: m.nombreMedicamento,
+			  forma_farmaceutica: m.formaFarmaceutica,
+			  via_administracion: m.viaAdministracion,
+			  concentracion: m.concentracion,
+			  presentacion: m.presentacion,
+			  tipo: m.tipoMedicamento,
+			  cantidad: m.cantidad,
+			},
+			posologias: [
+			  {
+				dosis_numero: Number(m.dosisNumero),
+				dosis_tipo: m.dosisTipo,
+				frecuencia_numero: Number(m.frecuenciaNumero),
+				frecuencia_tipo: m.frecuenciaTipo,
+				duracion_numero: Number(m.duracionNumero),
+				duracion_tipo: m.duracionTipo,
+				fecha_inicio: m.fecha_inicio || null,
+				hora_inicio: m.hora_inicio || null,
+				via: m.via,
+			  },
+			],
+		  })),
+		  receta_autorizacion: receta_autorizacion, // ✅ ESTA es la que debes enviar
 		};
+		
+		if (
+		  receta_autorizacion.tipo_autorizado === "PACIENTE" && !receta_autorizacion.id_paciente ||
+		  receta_autorizacion.tipo_autorizado === "FAMILIAR" && !receta_autorizacion.id_familiar ||
+		  receta_autorizacion.tipo_autorizado === "EXTERNO" && !receta_autorizacion.id_persona_externa
+		) {
+		  mostrarToastError("Error: No se ha definido correctamente el autorizado.");
+		  return;
+		}
+
 
 		await authAxios.post("/api/receta/registrar", payload);
 		mostrarToastExito("Receta guardada correctamente");
 		sessionStorage.removeItem("medicamentosAgregados");
 		setRecetaGuardada(true);
-		router.push("/medico-dashboard/cita/consultar-cita-medico");
+		
+		setRecetaPdf(null);
 
 	  } catch (error) {
 		mostrarToastError(error, "Error al guardar la receta");
@@ -270,14 +324,43 @@ export default function RecetaPage() {
         />
 
         {/* Botón para guardar receta */}
-        <div className="flex justify-center">
-          <button
-            onClick={guardarReceta}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow"
-          >
-            Guardar Receta
-          </button>
-        </div>
+        <div className="flex flex-col items-center space-y-4">
+		  <button
+			onClick={guardarReceta}
+			className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-lg shadow"
+		  >
+			Guardar Receta
+		  </button>
+
+		  <button
+			  onClick={async () => {
+				const storedIdCita = sessionStorage.getItem("notaEvolutiva_id_cita");
+				console.log("🔎 ID de la cita desde sessionStorage:", storedIdCita);
+
+				if (!storedIdCita) {
+				  mostrarToastError("No se encontró la cita para generar el PDF.");
+				  return;
+				}
+
+				try {
+				  const { data } = await authAxios.get(`/api/receta/get/por-cita?id_cita=${storedIdCita}`);
+				  if (data?.data) {
+					generarPDFReceta(data.data);
+				  } else {
+					mostrarToastError("La receta aún no está disponible. Intente nuevamente.");
+				  }
+				} catch (err) {
+				  console.error("❌ Error al intentar descargar la receta", err);
+				  mostrarToastError("Error al generar el PDF. Intente nuevamente.");
+				}
+			  }}
+			  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg shadow"
+			>
+			  Descargar PDF Receta
+			</button>
+
+		</div>
+
       </div>
     </div>
   );
