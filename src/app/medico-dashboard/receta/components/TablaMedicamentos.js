@@ -60,7 +60,7 @@ export default function TablaMedicamentos({ medicamentos, onEditar, onEliminar, 
                 <TableCell className="text-gray-700">
 				  {med.fecha_inicio && med.hora_inicio
 					? `${med.fecha_inicio} ${med.hora_inicio}`
-					: "-"}
+					: " - "}
 				</TableCell>
               </TableRow>
             ))

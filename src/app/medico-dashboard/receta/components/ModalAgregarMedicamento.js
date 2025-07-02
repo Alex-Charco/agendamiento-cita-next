@@ -12,7 +12,6 @@ import {
   Select,
   SelectItem,
   Textarea,
-  Checkbox,
 } from "@heroui/react";
 import DynamicTable from "@/components/table/DynamicTable";
 import React, { useState, useEffect } from "react";
@@ -573,4 +572,28 @@ ModalAgregarMedicamento.propTypes = {
   onClose: PropTypes.func.isRequired,
   onGuardar: PropTypes.func.isRequired,
   diagnosticos: PropTypes.array.isRequired,
+  modoEdicion: PropTypes.bool.isRequired,
+  datosEditar: PropTypes.shape({
+    nombreMedicamento: PropTypes.string,
+    formaFarmaceutica: PropTypes.string,
+    viaAdministracion: PropTypes.string,
+    concentracion: PropTypes.string,
+    presentacion: PropTypes.string,
+    tipoMedicamento: PropTypes.string,
+    cantidad: PropTypes.string,
+    dosisNumero: PropTypes.string,
+    dosisTipo: PropTypes.string,
+    frecuenciaNumero: PropTypes.string,
+    frecuenciaTipo: PropTypes.string,
+    duracionNumero: PropTypes.string,
+    duracionTipo: PropTypes.string,
+    via: PropTypes.string,
+    calcular: PropTypes.string,
+    indicacion: PropTypes.string,
+    signoAlarma: PropTypes.string,
+    indicacionNoFarmaco: PropTypes.string,
+    recomendacionNoFarmaco: PropTypes.string,
+    externo: PropTypes.bool,
+    index: PropTypes.number,
+  }),
 };

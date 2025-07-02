@@ -22,3 +22,12 @@ export default function DetalleDatosReceta({ fechaPrescripcion, fechaVigencia, p
     </div>
   );
 }
+
+DetalleDatosReceta.propTypes = {
+  fechaPrescripcion: PropTypes.string.isRequired,
+  fechaVigencia: PropTypes.string.isRequired,
+  paciente: PropTypes.shape({
+    nombre: PropTypes.string,
+    identificacion: PropTypes.string,
+  }).isRequired,
+};

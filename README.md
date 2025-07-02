@@ -91,6 +91,11 @@ La librería permite personalizar las notificaciones:
 6. **`@babel/preset-react`**: Preajuste de Babel para compilar JSX y características específicas de React en JavaScript.
 7. **`jest`**: es necesaria para hacer las pruebas.
 
+
+#### Dependencias para generar receta en formato pdf 
+
+	npm install jspdf jspdf-autotable
+
 ---
 
 #### NOTA
