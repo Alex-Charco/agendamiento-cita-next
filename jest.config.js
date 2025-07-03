@@ -14,7 +14,6 @@ module.exports = {
 
     // Tratar los archivos JSX como módulos ES
     extensionsToTreatAsEsm: [".jsx"],
-
     // Usar Babel para transformar los archivos de JS/TS/JSX/TSX
     transform: {
         "^.+\\.(js|jsx)$": ["babel-jest", { configFile: "./babel.config.test.js" }],
