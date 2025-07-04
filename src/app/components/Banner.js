@@ -3,16 +3,23 @@
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Button from "./Button";
+import Image from "next/image";
 
 const Banner = ({ title, description, buttons, imageUrl }) => {
 
     return (
         <section className="relative w-full h-[400px] flex flex-col items-center justify-center text-center p-10">
             {/* Imagen de fondo */}
-            <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${imageUrl})` }}
-            />
+            <div className="absolute inset-0 z-0">
+			  <Image
+				src={imageUrl}
+				alt="Banner"
+				fill
+				className="object-cover"
+				priority
+				sizes="(max-width: 768px) 100vw, 33vw"
+			  />
+			</div>
 
             {/* Capa de opacidad azul */}
             <div className="absolute inset-0 bg-blue-900 opacity-50"></div>
