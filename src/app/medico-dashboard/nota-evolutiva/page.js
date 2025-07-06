@@ -180,7 +180,7 @@ export default function NotaEvolutivaPage() {
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-2xl mb-4 flex items-center gap-2"
                 >
                   <FaFilePrescription className="text-white text-lg" />
-                  Nueva Receta médica
+                  Nueva Receta Médica
                 </button>
               </div>
             )}

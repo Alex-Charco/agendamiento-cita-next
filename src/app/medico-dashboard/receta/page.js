@@ -275,13 +275,8 @@ export default function RecetaPage() {
 		{
 			label: "Regresar",
 			icon: FaArrowLeft,
-			onClick: () => handleIntentoSalir("/medico-dashboard/nota-evolutiva"),
-		},
-		...(getCommonButtonsByPath(pathname) || []).map(btn => ({
-			...btn,
-			onClick: () => handleIntentoSalir(btn.href),
-		})),
-	];
+			action: "regresar", href:"/medico-dashboard/nota-evolutiva"},
+		...(getCommonButtonsByPath(pathname) || [])];
 
 	return (
 		<div className="bg-gray-100 min-h-screen">

@@ -39,28 +39,31 @@ export default function TablaNotasEvolutivas({
     tipo_consulta: "Consulta Médica",
   }));
 
+  // ✅ Mostrar mensaje solo si es página 1 y no hay notas
+  const mostrarMensajeVacio = currentPage === 1 && transformNotas.length === 0;
+
   return (
     <div className="relative w-full border rounded-lg p-3 mt-1 bg-white">
       <div className="absolute bg-white -top-2 left-4 px-2 text-[10px] text-blue-800">
         Historial de Nota Médica
       </div>
 
-      {(!notas || notas.length === 0) ? (
+      {mostrarMensajeVacio && (
         <div className="text-sm text-gray-500 text-center py-6">
           No hay notas evolutivas registradas.
         </div>
-      ) : (
-        <DynamicTable
-          columns={columns}
-          data={transformNotas}
-          filterPlaceholder="Buscar notas..."
-          remotePagination={true}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
       )}
 
+      {/* Siempre muestra la tabla, aunque no haya notas en otras páginas */}
+      <DynamicTable
+        columns={columns}
+        data={transformNotas}
+        filterPlaceholder="Buscar notas..."
+        remotePagination={true}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
     </div>
   );
 }

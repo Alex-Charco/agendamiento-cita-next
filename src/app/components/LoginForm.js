@@ -119,6 +119,7 @@ export default function LoginForm() {
                                 fill
                                 className="object-cover"
                                 priority
+								sizes="(max-width: 768px) 100vw, 33vw"
                             />
                         </div>
 
