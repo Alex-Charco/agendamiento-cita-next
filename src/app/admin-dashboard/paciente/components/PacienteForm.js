@@ -124,7 +124,7 @@ import SubmitButton from "@/components/ui/SubmitButton";
     return { ...state, [action.name]: action.value };
   }
   
-  function PacienteForm({ onSubmit, pacienteData = {} }) {
+  function PacienteForm({ onSubmit, pacienteData = {}, isEditable = true }) {
     const [paciente, dispatch] = useReducer(reducer, {
       ...initialState,
       ...pacienteData,
@@ -164,6 +164,7 @@ import SubmitButton from "@/components/ui/SubmitButton";
           value={paciente.nombre_usuario}
           onChange={handleChange}
           placeholder="Ingrese el nombre de usuario"
+		  isReadOnly={!isEditable}
         />
         <CustomInput
           name="identificacion"

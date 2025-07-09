@@ -6,7 +6,6 @@ import { FaHospitalUser } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const roles = [
-    { key: "3", label: "Administrador" },
     { key: "2", label: "Médico" },
     { key: "1", label: "Paciente" },
 ];

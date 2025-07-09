@@ -48,7 +48,7 @@ const Contacto = () => {
               <MdLocationOn className="h-6 w-6 text-red-500" />
               <div>
                 <h3 className="font-semibold">Dirección: </h3>
-                <p>Av. General Eloy Alfaro y Calle Ceslao Marin, cerca de Iglesia Católica Jesús del Gran Poder - Pindo (El Dorado), así como del terreno de juego de CANCHA DE USO MULTIPLE.</p>
+                <p>Av. General Eloy Alfaro y Calle Ceslao Marin, cerca de Iglesia Católica Jesús del Gran Poder - Pindo (El Dorado).</p>
               </div>
             </div>
           </div>

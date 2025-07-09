@@ -25,7 +25,7 @@ import { confirmarRegistro } from "@/utils/confirmacion";
 export default function RegistrarPacientePage() {
   const [selectedUsuario] = useState(null);
   const [mensaje, setMensaje] = useState("");
-  const [setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
   const pathname = usePathname();
 
   useClearLocalStorage(["identificacion", "nombre_usuario"]);
@@ -108,7 +108,7 @@ export default function RegistrarPacientePage() {
       title: "2. Paciente",
       content: (
         <FormWrapper mensaje={mensaje}>
-          <PacienteForm onSubmit={handlePacienteSelect} />
+          <PacienteForm onSubmit={handlePacienteSelect} isEditable={true} />
         </FormWrapper>
       ),
     },

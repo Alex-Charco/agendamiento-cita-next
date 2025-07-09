@@ -12,18 +12,25 @@ import DynamicTable from "@/components/table/DynamicTable";
 export default function HistorialCambiosMedicoPage() {
     const pathname = usePathname();
     const [selectedMedico, setSelectedMedico] = useState(null);
-    const [historialCambios, setHistorialCambios] = useState([]);
+    const [historialCambios, setHistorialCambios] = useState({
+	  datos_medico: null,
+	  historial: [],
+	});
+
     const [query, setQuery] = useState("");
 
     const handleMedicoSelect = async (medico) => {
-        setSelectedMedico(medico);
+	  setSelectedMedico(medico);
 
-        if (medico?.identificacion) {
-            await fetchHistorialMedico(medico.identificacion, setHistorialCambios);
-        } else {
-            setHistorialCambios([]);
-        }
-    };
+	  if (medico?.identificacion) {
+		await fetchHistorialMedico(medico.identificacion, setHistorialCambios);
+	  } else {
+		setHistorialCambios({
+		  datos_medico: null,
+		  historial: [],
+		});
+	  }
+	};
 
     const buttons = [
         { label: "Actualizar Médico", icon: FaSyncAlt, action: "actualizar-medico", href: "/admin-dashboard/medico/actualizar-medico" },
@@ -31,7 +38,30 @@ export default function HistorialCambiosMedicoPage() {
         { label: "Nuevo Médico", icon: FaPlus, action: "nuevo-medico", href: "/admin-dashboard/medico/registrar-medico" },
         ...getCommonButtonsByPath(pathname),
     ];
+	
+	const renderDatosMedico = () => {
+	  const m = historialCambios.datos_medico;
+	  if (!m) return null;
 
+	  return (
+		<div className="relative w-full border rounded-lg p-3 bg-white">
+		  <div className="absolute bg-white -top-2 left-4 px-2 text-[11px] text-blue-800 font-bold">
+			Datos Médico
+		  </div>
+		  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700">
+			<p>
+			  <span className="font-semibold">Nombre:</span>{" "}
+			  {[m.primer_nombre, m.segundo_nombre, m.primer_apellido, m.segundo_apellido]
+				.filter(Boolean)
+				.join(" ")}
+			</p>
+			<p><span className="font-semibold">Identificación:</span> {m.identificacion}</p>
+			<p><span className="font-semibold">Celular:</span> {m.celular}</p>
+			<p><span className="font-semibold">Correo:</span> {m.correo}</p>
+		  </div>
+		</div>
+	  );
+	};
 
     const tableColumns = [
         {
@@ -42,6 +72,11 @@ export default function HistorialCambiosMedicoPage() {
         { uid: "campo_modificado", name: "Campo Modificado" },
         { uid: "valor_anterior", name: "Valor Anterior" },
         { uid: "valor_nuevo", name: "Valor Nuevo" },
+		{
+			uid: "realizado_por",
+			name: "Realizado por",
+			render: (item) => item.realizado_por || "Desconocido",
+		  },
     ];
 
     return (
@@ -66,11 +101,12 @@ export default function HistorialCambiosMedicoPage() {
 
             {selectedMedico && (
                 <div className="flex justify-center py-8">
-                    <div className="flex flex-col w-full max-w-6xl gap-4 border rounded-xl shadow-lg p-6 bg-white">
-                        {historialCambios.length > 0 ? (
-                            <DynamicTable
-                                columns={tableColumns}
-                                data={historialCambios}
+                    <div className="flex flex-col w-full mx-2 gap-4 border rounded-xl shadow-lg p-6 bg-white">
+                        {renderDatosMedico()}
+						{historialCambios.historial.length > 0 ? (
+						  <DynamicTable
+							columns={tableColumns}
+							data={historialCambios.historial}
                                 rowsPerPage={5}
                                 filterPlaceholder="Buscar en el historial de cambios..."
                                 actionLabel={null}

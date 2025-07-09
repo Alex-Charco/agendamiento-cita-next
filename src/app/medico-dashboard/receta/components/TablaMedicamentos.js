@@ -40,14 +40,14 @@ export default function TablaMedicamentos({ medicamentos, onEditar, onEliminar, 
             medicamentos.map((med, index) => (
               <TableRow key={index}>
                 <TableCell className="flex gap-2 justify-center">
-                  <Tooltip content="Editar">
+                  <Tooltip content="Editar" className="text-blue-600 mr-1">
                     <Button isIconOnly variant="light" onPress={() => onEditar(index)}>
-                      <FaEdit className="text-blue-600" />
+                      <FaEdit className="text-blue-600 mr-1" />
                     </Button>
                   </Tooltip>
-                  <Tooltip content="Eliminar">
+                  <Tooltip content="Eliminar" className="text-red-600 mr-1">
                     <Button isIconOnly variant="light" onPress={() => onEliminar(index)}>
-                      <FaTrash className="text-red-600" />
+                      <FaTrash className="text-red-600 mr-1" />
                     </Button>
                   </Tooltip>
                 </TableCell>

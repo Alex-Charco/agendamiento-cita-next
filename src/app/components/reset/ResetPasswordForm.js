@@ -7,6 +7,7 @@ import { validarPassword } from "@/utils/validarPassword.js";
 import { Card } from "@heroui/react";
 import { FaUserAlt } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // 👈 Nuevo
 
 export default function ResetPasswordForm() {
     const searchParams = useSearchParams();
@@ -15,17 +16,18 @@ export default function ResetPasswordForm() {
     const [password, setPassword] = useState("");
     const [nombreUsuario, setNombreUsuario] = useState("");
     const [passwordErrors, setPasswordErrors] = useState([]);
+    const [isVisible, setIsVisible] = useState(false); // 👈 Nuevo
+
+    const toggleVisibility = () => setIsVisible(!isVisible); // 👈 Nuevo
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Verificación del token antes de cualquier otro campo
-        if (!token || token === 'expired') {
+        if (!token || token === "expired") {
             Swal.fire("Token inválido", "El token es inválido o ha expirado.", "error");
             return;
         }
 
-        // Validación de campos vacíos
         if (!nombreUsuario.trim()) {
             Swal.fire("Campo vacío", "Por favor ingresa el nombre de usuario.", "error");
             return;
@@ -36,14 +38,12 @@ export default function ResetPasswordForm() {
             return;
         }
 
-        // Validación de la contraseña (estructura)
         const validation = validarPassword(password);
         if (!validation.isValid) {
             setPasswordErrors(validation.errors);
             return;
         }
 
-        // Llamada a la API después de todas las validaciones
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/reset-password`, {
                 method: "POST",
@@ -67,7 +67,7 @@ export default function ResetPasswordForm() {
                     setPassword("");
                     setNombreUsuario("");
                     setPasswordErrors([]);
-                    window.location.href = "/auth/login"; // Redirige a la página de login
+                    window.location.href = "/auth/login";
                 });
             } else {
                 Swal.fire({
@@ -76,7 +76,6 @@ export default function ResetPasswordForm() {
                     text: data.message || "Ocurrió un error al restablecer la contraseña.",
                 });
             }
-
         } catch (error) {
             console.error("Error al restablecer la contraseña:", error);
             Swal.fire(
@@ -115,7 +114,7 @@ export default function ResetPasswordForm() {
                         />
                     </div>
 
-                    {/* Contraseña */}
+                    {/* Contraseña con visibilidad */}
                     <div className="mb-4 relative">
                         <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
                             <RiLockPasswordFill />
@@ -123,15 +122,23 @@ export default function ResetPasswordForm() {
                         <input
                             id="password"
                             name="password"
-                            type="password"
+                            type={isVisible ? "text" : "password"}
                             placeholder="Nueva contraseña"
-                            className="w-full pl-12 pr-4 py-3 rounded-[16px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full pl-12 pr-12 py-3 rounded-[16px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value={password}
                             onChange={(e) => {
                                 setPassword(e.target.value);
                                 setPasswordErrors([]);
                             }}
                         />
+                        <button
+                            type="button"
+                            onClick={toggleVisibility}
+                            aria-label="Mostrar/ocultar contraseña"
+                            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-xl text-gray-500 focus:outline-none"
+                        >
+                            {isVisible ? <FaEye /> : <FaEyeSlash />}
+                        </button>
                     </div>
 
                     {/* Errores */}
