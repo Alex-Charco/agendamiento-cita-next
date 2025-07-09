@@ -51,12 +51,14 @@ export const fetchHistorialPaciente = async (identificacion) => {
     try {
         const response = await authAxios.get(`/api/paciente/get/historial/${identificacion}`);
         console.log("URL consultada:", `/api/paciente/get/historial/${identificacion}`);
-
+		console.log("Respuesta", response)
+		console.log("Respuesta data", response.ata)
         return response.data?.historial || null;
     } catch (error) {
         console.error("Error al obtener historial médico:", error);
 		manejarError(error);
-        throw error;
+        //throw error;
+		return null;
     }
 };
 

@@ -96,7 +96,7 @@ function ActualizarPaciente({ pacienteData }) {
     <div className="min-h-screen p-6 flex flex-col items-center">
       <div>
         {datosPaciente ? (
-          <PacienteForm onSubmit={handleFormSubmit} pacienteData={datosPaciente} />
+          <PacienteForm onSubmit={handleFormSubmit} pacienteData={datosPaciente} isEditable={false} />
         ) : (
           <p>Buscar paciente para modificar paciente</p>
         )}

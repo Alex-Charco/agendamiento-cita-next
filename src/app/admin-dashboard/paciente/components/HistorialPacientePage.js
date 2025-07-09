@@ -23,6 +23,7 @@ export default function HistorialCambiosPacientePage() {
     info_militar: [],
     residencia: [],
     seguro: [],
+	datos_paciente: null
   });
 
   const handleBuscar = async () => {
@@ -40,6 +41,7 @@ export default function HistorialCambiosPacientePage() {
           info_militar: historial.info_militar || [],
           residencia: historial.residencia || [],
           seguro: historial.seguro || [],
+		  datos_paciente: historial.datos_paciente || null
         });
         setSelectedPaciente(query);
       } else {
@@ -79,8 +81,27 @@ export default function HistorialCambiosPacientePage() {
       render: (item) => new Date(item.fecha_cambio).toLocaleString(),
     },
     { uid: "campo_modificado", name: "Campo Modificado" },
-    { uid: "valor_anterior", name: "Valor Anterior" },
-    { uid: "valor_nuevo", name: "Valor Nuevo" },
+    {
+		uid: "valor_anterior",
+		name: "Valor Anterior",
+		render: (item) =>
+		  typeof item.valor_anterior === "object" && item.valor_anterior !== null
+			? JSON.stringify(item.valor_anterior, null, 2)
+			: item.valor_anterior ?? "—"
+	  },
+	  {
+		uid: "valor_nuevo",
+		name: "Valor Nuevo",
+		render: (item) =>
+		  typeof item.valor_nuevo === "object" && item.valor_nuevo !== null
+			? JSON.stringify(item.valor_nuevo, null, 2)
+			: item.valor_nuevo ?? "—"
+	  },
+	{
+		uid: "realizado_por",
+		name: "Realizado por",
+		render: (item) => item.realizado_por || "Desconocido",
+	  }
   ];
 
   const tabItems = [
@@ -90,6 +111,29 @@ export default function HistorialCambiosPacientePage() {
     { key: "residencia", title: "Residencia", data: historialCambios.residencia },
     { key: "seguro", title: "Seguro", data: historialCambios.seguro },
   ];
+  
+	  const renderDatosPaciente = () => {
+	  const p = historialCambios.datos_paciente;
+	  if (!p) return null;
+
+	  return (
+		<div className="relative w-full border rounded-lg p-3 bg-white">
+                        <div className="absolute bg-white -top-2 left-4 px-2 text-[11px] text-blue-800 font-bold">
+                            Datos Paciente
+                        </div>
+		  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700">
+			<p>
+			  <span className="font-semibold">Nombre:</span>{" "}
+			  {[p.primer_nombre, p.segundo_nombre, p.primer_apellido, p.segundo_apellido].filter(Boolean).join(" ")}
+			</p>
+			<p><span className="font-semibold">Identificación:</span> {p.identificacion}</p>
+			<p><span className="font-semibold">Celular:</span> {p.celular}</p>
+			<p><span className="font-semibold">Correo:</span> {p.correo}</p>
+		  </div>
+		</div>
+	  );
+	};
+
 
   return (
     <>
@@ -117,8 +161,9 @@ export default function HistorialCambiosPacientePage() {
 
       {selectedPaciente && (
         <div className="flex justify-center py-8">
-          <div className="flex flex-col w-full max-w-6xl gap-4 border rounded-xl shadow-lg p-6 bg-white">
-            <CustomTabs
+          <div className="flex flex-col w-full mx-2 gap-4 border rounded-xl shadow-lg p-6 bg-white">
+            {renderDatosPaciente()}
+			<CustomTabs
               tabs={tabItems.map((tab) => ({
                 key: tab.key,
                 title: tab.title,
